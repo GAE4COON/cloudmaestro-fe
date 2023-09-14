@@ -7,23 +7,26 @@ import Learn from "./pages/learn";
 import Navbar from "./components/Navbar";
 import Signup from "./pages/signup";
 import Signin from "./pages/signin";
+import { AuthProvider } from "./utils/auth/authContext";
 
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
-        <Navbar />
-        <div className="main-content">
-          <Routes>
-            <Route exact path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/learn" element={<Learn />} />
-            <Route path="/draw" element={<Draw />} />
-            <Route path="/sign-up" element={<Signup />} />
-            <Route path="/sign-in" element={<Signin />} />
-          </Routes>
-        </div>
-      </BrowserRouter>
+      <AuthProvider>
+        <BrowserRouter>
+          <Navbar />
+          <div className="main-content">
+            <Routes>
+              <Route exact path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/learn" element={<Learn />} />
+              <Route path="/draw" element={<Draw />} />
+              <Route path="/sign-up" element={<Signup />} />
+              <Route path="/sign-in" element={<Signin />} />
+            </Routes>
+          </div>
+        </BrowserRouter>
+      </AuthProvider>
     </div>
   );
 }

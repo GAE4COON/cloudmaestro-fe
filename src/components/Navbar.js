@@ -3,8 +3,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../assets/img/logo.png";
+import { useAuth } from "./../utils/auth/authContext";
 
 const Navbar = () => {
+  const { user, setUser } = useAuth();
+
   return (
     <>
       <NavStyled>
@@ -18,12 +21,29 @@ const Navbar = () => {
           <NavLink to="/draw">Go to draw!</NavLink>
         </NavMenuLeft>
         <NavMenuRight>
-          <NavBtn>
-            <NavBtnLink to="/sign-up">Sign Up</NavBtnLink>
-          </NavBtn>
-          <NavBtn>
-            <NavBtnLink to="/sign-in">Sign In</NavBtnLink>
-          </NavBtn>
+          {user ? (
+            <>
+              <img
+                src={user.picture}
+                alt={user.name}
+                style={{
+                  borderRadius: "50%",
+                  width: "50px",
+                  height: "50px",
+                }}
+              />
+              <span>{user.name}</span>
+            </>
+          ) : (
+            <>
+              <NavBtn>
+                <NavBtnLink to="/sign-up">Sign Up</NavBtnLink>
+              </NavBtn>
+              <NavBtn>
+                <NavBtnLink to="/sign-in">Sign In</NavBtnLink>
+              </NavBtn>
+            </>
+          )}
         </NavMenuRight>
       </NavStyled>
     </>
