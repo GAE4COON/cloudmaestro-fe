@@ -5,7 +5,8 @@ nav {
     height: 60px;
     
     display: flex;
-    border: solid 2px;
+
+    background-color: #9AB7C1;
   
   }
   
@@ -15,3 +16,4 @@ nav {
     justify-content: center;
     align-items: center;
   }
+

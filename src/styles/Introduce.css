@@ -1,0 +1,55 @@
+
+
+
+a {
+    
+    text-decoration: none; /* 밑줄 제거 */
+    color: inherit; /* 부모의 글자색을 상속 */
+  }
+
+
+.container1 {
+  background-color: #326070;
+  min-height: 200px;
+  width : 100%;
+  display: flex;
+  justify-content: center; /* Horizontal centering */
+  margin-top:3px;
+}
+
+.content{
+  position:relative;
+  width: 100%;
+  height: 100%;
+}
+.content > p{
+  position: absolute;
+  color: white;
+  font-size: 15px; 
+  top: 10px;
+  left: 3px;
+  border-bottom: 2px solid white;  /* 밑줄 추가 */
+}
+
+
+
+/* container2 */
+.container2 {
+    min-height: 200px;
+    width : 100%;
+    display: flex;
+    justify-content: center; /* Horizontal centering */
+    margin-top:3px;
+    background-color: #F5F5F5;
+  }
+
+
+.container2 > p {
+    text-align: left;
+    font-family: 'Arial', sans-serif;  /* 폰트 변경 */
+    font-size: 10px;  /* 폰트 크기 변경 */
+    color: #333;  /* 글자색 변경 */
+    line-height: 1.6;  /* 줄 간격 조절 */
+    
+
+}

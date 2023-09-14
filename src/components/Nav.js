@@ -9,7 +9,7 @@ const Nav = () => {
         <NavLink to="/">Home</NavLink>
       </div>
       <div>
-        <NavLink to="/recommend">Recommend</NavLink>
+        <NavLink to="/introduce">Introduce</NavLink>
       </div>
       <div>
         <NavLink to="/search">Search</NavLink>
