@@ -1,3 +1,9 @@
+* {
+  box-sizing: border-box;
+  margin: 0; /* 모든 요소의 margin을 초기화합니다. */
+  padding: 0; /* 모든 요소의 padding을 초기화합니다. */
+}
+
 nav {
     position: fixed;
     top: 0;
@@ -5,8 +11,7 @@ nav {
     height: 60px;
     
     display: flex;
-    border: solid 2px;
-  
+
   }
   
   nav > div {
@@ -15,3 +20,20 @@ nav {
     justify-content: center;
     align-items: center;
   }
+
+  .header {
+    background-color: #9AB7C1;
+    color: #3B6C7D;
+    text-align: center;
+    padding: 5px;
+    height: 60px; /* 네비게이션 바 높이 조절 */
+    display: flex;
+    justify-content: space-around; /* 내용물들 사이에 공간을 균등하게 나누기 위해 */
+    align-items: center; /* 세로 중앙 정렬 */
+  }
+
+  
+.logo {
+  height: 40px; /* 로고 크기를 조절합니다. */
+  margin-right: 20px; /* 로고와 텍스트 사이의 간격 추가 */
+}

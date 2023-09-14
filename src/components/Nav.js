@@ -4,20 +4,27 @@ import "../styles/Nav.css";
 
 const Nav = () => {
   return (
-    <nav>
-      <div>
-        <NavLink to="/">Home</NavLink>
-      </div>
-      <div>
-        <NavLink to="/recommend">Recommend</NavLink>
-      </div>
-      <div>
-        <NavLink to="/search">Search</NavLink>
-      </div>
-      <div>
-        <NavLink to="/mypage">MyPage</NavLink>
-      </div>
-    </nav>
+    <header className="header">
+      <nav>
+        <div>
+          <NavLink to="/">
+            <img src="img/logo.png" alt="Logo" className="logo" />
+          </NavLink>
+        </div>
+        <div>
+          <NavLink to="/">Home</NavLink>
+        </div>
+        <div>
+          <NavLink to="/introduce">Introduce</NavLink>
+        </div>
+        <div>
+          <NavLink to="/learn">Learn more</NavLink>
+        </div>
+        <div>
+          <NavLink to="/draw">Go to draw!</NavLink>
+        </div>
+      </nav>
+    </header>
   );
 };
 
