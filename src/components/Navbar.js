@@ -1,5 +1,5 @@
 import React from "react";
-import { FaBars } from "react-icons/fa";
+//import { FaBars } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../assets/img/logo.png";
@@ -22,7 +22,7 @@ const Navbar = () => {
             <NavBtnLink to="/sign-up">Sign Up</NavBtnLink>
           </NavBtn>
           <NavBtn>
-            <NavBtnLink to="/signin">Sign In</NavBtnLink>
+            <NavBtnLink to="/sign-in">Sign In</NavBtnLink>
           </NavBtn>
         </NavMenuRight>
       </NavStyled>
