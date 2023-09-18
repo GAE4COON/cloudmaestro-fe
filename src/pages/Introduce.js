@@ -71,10 +71,10 @@ class Home extends React.Component {
         </div>
 
         <div className="img">
-          <img src="/assets/input.png"  alt="input_img" className="box-shadow" width="600px" height="600px"/>
+          <img src="/assets/img/input.png"  alt="input_img" className="box-shadow" width="600px" height="600px"/>
           <p className="text">On Premise</p>
 
-          <img src="/assets/output.png"  alt="input_img" className="box-shadow" width="600px" height="600px" />
+          <img src="/assets/img/output.png"  alt="output_img" className="box-shadow" width="600px" height="600px" />
           <p className="text"> After Migration </p> 
 
         </div>
