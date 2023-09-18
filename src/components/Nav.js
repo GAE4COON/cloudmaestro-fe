@@ -12,7 +12,10 @@ const Nav = () => {
         <NavLink to="/introduce">Introduce</NavLink>
       </div>
       <div>
-        <NavLink to="/search">Search</NavLink>
+        <NavLink to="/draw">Draw</NavLink>
+      </div>
+      <div>
+        <NavLink to="/learnmore">LearnMore</NavLink>
       </div>
       <div>
         <NavLink to="/mypage">MyPage</NavLink>

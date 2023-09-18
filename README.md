@@ -13,4 +13,4 @@ Open [http://localhost:3000](http://localhost:3000)
 
 ### react-router-dom --save
 * npm install react-router-dom --save 
-
+* npm install -g react-devtools4
