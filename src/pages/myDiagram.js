@@ -9,8 +9,7 @@ import SellectToggle from "../component/SellectToggle";
 import { useMediaQuery } from "react-responsive";
 import { nodeDataArrayPalette } from "../db/data";
 
-
-function App() {
+function MyDiagram() {
   const isDesktopOrLaptop = useMediaQuery({ query: "(min-width: 700px)" });
   const paletteClassName = isDesktopOrLaptop ? "palette-component" : "palette-component-small";
   const diagramClassName = isDesktopOrLaptop ? "diagram-component" : "diagram-component-small";
@@ -159,4 +158,4 @@ function App() {
   );
 }
 
-export default App;
+export default MyDiagram;
