@@ -1,0 +1,137 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
+
+/* Header */
+a {
+    
+    text-decoration: none; /* 밑줄 제거 */
+    color: inherit; /* 부모의 글자색을 상속 */
+  }
+
+.container1 {
+  background-color: #3177a24d;
+  min-height: 250px;
+  width : 100%;
+  display: flex;
+  
+  margin:3px;
+}
+
+.content> p{
+  text-align: left; /* Horizontal centering */
+  color: white;
+  font-size: 40px; 
+  margin:10px;
+  border-bottom: 2px solid white;  /* 밑줄 추가 */
+  font-family:"Roboto";
+}
+
+/* Main Page */
+.Excels {
+    display:grid;
+    grid-template-columns : 15% 70% 15%;
+    
+}
+
+.name{
+
+  font-size: 24px;
+  font-weight: bold;
+  color:white;
+  padding: 10px;
+  border-radius: 10px;
+  text-align: center;
+  margin: 5px;
+  background-color: rgb(59,108,125,0.4);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.mainname{
+  width: 90%;
+  font-size: 30px;
+  font-weight: bold;
+  color:white;
+  padding: 10px;
+  border-radius: 3px;
+  text-align: center;
+ 
+  background-color: rgba(193,149,37,0.28);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  margin:auto;
+  margin-bottom:3px;
+  
+}
+
+
+/* Explain : 설명하는 큰 블록 구간  */
+
+
+.explain{
+
+  background-color: white;
+  height:500px;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between; /* 두 div를 양 끝으로 보냄 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom:20px;
+  
+}
+  
+.explain .summary {
+    width: 60%;  /* hello-div의 너비를 60%로 설정 */
+    padding: 10px;
+    box-sizing: border-box;
+  
+    text-align: center;
+}  
+.explain .summary .summary {
+  width:100%;
+  height: 90%;  /* hello-div의 너비를 60%로 설정 */
+  background-color: #f9f9f9;
+  display:flex;
+  justify-content: space-between;
+  
+  text-align: center;
+}  
+.explain .summary .link{
+  height: 10%;  /* hello-div의 너비를 60%로 설정 */
+  align-items: left;
+  text-align: left;
+  font-size:20px;
+  margin-top:3px;
+  color:rgb(1, 55, 37);
+  font-weight: bold;
+}  
+.link a:hover {
+  text-decoration: underline; /* Optional: Adds underline on hover */
+}
+
+/* img & json 전달 구간 */ 
+
+.explain .img{
+    width: 100%;  /* hello-div의 너비를 60%로 설정 */
+    height: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+
+}
+
+.explain .img .custom-img{
+   width: 100%;
+   height:auto;
+   padding:0;
+
+}
+
+.custom-img:hover {
+  transform: scale(1.4); /* 이미지를 1.2배 확대 */
+  transition: transform 0.3s ease-in-out; /* 0.3초 동안 확대 */
+}
+
+
+/*
+#block{border-right:solid 1px #aabbaa;border-left:solid 1px #aabbaa;}
+*/
