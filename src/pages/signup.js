@@ -2,11 +2,14 @@
 import React, { useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
 import { useAuth } from "./../utils/auth/authContext";
+import { useNavigate } from "react-router-dom";
+
 import axios from "axios";
 import "../styles/css/signup.css";
 
 function Signup() {
   const { user, setUser } = useAuth();
+  const navigate = useNavigate();
 
   async function handleCallbackResponse(response) {
     console.log(response.credential);
@@ -14,6 +17,10 @@ function Signup() {
       var userObject = jwt_decode(response.credential);
       setUser(userObject);
       console.log(userObject);
+
+      setTimeout(() => {
+        navigate("/");
+      }, 1500);
 
       // const res = await axios.post("YOUR_BACKEND_ENDPOINT", {
       //   token: response.credential,

@@ -29,15 +29,7 @@ const Navbar = () => {
           {user ? (
             <>
               <NavBtn>
-                <img
-                  src={user.picture}
-                  alt={user.name}
-                  style={{
-                    borderRadius: "50%",
-                    width: "40px",
-                    height: "40px",
-                  }}
-                />
+                <UserProfileImage src={user.picture} alt={user.name} />
               </NavBtn>
               {/* <span>{user.name}</span> */}
               <NavBtn>
@@ -167,4 +159,10 @@ export const StyledButton = styled.button`
     background: #3b6c7d;
     color: #fff;
   }
+`;
+
+export const UserProfileImage = styled.img`
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
 `;
