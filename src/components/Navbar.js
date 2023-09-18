@@ -8,14 +8,18 @@ import { useAuth } from "./../utils/auth/authContext";
 const Navbar = () => {
   const { user, setUser } = useAuth();
 
+  async function handleSignOut(event) {
+    setUser(null);
+  }
+
   return (
     <>
       <NavStyled>
         <NavMenuLeft>
           <NavLink to="/">
-            <img src={logo} alt="logo" /> {/* Use the imported logo */}
+            <img src={logo} alt="logo" />
           </NavLink>
-          <NavLink to="/home">Home</NavLink>
+          <NavLink to="/">Home</NavLink>
           <NavLink to="/about">about</NavLink>
           <NavLink to="/learn">learn more</NavLink>
           <NavLink to="/draw">Go to draw!</NavLink>
@@ -32,7 +36,8 @@ const Navbar = () => {
                   height: "50px",
                 }}
               />
-              <span>{user.name}</span>
+              {/* <span>{user.name}</span> */}
+              <button onClick={(e) => handleSignOut(e)}>Singout</button>
             </>
           ) : (
             <>

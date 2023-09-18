@@ -2,18 +2,32 @@
 import React, { useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
 import { useAuth } from "./../utils/auth/authContext";
+import axios from "axios";
 
 function Signup() {
   const { user, setUser } = useAuth();
 
-  function handleCallbackResponse(response) {
+  async function handleCallbackResponse(response) {
     console.log(response.credential);
     try {
       var userObject = jwt_decode(response.credential);
       setUser(userObject);
       console.log(userObject);
+
+      // const res = await axios.post("YOUR_BACKEND_ENDPOINT", {
+      //   token: response.credential,
+      // });
+
+      // console.log(res.data);
+      // Handle successful response from your server
     } catch (e) {
-      console.error("Failed to decode token:", e);
+      if (e.response) {
+        console.error("Server error:", e.response.data);
+      } else if (e.request) {
+        console.error("No response received:", e.request);
+      } else {
+        console.error("Error:", e.message);
+      }
     }
   }
 

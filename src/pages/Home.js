@@ -1,9 +1,38 @@
-import React from "react";
+import React, { Fragment } from "react";
+import { useNavigate } from "react-router-dom";
+import "../styles/css/home.css";
 
-class Home extends React.Component {
-  render() {
-    return <h1>Home</h1>;
-  }
+function Home() {
+  const navigate = useNavigate();
+
+  const handleAutoDraw = () => {
+    navigate("/draw");
+  };
+
+  const handleJustDraw = () => {
+    navigate("/draw");
+  };
+
+  return (
+    <Fragment>
+      <div className="home-content">
+        <img src="img/Cloud-architecture.png" alt="logo" className="home-img" />
+        <div className="home-select-box">
+          <h1>WELCOME TO CLOUD MAESTRO!</h1>
+          <h2 className="home-select-text">
+            Automated Diagram of a Cloud Architecture with Security
+            Considerations
+          </h2>
+          <button className="home-input-btn" onClick={handleAutoDraw}>
+            Auto Draw!
+          </button>
+          <button className="home-draw-btn" onClick={handleJustDraw}>
+            Just Draw!
+          </button>
+        </div>
+      </div>
+    </Fragment>
+  );
 }
 
 export default Home;
