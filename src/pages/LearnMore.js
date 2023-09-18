@@ -1,7 +1,7 @@
 import React from "react";
 import "../styles/LearnMore.css"
 import {Link} from 'react-router-dom';
-import Draw from './draw';
+
 
 class Home extends React.Component {
   constructor(props){
@@ -69,15 +69,15 @@ class Home extends React.Component {
         </div>
         
         <div className="img">
-
+        
           <Link 
             to={{
               pathname: `/draw`,
-              state: { json_path: img_json }
+              state: "hello"
             }}
           >
           <img className="custom-img" src={img_src} alt="도식화하는 이미지"/>
-            <Draw  json_path = {img_json} />
+         
           </Link>
 
         </div>

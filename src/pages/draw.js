@@ -9,8 +9,17 @@ import useGoJS from "./useGoJS";
 import SellectToggle from "../component/SellectToggle";
 import { useMediaQuery } from "react-responsive";
 import { nodeDataArrayPalette } from "../db/data";
+import { useLocation } from "react-router-dom";
+
+
 
 function Draw() {
+  const location = useLocation();
+	console.log("나는 location이에요",location);
+
+
+
+
   const isDesktopOrLaptop = useMediaQuery({ query: "(min-width: 700px)" });
   const paletteClassName = isDesktopOrLaptop ? "palette-component" : "palette-component-small";
   const diagramClassName = isDesktopOrLaptop ? "diagram-component" : "diagram-component-small";
