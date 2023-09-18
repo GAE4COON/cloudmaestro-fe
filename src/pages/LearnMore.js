@@ -1,7 +1,7 @@
 import React from "react";
 import "../styles/LearnMore.css"
 import {Link} from 'react-router-dom';
-import Draw from './Draw';
+import Draw from './draw';
 
 class Home extends React.Component {
   constructor(props){

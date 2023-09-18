@@ -1,16 +1,12 @@
-# Getting Started with Create React App
+# Example
+![image](https://github.com/GAE4COON/Diagram_sample/assets/112956015/4286a817-e3ab-47c3-b96a-443de2cf65fc)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Use
+- React
+- GoJS<br>
+  npm install gojs gojs-react
+# 메인브랜치 이소현이 먹음
 
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) 
-
-### react-router-dom --save
-* npm install react-router-dom --save 
-* npm install -g react-devtools4
+## Ref
+- GoJS-React: https://gojs.net/latest/learn/index.html
+- GoJS: https://gojs.net/latest/learn/index.html
