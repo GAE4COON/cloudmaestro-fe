@@ -16,7 +16,11 @@ function Home() {
   return (
     <Fragment>
       <div className="home-content">
-        <img src="img/Cloud-architecture.png" alt="logo" className="home-img" />
+        <img
+          src="assets/img/Cloud-architecture.png"
+          alt="logo"
+          className="home-img"
+        />
         <div className="home-select-box">
           <h1>WELCOME TO CLOUD MAESTRO!</h1>
           <h2 className="home-select-text">
