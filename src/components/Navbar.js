@@ -10,6 +10,7 @@ const Navbar = () => {
 
   async function handleSignOut(event) {
     setUser(null);
+    localStorage.removeItem("user");
   }
 
   return (
@@ -27,17 +28,23 @@ const Navbar = () => {
         <NavMenuRight>
           {user ? (
             <>
-              <img
-                src={user.picture}
-                alt={user.name}
-                style={{
-                  borderRadius: "50%",
-                  width: "50px",
-                  height: "50px",
-                }}
-              />
+              <NavBtn>
+                <img
+                  src={user.picture}
+                  alt={user.name}
+                  style={{
+                    borderRadius: "50%",
+                    width: "40px",
+                    height: "40px",
+                  }}
+                />
+              </NavBtn>
               {/* <span>{user.name}</span> */}
-              <button onClick={(e) => handleSignOut(e)}>Singout</button>
+              <NavBtn>
+                <StyledButton onClick={(e) => handleSignOut(e)}>
+                  Singout
+                </StyledButton>
+              </NavBtn>
             </>
           ) : (
             <>
@@ -123,6 +130,26 @@ export const NavBtn = styled.nav`
 `;
 
 export const NavBtnLink = styled(Link)`
+  border-radius: 4px;
+  background: #fff;
+  padding: 10px 22px;
+  color: #3b6c7d;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  text-decoration: none;
+  margin-left: 5px;
+  align-items: center;
+
+  &:hover {
+    transition: all 0.2s ease-in-out;
+    background: #3b6c7d;
+    color: #fff;
+  }
+`;
+
+export const StyledButton = styled.button`
   border-radius: 4px;
   background: #fff;
   padding: 10px 22px;

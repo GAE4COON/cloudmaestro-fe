@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
 import { useAuth } from "./../utils/auth/authContext";
 import axios from "axios";
+import "../styles/css/signup.css";
 
 function Signup() {
   const { user, setUser } = useAuth();
@@ -47,8 +48,9 @@ function Signup() {
   }, []);
 
   return (
-    <div>
+    <div className="sign-up-content">
       <div id="signInDiv"></div>
+      <br></br>
       {user && (
         <div>
           <img
