@@ -33,7 +33,7 @@ class Home extends React.Component {
   render() {
     
     return (
-<div>
+      <div>
         <div className="container1">
           <div className="content">
                 <p>{this.state.displayedText1}</p>
@@ -78,37 +78,31 @@ class Home extends React.Component {
           <p className="text"> After Migration </p> 
 
         </div>
-        <div className="container4">
-          <p className="security">성능 최적화</p>
+        <div className="Excels">
+        <div id='Excels-left' />
+          <div className="container5">
           
-        </div>
-          <div> 마이그레이션 후 상태 각자 인프라를 고려~~~~</div>
-        <div className="container4">
-          <p className="security">보안 위협 스캔</p>
-        </div>
-        <div> 마이그레이션 후 상태 각자 인프라를 고려~~~~</div>
-        <div className="container5">
-        
-          <div className="content1">
-            <p className="summary">보안성을 고려한 클라우드 아키텍처 자동 도식화 </p>
-            <p className="security">보안 기능  </p>
+            <div className="content1">
+              <p className="summary">보안성을 고려한 클라우드 아키텍처 자동 도식화 </p>
+              <p className="security">보안 기능  </p>
+            </div>
+            <div className="content2">
+              <p className="summary">보안성을 고려한 클라우드 아키텍처 자동 도식화 </p>
+              <p className="security">성능 최적화</p>
+            </div>
+            
+            <div className="content1">
+              <p className="summary">보안성을 고려한 클라우드 아키텍처 자동 도식화 </p>
+              <p className="security">비용 최적화</p>
+            </div>
+            
           </div>
-          <div className="content2">
-            <p className="summary">보안성을 고려한 클라우드 아키텍처 자동 도식화 </p>
-            <p className="security">성능 최적화</p>
-          </div>
-          
-          <div className="content1">
-            <p className="summary">보안성을 고려한 클라우드 아키텍처 자동 도식화 </p>
-            <p className="security">비용 최적화</p>
-          </div>
-          
-        </div>
-
+          <div id='Excels-right' />
+      </div>
      
-   </div>
+    </div>
 
-
+  
   )}
 }
 

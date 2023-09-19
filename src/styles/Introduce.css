@@ -107,33 +107,32 @@ p{
     box-shadow: 5px 5px 5px #000;
     width:40%;
 }
-.container5 {
-    display: flex;
-    flex-direction: column;  /* flex-direction 설정 */
-    justify-content: flex-start;  /* 상단에 위치 */
-    align-items: flex-end;  /* 상단에 위치 */
 
+/* Main Page */
+.Excels {
+    display:grid;
+    grid-template-columns : 15% 70% 15%;
+    
 }
 
- .content1 {
-    height:70px;
-    width: 100vw; /* 100% of viewport width */
+ .content1 ,
+ .content2 {
+
+
     display: flex;
-    justify-content: flex-start;  /* 상단에 위치 */
-    align-items: flex-start;  /* 상단에 위치 */
+    flex-direction: column;
+    justify-content: space-between;
+    align-items:flex-start;
+   
     background-color:rgba(59, 108, 125, 0.8);
     margin:15px;
-    
+    font-size : 40px;
+    border-radius: 10px;
 
 }
  .content2{
-    height:70px;
-    width: 100vw; /* 100% of viewport width */
-    display: flex;
-    justify-content: flex-start;  /* 상단에 위치 */
-    align-items: flex-start;  /* 상단에 위치 */
     background-color: rgba(59, 108, 125, 0.2);
-    margin:15px;
+    
 }
 
 .content1 > .summary{
@@ -141,9 +140,10 @@ p{
   margin: 0;  /* 상단 정렬을 위한 마진 제거 */
   padding: 10px;  /* 패딩을 원하는 대로 조절 */
   justify-content: flex-start;  /* 상단에 위치 */
-  align-self: flex-start; /* 부모 flex 컨테이너의 시작점에 정렬 */
+ 
   color: white;
-  font-size: 15px; 
+  font-size: 24px; 
+
    
 }
 .content2 > .summary, .content2 > p{
@@ -152,7 +152,7 @@ margin: 0;  /* 상단 정렬을 위한 마진 제거 */
 padding: 10px;  /* 패딩을 원하는 대로 조절 */
 align-self: flex-start; /* 부모 flex 컨테이너의 시작점에 정렬 */
 color: black;
-font-size: 15px; 
+font-size: 24px; 
  
 }
 
@@ -165,4 +165,8 @@ font-size: 15px;
     align-self: flex-end;
     
     font-family:"Roboto";
+}
+
+.content2 > .security{
+    color : black;
 }
