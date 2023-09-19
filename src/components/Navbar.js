@@ -76,7 +76,7 @@ export const NavLink = styled(Link)`
   cursor: pointer;
 
   & img {
-    width: 150px;
+    width: 40px;
     height: auto;
   }
 
