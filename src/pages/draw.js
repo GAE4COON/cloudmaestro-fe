@@ -1,5 +1,5 @@
 // draw.js
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import * as go from "gojs";
 import { ReactDiagram } from "gojs-react";
 import "../styles/App.css"; // contains .diagram-component CSS
@@ -13,12 +13,22 @@ import { useLocation } from "react-router-dom";
 
 
 
+
+
 function Draw() {
   const location = useLocation();
-	console.log("나는 location이에요",location);
+  const file = location.state;
+  console.log("file",typeof file);
+  
+  const [data, setData] = useState(null);
 
-
-
+  useEffect(() => {
+    fetch(file)
+      .then((response) => response.json())
+      .then((jsonData) => setData(jsonData))
+      .catch((error) => console.error('Error fetching data:', error));
+  }, []);
+ console.log("iamdata",JSON.stringify(data,null,2) );
 
   const isDesktopOrLaptop = useMediaQuery({ query: "(min-width: 700px)" });
   const paletteClassName = isDesktopOrLaptop ? "palette-component" : "palette-component-small";

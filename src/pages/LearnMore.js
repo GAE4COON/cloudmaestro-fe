@@ -1,6 +1,6 @@
 import React from "react";
 import "../styles/LearnMore.css"
-import {Link} from 'react-router-dom';
+import {Link, NavLink} from 'react-router-dom';
 
 
 class Home extends React.Component {
@@ -48,7 +48,7 @@ class Home extends React.Component {
     )
 
   }
-
+  
   explain(summary, index, img_src, img_json){
     console.log("summary",summary);
     console.log("index",index);
@@ -67,19 +67,16 @@ class Home extends React.Component {
           </Link>
           </div>
         </div>
-        
+  
         <div className="img">
-        
-          <Link 
-            to={{
-              pathname: `/draw`,
-              state: "hello"
-            }}
-          >
-          <img className="custom-img" src={img_src} alt="도식화하는 이미지"/>
+            <Link 
+              to='/draw'
+              state={img_json}
+            
+            >
+              <img className="custom-img" src={img_src} alt="도식화하는 이미지"/>       
+            </Link>
          
-          </Link>
-
         </div>
 
         <div>
