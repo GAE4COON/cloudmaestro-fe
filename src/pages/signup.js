@@ -1,11 +1,11 @@
 /* global google */
 import React, { useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
-import { useAuth } from "./../utils/auth/authContext";
+import { useAuth } from "../utils/auth/authContext";
 import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
-import "../styles/css/signup.css";
+import "../styles/signup.css";
 
 function Signup() {
   const { user, setUser } = useAuth();

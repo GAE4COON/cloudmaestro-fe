@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import { useNavigate } from "react-router-dom";
-import "../styles/css/home.css";
+import "../styles/home.css";
 
 function Home() {
   const navigate = useNavigate();
@@ -16,23 +16,26 @@ function Home() {
   return (
     <Fragment>
       <div className="home-content">
-        <img
-          src="assets/img/Cloud-architecture.png"
-          alt="logo"
-          className="home-img"
-        />
-        <div className="home-select-box">
-          <h1>WELCOME TO CLOUD MAESTRO!</h1>
-          <h2 className="home-select-text">
-            Automated Diagram of a Cloud Architecture with Security
-            Considerations
-          </h2>
-          <button className="home-input-btn" onClick={handleAutoDraw}>
-            Auto Draw!
-          </button>
-          <button className="home-draw-btn" onClick={handleJustDraw}>
-            Just Draw!
-          </button>
+        <div className="img-container">
+
+          <img
+            src="assets/img/Cloud-architecture.png"
+            alt="logo"
+            className="home-img"
+          />
+          <div className="home-select-box">
+            <h1>WELCOME TO CLOUD MAESTRO!</h1>
+            <h2 className="home-select-text">
+              Automated Diagram of a Cloud Architecture with Security
+              Considerations
+            </h2>
+            <button className="home-btn" onClick={handleAutoDraw}>
+              Auto Draw!
+            </button>
+            <button className="home-btn" onClick={handleJustDraw}>
+              Just Draw!
+            </button>
+          </div>
         </div>
       </div>
     </Fragment>

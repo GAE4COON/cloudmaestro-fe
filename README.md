@@ -5,7 +5,15 @@
 - React
 - GoJS<br>
   npm install gojs gojs-react
-# 메인브랜치 이소현이 먹음
+
+### Library
+```init.bash```
+
+
+- npm i styled-components
+- npm install @react-oauth/google@latest
+- npm install jwt-decode
+- npm install axios
 
 ## Ref
 - GoJS-React: https://gojs.net/latest/learn/index.html

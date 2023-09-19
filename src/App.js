@@ -2,10 +2,11 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Home from "./pages/Home";
 import Draw from "./pages/Draw";
+import Footer from "./components/Footer"
 //import Diagram from "./pages/MyDiagram";
 import Navbar from "./components/Navbar";
-import Signup from "./pages/signup";
-import Signin from "./pages/signin";
+import Signup from "./pages/SignUp";
+import Signin from "./pages/SignIn";
 import { AuthProvider } from "./utils/auth/authContext";
 import Introduce from "./pages/Introduce"
 import LearnMore from "./pages/LearnMore";
@@ -27,6 +28,7 @@ function App() {
               <Route path="/sign-in" element={<Signin />} />
             </Routes>
           </div>
+          <Footer/>
         </BrowserRouter>
       </AuthProvider>
     </div>

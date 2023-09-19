@@ -3,10 +3,10 @@ import React, { useState, useCallback, useEffect } from "react";
 import * as go from "gojs";
 import { ReactDiagram } from "gojs-react";
 import "../styles/App.css"; // contains .diagram-component CSS
-import Palette from "../component/Palette";
+import Palette from "../components/Palette";
 
 import useGoJS from "./useGoJS";
-import SellectToggle from "../component/SellectToggle";
+import SellectToggle from "../components/SellectToggle";
 import { useMediaQuery } from "react-responsive";
 import { nodeDataArrayPalette } from "../db/data";
 import { useLocation } from "react-router-dom";
