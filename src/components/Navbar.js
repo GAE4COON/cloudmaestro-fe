@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from "react";
 import logo from "../assets/img/logo.png";
 import { useAuth } from "./../utils/auth/authContext";
-import { GiHamburgerMenu } from 'react-icons/gi';
+import { GiHamburgerMenu } from "react-icons/gi";
 
 import {
   HamburgerContainer,
@@ -15,8 +15,8 @@ import {
   NavBtn,
   NavBtnLink,
   StyledButton,
-  UserProfileImage
-} from '../styles/NavbarStyle';
+  UserProfileImage,
+} from "../styles/NavbarStyle";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,16 +30,16 @@ const Navbar = () => {
       }
     }
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
   async function handleSignOut(event) {
     setUser(null);
-    localStorage.removeItem('user');
+    localStorage.removeItem("user");
   }
 
   const closeMenu = () => {
@@ -47,10 +47,9 @@ const Navbar = () => {
   };
 
   const logoutNclose = (event) => {
-    closeMenu();  // 첫 번째 함수 호출
-    handleSignOut(event);  // 두 번째 함수 호출
+    closeMenu(); // 첫 번째 함수 호출
+    handleSignOut(event); // 두 번째 함수 호출
   };
-
 
   return (
     <>
@@ -60,18 +59,37 @@ const Navbar = () => {
         </NavLinkLogo>
 
         <NavMenuLeft isOpen={isOpen}>
-          <NavLink onClick={closeMenu} to="/">Home</NavLink>
-          <NavLink onClick={closeMenu} to="/about">About</NavLink>
-          <NavLink onClick={closeMenu} to="/learn">Learn More</NavLink>
-          <NavLink onClick={closeMenu} to="/draw">Go to Draw!</NavLink>
-          {!user && <SpecialNavLink className="special-nav-link" onClick={closeMenu} to="/sign-up">Login Page</SpecialNavLink>}
-          {user && <SpecialNavLink className="special-nav-link" onClick={logoutNclose}>Sign Out</SpecialNavLink>}
-
+          <NavLink onClick={closeMenu} to="/">
+            Home
+          </NavLink>
+          <NavLink onClick={closeMenu} to="/about">
+            About
+          </NavLink>
+          <NavLink onClick={closeMenu} to="/learn">
+            Learn More
+          </NavLink>
+          <NavLink onClick={closeMenu} to="/draw">
+            Go to Draw!
+          </NavLink>
+          {!user && (
+            <SpecialNavLink
+              className="special-nav-link"
+              onClick={closeMenu}
+              to="/sign-up"
+            >
+              Login Page
+            </SpecialNavLink>
+          )}
+          {user && (
+            <SpecialNavLink className="special-nav-link" onClick={logoutNclose}>
+              Sign Out
+            </SpecialNavLink>
+          )}
         </NavMenuLeft>
 
         <HamburgerContainer>
           <Hamburger onClick={() => setIsOpen(!isOpen)}>
-            <GiHamburgerMenu size={50} color='#3b6c7d' />
+            <GiHamburgerMenu size={50} color="#3b6c7d" />
           </Hamburger>
         </HamburgerContainer>
 
@@ -83,9 +101,9 @@ const Navbar = () => {
               </NavBtn>
               {/* <span>{user.name}</span> */}
               <NavBtn>
-                <StyledButton onClick={(e) => handleSignOut(e)}>
+                <NavBtnLink onClick={(e) => handleSignOut(e)}>
                   Sign out
-                </StyledButton>
+                </NavBtnLink>
               </NavBtn>
             </>
           ) : (
@@ -98,11 +116,8 @@ const Navbar = () => {
               </NavBtn>
             </>
           )}
-
         </NavMenuRight>
-
       </NavStyled>
-
     </>
   );
 };

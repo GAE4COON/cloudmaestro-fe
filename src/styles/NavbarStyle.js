@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-
 export const HamburgerContainer = styled.div`
   display: flex;
   justify-content: flex-end;
@@ -11,7 +10,6 @@ export const HamburgerContainer = styled.div`
     display: none;
   }
 `;
-
 
 export const Hamburger = styled.div`
   display: none;
@@ -41,7 +39,6 @@ export const NavStyled = styled.nav`
   position: relative;
 `;
 
-
 export const NavMenuLeft = styled.div`
   display: flex;
   align-items: center;
@@ -57,23 +54,22 @@ export const NavMenuLeft = styled.div`
     text-align: center;
     position: fixed;
 
-    right: ${({ isOpen }) => (isOpen ? '0' : '-50%')};
-    visibility: ${({ isOpen }) => (isOpen ? 'visible' : 'hidden')};
-        top: 40px;
+    right: ${({ isOpen }) => (isOpen ? "0" : "-50%")};
+    visibility: ${({ isOpen }) => (isOpen ? "visible" : "hidden")};
+    top: 40px;
     background: #9ab7c1;
     z-index: 1;
   }
 `;
 
-
-
 export const NavMenuRight = styled.div`
+  width: 150px;
   display: flex;
   align-items: center;
   justify-content: flex-end;
 
   @media screen and (max-width: 768px) {
-    display: ${({ isOpen }) => (isOpen ? 'flex' : 'none')};
+    display: ${({ isOpen }) => (isOpen ? "flex" : "none")};
     flex-direction: column;
     width: 100%;
     text-align: center;
@@ -108,7 +104,6 @@ export const NavLinkLogo = styled(Link)`
     transition: all 0.2s ease-in-out;
     color: #fff;
   }
-
 `;
 
 export const NavLink = styled(Link)`
@@ -143,7 +138,6 @@ export const NavLink = styled(Link)`
     &:hover {
       background: #3b6c7d;
     }
-
   }
 `;
 
@@ -164,6 +158,7 @@ export const NavBtn = styled.nav`
 `;
 
 export const NavBtnLink = styled(Link)`
+  width: 60px;
   border-radius: 4px;
   background: #fff;
   padding: 5px 12px;
@@ -183,30 +178,8 @@ export const NavBtnLink = styled(Link)`
   }
 `;
 
-export const StyledButton = styled.button`
-  border-radius: 4px;
-  background: #fff;
-  padding: 5px 12px;
-  color: #3b6c7d;
-  outline: none;
-  border: none;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
-  text-decoration: none;
-  margin-left: 5px;
-  align-items: center;
-
-  &:hover {
-    transition: all 0.2s ease-in-out;
-    background: #3b6c7d;
-    color: #fff;
-    
-  }
-`;
-
 export const UserProfileImage = styled.img`
   border-radius: 50%;
   width: 40px;
   height: 40px;
 `;
-

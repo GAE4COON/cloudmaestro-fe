@@ -56,22 +56,26 @@ function Signup() {
 
   return (
     <div className="sign-up-content">
-      <div id="signInDiv"></div>
       <br></br>
-      {user && (
+      {user ? (
         <div>
           <img
             src={user.picture}
             alt={user.name}
             style={{
-              borderRadius: "50%", // 이 부분이 동그라미 모양을 만듭니다.
-              width: "50px", // 이미지 크기를 조절합니다. 원하는 크기로 변경 가능합니다.
-              height: "50px", // 이미지 크기를 조절합니다. 원하는 크기로 변경 가능합니다.
+              borderRadius: "50%",
+              width: "50px",
+              height: "50px",
             }}
           />
           <h3>{user.name}</h3>
         </div>
-      )}
+      ) : null}
+      <div
+        id="signInDiv"
+        className="googleDiv"
+        style={{ visibility: user ? "hidden" : "visible" }}
+      ></div>
     </div>
   );
 }
