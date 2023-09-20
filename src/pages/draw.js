@@ -6,20 +6,16 @@ import "../styles/App.css"; // contains .diagram-component CSS
 import Palette from "../components/Palette";
 
 import useGoJS from "./useGoJS";
-import SellectToggle from "../components/SellectToggle";
+import SelectToggle from "../components/SelectToggle";
 import { useMediaQuery } from "react-responsive";
 import { nodeDataArrayPalette } from "../db/data";
 import { useLocation } from "react-router-dom";
 
-
-
-
-
 function Draw() {
   const location = useLocation();
   const file = location.state;
-  console.log("file",typeof file);
-  
+  console.log("file", typeof file);
+
   const [data, setData] = useState(null);
 
   useEffect(() => {
@@ -28,7 +24,7 @@ function Draw() {
       .then((jsonData) => setData(jsonData))
       .catch((error) => console.error('Error fetching data:', error));
   }, []);
- console.log("iamdata",JSON.stringify(data,null,2) );
+  console.log("iamdata", JSON.stringify(data, null, 2));
 
   const isDesktopOrLaptop = useMediaQuery({ query: "(min-width: 700px)" });
   const paletteClassName = isDesktopOrLaptop ? "palette-component" : "palette-component-small";
@@ -52,7 +48,7 @@ function Draw() {
     // make download link
     let fileName = prompt("파일명을 입력해주세요:", "diagram.json");
     // 사용자가 프롬프트를 취소하거나 이름을 제공하지 않으면 함수 종료
-    if (!fileName){
+    if (!fileName) {
       return;
     }
     else if (!fileName.endsWith('.json')) {
@@ -70,14 +66,14 @@ function Draw() {
         scale: 1,
         background: "white"
       });
-    let fileName = prompt("파일명을 입력해주세요:", "diagram.png");
-    // 사용자가 프롬프트를 취소하거나 이름을 제공하지 않으면 함수 종료
-    if (!fileName){
-      return;
-    }
-    else if (!fileName.endsWith('.png')) {
-      fileName += '.png';
-    }
+      let fileName = prompt("파일명을 입력해주세요:", "diagram.png");
+      // 사용자가 프롬프트를 취소하거나 이름을 제공하지 않으면 함수 종료
+      if (!fileName) {
+        return;
+      }
+      else if (!fileName.endsWith('.png')) {
+        fileName += '.png';
+      }
       const a = document.createElement("a");
       a.href = imgData;
       a.download = fileName;
@@ -141,17 +137,21 @@ function Draw() {
         <div className="createspace">
 
           <div className="workspace">
-            <SellectToggle
-              value={selectedNodeData}
-              onToggleSelect={handleNodeSelect}
-              readOnly
-            />
-
-            <ReactDiagram
-              initDiagram={initDiagram}
-              divClassName={diagramClassName}
-            />
+            <div className="select-toggle-container">
+              <SelectToggle
+                value={selectedNodeData}
+                onToggleSelect={handleNodeSelect}
+                readOnly
+              />
+            </div>
+            <div className="react-diagram-container">
+              <ReactDiagram
+                initDiagram={initDiagram}
+                divClassName={diagramClassName}
+              />
+            </div>
           </div>
+
 
           <Palette
             nodeDataArray={nodeDataArrayPalette}

@@ -3,3 +3,4 @@ npm i styled-components
 npm install @react-oauth/google@latest
 npm install jwt-decode
 npm install axios
+npm install react-icons --save
