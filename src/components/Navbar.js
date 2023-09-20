@@ -1,38 +1,56 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../assets/img/logo.png";
 import { useAuth } from "./../utils/auth/authContext";
 import { GiHamburgerMenu } from 'react-icons/gi';
 
-
-
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { user, setUser } = useAuth();
+  const menuRef = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    }
+    
+    document.addEventListener('mousedown', handleClickOutside);
+    
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   async function handleSignOut(event) {
     setUser(null);
     localStorage.removeItem('user');
   }
 
+  const closeMenu = () => {
+    setIsOpen(false);
+  };
+
+
   return (
     <>
-      <NavStyled>
+      <NavStyled ref={menuRef}>
       <NavLink to="/">
             <img src={logo} alt="logo" />
           </NavLink>
 
-        <NavMenuLeft isOpen={isOpen}>
-          <NavLink to="/">Home</NavLink>
-          <NavLink to="/about">About</NavLink>
-          <NavLink to="/learn">Learn More</NavLink>
-          <NavLink to="/draw">Go to Draw!</NavLink>
+          <NavMenuLeft isOpen={isOpen}>
+          <NavLink onClick={closeMenu} to="/">Home</NavLink>
+          <NavLink onClick={closeMenu} to="/about">About</NavLink>
+          <NavLink onClick={closeMenu} to="/learn">Learn More</NavLink>
+          <NavLink onClick={closeMenu} to="/draw">Go to Draw!</NavLink>
         </NavMenuLeft>
 
         <HamburgerContainer>
           <Hamburger onClick={() => setIsOpen(!isOpen)}>
-            <GiHamburgerMenu size={50} color='#3b6c7d' />
+            <GiHamburgerMenu size={50} color='#3b6c7d'/>
           </Hamburger>
         </HamburgerContainer>
 
@@ -59,8 +77,11 @@ const Navbar = () => {
               </NavBtn>
             </>
           )}
+          
         </NavMenuRight>
+        
       </NavStyled>
+      
     </>
   );
 };
@@ -101,17 +122,15 @@ const NavStyled = styled.nav`
   display: flex;
   justify-content: space-between;
   padding: 0.5rem calc(0.125 * ((100vw - 1000px) / 2));
-  z-index: 10;
+  z-index: 999;
   position: relative;
 `;
-
 
 const NavMenuLeft = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
   text-align: center;
-
 
   @media screen and (max-width: 768px) {
     display: ${({ isOpen }) => (isOpen ? 'flex' : 'none')};
@@ -124,6 +143,7 @@ const NavMenuLeft = styled.div`
     top: 40px;
     background: #9ab7c1;
     z-index: 1;
+
   }
 `;
 

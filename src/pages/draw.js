@@ -151,8 +151,6 @@ function Draw() {
               />
             </div>
           </div>
-
-
           <Palette
             nodeDataArray={nodeDataArrayPalette}
             divClassName={paletteClassName}
