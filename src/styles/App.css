@@ -59,13 +59,6 @@
   }
 }
 
-.palette-component {
-  border: "solid 1px black";
-  width: "300px";
-  height: "600px";
-}
-
-
 .diagram-component {
   position: relative;
   z-index: 1; /* 낮은 z-index */
@@ -174,6 +167,7 @@
   width: 100%; /* Optional: 부모 요소의 너비를 100%로 설정 */
   height: 100vh; /*  Optional: 뷰포트 높이를 기준으로 높이 설정 */
 }
+
 .select-toggle-container,
 .react-diagram-container {
   width: 100%;  /* 부모 컨테이너의 가로 길이에 맞춤 */
@@ -182,6 +176,8 @@
 .react-diagram-container {
   flex-grow: 1;  /* 가능한 경우 남은 공간을 채움 */
 }
+
+
 
 .palette-component{
   position: absolute;
@@ -200,16 +196,15 @@
 }
 
 .diagram-component{
-  position: absolute;
+  position: relative;
   float : left;
 
   width : 70%;
   height : 80%;
   border: solid 1px black;
   background-color: white;
-  position: absolute;
   top: 0%;
-  left: 20%;
+  left: 25%;
   background-size:20px 20px;
 
    /* create a grid pattern using linear gradients */
@@ -220,15 +215,14 @@
 }
 
 .diagram-component-small{
-  position: absolute;
+  position: relative;
   float : left;
   width : 70%;
   height : 80%;
   border: solid 1px black;
   background-color: white;
-  position: absolute;
   top: 0%;
-  left: 25%;
+  left: 20%;
   background-size:20px 20px;
   
    /* create a grid pattern using linear gradients */

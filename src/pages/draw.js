@@ -137,19 +137,15 @@ function Draw() {
         <div className="createspace">
 
           <div className="workspace">
-            <div className="select-toggle-container">
-              <SelectToggle
-                value={selectedNodeData}
-                onToggleSelect={handleNodeSelect}
-                readOnly
-              />
-            </div>
-            <div className="react-diagram-container">
-              <ReactDiagram
-                initDiagram={initDiagram}
-                divClassName={diagramClassName}
-              />
-            </div>
+            <SelectToggle
+              value={selectedNodeData}
+              onToggleSelect={handleNodeSelect}
+              readOnly
+            />
+            <ReactDiagram
+              initDiagram={initDiagram}
+              divClassName={diagramClassName}
+            />
           </div>
           <Palette
             nodeDataArray={nodeDataArrayPalette}

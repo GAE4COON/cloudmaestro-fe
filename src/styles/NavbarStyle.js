@@ -55,9 +55,11 @@ export const NavMenuLeft = styled.div`
     width: 50%;
     height: 200px;
     text-align: center;
-    position: absolute;
-    right: ${({ isOpen }) => (isOpen ? '0' : '-50%')}; // Change this line
-    top: 40px;
+    position: fixed;
+
+    right: ${({ isOpen }) => (isOpen ? '0' : '-50%')};
+    visibility: ${({ isOpen }) => (isOpen ? 'visible' : 'hidden')};
+        top: 40px;
     background: #9ab7c1;
     z-index: 1;
   }
