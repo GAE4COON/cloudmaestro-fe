@@ -1,33 +1,72 @@
-import React, { useState } from 'react';
-import { Link } from "react-router-dom";
-import styled from "styled-components";
+import React, { useState, useEffect, useRef } from 'react';
 import logo from "../assets/img/logo.png";
 import { useAuth } from "./../utils/auth/authContext";
 import { GiHamburgerMenu } from 'react-icons/gi';
 
-
+import {
+  HamburgerContainer,
+  Hamburger,
+  NavStyled,
+  NavMenuLeft,
+  NavMenuRight,
+  NavLinkLogo,
+  NavLink,
+  SpecialNavLink,
+  NavBtn,
+  NavBtnLink,
+  StyledButton,
+  UserProfileImage
+} from '../styles/NavbarStyle';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { user, setUser } = useAuth();
+  const menuRef = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   async function handleSignOut(event) {
     setUser(null);
     localStorage.removeItem('user');
   }
 
+  const closeMenu = () => {
+    setIsOpen(false);
+  };
+
+  const logoutNclose = (event) => {
+    closeMenu();  // 첫 번째 함수 호출
+    handleSignOut(event);  // 두 번째 함수 호출
+  };
+
+
   return (
     <>
-      <NavStyled>
-      <NavLink to="/">
-            <img src={logo} alt="logo" />
-          </NavLink>
+      <NavStyled ref={menuRef}>
+        <NavLinkLogo to="/">
+          <img src={logo} alt="logo" />
+        </NavLinkLogo>
 
         <NavMenuLeft isOpen={isOpen}>
-          <NavLink to="/">Home</NavLink>
-          <NavLink to="/about">About</NavLink>
-          <NavLink to="/learn">Learn More</NavLink>
-          <NavLink to="/draw">Go to Draw!</NavLink>
+          <NavLink onClick={closeMenu} to="/">Home</NavLink>
+          <NavLink onClick={closeMenu} to="/about">About</NavLink>
+          <NavLink onClick={closeMenu} to="/learn">Learn More</NavLink>
+          <NavLink onClick={closeMenu} to="/draw">Go to Draw!</NavLink>
+          {!user && <SpecialNavLink className="special-nav-link" onClick={closeMenu} to="/sign-up">Login Page</SpecialNavLink>}
+          {user && <SpecialNavLink className="special-nav-link" onClick={logoutNclose}>Sign Out</SpecialNavLink>}
+
         </NavMenuLeft>
 
         <HamburgerContainer>
@@ -45,7 +84,7 @@ const Navbar = () => {
               {/* <span>{user.name}</span> */}
               <NavBtn>
                 <StyledButton onClick={(e) => handleSignOut(e)}>
-                  Singout
+                  Sign out
                 </StyledButton>
               </NavBtn>
             </>
@@ -59,171 +98,13 @@ const Navbar = () => {
               </NavBtn>
             </>
           )}
+
         </NavMenuRight>
+
       </NavStyled>
+
     </>
   );
 };
-
-// Styled Components
-
-const HamburgerContainer = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  flex: 1;
-
-  @media screen and (min-width: 769px) {
-    display: none;
-  }
-`;
-
-const Hamburger = styled.div`
-  display: none;
-  flex-direction: column;
-  height: 26px;
-  justify-content: space-between;
-  cursor: pointer;
-
-  & > span {
-    height: 4px;
-    width: 25px;
-    background: #333;
-  }
-
-  @media screen and (max-width: 768px) {
-    display: flex;
-  }
-`;
-
-const NavStyled = styled.nav`
-  background: #9ab7c1;
-  height: 30px;
-  display: flex;
-  justify-content: space-between;
-  padding: 0.5rem calc(0.125 * ((100vw - 1000px) / 2));
-  z-index: 10;
-  position: relative;
-`;
-
-
-const NavMenuLeft = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  text-align: center;
-
-
-  @media screen and (max-width: 768px) {
-    display: ${({ isOpen }) => (isOpen ? 'flex' : 'none')};
-    flex-direction: column;
-    width: 50%;
-    height: 200px;
-    text-align: center;
-    position: absolute;
-    right:0;
-    top: 40px;
-    background: #9ab7c1;
-    z-index: 1;
-  }
-`;
-
-const NavMenuRight = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-
-  @media screen and (max-width: 768px) {
-    display: ${({ isOpen }) => (isOpen ? 'flex' : 'none')};
-    flex-direction: column;
-    width: 100%;
-    text-align: center;
-    position: absolute;
-    top: 40px;
-    left: 0;
-    background: #9ab7c1;
-    z-index: 1;
-  }
-`;
-
-export const NavLink = styled(Link)`
-  color: #3b6c7d;
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  font-size: 17px;
-  padding: 0 1rem;
-  height: 100%;
-  cursor: pointer;
-
-  & img {
-    width: 40px;
-    height: auto;
-  }
-
-  &.active {
-    color: #15cdfc;
-  }
-
-  &:hover {
-    transition: all 0.2s ease-in-out;
-    color: #fff;
-  }
-`;
-
-export const NavBtn = styled.nav`
-  display: flex;
-  align-items: center;
-  margin-right: 10px;
-
-  @media screen and (max-width: 768px) {
-    display: none;
-  }
-`;
-
-export const NavBtnLink = styled(Link)`
-  border-radius: 4px;
-  background: #fff;
-  padding: 5px 12px;
-  color: #3b6c7d;
-  outline: none;
-  border: none;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
-  text-decoration: none;
-  // margin-left: 5px;
-  align-items: center;
-
-  &:hover {
-    transition: all 0.2s ease-in-out;
-    background: #3b6c7d;
-    color: #fff;
-  }
-`;
-
-export const StyledButton = styled.button`
-  border-radius: 4px;
-  background: #fff;
-  padding: 5px 12px;
-  color: #3b6c7d;
-  outline: none;
-  border: none;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
-  text-decoration: none;
-  margin-left: 5px;
-  align-items: center;
-
-  &:hover {
-    transition: all 0.2s ease-in-out;
-    background: #3b6c7d;
-    color: #fff;
-  }
-`;
-
-export const UserProfileImage = styled.img`
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-`;
 
 export default Navbar;

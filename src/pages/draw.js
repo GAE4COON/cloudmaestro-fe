@@ -136,7 +136,6 @@ function Draw() {
       <div className="container">
         <div className="createspace">
           <div className="workspace">
-            <div className="select-toggle-container">
             {showSelectToggle && (
               <SelectToggle
                 value={selectedNodeData}
@@ -144,16 +143,11 @@ function Draw() {
                 readOnly
               />
             )}
-            </div>
-            <div className="react-diagram-container">
-              <ReactDiagram
-                initDiagram={initDiagram}
-                divClassName={diagramClassName}
-              />
-            </div>
+            <ReactDiagram
+              initDiagram={initDiagram}
+              divClassName={diagramClassName}
+            />
           </div>
-
-
           <Palette
             nodeDataArray={nodeDataArrayPalette}
             divClassName={paletteClassName}
