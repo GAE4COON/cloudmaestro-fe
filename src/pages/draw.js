@@ -4,7 +4,7 @@ import * as go from "gojs";
 import { ReactDiagram } from "gojs-react";
 import "../styles/App.css"; // contains .diagram-component CSS
 import Palette from "../components/Palette";
-
+import Button from "../pages/Button"
 import useGoJS from "./useGoJS";
 import SelectToggle from "../components/SelectToggle";
 import { useMediaQuery } from "react-responsive";
@@ -134,6 +134,8 @@ function Draw() {
   return (
     <div className="Draw">
       <div className="container">
+      <Button/>
+
         <div className="createspace">
           <div className="workspace">
             {showSelectToggle && (
@@ -155,20 +157,6 @@ function Draw() {
 
         </div>
       </div>
-      <div className="top-right-button">
-        <div className="button-container">
-          <div className="button-row">
-            <input type="file" onChange={onFileChange} />
-            <input type="button" value="Clear" onClick={handleReset} />
-          </div>
-          <div className="button-row">
-            <input type="button" value="Save" onClick={handleSave} />
-            <input type="button" value="Save as Image" onClick={localSaveImage} />
-            <input type="button" value="Load" onClick={handleLoad} />
-          </div>
-        </div>
-      </div>
-
     </div>
   );
 }

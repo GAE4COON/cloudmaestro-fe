@@ -1,0 +1,28 @@
+
+  
+  /* Draw */
+  .Draw {
+    position: relative;
+    z-index: 1; /* 낮은 z-index 값 */
+    margin-top: 40px; /* 아래쪽 여백 추가 */
+  }
+  
+  /* Container within Draw */
+  .container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* createspace within container */
+  .createspace {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  
+  /* workspace within createspace */
+  .workspace {
+    flex: 1;
+    justify-content: space-between;
+  }
+  
