@@ -32,7 +32,7 @@ function Draw() {
 
   const [selectedNodeData, setSelectedNodeData] = useState(null); // <-- 상태 변수를 추가합니다.
   const [savedDiagramJSON, setSavedDiagramJSON] = useState(null);
-  const { initDiagram, diagram } = useGoJS(setSelectedNodeData); // <-- setSelectedNodeData를 전달합니다.
+  const { initDiagram, diagram, showSelectToggle } = useGoJS(setSelectedNodeData); // <-- setSelectedNodeData를 전달합니다.
 
   const handleSave = () => {
     if (diagram) {
@@ -135,14 +135,15 @@ function Draw() {
     <div className="Draw">
       <div className="container">
         <div className="createspace">
-
           <div className="workspace">
             <div className="select-toggle-container">
+            {showSelectToggle && (
               <SelectToggle
                 value={selectedNodeData}
                 onToggleSelect={handleNodeSelect}
                 readOnly
               />
+            )}
             </div>
             <div className="react-diagram-container">
               <ReactDiagram

@@ -4,7 +4,7 @@
 
   const useGoJS = () => {
     const [diagram, setDiagram] = useState(null);
-
+    const [showSelectToggle, setShowSelectToggle] = useState(false);
     function highlightGroup(e, grp, show) {
       if (!grp) return;
       e.handled = true;
@@ -26,6 +26,8 @@
         : e.diagram.commandHandler.addTopLevelParts(e.diagram.selection, true));
       if (!ok) e.diagram.currentTool.doCancel();
     }
+
+
 
     const initDiagram = () => {
       const $ = go.GraphObject.make;
@@ -229,7 +231,8 @@
         } else if (part instanceof go.Node) {
           console.log(part.data);
         }
-    });
+      });
+
 
       diagram.addDiagramListener("ExternalObjectsDropped", (e) => {
         console.log("from palette\n");
@@ -242,11 +245,21 @@
           }
         });
       });
+
+      diagram.addDiagramListener("ChangedSelection", (e) => {
+        const selectedNode = e.diagram.selection.first();
+        if (selectedNode instanceof go.Node) {
+          setShowSelectToggle(true); // 추가된 로직
+        } else {
+          setShowSelectToggle(false); // 추가된 로직
+        }
+      });
+
       setDiagram(diagram);
       return diagram;
     };
 
-    return { initDiagram, diagram };
+    return { initDiagram, diagram, showSelectToggle};
   };
 
   export default useGoJS;

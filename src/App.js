@@ -14,6 +14,7 @@ import LearnMore from "./pages/LearnMore";
 
 function App() {
   return (
+    
     <div className="App">
       <AuthProvider>
         <BrowserRouter>

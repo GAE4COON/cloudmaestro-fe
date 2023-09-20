@@ -110,6 +110,7 @@
 }
 
 .button-container {
+  opacity: 1;
   margin-top: 1px;
   display: flex;
   justify-content: center;  /* 혹은 space-around, center 등 */
@@ -139,6 +140,7 @@
 }
 
 .button-container input[type="file"] {    /*file 업로드 버튼*/
+  opacity: 1;
   margin: 0 5px;
   padding: 6px 10px;
   font-size: 12px;
@@ -146,6 +148,7 @@
 }
 
 .button {
+  opacity: 1;
   font-size: 20px;
   padding: 15px 30px;
   cursor: pointer;
