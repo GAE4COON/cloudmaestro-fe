@@ -3,6 +3,9 @@ import React, { useState, useCallback, useEffect } from "react";
 import * as go from "gojs";
 
 const useReadJSON = (file,diagram) => {
+  if(file){
+    
+  }
   const [data, setData] = useState([]);
 
   useEffect(() => {

@@ -12,6 +12,7 @@ import Introduce from "./pages/Introduce"
 import LearnMore from "./pages/LearnMore";
 import Input from "./pages/Input";
 import NetDraw from "./pages/NetDraw";
+import LearnDraw from "./pages/LearnDraw";
 
 function App() {
   return (
@@ -30,6 +31,8 @@ function App() {
               <Route path="/sign-in" element={<Signin />} />
               <Route path="/input" element={<Input />} />
               <Route path="/netdraw" element={<NetDraw />} />
+              <Route path="/learn-draw" element={<LearnDraw />} />
+
 
             </Routes>
           </div>

@@ -14,7 +14,7 @@ import { useLocation } from "react-router-dom";
 // 페이지 
 import useReadJSON from "./useReadJSON";
 
-function Draw() {
+function LearnDraw() {
   
 
   const isDesktopOrLaptop = useMediaQuery({ query: "(min-width: 700px)" });
@@ -26,6 +26,11 @@ function Draw() {
   const { initDiagram, diagram, showSelectToggle } = useGoJS(setSelectedNodeData); // <-- setSelectedNodeData를 전달합니다.
   
   
+  const location = useLocation();
+  //console.log("location_path",location.state);
+  let temp = location.state;
+
+  useReadJSON(temp, diagram);
 
   
   const handleNodeSelect = useCallback(
@@ -74,4 +79,4 @@ function Draw() {
   );
 }
 
-export default Draw;
+export default LearnDraw;
