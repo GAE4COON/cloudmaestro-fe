@@ -18,35 +18,13 @@ function Draw() {
 
   const [data, setData] = useState(null);
 
-
-
-  const onFileChange = (e) => {
-    console.log("hello")
-    if (e.target.files[0] && e.target.files[0].name.includes('json')) {
-      let file = e.target.files[0];
-      console.log(e.target.files[0]);
-      let fileReader = new FileReader();
-      fileReader.readAsText(file);
-      fileReader.onload = () => {
-        console.log(fileReader.result);
-        if (fileReader.result && diagram) {
-          diagram.model = go.Model.fromJson(fileReader.result);
-          console.log(JSON.stringify(diagram.model));
-        }
-      };
-    }
-    else if (e.target.files[0] && !e.target.files[0].name.includes('json')) {
-      alert("Json형식의 파일을 넣어주세용 ㅜㅜ");
-    }
-  };
-
   useEffect(() => {
     fetch(file)
       .then((response) => response.json())
       .then((jsonData) => setData(jsonData))
       .catch((error) => console.error('Error fetching data:', error));
   }, []);
-  // console.log("iamdata", JSON.stringify(data, null, 2));
+  console.log("iamdata", JSON.stringify(data));
 
   const isDesktopOrLaptop = useMediaQuery({ query: "(min-width: 700px)" });
   const paletteClassName = isDesktopOrLaptop ? "palette-component" : "palette-component-small";
@@ -90,6 +68,8 @@ function Draw() {
             <ReactDiagram
               initDiagram={initDiagram}
               divClassName={diagramClassName}
+              nodeDataArray={data?.nodeDataArray}  // <-- 여기에 노드 데이터를 전달합니다.
+              linkDataArray={data?.linkDataArray}  // <-- 여기에 링크 데이터를 전달합니다.
             />
 
           </div>
