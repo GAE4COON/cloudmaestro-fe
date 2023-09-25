@@ -14,81 +14,14 @@ import { useLocation } from "react-router-dom";
 function Draw() {
   const location = useLocation();
   const file = location.state;
-  console.log("file", typeof file);
+  console.log("file", file);
 
   const [data, setData] = useState(null);
 
-  useEffect(() => {
-    fetch(file)
-      .then((response) => response.json())
-      .then((jsonData) => setData(jsonData))
-      .catch((error) => console.error('Error fetching data:', error));
-  }, []);
-  console.log("iamdata", JSON.stringify(data, null, 2));
 
-  const isDesktopOrLaptop = useMediaQuery({ query: "(min-width: 700px)" });
-  const paletteClassName = isDesktopOrLaptop ? "palette-component" : "palette-component-small";
-  const diagramClassName = isDesktopOrLaptop ? "diagram-component" : "diagram-component-small";
-
-  const [selectedNodeData, setSelectedNodeData] = useState(null); // <-- 상태 변수를 추가합니다.
-  const [savedDiagramJSON, setSavedDiagramJSON] = useState(null);
-  const { initDiagram, diagram, showSelectToggle } = useGoJS(setSelectedNodeData); // <-- setSelectedNodeData를 전달합니다.
-
-  const handleSave = () => {
-    if (diagram) {
-      const jsonCombinedArray = diagram.model.toJson();
-      setSavedDiagramJSON(jsonCombinedArray);
-      console.log(jsonCombinedArray);
-      localSaveJSON(jsonCombinedArray);
-    }
-  };
-
-  const localSaveJSON = (target) => {
-    const blob = new Blob([target], { type: "text/json" });
-    // make download link
-    let fileName = prompt("파일명을 입력해주세요:", "diagram.json");
-    // 사용자가 프롬프트를 취소하거나 이름을 제공하지 않으면 함수 종료
-    if (!fileName) {
-      return;
-    }
-    else if (!fileName.endsWith('.json')) {
-      fileName += '.json';
-    }
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = fileName;
-    a.click();
-  };
-
-  const localSaveImage = () => {
-    if (diagram) {
-      const imgData = diagram.makeImageData({
-        scale: 1,
-        background: "white"
-      });
-      let fileName = prompt("파일명을 입력해주세요:", "diagram.png");
-      // 사용자가 프롬프트를 취소하거나 이름을 제공하지 않으면 함수 종료
-      if (!fileName) {
-        return;
-      }
-      else if (!fileName.endsWith('.png')) {
-        fileName += '.png';
-      }
-      const a = document.createElement("a");
-      a.href = imgData;
-      a.download = fileName;
-      a.click(); // 다운로드 링크 클릭
-    }
-  }
-
-  const handleLoad = () => {
-    if (savedDiagramJSON && diagram) {
-      diagram.model = go.Model.fromJson(savedDiagramJSON);
-      console.log(JSON.stringify(diagram.model));
-    }
-  };
 
   const onFileChange = (e) => {
+    console.log("hello")
     if (e.target.files[0] && e.target.files[0].name.includes('json')) {
       let file = e.target.files[0];
       console.log(e.target.files[0]);
@@ -107,13 +40,22 @@ function Draw() {
     }
   };
 
-  const handleReset = () => {
-    if (diagram) {
-      diagram.model.nodeDataArray = [];
-      diagram.model.linkDataArray = [];
-      diagram.model.commitTransaction('Cleared diagram');
-    }
-  }
+  useEffect(() => {
+    fetch(file)
+      .then((response) => response.json())
+      .then((jsonData) => setData(jsonData))
+      .catch((error) => console.error('Error fetching data:', error));
+  }, []);
+  // console.log("iamdata", JSON.stringify(data, null, 2));
+
+  const isDesktopOrLaptop = useMediaQuery({ query: "(min-width: 700px)" });
+  const paletteClassName = isDesktopOrLaptop ? "palette-component" : "palette-component-small";
+  const diagramClassName = isDesktopOrLaptop ? "diagram-component" : "diagram-component-small";
+
+  const [selectedNodeData, setSelectedNodeData] = useState(null); // <-- 상태 변수를 추가합니다.
+  // const [savedDiagramJSON, setSavedDiagramJSON] = useState(null);
+  const { initDiagram, diagram, showSelectToggle } = useGoJS(setSelectedNodeData); // <-- setSelectedNodeData를 전달합니다.
+
 
   const handleNodeSelect = useCallback(
     (label) => {
@@ -134,7 +76,7 @@ function Draw() {
   return (
     <div className="Draw">
       <div className="container">
-      <Button diagram={diagram}/>
+        <Button diagram={diagram} />
 
         <div className="createspace">
           <div className="workspace">
@@ -149,6 +91,7 @@ function Draw() {
               initDiagram={initDiagram}
               divClassName={diagramClassName}
             />
+
           </div>
           <Palette
             nodeDataArray={nodeDataArrayPalette}

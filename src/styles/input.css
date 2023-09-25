@@ -3,7 +3,7 @@
 .app-container {
     min-height: 580px;
     font-family: 'Arial', sans-serif;
-    padding-top: 20px;
+    padding-top: 50px;
     width: 100%;
     background-color: #EDF3FF;
     margin: 0 auto; /* 중앙 정렬을 위한 스타일 */
@@ -19,12 +19,13 @@
 }
 
 .horizontal-layout label {
-    margin-right: 10px;
+    margin-right: 20px;
     font-weight: bold;
     background-color: white;
-    border-radius: 3px;
+    border-radius: 5px;
     padding: 10px;
     color: #3B6C7D;
+    min-width: 150px;
 }
 
 .select-container {

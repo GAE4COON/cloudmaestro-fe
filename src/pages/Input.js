@@ -2,23 +2,16 @@ import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom'; // 변경된 부분
 import Select from 'react-select';
 import "../styles/input.css"
+import { periodOptions, serviceOptions, industrialOptions, wayOptions, costplatOptions } from "../db/inputSelect";
 
 const App = () => {
     const [selectedPeriod, setSelectedPeriod] = useState(null);
     const [selectedService, setSelectedService] = useState(null);
+    const [selectedIndustrial, setSelectedIndustrial] = useState(null);
+    const [selectedWay, setSelectedWay] = useState(null);
+    const [selectedCostPlat, setSelectedCostPlat] = useState(null);
+
     const [uploadedFiles, setUploadedFiles] = useState([]);
-
-    const periodOptions = [
-        { value: 'daily', label: 'Daily' },
-        { value: 'weekly', label: 'Weekly' },
-        { value: 'monthly', label: 'Monthly' }
-    ];
-
-    const serviceOptions = [
-        { value: 'serviceA', label: 'Service A' },
-        { value: 'serviceB', label: 'Service B' },
-        { value: 'serviceC', label: 'Service C' }
-    ];
 
     const navigate = useNavigate();
 
@@ -49,6 +42,36 @@ const App = () => {
                         options={serviceOptions}
                         onChange={setSelectedService}
                         value={selectedService}
+                    />
+                </div>
+            </div>
+            <div className="horizontal-layout">
+                <label>Industrial</label>
+                <div className="select-container">
+                    <Select
+                        options={industrialOptions}
+                        onChange={setSelectedIndustrial}
+                        value={selectedIndustrial}
+                    />
+                </div>
+            </div>
+            <div className="horizontal-layout">
+                <label>Mygration Way</label>
+                <div className="select-container">
+                    <Select
+                        options={wayOptions}
+                        onChange={setSelectedWay}
+                        value={selectedWay}
+                    />
+                </div>
+            </div>
+            <div className="horizontal-layout">
+                <label>Const & Platform</label>
+                <div className="select-container">
+                    <Select
+                        options={costplatOptions}
+                        onChange={setSelectedCostPlat}
+                        value={selectedCostPlat}
                     />
                 </div>
             </div>
