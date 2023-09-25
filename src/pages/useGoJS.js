@@ -28,7 +28,6 @@
     }
 
 
-
     const initDiagram = () => {
       const $ = go.GraphObject.make;
 
@@ -50,41 +49,37 @@
 
       // Define nodeTemplate (simplified, add other properties as needed)
       diagram.nodeTemplate = $(
-        
-        go.Node,
-        "Auto",
-        { mouseDrop: (e, node) => finishDrop(e, node.containingGroup) },
-        { resizable: true, resizeObjectName: "Picture" },
-        { background: "#A0BCC2" },
-        new go.Binding("layerName", "key", function (key) {
-          return key === -7 ? "BottomLayer" : "";
-        }),
-        new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
-
-        $(
-          go.Picture,
-          {
-            name: "Picture",
-            margin: new go.Margin(10, 10),
-            width: 50,
-            height: 50,
-            background: "white",
-            portId: "",
-            cursor: "pointer",
-            fromLinkable: true,
-            toLinkable: true,
-
-            fromLinkableSelfNode: true,
-            fromLinkableDuplicates: true,
-
-            toLinkableSelfNode: true,
-            toLinkableDuplicates: true,
-          },
+          go.Node,
+          "Spot",  // Spot 패널 사용으로 변경
+          { mouseDrop: (e, node) => finishDrop(e, node.containingGroup) },
+          { resizable: false, resizeObjectName: "Picture" },
+          { background: "#A0BCC2" },
+          new go.Binding("layerName", "key", function (key) { 
+            return key === -7 ? "BottomLayer" : "";
+          }),
+          new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
+          //마진에 포트 추가해서 링크가 동작되게 만든다
+          $(go.Shape, 
+            {
+              width: 70, height: 70,
+              fill: "transparent", stroke: null, 
+              portId: "", 
+              fromLinkable: true, toLinkable: true, 
+              fromSpot: go.Spot.AllSides, toSpot: go.Spot.AllSides
+            }
+          ),
+          $(go.Picture,
+            {
+              name: "Picture",
+              margin: 10,
+              width: 50,
+              height: 50,
+              background: "white",
+            },
           new go.Binding("source").makeTwoWay(),
           new go.Binding("desiredSize", "size", go.Size.parse).makeTwoWay(
             go.Size.stringify
           ),
-
           // modify or delete -> if unnecessary 
           new go.Binding("fromLinkable", "key", function (k) {
             return k !== -7;
