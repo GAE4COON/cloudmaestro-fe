@@ -10,7 +10,8 @@ import Signin from "./pages/SignIn";
 import { AuthProvider } from "./utils/auth/authContext";
 import Introduce from "./pages/Introduce"
 import LearnMore from "./pages/LearnMore";
-//import MyPage from "./pages/MyPage";
+import Input from "./pages/Input";
+import NetDraw from "./pages/NetDraw";
 
 function App() {
   return (
@@ -27,6 +28,9 @@ function App() {
               <Route path="/draw" element={<Draw />} />
               <Route path="/sign-up" element={<Signup />} />
               <Route path="/sign-in" element={<Signin />} />
+              <Route path="/input" element={<Input />} />
+              <Route path="/netdraw" element={<NetDraw />} />
+
             </Routes>
           </div>
           <Footer/>
