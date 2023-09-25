@@ -15,6 +15,7 @@
 - npm install jwt-decode
 - npm install axios
 - npm install react-icons --save
+- npm install xlsx 
 
 ## Ref
 - GoJS-React: https://gojs.net/latest/learn/index.html

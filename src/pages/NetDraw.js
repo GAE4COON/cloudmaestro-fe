@@ -10,11 +10,21 @@ import SelectToggle from "../components/SelectToggle";
 import { useMediaQuery } from "react-responsive";
 import { nodeDataArrayPalette } from "../db/data";
 import { useLocation } from "react-router-dom";
+import * as XLSX from 'xlsx';
+
+
+function processExcelData(data){
+
+  return data;
+}
 
 function Draw() {
   const location = useLocation();
   const file = location.state;
-  console.log("file", typeof file);
+  const excelDataFromInput = location.state.excelData;
+  console.log("excelData",excelDataFromInput);
+  
+  const processedData = processExcelData(excelDataFromInput);
 
   const [data, setData] = useState(null);
 
@@ -24,7 +34,7 @@ function Draw() {
       .then((jsonData) => setData(jsonData))
       .catch((error) => console.error('Error fetching data:', error));
   }, []);
-  console.log("iamdata", JSON.stringify(data, null, 2));
+  
 
   const isDesktopOrLaptop = useMediaQuery({ query: "(min-width: 700px)" });
   const paletteClassName = isDesktopOrLaptop ? "palette-component" : "palette-component-small";

@@ -2,11 +2,14 @@ import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom'; // 변경된 부분
 import Select from 'react-select';
 import "../styles/input.css"
+import { upload } from '@testing-library/user-event/dist/upload';
+import * as XLSX from 'xlsx';
 
 const App = () => {
     const [selectedPeriod, setSelectedPeriod] = useState(null);
     const [selectedService, setSelectedService] = useState(null);
     const [uploadedFiles, setUploadedFiles] = useState([]);
+
 
     const periodOptions = [
         { value: 'daily', label: 'Daily' },
@@ -21,13 +24,32 @@ const App = () => {
     ];
 
     const navigate = useNavigate(); // 변경된 부분
+    const [excelData, setExcelData] = useState(null);
 
     const handleFileChange = (event) => {
         const file = event.target.files[0];
         setUploadedFiles([file]);
 
         // 파일 선택 후 /draw 페이지로 리디렉션
-        navigate('/netdraw', { state: { file: file } }); // 변경된 부분
+        const reader = new FileReader();
+        reader.readAsArrayBuffer(file);
+
+        reader.onload = (e) => {
+            const bufferArray = e.target.result;
+
+            // Parse the Excel data
+            const workbook = XLSX.read(bufferArray, { type: 'buffer' });
+
+            // Convert the first worksheet to JSON
+            const sheetName = workbook.SheetNames[0];
+            const worksheet = workbook.Sheets[sheetName];
+            const jsonData = XLSX.utils.sheet_to_json(worksheet);
+            console.log("jsonjsondata",jsonData);
+            setExcelData(jsonData);
+            
+     
+        navigate('/netdraw', { state: { excelData: jsonData } });
+           }; // 변경된 부분
     };
 
     

@@ -110,7 +110,7 @@ class Home extends React.Component {
                 </div>
                 <div>
                   
-                  {this.explain("user",1,"/assets/1/1_diagram.png","/asstes/1/1_diagram.json")}
+                  {this.explain("user",1,"/assets/1/1_diagram.png","/assets/1/1_diagram.json")}
                 </div>
 
               </div>
