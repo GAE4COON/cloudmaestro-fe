@@ -105,7 +105,6 @@ const Button = ({ diagram }) => {
                         Upload File
                     </button>
                     <input
-                    fdfksdlf
                         type="file"
                         ref={hiddenFileInput}
                         onChange={onFileChange}
