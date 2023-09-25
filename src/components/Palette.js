@@ -120,6 +120,24 @@ const Palette = memo(({ divClassName }) => {
                   <label className="tab-label" htmlFor="rd4">Group</label>
                   <div className="tab-content" ref={el => paletteDivs.current['group'] = el} />
                 </div>
+                
+                <div className="tab">
+                  <input type="radio" id="rd5" name="rd" onClick={() => setSelectedTab("Compute")} />
+                  <label className="tab-label" htmlFor="rd5">Compute</label>
+                  <div className="tab-content" ref={el => paletteDivs.current['Compute'] = el} />
+                </div>
+
+                <div className="tab">
+                  <input type="radio" id="rd6" name="rd" onClick={() => setSelectedTab("Database")} />
+                  <label className="tab-label" htmlFor="rd6">Database</label>
+                  <div className="tab-content" ref={el => paletteDivs.current['Database'] = el} />
+                </div>
+
+                <div className="tab">
+                  <input type="radio" id="rd7" name="rd" onClick={() => setSelectedTab("Storage")} />
+                  <label className="tab-label" htmlFor="rd7">Storage</label>
+                  <div className="tab-content" ref={el => paletteDivs.current['Storage'] = el} />
+                </div>
 
               </div>
             </div>

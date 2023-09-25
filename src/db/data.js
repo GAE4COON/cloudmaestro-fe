@@ -58,6 +58,7 @@ export const nodeDataArrayPalette = [
         figure: "Rectangle",
         color: "lightblue",
         source: "img/ec2.png",
+        type: "Compute"
     },
     {
         key: "database",
@@ -65,6 +66,7 @@ export const nodeDataArrayPalette = [
         figure: "Rectangle",
         color: "lightblue",
         source: "img/database.png",
+        type: "Database"
     },
     {
         key: "autoscaling",
@@ -72,6 +74,7 @@ export const nodeDataArrayPalette = [
         figure: "Rectangle",
         color: "lightblue",
         source: "img/autoscaling.png",
+        type: "Compute"
     },
     {
         key: "waf",
@@ -79,6 +82,7 @@ export const nodeDataArrayPalette = [
         figure: "Rectangle",
         color: "lightblue",
         source: "img/waf.png",
+        type: "security"
     },
     {
         key: "s3",
@@ -86,6 +90,7 @@ export const nodeDataArrayPalette = [
         figure: "Rectangle",
         color: "lightblue",
         source: "img/s3.png",
+        type: "Storage"
     },
     {
         key: "efs",
@@ -93,6 +98,7 @@ export const nodeDataArrayPalette = [
         figure: "Rectangle",
         color: "lightblue",
         source: "img/efs.png",
+        type: "Storage"
     },
     {
         key: "loadbalancer",
@@ -100,6 +106,7 @@ export const nodeDataArrayPalette = [
         figure: "Rectangle",
         color: "lightblue",
         source: "img/loadbalancer.png",
+        type: "etc"
     },
     {
         isGroup: true,
