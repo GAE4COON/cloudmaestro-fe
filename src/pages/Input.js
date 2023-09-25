@@ -20,7 +20,7 @@ const App = () => {
         { value: 'serviceC', label: 'Service C' }
     ];
 
-    const navigate = useNavigate(); // 변경된 부분
+    const navigate = useNavigate();
 
     const handleFileChange = (event) => {
         const file = event.target.files[0];
@@ -29,8 +29,6 @@ const App = () => {
         // 파일 선택 후 /draw 페이지로 리디렉션
         navigate('/netdraw', { state: { file: file } }); // 변경된 부분
     };
-
-    
 
     return (
         <div className="app-container">
@@ -55,7 +53,7 @@ const App = () => {
                 </div>
             </div>
             <div>
-                <label>Upload Excel or JSON:</label>
+                <label>Upload Excel or JSON</label><br/>
                 <input 
                     type="file" 
                     className="file-input"
