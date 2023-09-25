@@ -134,7 +134,7 @@ function Draw() {
   return (
     <div className="Draw">
       <div className="container">
-      <Button/>
+      <Button diagram={diagram}/>
 
         <div className="createspace">
           <div className="workspace">
