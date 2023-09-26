@@ -2,12 +2,20 @@ import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom'; // 변경된 부분
 import Select from 'react-select';
 import "../styles/input.css"
+
 import { upload } from '@testing-library/user-event/dist/upload';
 import * as XLSX from 'xlsx';
+
+import { periodOptions, serviceOptions, industrialOptions, wayOptions, costplatOptions } from "../db/inputSelect";
+
 
 const App = () => {
     const [selectedPeriod, setSelectedPeriod] = useState(null);
     const [selectedService, setSelectedService] = useState(null);
+    const [selectedIndustrial, setSelectedIndustrial] = useState(null);
+    const [selectedWay, setSelectedWay] = useState(null);
+    const [selectedCostPlat, setSelectedCostPlat] = useState(null);
+
     const [uploadedFiles, setUploadedFiles] = useState([]);
 
 
@@ -25,6 +33,7 @@ const App = () => {
 
     const navigate = useNavigate(); // 변경된 부분
     const [excelData, setExcelData] = useState(null);
+
 
     const handleFileChange = (event) => {
         const file = event.target.files[0];
@@ -52,8 +61,6 @@ const App = () => {
            }; // 변경된 부분
     };
 
-    
-
     return (
         <div className="app-container">
             <div className="horizontal-layout">
@@ -76,8 +83,38 @@ const App = () => {
                     />
                 </div>
             </div>
+            <div className="horizontal-layout">
+                <label>Industrial</label>
+                <div className="select-container">
+                    <Select
+                        options={industrialOptions}
+                        onChange={setSelectedIndustrial}
+                        value={selectedIndustrial}
+                    />
+                </div>
+            </div>
+            <div className="horizontal-layout">
+                <label>Mygration Way</label>
+                <div className="select-container">
+                    <Select
+                        options={wayOptions}
+                        onChange={setSelectedWay}
+                        value={selectedWay}
+                    />
+                </div>
+            </div>
+            <div className="horizontal-layout">
+                <label>Const & Platform</label>
+                <div className="select-container">
+                    <Select
+                        options={costplatOptions}
+                        onChange={setSelectedCostPlat}
+                        value={selectedCostPlat}
+                    />
+                </div>
+            </div>
             <div>
-                <label>Upload Excel or JSON:</label>
+                <label>Upload Excel or JSON</label><br/>
                 <input 
                     type="file" 
                     className="file-input"

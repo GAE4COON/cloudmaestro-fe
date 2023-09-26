@@ -6,7 +6,7 @@ function Home() {
   const navigate = useNavigate();
 
   const handleAutoDraw = () => {
-    navigate("/draw");
+    navigate("/input");
   };
 
   const handleJustDraw = () => {

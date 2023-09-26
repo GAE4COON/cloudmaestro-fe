@@ -16,7 +16,7 @@ import Button from "./Button.js"
 import Palette from "../components/Palette";
 import "../styles/Draw.css"
 
-function Draw() {
+function LearnDraw() {
   const isDesktopOrLaptop = useMediaQuery({ query: "(min-width: 700px)" });
   const paletteClassName = isDesktopOrLaptop ? "palette-component" : "palette-component-small";
   const diagramClassName = isDesktopOrLaptop ? "diagram-component" : "diagram-component-small";
@@ -25,7 +25,11 @@ function Draw() {
 
   const { initDiagram, diagram, showSelectToggle } = useGoJS(setSelectedNodeData);
   // Go to Draw page 완료
-
+  const location = useLocation();
+  //console.log("location_path",location.state);
+  let temp = location.state;
+  console.log("나는 temp이다",temp);
+  useReadJSON(temp, diagram);
 
   const handleNodeSelect = useCallback(
     (label) => {
@@ -76,4 +80,4 @@ function Draw() {
   );
 }
 
-export default Draw;
+export default LearnDraw;

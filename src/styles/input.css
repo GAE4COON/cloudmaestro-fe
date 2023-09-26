@@ -1,11 +1,10 @@
 /* App.css */
 
 .app-container {
-    min-height: 570px;
+    min-height: 580px;
     font-family: 'Arial', sans-serif;
-    padding: 20px;
-    max-width: 500px;
-    margin: 0 auto;
+    padding-top: 50px;
+    width: 100%;
     background-color: #EDF3FF;
     margin: 0 auto; /* 중앙 정렬을 위한 스타일 */
     display: flex;
@@ -20,12 +19,13 @@
 }
 
 .horizontal-layout label {
-    margin-right: 10px;
+    margin-right: 20px;
     font-weight: bold;
     background-color: white;
-    border-radius: 3px;
+    border-radius: 5px;
     padding: 10px;
     color: #3B6C7D;
+    min-width: 150px;
 }
 
 .select-container {
@@ -38,6 +38,7 @@
     border: 1px solid #ddd;
     border-radius: 4px;
     cursor: pointer;
+    background-color: #fff;
 }
 
 .file-list {

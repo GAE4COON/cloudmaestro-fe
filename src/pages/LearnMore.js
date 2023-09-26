@@ -70,7 +70,7 @@ class Home extends React.Component {
   
         <div className="img">
             <Link 
-              to='/draw'
+              to='/learn-draw'
               state={img_json}
             
             >
