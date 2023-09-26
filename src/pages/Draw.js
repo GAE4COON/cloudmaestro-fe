@@ -25,6 +25,10 @@ function Draw() {
 
   const { initDiagram, diagram, showSelectToggle } = useGoJS(setSelectedNodeData);
   // Go to Draw page 완료
+  const location = useLocation();
+  //console.log("location_path",location.state);
+  let temp = location.state;
+  console.log("나는 temp이다",temp);
 
 
   const handleNodeSelect = useCallback(
