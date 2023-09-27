@@ -1,6 +1,7 @@
 .tab-content {
     width: 100%;
-    height: 340px;
+    height: 200px;
+
 }
 
 .tabs {
@@ -11,4 +12,11 @@
 
 .tab {
     width: 100%;
+    /* display: inline-block; Makes the tabs stay side by side */
+
 }
+.scrollable-tabs-container {
+    max-height: 500px; /* Adjust to your preferred height */
+    overflow-y: auto;
+}
+

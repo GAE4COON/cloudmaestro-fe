@@ -33,6 +33,7 @@ const App = () => {
                         onChange={setSelectedPeriod}
                         value={selectedPeriod}
                     />
+                    
                 </div>
             </div>
             <div className="horizontal-layout">
