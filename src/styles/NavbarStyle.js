@@ -145,6 +145,10 @@ export const NavLink = styled(Link)`
     color: #3064d6;
   }
 
+  &:hover ${DropdownMenu} {
+    display: flex;
+  }
+
   @media screen and (max-width: 768px) {
     justify-content: center; // 내용 중앙 정렬
     width: 100%; // 가로 길이 설정

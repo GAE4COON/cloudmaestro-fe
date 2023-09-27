@@ -20,7 +20,7 @@ import {
 } from "../styles/NavbarStyle";
 
 const Navbar = () => {
-  const [isDropdownOpen, setDropdownOpen] = useState(false); // 드롭다운 메뉴 상태
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const { user, setUser } = useAuth();
   const menuRef = useRef(null);
@@ -54,10 +54,6 @@ const Navbar = () => {
     handleSignOut(event); // 두 번째 함수 호출
   };
 
-  const toggleDropdown = () => {
-    setDropdownOpen(!isDropdownOpen);
-  };
-
   return (
     <>
       <NavStyled ref={menuRef}>
@@ -65,7 +61,7 @@ const Navbar = () => {
           <img src={logo} alt="logo" />
         </NavLinkLogo>
 
-        <NavMenuLeft isOpen={isOpen}>
+        <NavMenuLeft isOpen={isOpen} onMouseLeave={closeMenu}>
           <NavLink
             onClick={closeMenu}
             to="/"
@@ -88,7 +84,8 @@ const Navbar = () => {
             Learn More
           </NavLink>
           <NavLink
-            onClick={toggleDropdown}
+            onMouseEnter={() => setDropdownOpen(true)} // 호버 시 드롭다운 열기
+            onMouseLeave={() => setDropdownOpen(false)} // 호버 떼면 드롭다운 닫기
             className={location.pathname.startsWith("/draw") ? "active" : ""}
           >
             Draw!
