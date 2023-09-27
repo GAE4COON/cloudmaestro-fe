@@ -29,14 +29,28 @@ export const Hamburger = styled.div`
   }
 `;
 
+export const DropdownMenu = styled.div`
+  position: absolute;
+  top: 100%; // NavLink의 바로 아래에 나타나게 함
+  left: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  width: fit-content; // 너비를 내용에 맞게 조절
+`;
+
 export const NavStyled = styled.nav`
-  background: #9ab7c1;
+  background: #fff;
   height: 30px;
   display: flex;
   justify-content: space-between;
   padding: 0.5rem calc(0.125 * ((100vw - 1000px) / 2));
   z-index: 999;
   position: relative;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 `;
 
 export const NavMenuLeft = styled.div`
@@ -57,7 +71,7 @@ export const NavMenuLeft = styled.div`
     right: ${({ isOpen }) => (isOpen ? "0" : "-50%")};
     visibility: ${({ isOpen }) => (isOpen ? "visible" : "hidden")};
     top: 40px;
-    background: #9ab7c1;
+    background: #fff;
     z-index: 1;
   }
 `;
@@ -107,7 +121,8 @@ export const NavLinkLogo = styled(Link)`
 `;
 
 export const NavLink = styled(Link)`
-  color: #3b6c7d;
+  position: relative;
+  color: #000;
   display: flex;
   align-items: center;
   text-decoration: none;
@@ -122,12 +137,16 @@ export const NavLink = styled(Link)`
   }
 
   &.active {
-    color: #15cdfc;
+    color: #3064d6;
   }
 
   &:hover {
     transition: all 0.2s ease-in-out;
-    color: #fff;
+    color: #3064d6;
+  }
+
+  &:hover ${DropdownMenu} {
+    display: flex;
   }
 
   @media screen and (max-width: 768px) {
@@ -136,7 +155,7 @@ export const NavLink = styled(Link)`
     padding: 0 0rem;
 
     &:hover {
-      background: #3b6c7d;
+      background: #3064d6;
     }
   }
 `;
@@ -162,7 +181,7 @@ export const NavBtnLink = styled(Link)`
   border-radius: 4px;
   background: #fff;
   padding: 5px 12px;
-  color: #3b6c7d;
+  color: #3064d6;
   outline: none;
   border: none;
   cursor: pointer;
@@ -173,8 +192,8 @@ export const NavBtnLink = styled(Link)`
 
   &:hover {
     transition: all 0.2s ease-in-out;
-    background: #3b6c7d;
-    color: #fff;
+    color: #3064d6;
+    font-weight: bold;
   }
 `;
 

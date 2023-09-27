@@ -2,8 +2,10 @@ import React, { useState, useEffect, useRef } from "react";
 import logo from "../assets/img/logo.png";
 import { useAuth } from "./../utils/auth/authContext";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { useLocation } from "react-router-dom";
 
 import {
+  DropdownMenu,
   HamburgerContainer,
   Hamburger,
   NavStyled,
@@ -14,14 +16,15 @@ import {
   SpecialNavLink,
   NavBtn,
   NavBtnLink,
-  StyledButton,
   UserProfileImage,
 } from "../styles/NavbarStyle";
 
 const Navbar = () => {
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const { user, setUser } = useAuth();
   const menuRef = useRef(null);
+  const location = useLocation();
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -58,19 +61,46 @@ const Navbar = () => {
           <img src={logo} alt="logo" />
         </NavLinkLogo>
 
-        <NavMenuLeft isOpen={isOpen}>
-          <NavLink onClick={closeMenu} to="/">
+        <NavMenuLeft isOpen={isOpen} onMouseLeave={closeMenu}>
+          <NavLink
+            onClick={closeMenu}
+            to="/"
+            className={location.pathname === "/" ? "active" : ""}
+          >
             Home
           </NavLink>
-          <NavLink onClick={closeMenu} to="/about">
+          <NavLink
+            onClick={closeMenu}
+            to="/about"
+            className={location.pathname === "/about" ? "active" : ""}
+          >
             About
           </NavLink>
-          <NavLink onClick={closeMenu} to="/learn">
+          <NavLink
+            onClick={closeMenu}
+            to="/learn"
+            className={location.pathname === "/learn" ? "active" : ""}
+          >
             Learn More
           </NavLink>
-          <NavLink onClick={closeMenu} to="/draw">
-            Go to Draw!
+          <NavLink
+            onMouseEnter={() => setDropdownOpen(true)} // 호버 시 드롭다운 열기
+            onMouseLeave={() => setDropdownOpen(false)} // 호버 떼면 드롭다운 닫기
+            className={location.pathname.startsWith("/draw") ? "active" : ""}
+          >
+            Draw!
+            {isDropdownOpen && (
+              <DropdownMenu>
+                <NavLink onClick={closeMenu} to="/draw/network">
+                  Network
+                </NavLink>
+                <NavLink onClick={closeMenu} to="/draw/aws">
+                  Aws
+                </NavLink>
+              </DropdownMenu>
+            )}
           </NavLink>
+
           {!user && (
             <SpecialNavLink
               className="special-nav-link"
