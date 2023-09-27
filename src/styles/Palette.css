@@ -16,7 +16,7 @@
 
 }
 .scrollable-tabs-container {
-    max-height: 500px; /* Adjust to your preferred height */
+    max-height: 570px; 
     overflow-y: auto;
 }
 

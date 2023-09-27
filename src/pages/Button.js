@@ -135,6 +135,11 @@ const Button = ({ diagram }) => {
                     Load
                 </button>
             </div>
+            <div className="button-row">
+                <button onClick={handleLoad}>
+                    Submit
+                </button>
+            </div>
 
 
         </div>

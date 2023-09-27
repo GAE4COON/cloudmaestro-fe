@@ -10,7 +10,8 @@ import Signin from "./pages/SignIn";
 import { AuthProvider } from "./utils/auth/authContext";
 import Introduce from "./pages/Introduce"
 import LearnMore from "./pages/LearnMore";
-import Input from "./pages/Input";
+import InputNet from "./pages/InputNet";
+import InputAWS from "./pages/InputAWS";
 import NetDraw from "./pages/NetDraw";
 import LearnDraw from "./pages/LearnDraw";
 
@@ -30,7 +31,8 @@ function App() {
               <Route path="/draw" element={<Draw />} />
               <Route path="/sign-up" element={<Signup />} />
               <Route path="/sign-in" element={<Signin />} />
-              <Route path="/input" element={<Input />} />
+              <Route path="/inputnet" element={<InputNet />} />
+              <Route path="/inputaws" element={<InputAWS />} />
               <Route path="/netdraw" element={<NetDraw />} />
 
             </Routes>

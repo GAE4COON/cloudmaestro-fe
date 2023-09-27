@@ -2448,4 +2448,95 @@ export const nodeDataArrayPalette = [
         source: "img/AWS_icon/Arch_Storage/Arch_AWS-Storage-Gateway_48.svg",
         type: "Arch_Storage"
     },
+
+    {
+        isGroup: true,
+        key: "AWS Cloud",
+        stroke: "rgba(255,165,0,0.3)",
+        type: "group"
+    },
+    {
+        isGroup: true,
+        key: "Region",
+        stroke: "rgba(0,198,0,0.3)",
+        type: "group"
+
+    },
+    {
+        isGroup: true,
+        key: "Availability Zone",
+        stroke: "rgba(0,0,198,0.3)",
+        type: "group"
+
+    },
+    {
+        isGroup: true,
+        key: "Security Group",
+        stroke: "rgba(255,165,0,0.3)",
+        type: "group"
+    },
+    {
+        isGroup: true,
+        key: "Auto Scaling Group",
+        stroke: "rgba(0,198,0,0.3)",
+        type: "group"
+
+    },
+    {
+        isGroup: true,
+        key: "Virtual pricate cloud (VPC)",
+        stroke: "rgba(0,0,198,0.3)",
+        type: "group"
+
+    },  {
+        isGroup: true,
+        key: "Private subnet",
+        stroke: "rgba(255,165,0,0.3)",
+        type: "group"
+    },
+    {
+        isGroup: true,
+        key: "Public subnet",
+        stroke: "rgba(0,198,0,0.3)",
+        type: "group"
+
+    },
+    {
+        isGroup: true,
+        key: "Server contents",
+        stroke: "rgba(0,0,198,0.3)",
+        type: "group"
+
+    },  {
+        isGroup: true,
+        key: "Corporate data center",
+        stroke: "rgba(255,165,0,0.3)",
+        type: "group"
+    },
+    {
+        isGroup: true,
+        key: "EC2 instance contents",
+        stroke: "rgba(0,198,0,0.3)",
+        type: "group"
+
+    },
+    {
+        isGroup: true,
+        key: "Spot Fleet",
+        stroke: "rgba(0,0,198,0.3)",
+        type: "group"
+
+    },  {
+        isGroup: true,
+        key: "AWS account",
+        stroke: "rgba(255,165,0,0.3)",
+        type: "group"
+    },
+    {
+        isGroup: true,
+        key: "Elastic Beanstalk Container",
+        stroke: "rgba(0,198,0,0.3)",
+        type: "group"
+
+    },
 ]

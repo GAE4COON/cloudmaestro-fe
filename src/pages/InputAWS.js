@@ -20,7 +20,7 @@ const App = () => {
         setUploadedFiles([file]);
 
         // 파일 선택 후 /draw 페이지로 리디렉션
-        navigate('/netdraw', { state: { file: file } }); // 변경된 부분
+        navigate('/draw', { state: { file: file } }); // 변경된 부분
     };
 
     return (
@@ -76,24 +76,7 @@ const App = () => {
                     />
                 </div>
             </div>
-            <div>
-                <label>Upload Excel or JSON</label><br/>
-                <input 
-                    type="file" 
-                    className="file-input"
-                    accept=".xlsx, .xls, .json" 
-                    multiple 
-                    onChange={handleFileChange} 
-                />
-            </div>
-            <div className="file-list">
-                <h4>Uploaded File</h4>
-                <ul>
-                    {Array.from(uploadedFiles).map((file, index) => (
-                        <li key={index}>{file.name}</li>
-                    ))}
-                </ul>
-            </div>
+ 
         </div>
     );
 }

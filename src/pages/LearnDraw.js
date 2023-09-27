@@ -7,7 +7,7 @@ import { ReactDiagram } from "gojs-react";
 import useGoJS from "./useGoJS";
 import SelectToggle from "../components/SelectToggle";
 import { useMediaQuery } from "react-responsive";
-import { nodeDataArrayPalette } from "../db/data";
+import { nodeDataArrayPalette } from "../db/nodes";
 import { useLocation } from "react-router-dom";
 
 // 페이지 

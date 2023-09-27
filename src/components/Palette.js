@@ -244,6 +244,14 @@ const Palette = memo(({ divClassName }) => {
                     <label className="tab-label" htmlFor="rd25">Storage</label>
                     <div className="tab-content" ref={el => paletteDivs.current['Arch_Storage'] = el} />
                   </div>
+
+                  
+                  <div className="tab">
+                    <input type="radio" id="rd26" name="rd" onClick={() => setSelectedTab("group")} />
+                    <label className="tab-label" htmlFor="rd26">Group</label>
+                    <div className="tab-content" ref={el => paletteDivs.current['group'] = el} />
+                  </div>
+
                 </div>
               </div>
             </div>
