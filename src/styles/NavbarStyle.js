@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { Link } from "react-router-dom";
 
 export const HamburgerContainer = styled.div`
@@ -28,6 +28,23 @@ export const Hamburger = styled.div`
     display: flex;
   }
 `;
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
+
+const slideDown = keyframes`
+  from {
+    transform: translateY(-20px);
+  }
+  to {
+    transform: translateY(0);
+  }
+`;
 
 export const DropdownMenu = styled.div`
   position: absolute;
@@ -37,9 +54,17 @@ export const DropdownMenu = styled.div`
   border: 1px solid #ccc;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
-  display: flex;
+  display: none; // by default, the menu is not displayed
+  animation: ${fadeIn} 0.3s forwards, ${slideDown} 0.3s forwards;
   flex-direction: column;
   width: fit-content; // 너비를 내용에 맞게 조절
+  border-radius: 8px; // 둥근 모서리 추가
+  padding-top: 10px; // 상단에 여백 추가
+  padding-bottom: 10px; // 하단에 여백 추가
+
+  &:hover {
+    display: flex; // display the dropdown menu when the NavLink is hovered over
+  }
 `;
 
 export const NavStyled = styled.nav`
