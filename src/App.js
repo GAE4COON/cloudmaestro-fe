@@ -28,12 +28,12 @@ function App() {
               <Route exact path="/learn-draw" element={<LearnDraw/>} />
               <Route path="/about" element={<Introduce />} />
               <Route path="/learn" element={<LearnMore />} />
-              <Route path="/draw" element={<Draw />} />
+              <Route path="/draw/aws" element={<Draw />} />
               <Route path="/sign-up" element={<Signup />} />
               <Route path="/sign-in" element={<Signin />} />
               <Route path="/inputnet" element={<InputNet />} />
               <Route path="/inputaws" element={<InputAWS />} />
-              <Route path="/netdraw" element={<NetDraw />} />
+              <Route path="/draw/network" element={<NetDraw />} />
 
             </Routes>
           </div>

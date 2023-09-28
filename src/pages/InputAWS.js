@@ -20,7 +20,7 @@ const App = () => {
         setUploadedFiles([file]);
 
         // 파일 선택 후 /draw 페이지로 리디렉션
-        navigate('/draw', { state: { file: file } }); // 변경된 부분
+        navigate('/draw/aws', { state: { file: file } }); // 변경된 부분
     };
 
     return (
