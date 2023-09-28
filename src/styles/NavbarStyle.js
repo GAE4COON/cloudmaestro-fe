@@ -57,10 +57,10 @@ export const DropdownMenu = styled.div`
   display: none; // by default, the menu is not displayed
   animation: ${fadeIn} 0.3s forwards, ${slideDown} 0.3s forwards;
   flex-direction: column;
-  width: fit-content; // 너비를 내용에 맞게 조절
-  border-radius: 8px; // 둥근 모서리 추가
-  padding-top: 10px; // 상단에 여백 추가
-  padding-bottom: 10px; // 하단에 여백 추가
+  width: fit-content;
+  border-radius: 8px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 
   &:hover {
     display: flex; // display the dropdown menu when the NavLink is hovered over
