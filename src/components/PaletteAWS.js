@@ -1,7 +1,7 @@
 import "../styles/Palette.css";
 import React, { memo, useEffect, useRef, useState } from "react";
 import * as go from "gojs";
-import { nodeDataArrayPalette } from "../db/nodes";
+import { nodeDataArrayPalette } from "../db/NodeAWS";
 
 
 const Palette = memo(({ divClassName }) => {

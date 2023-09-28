@@ -22,7 +22,7 @@ function Home() {
             alt="logo"
             className="home-img"
           />
-          <div className="home-select-box">
+           <div className="home-select-box">
             <h1>WELCOME TO CLOUD MAESTRO!</h1>
             <h2 className="home-select-text">
               Automated Diagram of a Cloud Architecture with Security
