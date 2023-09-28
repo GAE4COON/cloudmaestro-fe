@@ -6,18 +6,17 @@ function Home() {
   const navigate = useNavigate();
 
   const handleAutoDraw = () => {
-    navigate("/inputnet");
+    navigate("/inputndet");
   };
 
   const handleJustDraw = () => {
-    navigate("/draw");
+    navigate("/draw/aws");
   };
 
   return (
     <Fragment>
       <div className="home-content">
         <div className="img-container">
-
           <img
             src="assets/img/Cloud-architecture.png"
             alt="logo"

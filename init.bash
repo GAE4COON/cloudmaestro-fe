@@ -1,3 +1,5 @@
+#!/bin/bash
+
 npm install
 npm install gojs gojs-react
 npm i --save react-select
