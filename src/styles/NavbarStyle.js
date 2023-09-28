@@ -155,7 +155,7 @@ export const NavLink = styled(Link)`
     padding: 0 0rem;
 
     &:hover {
-      background: #3064d6;
+      background: #dddddd;
     }
   }
 `;

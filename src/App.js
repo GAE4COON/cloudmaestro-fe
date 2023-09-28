@@ -33,7 +33,7 @@ function App() {
               <Route path="/sign-in" element={<Signin />} />
               <Route path="/inputnet" element={<InputNet />} />
               <Route path="/inputaws" element={<InputAWS />} />
-              <Route path="/netdraw" element={<NetDraw />} />
+              <Route path="/draw/network" element={<NetDraw />} />
 
             </Routes>
           </div>

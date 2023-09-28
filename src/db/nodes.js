@@ -5,7 +5,7 @@ export const nodeDataArrayPalette = [
         text: "1",
         figure: "Rectangle",
         color: "lightblue",
-        source: "img/AWS_icon/Arch_Analytics/Arch_Amazon-Athena_48.svg",
+        source: "/img/AWS_icon/Arch_Analytics/Arch_Amazon-Athena_48.svg",
         type: "Arch_Analytics"
     },
     {
@@ -13,7 +13,7 @@ export const nodeDataArrayPalette = [
         text: "1",
         figure: "Rectangle",
         color: "lightblue",
-        source: "img/AWS_icon/Arch_Analytics/Arch_Amazon-CloudSearch_48.svg",
+        source: "/img/AWS_icon/Arch_Analytics/Arch_Amazon-CloudSearch_48.svg",
         type: "Arch_Analytics"
     },
     {
