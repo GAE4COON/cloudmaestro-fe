@@ -12,7 +12,8 @@
 
 .tab {
     width: 100%;
-    /* display: inline-block; Makes the tabs stay side by side */
+    /* display: inline-block;  */
+    position: relative;
 
 }
 .scrollable-tabs-container {
