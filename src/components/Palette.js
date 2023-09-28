@@ -48,7 +48,7 @@ const Palette = memo(({ divClassName }) => {
       ),
 
       $(go.TextBlock,
-        { font: "bold 12pt sans-serif" },
+        { font: "bold 10pt sans-serif" },
         new go.Binding("text", "key")),
 
     );
@@ -58,6 +58,7 @@ const Palette = memo(({ divClassName }) => {
 
     if (paletteDivs.current[selectedTab]) {
       myPalette.div = paletteDivs.current[selectedTab];
+      console.log("current: ",selectedTab);
 
     }
 

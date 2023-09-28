@@ -28,7 +28,7 @@ function App() {
               <Route exact path="/learn-draw" element={<LearnDraw/>} />
               <Route path="/about" element={<Introduce />} />
               <Route path="/learn" element={<LearnMore />} />
-              <Route path="/draw" element={<Draw />} />
+              <Route path="/draw/aws" element={<Draw />} />
               <Route path="/sign-up" element={<Signup />} />
               <Route path="/sign-in" element={<Signin />} />
               <Route path="/inputnet" element={<InputNet />} />
