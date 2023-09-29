@@ -1,6 +1,7 @@
 .tab-content {
     width: 100%;
     height: 200px;
+    
 }
 
 .tabs {
@@ -26,13 +27,14 @@ input[type="radio"]:not(:checked) + .tab-label {
     background-color: #3064D6;
 }
 
-
+/* width 고정하면 안댑니다.. */
 .scrollable-tabs-container {
     max-height: 570px;
-    width: 270px;
+    width: 90%;
     overflow-y: auto;
     overflow-x: hidden;
 }
+
 .tab-content > div[style*="overflow: auto;"]::-webkit-scrollbar {
     width: 10px;
 }
