@@ -1,8 +1,6 @@
-
 import React, { useState, useCallback, useEffect } from "react";
 import * as go from "gojs";
 import { ReactDiagram } from "gojs-react";
-
 
 import useGoJS from "./useGoJS";
 import SelectToggle from "../components/SelectToggle";
@@ -10,11 +8,11 @@ import { useMediaQuery } from "react-responsive";
 import { nodeDataArrayPalette } from "../db/nodes";
 import { useLocation } from "react-router-dom";
 
-// 페이지 
+// 페이지
 import useReadJSON from "./useReadJSON";
-import Button from "./Button.js"
+import Button from "./Button.js";
 import Palette from "../components/Palette";
-import "../styles/Draw.css"
+import "../styles/Draw.css";
 
 function Draw() {
   const location = useLocation();
@@ -27,17 +25,22 @@ function Draw() {
     fetch(file)
       .then((response) => response.json())
       .then((jsonData) => setData(jsonData))
-      .catch((error) => console.error('Error fetching data:', error));
+      .catch((error) => console.error("Error fetching data:", error));
   }, []);
   console.log("iamdata", JSON.stringify(data, null, 2));
 
   const isDesktopOrLaptop = useMediaQuery({ query: "(min-width: 700px)" });
-  const paletteClassName = isDesktopOrLaptop ? "palette-component" : "palette-component-small";
-  const diagramClassName = isDesktopOrLaptop ? "diagram-component" : "diagram-component-small";
+  const paletteClassName = isDesktopOrLaptop
+    ? "palette-component"
+    : "palette-component-small";
+  const diagramClassName = isDesktopOrLaptop
+    ? "diagram-component"
+    : "diagram-component-small";
 
   const [selectedNodeData, setSelectedNodeData] = useState(null); // <-- 상태 변수를 추가합니다.
   const [savedDiagramJSON, setSavedDiagramJSON] = useState(null);
-  const { initDiagram, diagram, showSelectToggle } = useGoJS(setSelectedNodeData); // <-- setSelectedNodeData를 전달합니다.
+  const { initDiagram, diagram, showSelectToggle } =
+    useGoJS(setSelectedNodeData); // <-- setSelectedNodeData를 전달합니다.
 
   const handleSave = () => {
     if (diagram) {
@@ -55,9 +58,8 @@ function Draw() {
     // 사용자가 프롬프트를 취소하거나 이름을 제공하지 않으면 함수 종료
     if (!fileName) {
       return;
-    }
-    else if (!fileName.endsWith('.json')) {
-      fileName += '.json';
+    } else if (!fileName.endsWith(".json")) {
+      fileName += ".json";
     }
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
@@ -69,22 +71,21 @@ function Draw() {
     if (diagram) {
       const imgData = diagram.makeImageData({
         scale: 1,
-        background: "white"
+        background: "white",
       });
       let fileName = prompt("파일명을 입력해주세요:", "diagram.png");
       // 사용자가 프롬프트를 취소하거나 이름을 제공하지 않으면 함수 종료
       if (!fileName) {
         return;
-      }
-      else if (!fileName.endsWith('.png')) {
-        fileName += '.png';
+      } else if (!fileName.endsWith(".png")) {
+        fileName += ".png";
       }
       const a = document.createElement("a");
       a.href = imgData;
       a.download = fileName;
       a.click(); // 다운로드 링크 클릭
     }
-  }
+  };
 
   const handleLoad = () => {
     if (savedDiagramJSON && diagram) {
@@ -94,7 +95,7 @@ function Draw() {
   };
 
   const onFileChange = (e) => {
-    if (e.target.files[0] && e.target.files[0].name.includes('json')) {
+    if (e.target.files[0] && e.target.files[0].name.includes("json")) {
       let file = e.target.files[0];
       console.log(e.target.files[0]);
       let fileReader = new FileReader();
@@ -106,8 +107,7 @@ function Draw() {
           console.log(JSON.stringify(diagram.model));
         }
       };
-    }
-    else if (e.target.files[0] && !e.target.files[0].name.includes('json')) {
+    } else if (e.target.files[0] && !e.target.files[0].name.includes("json")) {
       alert("Json형식의 파일을 넣어주세용 ㅜㅜ");
     }
   };
@@ -116,9 +116,9 @@ function Draw() {
     if (diagram) {
       diagram.model.nodeDataArray = [];
       diagram.model.linkDataArray = [];
-      diagram.model.commitTransaction('Cleared diagram');
+      diagram.model.commitTransaction("Cleared diagram");
     }
-  }
+  };
 
   const handleNodeSelect = useCallback(
     (label) => {
@@ -139,7 +139,7 @@ function Draw() {
   return (
     <div className="Draw">
       <div className="container">
-      <Button diagram={diagram}/>
+        <Button diagram={diagram} />
 
         <div className="createspace">
           <div className="workspace">
@@ -159,12 +159,9 @@ function Draw() {
             nodeDataArray={nodeDataArrayPalette}
             divClassName={paletteClassName}
           />
-
         </div>
-
       </div>
     </div>
-
   );
 }
 

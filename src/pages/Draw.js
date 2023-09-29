@@ -50,28 +50,29 @@ function Draw() {
   );
 
   return (
-    <div className="draw-container">
-      <div className="Button">
+    <div className="Draw">
+      <div className="container">
         <Button diagram={diagram} />
-      </div>
-      <div className="Draw">
-        <div className="container">
-          {showSelectToggle && (
-            <SelectToggle
-              value={selectedNodeData}
-              onToggleSelect={handleNodeSelect}
-              readOnly
+
+        <div className="createspace">
+          <div className="workspace">
+            {showSelectToggle && (
+              <SelectToggle
+                value={selectedNodeData}
+                onToggleSelect={handleNodeSelect}
+                readOnly
+              />
+            )}
+            <ReactDiagram
+              initDiagram={initDiagram}
+              divClassName={diagramClassName}
             />
-          )}
-          <ReactDiagram
-            initDiagram={initDiagram}
-            divClassName={diagramClassName}
+          </div>
+          <Palette
+            nodeDataArray={nodeDataArrayPalette}
+            divClassName={paletteClassName}
           />
         </div>
-        <Palette
-          nodeDataArray={nodeDataArrayPalette}
-          divClassName={paletteClassName}
-        />
       </div>
     </div>
   );
