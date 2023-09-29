@@ -2,16 +2,14 @@
 /* Button */
 
 .top-right-button {
-    z-index: 1000; 
+  width: 100%; /* 이 부분을 추가하면 부모 div 안에서 너비를 차지하게 됩니다. */
+  background: #fff;
+    z-index: 100; 
     display: flex;
     flex-direction: row;
     justify-content: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 100%; /* 이 부분을 추가하면 부모 div 안에서 너비를 차지하게 됩니다. */
-    background-color: #9ab7c1;;
   }
   
-  /* Button Container */
   .button-container {
     display: flex;
     flex-direction: row;
@@ -24,21 +22,15 @@
     justify-content: flex-end;
     
   }
-
-  .button-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
   
   .button-row {
     margin: 10px;
   }
   
   button {
-    background-color:#9ab7c1;
+    background-color:#fff;
     border: none;
-    color: white;
+    color: black;
     padding: 10px 20px;
     text-align: center;
     text-decoration: none;
@@ -49,5 +41,5 @@
   }
   
   button:hover {
-    background-color:  #7ba4b2;;
+    color: #3064d6;
   }

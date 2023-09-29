@@ -69,13 +69,13 @@ export const DropdownMenu = styled.div`
 
 export const NavStyled = styled.nav`
   background: #fff;
-  height: 30px;
+  height: 35px;
   display: flex;
   justify-content: space-between;
   padding: 0.5rem calc(0.125 * ((100vw - 1000px) / 2));
   z-index: 999;
   position: relative;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 `;
 
 export const NavMenuLeft = styled.div`
@@ -121,7 +121,6 @@ export const NavMenuRight = styled.div`
 `;
 
 export const NavLinkLogo = styled(Link)`
-  color: #3b6c7d;
   display: flex;
   align-items: center;
   text-decoration: none;

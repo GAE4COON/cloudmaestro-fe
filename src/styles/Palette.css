@@ -14,9 +14,22 @@
     position: relative;
 }
 
+.tab-label {
+    color: fff;
+}
+
+input[type="radio"]:checked + .tab-label {
+    background-color: #809CDA;
+}
+
+input[type="radio"]:not(:checked) + .tab-label {
+    background-color: #3064D6;
+}
+
+
 .scrollable-tabs-container {
     max-height: 570px;
-    width: 300px;
+    width: 270px;
     overflow-y: auto;
     overflow-x: hidden;
 }
