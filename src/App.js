@@ -3,12 +3,12 @@ import "./styles/App.css";
 import Home from "./pages/Home";
 import DrawAWS from "./pages/DrawAWS";
 import DrawNetwork from "./pages/DrawNetwork";
-import Footer from "./components/Footer"
+import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import Signup from "./pages/SignUp";
 import Signin from "./pages/SignIn";
 import { AuthProvider } from "./utils/auth/authContext";
-import Introduce from "./pages/Introduce"
+import Introduce from "./pages/Introduce";
 import LearnMore from "./pages/LearnMore";
 import InputNet from "./pages/InputNetwork";
 import InputAWS from "./pages/InputAWS";
@@ -16,7 +16,6 @@ import LearnDraw from "./pages/LearnDraw";
 
 function App() {
   return (
-    
     <div className="App">
       <AuthProvider>
         <BrowserRouter>
@@ -24,7 +23,7 @@ function App() {
           <div className="main-content">
             <Routes>
               <Route exact path="/" element={<Home />} />
-              <Route exact path="/learn-draw" element={<LearnDraw/>} />
+              <Route exact path="/learn-draw" element={<LearnDraw />} />
               <Route path="/about" element={<Introduce />} />
               <Route path="/learn" element={<LearnMore />} />
 
@@ -33,13 +32,12 @@ function App() {
 
               <Route path="/sign-up" element={<Signup />} />
               <Route path="/sign-in" element={<Signin />} />
-              
+
               <Route path="/inputnet" element={<InputNet />} />
               <Route path="/inputaws" element={<InputAWS />} />
-
             </Routes>
           </div>
-          <Footer/>
+          <Footer />
         </BrowserRouter>
       </AuthProvider>
     </div>

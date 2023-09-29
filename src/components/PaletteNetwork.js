@@ -88,9 +88,7 @@ const Palette = memo(({ divClassName }) => {
             <div
               style={{
                 width: "100%",
-                // marginRight: 2,
                 backgroundColor: "whitesmoke",
-                // border: "solid 1px black"
               }}>
               <div className="scrollable-tabs-container">
                 <div className="tabs">
