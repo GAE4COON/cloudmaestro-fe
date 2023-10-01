@@ -7,9 +7,10 @@ import SelectToggle from "../components/SelectToggle";
 import { useMediaQuery } from "react-responsive";
 import { nodeDataArrayPalette } from "../db/NodeNetwork";
 import { useLocation } from "react-router-dom";
+import useReadJSON from "./useReadJSON";
+
 
 // 페이지
-import useReadJSON from "./useReadJSON";
 import Button from "./Button.js";
 import Palette from "../components/PaletteNetwork";
 import "../styles/Draw.css";
@@ -18,15 +19,16 @@ function Draw() {
   const location = useLocation();
   const file = location.state;
   console.log("file", typeof file);
-
+  const type = location?.state;
   const [data, setData] = useState(null);
 
   useEffect(() => {
     fetch(file)
       .then((response) => response.json())
       .then((jsonData) => setData(jsonData))
-      .catch((error) => console.error("Error fetching data:", error));
-  }, []);
+      .catch((error) => console.error("Error fetching data:", error));   
+    }, [location]);
+
   console.log("iamdata", JSON.stringify(data, null, 2));
 
   const isDesktopOrLaptop = useMediaQuery({ query: "(min-width: 700px)" });
@@ -135,6 +137,9 @@ function Draw() {
     },
     [diagram]
   );
+
+  useReadJSON(type, diagram);
+
 
   return (
     <div className="Draw">

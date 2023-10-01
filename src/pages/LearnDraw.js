@@ -8,7 +8,8 @@ import useGoJS from "./useGoJS";
 import SelectToggle from "../components/SelectToggle";
 import { useMediaQuery } from "react-responsive";
 import { nodeDataArrayPalette } from "../db/NodeAWS";
-import { useLocation } from "react-router-dom";
+import { useLocation } from 'react-router-dom';
+
 
 // 페이지 
 import useReadJSON from "./useReadJSON";
@@ -20,15 +21,12 @@ function LearnDraw() {
   const isDesktopOrLaptop = useMediaQuery({ query: "(min-width: 700px)" });
   const paletteClassName = isDesktopOrLaptop ? "palette-component" : "palette-component-small";
   const diagramClassName = isDesktopOrLaptop ? "diagram-component" : "diagram-component-small";
-
   const [selectedNodeData, setSelectedNodeData] = useState(null); // <-- 상태 변수를 추가합니다.
 
   const { initDiagram, diagram, showSelectToggle } = useGoJS(setSelectedNodeData);
   // Go to Draw page 완료
   const location = useLocation();
-  //console.log("location_path",location.state);
   let temp = location.state;
-  console.log("나는 temp이다",temp);
   useReadJSON(temp, diagram);
 
   const handleNodeSelect = useCallback(
@@ -44,8 +42,8 @@ function LearnDraw() {
       }
       setSelectedNodeData(label);
     },
-    [diagram]
-  );
+    [diagram],
+    );
 
   return (
     <div>

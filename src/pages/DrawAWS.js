@@ -30,8 +30,7 @@ function Draw() {
   // Go to Draw page 완료
   const location = useLocation();
   //console.log("location_path",location.state);
-  let temp = location.state;
-  console.log("나는 temp이다", temp);
+  const file = location?.state;
 
   const handleNodeSelect = useCallback(
     (label) => {
@@ -48,6 +47,7 @@ function Draw() {
     },
     [diagram]
   );
+  useReadJSON(file,diagram);
 
   return (
     <div>

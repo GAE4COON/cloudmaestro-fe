@@ -1,126 +1,113 @@
-import React from "react";
-import "../styles/LearnMore.css"
-import { Link, NavLink } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import "../styles/LearnMore.css";
+import { Link } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
 
+const Learn = () => {
+    const [index, setIndex] = useState(1);
+    const [displayedText1, setDisplayedText1] = useState("");
+    const location = useLocation();
+    const type = location?.state?.type;
 
-class Home extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { index: 1 };
-  }
+    useEffect(() => {
+        animateText("Get Started with Clound Migration", setDisplayedText1, 100);
 
-  componentDidMount() {
-    this.animateText(
-      "Get Started with GAE4COON",
-      "displayedText1",
-      100
+        console.log("type:", type);
+    
+        if (type) {
+          
+          if (type === 'excel') {
+            window.scrollTo(0, 300);
+          }
+          if (type === 'json') {
+            window.scrollTo(0, 1570);
+          }
+        }
+      }, [location]);
+
+    const animateText = (fullText, setter, speed) => {
+        let i = 0;
+        const interval = setInterval(() => {
+            i++;
+            setter(fullText.substring(0, i));
+            if (i === fullText.length) {
+                clearInterval(interval);
+            }
+        }, speed);
+    };
+
+    const renderNameSection = (name) => (
+        <div className="name">{name}</div>
     );
 
-  };
+    const nameSection = (name) => (
+        <div className="mainname">{name}</div>
+    );
 
-  animateText = (fullText, stateKey, speed) => {
-    let index = 0;
-    const interval = setInterval(() => {
-      index++;
-      this.setState({
-        [stateKey]: fullText.substring(0, index)
-      });
-      if (index === fullText.length) {
-        clearInterval(interval);
-      }
-    }, speed);
-  };
+    const explainNetwork = (summary, index, img_src, img_json) => (
+        <div className="explain">
+            <div className="summary">
+                <div className="summary">Network Example 1<br/>
+                how to make safe network environment</div>
+                <div className="link">
+                    <Link to={`/learnmore/${index}`}>Learn More</Link>
+                </div>
+            </div>
+            <div className="img">
+                <Link to='/draw/network' state={img_json}>
+                    <img className="custom-img" src={img_src} alt="도식화하는 이미지" />
+                </Link>
+            </div>
+        </div>
+    );
 
-  renderNameSection(name) {
-    return (
-      <div className="name">
-        {name}
-      </div>
-    )
-
-  }
-
-  nameSection(name) {
-    return (
-      <div className="mainname">
-        {name}
-      </div>
-    )
-
-  }
-
-  explain(summary, index, img_src, img_json) {
-    console.log("summary", summary);
-    console.log("index", index);
-
-    console.log("img_json", img_json);
-
-    return (
+    
+    const explainAWS = (summary, index, img_src, img_json) => (
       <div className="explain">
-        <div className="summary">
           <div className="summary">
-            Input에 대해서는 어쩌고 저껒고
+              <div className="summary">Network Example 1<br/>
+              how to make safe network environment</div>
+              <div className="link">
+                  <Link to={`/learnmore/${index}`}>Learn More</Link>
+              </div>
           </div>
-          <div className="link">
-            <Link to={`/learnmore/${index}`}>
-              Learn More
-            </Link>
+          <div className="img">
+              <Link to='/draw/aws' state={img_json}>
+                  <img className="custom-img" src={img_src} alt="도식화하는 이미지" />
+              </Link>
           </div>
-        </div>
-
-        <div className="img">
-            <Link 
-              to='/learn-draw'
-              state={img_json}
-            
-            >
-              <img className="custom-img" src={img_src} alt="도식화하는 이미지"/>       
-            </Link>
-         
-        </div>
-
-        <div>
-
-        </div>
-
       </div>
-    )
+  );
 
-  }
-
-
-
-  render() {
     return (
       <div>
         <div className="container1">
           <div className="content">
-            <p>{this.state.displayedText1}</p>
+          <p>{displayedText1}</p> 
           </div>
         </div>
 
-        {this.nameSection("Network Excel")}
+        {nameSection("Network Excel")}
         <div className="Excels">
           <div id='Excels-left' />
           <div>
-              <div id="block">
-               
-                <div>
-                  {this.renderNameSection("User Guide for Input")}
-                </div>
-                <div>
-                  
-                  {this.explain("user",1,"/assets/1/1_diagram.png","/assets/1/1_diagram.json")}
-                </div>
+            <div id="block">
+
+              <div>
+                {renderNameSection("User Guide for Input")}
+              </div>
+              <div>
+                {explainNetwork("user", 1, "/assets/learn_template/Network1.png", "/assets/learn_template/Network1.json")}
+              </div>
 
             </div>
             <div id="block">
 
               <div>
-                {this.renderNameSection("Network Excel")}
+                {renderNameSection("Network Excel")}
               </div>
               <div>
-                {this.explain("User Guide for Input", 2)}
+                {explainNetwork("User Guide for Input", 2)}
               </div>
 
             </div>
@@ -132,7 +119,7 @@ class Home extends React.Component {
         </div>
 
 
-        {this.nameSection("Network Draw")}
+        {nameSection("Network Draw")}
         <div className="Excels">
           <div id='Excels-left' />
           <div>
@@ -140,50 +127,51 @@ class Home extends React.Component {
             <div id="block">
 
               <div>
-                {this.renderNameSection("Network Excel")}
+                {renderNameSection("Network Excel")}
               </div>
               <div>
-                {this.explain("User Guide for Input", 3)}
+                {explainAWS("user", 3, "/assets/learn_template/AWS1.png", "/assets/learn_template/AWS1.json")}
+
               </div>
 
             </div>
             <div id="block">
-              s
+              
               <div>
-                {this.renderNameSection("Network Excel")}
+                {renderNameSection("Network Excel")}
               </div>
               <div>
-                {this.explain("User Guide for Input", 4)}
-              </div>
-
-            </div>
-            <div id="block">
-
-              <div>
-                {this.renderNameSection("Network Excel")}
-              </div>
-              <div>
-                {this.explain("User Guide for Input", 5)}
+                {explainAWS("User Guide for Input", 4)}
               </div>
 
             </div>
             <div id="block">
 
               <div>
-                {this.renderNameSection("Network Excel")}
+                {renderNameSection("Network Excel")}
               </div>
               <div>
-                {this.explain("User Guide for Input", 6)}
+                {explainAWS("User Guide for Input", 5)}
+              </div>
+
+            </div>
+            <div id="block">
+
+              <div>
+                {renderNameSection("Network Excel")}
+              </div>
+              <div>
+                {explainAWS("User Guide for Input", 6)}
               </div>
 
             </div>
           </div>
           <div id='Excels-right' />
-         </div>
+        </div>
 
       </div>
     );
-  }
+  
 }
 
-export default Home;
+export default Learn;
