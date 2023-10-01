@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import logo from "../assets/img/logo.png";
 import { useAuth } from "./../utils/auth/authContext";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useLocation } from "react-router-dom";
@@ -58,7 +57,7 @@ const Navbar = () => {
     <>
       <NavStyled ref={menuRef}>
         <NavLinkLogo to="/">
-          <img src={logo} alt="logo" />
+          <img src="/assets/img/logo.png" alt="logo" />
         </NavLinkLogo>
 
         <NavMenuLeft isOpen={isOpen} onMouseLeave={closeMenu}>
