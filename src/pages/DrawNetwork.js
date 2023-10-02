@@ -17,9 +17,8 @@ import "../styles/Draw.css";
 
 function Draw() {
   const location = useLocation();
-  const file = location.state;
-  console.log("file", typeof file);
-  const type = location?.state;
+  const file = location?.state;
+  console.log("file", file);
   const [data, setData] = useState(null);
 
   useEffect(() => {
@@ -138,7 +137,7 @@ function Draw() {
     [diagram]
   );
 
-  useReadJSON(type, diagram);
+  useReadJSON(file, diagram);
 
 
   return (
