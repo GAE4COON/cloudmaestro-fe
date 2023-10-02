@@ -24,7 +24,7 @@ input[type="radio"]:checked + .tab-label {
 }
 
 input[type="radio"]:not(:checked) + .tab-label {
-    background-color: #3064D6;
+    background-color: #3E629A;
 }
 
 /* width 고정하면 안댑니다.. */
