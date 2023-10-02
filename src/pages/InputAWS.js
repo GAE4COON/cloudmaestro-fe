@@ -18,8 +18,6 @@ const App = () => {
     const handleFileChange = (event) => {
         navigate('/draw/aws'); // 변경된 부분
     };
-
-
     return (
         <div className="app-container">
             <div className="horizontal-layout">
