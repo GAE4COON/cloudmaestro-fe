@@ -19,6 +19,7 @@ const App = () => {
     const handleUpload = () => {
         if (selectedFile) {
             // TODO: 업로드 로직 구현
+            console.log("file", selectedFile)
             console.log("Uploading:", selectedFile.name);
         }
     };
@@ -118,7 +119,10 @@ const App = () => {
             </div>
 
             <button className="submit-button" onClick={handleUpload}>
-                Submit
+                <Link to={'/draw/network'}
+                    state={{ selectedFile }}>
+                    Submit
+                </Link>
             </button>
         </div>
     );

@@ -1,8 +1,7 @@
-
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import * as go from "gojs";
 
-const useReadJSON = (file,diagram) => {
+const useReadJSON = (file, diagram) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -15,15 +14,14 @@ const useReadJSON = (file,diagram) => {
       })
       .then((json) => {
         setData(json);
+        if (diagram) {
+          diagram.model = go.Model.fromJson(json);
+        }
       })
       .catch((error) => {
         console.error('Fetch error:', error);
       });
-  }, [diagram, file]); // file이 변경되면 useEffect가 다시 실행됩니다.
-  if(diagram){
-    diagram.model = go.Model.fromJson(data);
-  }
-
+  }, [diagram, file]);
 
   return data;
 };
