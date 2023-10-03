@@ -22,6 +22,26 @@
   display: flex;
 }
 
+.handler-content {
+  position: absolute;
+  width: 75%;
+  height: 5rem;
+  background-color: #fff;
+  left: 22.5%;
+  z-index: 10;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.toggle-container{
+
+  display: flex; 
+}
+
+.toggle-component{
+  width: 25%;
+  flex-shrink: 0; /* 플렉스 컨테이너 내에서 토글의 크기가 줄어들지 않게 설정 */
+}
+
 
 .Toggletype{
   position: absolute;
@@ -45,15 +65,6 @@
   background-color: white;
   border-left: 1px solid gray;
   border-top: 1px solid gray;
-}
-
-.toggle-component {
-  position: absolute;
-  width : 75%;
-  top: 0;
-  left: 20%;
-  z-index: 10; /* 높은 z-index */
-  margin : 0 auto;
 }
 
 .button-container {

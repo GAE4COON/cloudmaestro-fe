@@ -47,7 +47,7 @@ function Draw() {
     },
     [diagram]
   );
-  useReadJSON(file,diagram);
+  useReadJSON(file, diagram);
 
   return (
     <div>
@@ -57,11 +57,30 @@ function Draw() {
           <div className="createspace">
             <div className="workspace">
               {showSelectToggle && (
-                <SelectToggle
-                  value={selectedNodeData}
-                  onToggleSelect={handleNodeSelect}
-                  readOnly
-                />
+                <div className="handler-content">
+                  <div>토글 선택</div>
+                  <div className="toggle-container">
+                    <SelectToggle
+                      className="toogle1"
+                      value={selectedNodeData}
+                      onToggleSelect={handleNodeSelect}
+                      readOnly
+                    />
+                    <SelectToggle
+                      className="toogle2"
+                      value={selectedNodeData}
+                      onToggleSelect={handleNodeSelect}
+                      readOnly
+                    />
+                    <SelectToggle
+                      className="toogle3"
+                      value={selectedNodeData}
+                      onToggleSelect={handleNodeSelect}
+                      readOnly
+                    />
+                    <label className="instance-price">10$</label>
+                  </div>
+                </div>
               )}
               <ReactDiagram
                 initDiagram={initDiagram}
