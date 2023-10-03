@@ -16,6 +16,7 @@
   object-fit: cover;
   display: block;
   margin: 0 auto;
+  margin-top: 35px;
   opacity: 0.5;
 }
 
@@ -83,4 +84,14 @@
     height: 60%;
     text-align: center;
   }
+}
+
+@font-face {
+  font-family: "Pretendard-ExtraBold";
+  font-weight: normal;
+  src: url("./../assets/font/Pretendard-ExtraBold.otf") format("truetype");
+}
+
+h1 {
+  font-family: "Pretendard-ExtraBold";
 }
