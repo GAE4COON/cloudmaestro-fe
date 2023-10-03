@@ -55,23 +55,34 @@ function Draw() {
         <div className="container">
           <Button diagram={diagram} />
           <div className="createspace">
+          
             <div className="workspace">
-              {showSelectToggle && (
-                <SelectToggle
-                  value={selectedNodeData}
-                  onToggleSelect={handleNodeSelect}
-                  readOnly
+             
+              <div className="palette">
+                <Palette
+                  nodeDataArray={nodeDataArrayPalette}
+                  divClassName={paletteClassName}
                 />
-              )}
-              <ReactDiagram
-                initDiagram={initDiagram}
-                divClassName={diagramClassName}
-              />
+
+              </div>
+             
+               <div className="diagram">
+                  { showSelectToggle && (
+                    <SelectToggle
+                      value={selectedNodeData}
+                      key = {showSelectToggle.key}
+                      onToggleSelect={handleNodeSelect}
+                      readOnly
+                    />
+                  )}
+                  <ReactDiagram
+                  initDiagram={initDiagram}
+                  divClassName={diagramClassName}
+                />
+              </div>
             </div>
-            <Palette
-              nodeDataArray={nodeDataArrayPalette}
-              divClassName={paletteClassName}
-            />
+           
+           
           </div>
         </div>
       </div>

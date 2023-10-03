@@ -14,7 +14,8 @@ const groupedOptions = [
   },
 ];
 
-const SellectToggle = ({ value, onToggleSelect }) => {
+const SelectToggle = ({ value, key, onToggleSelect }) => {
+  console.log("나는 key 입니다", key)
   const selectedOption = groupedOptions
     .flatMap((group) => group.options)
     .find((option) => option.value === value);
@@ -36,4 +37,4 @@ const SellectToggle = ({ value, onToggleSelect }) => {
     </div>
   );
 };
-export default React.memo(SellectToggle);
+export default React.memo(SelectToggle);

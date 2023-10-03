@@ -2,6 +2,9 @@ import { useState } from "react";
 import * as go from "gojs";
 import "../styles/App.css"; // contains .diagram-component CSS
 
+// file 
+import {handleChangedSelection} from './toggle/toggle.js'
+
 const useGoJS = () => {
   const [diagram, setDiagram] = useState(null);
   const [showSelectToggle, setShowSelectToggle] = useState(false);
@@ -253,12 +256,19 @@ const useGoJS = () => {
     );
 
     diagram.addDiagramListener("ObjectSingleClicked", function (e) {
-      const part = e.subject.part;
-      if (part instanceof go.Link) {
+      const selectedNode = e.subject.part;
+      if (selectedNode instanceof go.Link) {
         console.log("링크가 클릭되었네요");
-      } else if (part instanceof go.Node) {
-        console.log(part.data);
-      }
+      } else if (selectedNode instanceof go.Node) {
+        const key = selectedNode.data.key;
+        console.log(key);  // 여기서 선택된 Node의 key 값을 출력합니다
+        
+        setShowSelectToggle(key, true); 
+        }
+        else {
+          setShowSelectToggle(false); // 추가된 로직
+        }
+      
     });
 
     diagram.addDiagramListener("ExternalObjectsDropped", (e) => {
@@ -276,12 +286,14 @@ const useGoJS = () => {
     diagram.addDiagramListener("ChangedSelection", (e) => {
       const selectedNode = e.diagram.selection.first();
       if (selectedNode instanceof go.Node) {
-        setShowSelectToggle(true); // 추가된 로직
+        
       } else {
-        setShowSelectToggle(false); // 추가된 로직
+        setShowSelectToggle(false); // Node가 아닌 경우에는 토글 숨김
       }
     });
+    
 
+   
     setDiagram(diagram);
     return diagram;
   };
