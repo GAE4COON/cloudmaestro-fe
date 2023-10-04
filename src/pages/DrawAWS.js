@@ -27,6 +27,8 @@ function Draw() {
 
   const { initDiagram, diagram, showSelectToggle } =
     useGoJS(setSelectedNodeData);
+
+    console.log("show", showSelectToggle.value)
   // Go to Draw page 완료
   const location = useLocation();
   //console.log("location_path",location.state);
@@ -67,13 +69,13 @@ function Draw() {
               </div>
              
                <div className="diagram">
-                  { showSelectToggle && (
+                  { showSelectToggle.value && (
                     <SelectToggle
-                      value={selectedNodeData}
-                      key = {showSelectToggle.key}
-                      onToggleSelect={handleNodeSelect}
-                      readOnly
-                    />
+                    value={selectedNodeData}
+                    uniquekey={showSelectToggle.key}
+                    onToggleSelect={handleNodeSelect}
+                    readOnly
+                  />
                   )}
                   <ReactDiagram
                   initDiagram={initDiagram}

@@ -1,13 +1,10 @@
 import { useState } from "react";
 import * as go from "gojs";
 import "../styles/App.css"; // contains .diagram-component CSS
-
-// file 
-import {handleChangedSelection} from './toggle/toggle.js'
-
+import handleChangedSelection from "./toggle/toggle.js";
 const useGoJS = () => {
   const [diagram, setDiagram] = useState(null);
-  const [showSelectToggle, setShowSelectToggle] = useState(false);
+  const [showSelectToggle, setShowSelectToggle] = useState({"value":false});
   function highlightGroup(e, grp, show) {
     if (!grp) return;
     e.handled = true;
@@ -256,19 +253,18 @@ const useGoJS = () => {
     );
 
     diagram.addDiagramListener("ObjectSingleClicked", function (e) {
-      const selectedNode = e.subject.part;
-      if (selectedNode instanceof go.Link) {
+      const part = e.subject.part;
+      if (part instanceof go.Link) {
         console.log("링크가 클릭되었네요");
-      } else if (selectedNode instanceof go.Node) {
-        const key = selectedNode.data.key;
-        console.log(key);  // 여기서 선택된 Node의 key 값을 출력합니다
-        
-        setShowSelectToggle(key, true); 
+      } else if (part instanceof go.Node) {
+        console.log("나는 node 입니다" , part.data);
+        const key = part.data.key;
+        console.log("나는 key 입니다",key);
+
+        if(handleChangedSelection(key)){
+          setShowSelectToggle({"value":true,"key":key})
         }
-        else {
-          setShowSelectToggle(false); // 추가된 로직
-        }
-      
+      }
     });
 
     diagram.addDiagramListener("ExternalObjectsDropped", (e) => {
@@ -286,17 +282,19 @@ const useGoJS = () => {
     diagram.addDiagramListener("ChangedSelection", (e) => {
       const selectedNode = e.diagram.selection.first();
       if (selectedNode instanceof go.Node) {
-        
+        const key = selectedNode.data.key;
+        console.log("나는 key 입니다",key);
+
       } else {
-        setShowSelectToggle(false); // Node가 아닌 경우에는 토글 숨김
+        setShowSelectToggle({"value":false}); // 추가된 로직
       }
     });
-    
 
-   
     setDiagram(diagram);
     return diagram;
   };
+
+  console.log("value",showSelectToggle)
 
   return { initDiagram, diagram, showSelectToggle };
 };

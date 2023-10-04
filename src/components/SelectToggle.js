@@ -14,8 +14,14 @@ const groupedOptions = [
   },
 ];
 
-const SelectToggle = ({ value, key, onToggleSelect }) => {
-  console.log("나는 key 입니다", key)
+const SelectToggle = ({ value, uniquekey,  onToggleSelect}) => {
+  console.log("valuevalue",uniquekey)
+
+  if (uniquekey === 'Arch_Amazon-EC2_48') {
+    console.log("hihihi");
+
+}
+  console.log("나는 keyyy 입니다", value)
   const selectedOption = groupedOptions
     .flatMap((group) => group.options)
     .find((option) => option.value === value);
