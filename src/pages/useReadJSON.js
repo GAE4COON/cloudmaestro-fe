@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import * as go from "gojs";
 
+
 const useReadJSON = (file, diagram) => {
+
   const [data, setData] = useState([]);
 
   useEffect(() => {
