@@ -13,6 +13,8 @@ import LearnMore from "./pages/LearnMore";
 import InputNet from "./pages/InputNetwork";
 import InputAWS from "./pages/InputAWS";
 
+import Back from "./pages/Backend/BackEnd";
+
 function App() {
   return (
     <div className="App">
@@ -22,6 +24,10 @@ function App() {
           <div className="main-content">
             <Routes>
               <Route exact path="/" element={<Home />} />
+
+              <Route path="/ec2" element={<Back/>}/>
+
+
               <Route path="/about" element={<Introduce />} />
               <Route path="/learn" element={<LearnMore />} />
 

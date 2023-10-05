@@ -1,18 +1,19 @@
-
-/* .toggle-component의 부모 요소에 대한 스타일. 만약 .toggle-component가 최상위 요소라면 이 스타일을 .toggle-component에 직접 적용하세요. */
-.parent-of-toggle-component {
-    display: flex;
-    justify-content: center; /* 수평 중앙 정렬 */
-    align-items: center;     /* 수직 중앙 정렬 */
-    height: 100vh;           /* 화면의 전체 높이를 차지 */
+.toggle-component {
+  display: flex; /* 토글들을 수평으로 배열하기 위해 flex 사용 */
+  justify-content: space-between; /* 토글 간 간격 조정 */
+  width: 70%; /* 부모 요소의 너비에 맞게 조절 */
+  max-width: 800px; /* 원하는 최대 너비 설정. 여기서는 800px로 변경 */
+  position: relative;
+  top: 0;
+  left: 10%;
+  z-index: 2; /* 높은 z-index */
+  margin: 0 auto;
 }
 
-
- .toggle-component {
-    display: flex; /* 토글들을 수평으로 배열하기 위해 flex 사용 */
-    justify-content: space-between; /* 토글 간 간격 조정 */
-    width: 100%; /* 부모 요소의 너비에 맞게 조절 */
-    max-width: 600px; /* 원하는 최대 너비 설정. 필요에 따라 조절 가능 */
-  }
-  
-  
+select {
+  width: 100%; /* 전체 너비 사용 */
+  padding: 10px; /* 패딩을 추가하여 크기를 늘림 */
+  font-size: 16px; /* 글꼴 크기 증가 */
+  border-radius: 4px; /* 모서리 둥글게 */
+  border: 1px solid #ccc; /* 경계선 스타일링 */
+}

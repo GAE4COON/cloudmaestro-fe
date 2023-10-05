@@ -22,6 +22,22 @@
   display: flex;
 }
 
+.handler-content {
+  position: absolute;
+  width: 75%;
+  height: 5rem;
+  background-color: #fff;
+  left: 22.5%;
+  z-index: 10;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.toggle-container{
+
+  display: flex; 
+}
+
+
 
 .Toggletype{
   position: absolute;
@@ -45,15 +61,6 @@
   background-color: white;
   border-left: 1px solid gray;
   border-top: 1px solid gray;
-}
-
-.toggle-component {
-  position: absolute;
-  width : 75%;
-  top: 0;
-  left: 20%;
-  z-index: 10; /* 높은 z-index */
-  margin : 0 auto;
 }
 
 .button-container {
@@ -114,12 +121,11 @@
   width: 100%; /* Optional: 부모 요소의 너비를 100%로 설정 */
   height: 100vh; /*  Optional: 뷰포트 높이를 기준으로 높이 설정 */
 }
-.toggle-component .css-b62m3t-container {
-  position: relative;
-  width: 80%; /* 현재 값을 유지하거나 필요에 따라 조절 */
-  margin: 0 auto;
-}
 
+.select-toggle-container,
+.react-diagram-container {
+  width: 100%;  /* 부모 컨테이너의 가로 길이에 맞춤 */
+}
 
 .react-diagram-container {
   flex-grow: 1;  /* 가능한 경우 남은 공간을 채움 */
