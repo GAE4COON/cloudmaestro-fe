@@ -6,24 +6,23 @@ function Home() {
   const navigate = useNavigate();
 
   const handleAutoDraw = () => {
-    navigate("/input");
+    navigate("/inputnet");
   };
 
   const handleJustDraw = () => {
-    navigate("/draw");
+    navigate("/draw/aws");
   };
 
   return (
     <Fragment>
       <div className="home-content">
         <div className="img-container">
-
           <img
             src="assets/img/Cloud-architecture.png"
             alt="logo"
             className="home-img"
           />
-          <div className="home-select-box">
+           <div className="home-select-box">
             <h1>WELCOME TO CLOUD MAESTRO!</h1>
             <h2 className="home-select-text">
               Automated Diagram of a Cloud Architecture with Security

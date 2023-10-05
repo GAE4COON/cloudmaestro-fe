@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { Link } from "react-router-dom";
 
 export const HamburgerContainer = styled.div`
@@ -28,15 +28,54 @@ export const Hamburger = styled.div`
     display: flex;
   }
 `;
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
+
+const slideDown = keyframes`
+  from {
+    transform: translateY(-20px);
+  }
+  to {
+    transform: translateY(0);
+  }
+`;
+
+export const DropdownMenu = styled.div`
+  position: absolute;
+  top: 100%; // NavLink의 바로 아래에 나타나게 함
+  left: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  display: none; // by default, the menu is not displayed
+  animation: ${fadeIn} 0.3s forwards, ${slideDown} 0.3s forwards;
+  flex-direction: column;
+  width: fit-content;
+  border-radius: 8px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+  &:hover {
+    display: flex; // display the dropdown menu when the NavLink is hovered over
+  }
+`;
 
 export const NavStyled = styled.nav`
-  background: #9ab7c1;
-  height: 30px;
+  background: #fff;
+  height: 35px;
   display: flex;
   justify-content: space-between;
   padding: 0.5rem calc(0.125 * ((100vw - 1000px) / 2));
   z-index: 999;
   position: relative;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 `;
 
 export const NavMenuLeft = styled.div`
@@ -57,7 +96,7 @@ export const NavMenuLeft = styled.div`
     right: ${({ isOpen }) => (isOpen ? "0" : "-50%")};
     visibility: ${({ isOpen }) => (isOpen ? "visible" : "hidden")};
     top: 40px;
-    background: #9ab7c1;
+    background: #fff;
     z-index: 1;
   }
 `;
@@ -82,7 +121,6 @@ export const NavMenuRight = styled.div`
 `;
 
 export const NavLinkLogo = styled(Link)`
-  color: #3b6c7d;
   display: flex;
   align-items: center;
   text-decoration: none;
@@ -107,7 +145,8 @@ export const NavLinkLogo = styled(Link)`
 `;
 
 export const NavLink = styled(Link)`
-  color: #3b6c7d;
+  position: relative;
+  color: #000;
   display: flex;
   align-items: center;
   text-decoration: none;
@@ -122,12 +161,16 @@ export const NavLink = styled(Link)`
   }
 
   &.active {
-    color: #15cdfc;
+    color: #3064d6;
   }
 
   &:hover {
     transition: all 0.2s ease-in-out;
-    color: #fff;
+    color: #3064d6;
+  }
+
+  &:hover ${DropdownMenu} {
+    display: flex;
   }
 
   @media screen and (max-width: 768px) {
@@ -136,7 +179,7 @@ export const NavLink = styled(Link)`
     padding: 0 0rem;
 
     &:hover {
-      background: #3b6c7d;
+      background: #dddddd;
     }
   }
 `;
@@ -162,7 +205,7 @@ export const NavBtnLink = styled(Link)`
   border-radius: 4px;
   background: #fff;
   padding: 5px 12px;
-  color: #3b6c7d;
+  color: #3064d6;
   outline: none;
   border: none;
   cursor: pointer;
@@ -173,8 +216,8 @@ export const NavBtnLink = styled(Link)`
 
   &:hover {
     transition: all 0.2s ease-in-out;
-    background: #3b6c7d;
-    color: #fff;
+    color: #3064d6;
+    font-weight: bold;
   }
 `;
 

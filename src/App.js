@@ -1,22 +1,24 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./styles/App.css";
 import Home from "./pages/Home";
-import Draw from "./pages/Draw";
-import Footer from "./components/Footer"
-//import Diagram from "./pages/MyDiagram";
+import DrawAWS from "./pages/DrawAWS";
+import DrawNetwork from "./pages/DrawNetwork";
+import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import Signup from "./pages/SignUp";
 import Signin from "./pages/SignIn";
 import { AuthProvider } from "./utils/auth/authContext";
-import Introduce from "./pages/Introduce"
+import Introduce from "./pages/Introduce";
 import LearnMore from "./pages/LearnMore";
-import Input from "./pages/Input";
-import NetDraw from "./pages/NetDraw";
-import LearnDraw from "./pages/LearnDraw";
+
+import InputNet from "./pages/InputNetwork";
+import InputAWS from "./pages/InputAWS";
+
+import Back from "./pages/Backend/BackEnd";
+
 
 function App() {
   return (
-    
     <div className="App">
       <AuthProvider>
         <BrowserRouter>
@@ -24,19 +26,24 @@ function App() {
           <div className="main-content">
             <Routes>
               <Route exact path="/" element={<Home />} />
+
+              <Route path="/ec2" element={<Back/>}/>
+
+
               <Route path="/about" element={<Introduce />} />
               <Route path="/learn" element={<LearnMore />} />
-              <Route path="/draw" element={<Draw />} />
+
+              <Route path="/draw/aws" element={<DrawAWS />} />
+              <Route path="/draw/network" element={<DrawNetwork />} />
+
               <Route path="/sign-up" element={<Signup />} />
               <Route path="/sign-in" element={<Signin />} />
-              <Route path="/input" element={<Input />} />
-              <Route path="/netdraw" element={<NetDraw />} />
-              <Route path="/learn-draw" element={<LearnDraw />} />
 
-
+              <Route path="/inputnet" element={<InputNet />} />
+              <Route path="/inputaws" element={<InputAWS />} />
             </Routes>
           </div>
-          <Footer/>
+          <Footer />
         </BrowserRouter>
       </AuthProvider>
     </div>

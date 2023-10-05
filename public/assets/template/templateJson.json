@@ -1,0 +1,129 @@
+{
+  "class": "GraphLinksModel",
+  "linkKeyProperty": "key",
+  "nodeDataArray": [
+    {
+      "isGroup": true,
+      "key": "Public",
+      "stroke": "rgba(0,0,198,0.3)",
+      "group": "VPC"
+    },
+    {
+      "key": "icon1",
+      "text": "2",
+      "figure": "Rectangle",
+      "background": "lightblue",
+      "source": "img/icon1.png",
+      "loc": "-554.6787052764904 -210.74287510988444",
+      "group": "Public"
+    },
+    {
+      "key": "cat3",
+      "text": "5",
+      "figure": "Rectangle",
+      "color": "lightblue",
+      "source": "img/cat3.png.jpg",
+      "loc": "-564.278711380006 -132.87622166750165",
+      "group": "Public"
+    },
+    {
+      "isGroup": true,
+      "key": "Private",
+      "stroke": "rgba(0,198,0,0.3)",
+      "group": "VPC"
+    },
+    {
+      "key": "icon12",
+      "text": "2",
+      "figure": "Rectangle",
+      "background": "lightblue",
+      "source": "img/icon1.png",
+      "loc": "-421.34539228820915 -259.8095560180875",
+      "group": "Private"
+    },
+    {
+      "key": "cat32",
+      "text": "5",
+      "figure": "Rectangle",
+      "color": "lightblue",
+      "source": "img/cat3.png.jpg",
+      "loc": "-430.9453983917248 -181.94290257570472",
+      "group": "Private"
+    },
+    {
+      "isGroup": true,
+      "key": "VPC",
+      "stroke": "rgba(255,165,0,0.3)"
+    },
+    {
+      "isGroup": true,
+      "key": "VPC2",
+      "stroke": "rgba(255,165,0,0.3)"
+    },
+    {
+      "isGroup": true,
+      "key": "Public2",
+      "stroke": "rgba(0,0,198,0.3)",
+      "group": "VPC2"
+    },
+    {
+      "key": "icon13",
+      "text": "2",
+      "figure": "Rectangle",
+      "background": "lightblue",
+      "source": "img/icon1.png",
+      "loc": "-178.29778486633415 -210.74287510988444",
+      "group": "Public2"
+    },
+    {
+      "key": "cat33",
+      "text": "5",
+      "figure": "Rectangle",
+      "color": "lightblue",
+      "source": "img/cat3.png.jpg",
+      "loc": "-187.89779096984978 -132.87622166750165",
+      "group": "Public2"
+    },
+    {
+      "isGroup": true,
+      "key": "Private2",
+      "stroke": "rgba(0,198,0,0.3)",
+      "group": "VPC2"
+    },
+    {
+      "key": "icon122",
+      "text": "2",
+      "figure": "Rectangle",
+      "background": "lightblue",
+      "source": "img/icon1.png",
+      "loc": "-44.964471878052905 -259.8095560180875",
+      "group": "Private2"
+    },
+    {
+      "key": "cat322",
+      "text": "5",
+      "figure": "Rectangle",
+      "color": "lightblue",
+      "source": "img/cat3.png.jpg",
+      "loc": "-54.56447798156853 -181.94290257570472",
+      "group": "Private2"
+    }
+  ],
+  "linkDataArray": [
+    {
+      "from": "Public",
+      "to": "Private",
+      "key": -1
+    },
+    {
+      "from": "Public2",
+      "to": "Private2",
+      "key": -2
+    },
+    {
+      "from": "VPC",
+      "to": "VPC2",
+      "key": -3
+    }
+  ]
+}
