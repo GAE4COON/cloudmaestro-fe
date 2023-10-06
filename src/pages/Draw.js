@@ -25,7 +25,7 @@ function Draw() {
 
   const [selectedNodeData, setSelectedNodeData] = useState(null); // <-- 상태 변수를 추가합니다.
 
-  const { initDiagram, diagram, showSelectToggle } =
+  const { initDiagram, diagram, showSelectToggle, clickedNodeKey } =
     useGoJS(setSelectedNodeData);
 
     console.log("show", showSelectToggle.value)
@@ -61,14 +61,16 @@ function Draw() {
             <div className="workspace">
              
               <div className="palette">
+
                 <Palette
                   nodeDataArray={nodeDataArrayPalette}
                   divClassName={paletteClassName}
                 />
 
               </div>
-             
+
                <div className="diagram">
+
                   { showSelectToggle.value && (
                     <SelectToggle
                     value={selectedNodeData}
@@ -77,13 +79,16 @@ function Draw() {
                     readOnly
                   />
                   )}
+                    <div className="clicked_key">
+                      {clickedNodeKey}
+                    </div>
                   <ReactDiagram
                   initDiagram={initDiagram}
                   divClassName={diagramClassName}
                 />
               </div>
+              
             </div>
-           
            
           </div>
         </div>

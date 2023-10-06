@@ -5,6 +5,15 @@ import * as go from "gojs";
 // import { nodeDataArrayPalette } from "../db/NodeAWS";
 import { nodeDataArrayPalette } from "../db/Node";
 
+function formatKey(key) {
+  // _를 공백으로 대체합니다.
+  let words = key.replace(/_/g, ' ').split(' ');
+
+  // 각 단어의 첫 글자를 대문자로 바꿉니다.
+  let result = words.map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+
+  return result;
+}
 
 const Palette = memo(({ divClassName }) => {
   // const [setNodeDataArray] = useState([]);
@@ -21,21 +30,29 @@ const Palette = memo(({ divClassName }) => {
       // enable Ctrl+Z to undo and Ctrl+Y to redo
       "undoManager.isEnabled": true,
       "animationManager.isEnabled": false,
-
       model: new go.GraphLinksModel(nodeDataArray),
     });
 
-    myPalette.nodeTemplate = $(
-      go.Node,
-      "Auto",
-      { background: "#A0BCC2" },
-
-      $(
-        go.Picture,
-        { margin: 10, width: 50, height: 50, background: "white" },
+    myPalette.nodeTemplate =
+      $(go.Node, "Auto",
+      $(go.Panel, "Vertical",
+      $(go.Picture,
+        { margin: 5, width: 50, height: 50, background: "white" },
         new go.Binding("source")
+      ),
+
+      $(go.TextBlock,
+        {
+          alignment: go.Spot.BottomCenter,
+          font: "bold 10pt sans-serif",
+          width: 80,  // 예를 들어, 최대 너비를 100픽셀로 설정
+          overflow: go.TextBlock.WrapFit,  // 너비를 초과하는 텍스트를 래핑
+          textAlign:"center"  
+        },
+        new go.Binding("text", "key", formatKey))
       )
-    );
+
+      );
 
     myPalette.groupTemplate = $(
       go.Group,
@@ -60,7 +77,7 @@ const Palette = memo(({ divClassName }) => {
       (item) => item.type === selectedTab
     );
 
-    myPalette.model = new go.GraphLinksModel(dataToUse);
+    myPalette.model.nodeDataArray = dataToUse;
 
     if (paletteDivs.current[selectedTab]) {
       myPalette.div = paletteDivs.current[selectedTab];
@@ -69,6 +86,7 @@ const Palette = memo(({ divClassName }) => {
 
     return () => {
       myPalette.div = null;
+
     };
   }, [nodeDataArray, selectedTab]);
 
