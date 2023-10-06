@@ -14,22 +14,23 @@ const onTypeOptions = [
   { value: "T3.3", label: "Reserved" }
 ];
 
-function fetchData(platform,setData, setOptions,setLoading, setError){
+function fetchPlatformData(platform, instanceType, setData, setLoading, setError){
   return new Promise((resolve, reject) => {setLoading(true);
     axios({
       url: '/ec2/apiname',
       method: 'post',
       data: {
-        "platform": platform
+        "platform": platform,
+        "instanceType":instanceType
       },
       baseURL: 'http://localhost:8080',
     })
     .then(function (response) {
       setData(response.data);
-      console.log("response.data",response.data,"platform",platform)
+      //console.log("response.data",response.data,"platform",platform)
       if(platform == "linux"){
         const newLinuxOptions = response.data.map(item => ({
-          value:"T1."+item.id,
+          value: item,
           label: item
         }))
 
@@ -39,7 +40,7 @@ function fetchData(platform,setData, setOptions,setLoading, setError){
       }
       if(platform == "windows"){
         const newWindowsOptions = response.data.map(item => ({
-          value:"T1."+item.id,
+          value: item,
           label: item
         }))
 
@@ -56,6 +57,7 @@ function fetchData(platform,setData, setOptions,setLoading, setError){
     });
   });
 }
+
 
 
 const SelectToggle = ({ uniquekey, onToggleSelect }) => {
@@ -75,30 +77,53 @@ const SelectToggle = ({ uniquekey, onToggleSelect }) => {
 
   const handleChange = async(index, event) => {
     const newValue = event.target.value;
+    let platform = null;
+    let options = null;
       
-    const platformMap = {
-      "T1": "linux",
-      "T2": "windows",
-    };
-      
+  
     if(index === 0) {
       setToggle1Value(newValue);
-      if(newValue === "T1" || newValue === "T2") {
-        const platform = platformMap[newValue];
-        const options = await fetchData(platform, setData, setLoading, setError);
-        setToggle2Options(options);
+      console.log("newValue",newValue)
+      if(newValue === "linux" || newValue === "windows") {
+        platform = newValue;
+        
+        try {
+          const options = await fetchPlatformData(platform, null, setData, setLoading, setError);
+          setToggle2Options(options);
+          setToggle2Value(null);
+          setToggle3Value(null);
+        } catch (err) {
+          console.error("Error fetching platform data:", err);
+        }
       } else {
         setToggle2Options([]);
+        setToggle2Value(null);
+        setToggle3Value(null);
       }
-      setToggle2Value(null); // Reset toggle 2 value when toggle 1 changes
-      setToggle3Value(null); // Reset toggle 3 value when toggle 1 changes
+        
+       
     } else if(index === 1) {
-      setToggle2Value(newValue);
-      setToggle3Options(onTypeOptions);
-      setToggle3Value(null); // Reset toggle 3 value when toggle 2 changes
+        console.log("newvalue2", newValue);
+        setToggle2Value(newValue);
+
+        try {
+          const options = await fetchPlatformData(toggle1Value, newValue, setData, setLoading, setError);
+          setToggle3Options(options);
+          setToggle3Value(null);
+        } catch (err) {
+          console.error("Error fetching instance form data:", err);
+        }
+
+
     } else if(index === 2) {
       setToggle3Value(newValue);
+      setToggle4Options(onTypeOptions);
+    
     }
+    else if(index === 3) {
+      setToggle4Value(newValue);
+    }
+  
   };
 
   const renderToggle = (index, Select, value, options) => (
@@ -108,7 +133,7 @@ const SelectToggle = ({ uniquekey, onToggleSelect }) => {
     >
       <option value="" disabled>{Select}</option>
       {options.map((option) => (
-        <option key={option.value} value={option.value}>
+        <option key={option.label} value={option.label}>
           {option.label}
         </option>
       ))}

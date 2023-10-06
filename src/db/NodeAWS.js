@@ -15,6 +15,7 @@ export const nodeDataArrayPalette = [
         color: "lightblue",
         source: "/img/AWS_icon/Arch_Analytics/Arch_Amazon-CloudSearch_48.svg",
         type: "Arch_Analytics"
+
     },
     {
         key: "Arch_Amazon-DataZone_48",
