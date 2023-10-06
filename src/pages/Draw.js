@@ -79,9 +79,11 @@ function Draw() {
                     readOnly
                   />
                   )}
-                    <div className="clicked_key">
-                      {clickedNodeKey}
-                    </div>
+                    { clickedNodeKey && 
+  <div className="clicked_key">
+    {clickedNodeKey}
+  </div> 
+}
                   <ReactDiagram
                   initDiagram={initDiagram}
                   divClassName={diagramClassName}
