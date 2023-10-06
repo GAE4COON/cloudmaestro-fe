@@ -47,7 +47,7 @@ function Draw() {
     },
     [diagram]
   );
-  useReadJSON(file,diagram);
+  useReadJSON(file, diagram);
 
   return (
     <div>
