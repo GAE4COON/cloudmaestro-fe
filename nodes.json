@@ -1,0 +1,122 @@
+[
+    {
+        key: "anti_ddos",
+        text: "1",
+        figure: "Rectangle",
+        color: "lightblue",
+        source: "./public/img/Network_icon/anti_ddos.png",
+        type: "Network_icon"
+    },
+    {
+        key: "ap",
+        text: "1",
+        figure: "Rectangle",
+        color: "lightblue",
+        source: "./public/img/Network_icon/ap.png",
+        type: "Network_icon"
+    },
+    {
+        key: "database",
+        text: "1",
+        figure: "Rectangle",
+        color: "lightblue",
+        source: "./public/img/Network_icon/database.png",
+        type: "Network_icon"
+    },
+    {
+        key: "firewall",
+        text: "1",
+        figure: "Rectangle",
+        color: "lightblue",
+        source: "./public/img/Network_icon/firewall.png",
+        type: "Network_icon"
+    },
+    {
+        key: "Hub",
+        text: "1",
+        figure: "Rectangle",
+        color: "lightblue",
+        source: "./public/img/Network_icon/Hub.png",
+        type: "Network_icon"
+    },
+    {
+        key: "image19",
+        text: "1",
+        figure: "Rectangle",
+        color: "lightblue",
+        source: "./public/img/Network_icon/image19.png",
+        type: "Network_icon"
+    },
+    {
+        key: "L2_switch",
+        text: "1",
+        figure: "Rectangle",
+        color: "lightblue",
+        source: "./public/img/Network_icon/L2_switch.png",
+        type: "Network_icon"
+    },
+    {
+        key: "L3_switch",
+        text: "1",
+        figure: "Rectangle",
+        color: "lightblue",
+        source: "./public/img/Network_icon/L3_switch.png",
+        type: "Network_icon"
+    },
+    {
+        key: "L4_switch",
+        text: "1",
+        figure: "Rectangle",
+        color: "lightblue",
+        source: "./public/img/Network_icon/L4_switch.png",
+        type: "Network_icon"
+    },
+    {
+        key: "L7_switch",
+        text: "1",
+        figure: "Rectangle",
+        color: "lightblue",
+        source: "./public/img/Network_icon/L7_switch.png",
+        type: "Network_icon"
+    },
+    {
+        key: "network",
+        text: "1",
+        figure: "Rectangle",
+        color: "lightblue",
+        source: "./public/img/Network_icon/network.png",
+        type: "Network_icon"
+    },
+    {
+        key: "pc",
+        text: "1",
+        figure: "Rectangle",
+        color: "lightblue",
+        source: "./public/img/Network_icon/pc.png",
+        type: "Network_icon"
+    },
+    {
+        key: "router",
+        text: "1",
+        figure: "Rectangle",
+        color: "lightblue",
+        source: "./public/img/Network_icon/router.png",
+        type: "Network_icon"
+    },
+    {
+        key: "server",
+        text: "1",
+        figure: "Rectangle",
+        color: "lightblue",
+        source: "./public/img/Network_icon/server.png",
+        type: "Network_icon"
+    },
+    {
+        key: "waf",
+        text: "1",
+        figure: "Rectangle",
+        color: "lightblue",
+        source: "./public/img/Network_icon/waf.png",
+        type: "Network_icon"
+    },
+]
