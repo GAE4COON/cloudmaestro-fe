@@ -62,40 +62,49 @@ const Navbar = () => {
         </NavLinkLogo>
 
         <NavMenuLeft isOpen={isOpen} onMouseLeave={closeMenu}>
+
+
           <NavLink
-            onClick={closeMenu}
-            to="/"
-            className={location.pathname === "/" ? "active" : ""}
-          >
-            Home
-          </NavLink>
-          <NavLink
-            onClick={closeMenu}
-            to="/about"
-            className={location.pathname === "/about" ? "active" : ""}
-          >
-            About
-          </NavLink>
-          <NavLink
-            onClick={closeMenu}
-            to="/learn"
-            className={location.pathname === "/learn" ? "active" : ""}
-          >
-            Learn More
-          </NavLink>
-          <NavLink
+            onClick={closeMenu} to="/home"
             onMouseEnter={() => setDropdownOpen(true)} // 호버 시 드롭다운 열기
             onMouseLeave={() => setDropdownOpen(false)} // 호버 떼면 드롭다운 닫기
-            className={location.pathname.startsWith("/draw") ? "active" : ""}
-          >
-            Draw!
+            className={location.pathname.startsWith("/home") ? "active" : ""}>
+
+            Home
             {isDropdownOpen && (
               <DropdownMenu>
-                <NavLink onClick={closeMenu} to="/draw/network">
-                  Network
+                <NavLink onClick={closeMenu} to="/home">
+                  Home
                 </NavLink>
-                <NavLink onClick={closeMenu} to="/draw/aws">
-                  Aws
+                <NavLink style={{paddingTop:"8px"}} onClick={closeMenu} to="/home/autodraw">
+                  Auto Draw
+                </NavLink>
+              </DropdownMenu>
+            )}
+          </NavLink>
+
+          <NavLink
+            onClick={closeMenu}
+            to="/draw"
+            className={location.pathname === "/draw" ? "active" : ""}
+          >
+            Draw
+          </NavLink>
+
+          <NavLink            
+            onClick={closeMenu} to="/about"
+            onMouseEnter={() => setDropdownOpen(true)} // 호버 시 드롭다운 열기
+            onMouseLeave={() => setDropdownOpen(false)} // 호버 떼면 드롭다운 닫기
+            className={location.pathname.startsWith("/about") ? "active" : ""}>
+
+            About
+            {isDropdownOpen && (
+              <DropdownMenu>
+                <NavLink onClick={closeMenu} to="/about">
+                  About
+                </NavLink>
+                <NavLink style={{paddingTop:"8px"}} onClick={closeMenu} to="/about/example">
+                  Learn Example
                 </NavLink>
               </DropdownMenu>
             )}

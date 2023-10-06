@@ -1,7 +1,10 @@
 import "../styles/Palette.css";
 import React, { memo, useEffect, useRef, useState } from "react";
 import * as go from "gojs";
-import { nodeDataArrayPalette } from "../db/NodeAWS";
+
+// import { nodeDataArrayPalette } from "../db/NodeAWS";
+import { nodeDataArrayPalette } from "../db/Node";
+
 
 const Palette = memo(({ divClassName }) => {
   // const [setNodeDataArray] = useState([]);
@@ -97,6 +100,13 @@ const Palette = memo(({ divClassName }) => {
             >
               <div className="scrollable-tabs-container">
                 <div className="tabs">
+                  {/* Network node */}
+                  <div className="tab">
+                    <input type="radio" id="rd27" name="rd" onClick={() => setSelectedTab("Network_icon")} />
+
+                    <label className="tab-label" htmlFor="rd27">Network</label>
+                    <div className="tab-content" ref={el => paletteDivs.current['Network_icon'] = el} />
+                  </div>
                   <div className="tab">
                     <input
                       type="radio"
@@ -184,9 +194,9 @@ const Palette = memo(({ divClassName }) => {
                     <div
                       className="tab-content"
                       ref={(el) =>
-                        (paletteDivs.current[
-                          "Arch_Cloud-Financial-Management"
-                        ] = el)
+                      (paletteDivs.current[
+                        "Arch_Cloud-Financial-Management"
+                      ] = el)
                       }
                     />
                   </div>
@@ -456,9 +466,9 @@ const Palette = memo(({ divClassName }) => {
                     <div
                       className="tab-content"
                       ref={(el) =>
-                        (paletteDivs.current[
-                          "Arch_Networking-Content-Delivery"
-                        ] = el)
+                      (paletteDivs.current[
+                        "Arch_Networking-Content-Delivery"
+                      ] = el)
                       }
                     />
                   </div>
@@ -530,9 +540,9 @@ const Palette = memo(({ divClassName }) => {
                     <div
                       className="tab-content"
                       ref={(el) =>
-                        (paletteDivs.current[
-                          "Arch_Security-Identity-Compliance"
-                        ] = el)
+                      (paletteDivs.current[
+                        "Arch_Security-Identity-Compliance"
+                      ] = el)
                       }
                     />
                   </div>

@@ -1,10 +1,11 @@
 import { useState } from "react";
 import * as go from "gojs";
 import "../styles/App.css"; // contains .diagram-component CSS
+import handleChangedSelection from "./toggle/toggle.js";
 
 const useGoJS = () => {
   const [diagram, setDiagram] = useState(null);
-  const [showSelectToggle, setShowSelectToggle] = useState(false);
+  const [showSelectToggle, setShowSelectToggle] = useState({"value":false});
   function highlightGroup(e, grp, show) {
     if (!grp) return;
     e.handled = true;
@@ -21,12 +22,12 @@ const useGoJS = () => {
 
   // add group via drag and drop
   function finishDrop(e, grp) {
-    var ok =
-      grp !== null
-        ? grp.addMembers(grp.diagram.selection, true)
-        : e.diagram.commandHandler.addTopLevelParts(e.diagram.selection, true);
+    var ok = (grp !== null
+      ? grp.addMembers(grp.diagram.selection, true)
+      : e.diagram.commandHandler.addTopLevelParts(e.diagram.selection, true));
     if (!ok) e.diagram.currentTool.doCancel();
   }
+
 
   const initDiagram = () => {
     const $ = go.GraphObject.make;
@@ -49,185 +50,162 @@ const useGoJS = () => {
 
     // Define nodeTemplate (simplified, add other properties as needed)
     diagram.nodeTemplate = $(
-      go.Node,
-      "Auto",
-      { mouseDrop: (e, node) => finishDrop(e, node.containingGroup) },
-      { resizable: true, resizeObjectName: "Picture" },
-      { background: "#A0BCC2" },
-      new go.Binding("layerName", "key", function (key) {
-        return key === -7 ? "BottomLayer" : "";
-      }),
-      new go.Binding("location", "loc", go.Point.parse).makeTwoWay(
-        go.Point.stringify
-      ),
-
-      $(
-        go.Picture,
-        {
-          name: "Picture",
-          margin: new go.Margin(10, 10),
-          width: 50,
-          height: 50,
-          background: "white",
-          portId: "",
-          cursor: "pointer",
-          fromLinkable: true,
-          toLinkable: true,
-
-          fromLinkableSelfNode: true,
-          fromLinkableDuplicates: true,
-
-          toLinkableSelfNode: true,
-          toLinkableDuplicates: true,
-        },
+        go.Node,
+        "Spot",  // Spot 패널 사용으로 변경
+        { mouseDrop: (e, node) => finishDrop(e, node.containingGroup) },
+        { resizable: false, resizeObjectName: "Picture" },
+        { background: "#A0BCC2" },
+        new go.Binding("layerName", "key", function (key) { 
+          return key === -7 ? "BottomLayer" : "";
+        }),
+        new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
+        //마진에 포트 추가해서 링크가 동작되게 만든다
+        $(go.Shape, 
+          {
+            width: 70, height: 70,
+            fill: "transparent", stroke: null, 
+            portId: "", 
+            fromLinkable: true, toLinkable: true, 
+            fromSpot: go.Spot.AllSides, toSpot: go.Spot.AllSides
+          }
+        ),
+        $(go.Picture,
+          {
+            name: "Picture",
+            margin: 10,
+            width: 50,
+            height: 50,
+            background: "white",
+          },
         new go.Binding("source").makeTwoWay(),
         new go.Binding("desiredSize", "size", go.Size.parse).makeTwoWay(
           go.Size.stringify
         ),
-
-        // modify or delete -> if unnecessary
+        // modify or delete -> if unnecessary 
         new go.Binding("fromLinkable", "key", function (k) {
           return k !== -7;
         }),
         new go.Binding("toLinkable", "key", function (k) {
           return k !== -7;
-        })
+        }),
+
       )
     );
 
-    diagram.groupTemplate = $(
-      go.Group,
-      "Auto",
-      "Vertical",
-      {
-        mouseDragEnter: (e, grp, prev) => highlightGroup(e, grp, true),
-        mouseDragLeave: (e, grp, next) => highlightGroup(e, grp, false),
-        mouseDrop: finishDrop,
-        ungroupable: true,
-      },
-
-      $(
-        go.TextBlock,
+    diagram.groupTemplate
+      = $(go.Group,
+        "Auto", "Vertical",
         {
-          font: "bold 12pt sans-serif",
-          alignment: go.Spot.TopLeft,
-          portId: "",
-          cursor: "pointer",
-          fromLinkable: true,
-          toLinkable: true,
+          mouseDragEnter: (e, grp, prev) => highlightGroup(e, grp, true),
+          mouseDragLeave: (e, grp, next) => highlightGroup(e, grp, false),
+          mouseDrop: finishDrop,
+          ungroupable: true,
         },
-        new go.Binding("text", "key")
-      ),
 
-      $(
-        go.Panel,
-        "Auto",
-        $(
-          go.Shape,
-          "Rectangle",
+        $(go.TextBlock,
           {
-            margin: 10,
-            fill: "transparent",
-            stroke: "rgba(128,128,128,0.5)",
-            strokeWidth: 5,
+            font: "bold 12pt sans-serif",
+            alignment: go.Spot.TopLeft,
+            portId: "",
+            cursor: "pointer",
+            fromLinkable: true,
+            toLinkable: true,
           },
-          new go.Binding("stroke"),
-          new go.Binding("fill", "stroke")
+          new go.Binding("text", "key"),
         ),
-        $(go.Placeholder, { padding: 30 })
-      )
-    );
+
+        $(go.Panel, "Auto",
+          $(go.Shape,
+            "Rectangle",
+            {
+              margin: 10,
+              fill: "transparent",
+              stroke: "rgba(128,128,128,0.5)",
+              strokeWidth: 5
+            },
+            new go.Binding("stroke"),
+            new go.Binding("fill", "stroke")),
+          $(go.Placeholder, { padding: 30 }),
+        ),
+      );
 
     diagram.linkTemplate = $(
       go.Link,
       {
-        contextMenu: $(
-          go.Adornment,
-          "Table",
+          contextMenu: $(go.Adornment, "Table",
           {
             defaultStretch: go.GraphObject.Horizontal,
           },
 
-          $(
-            "ContextMenuButton",
+        $("ContextMenuButton",
+         
+            $(go.Shape, "RoundedRectangle", { fill: "transparent", width: 40, height: 40 }),   
+              $(go.TextBlock, "━", 
+              {font: "bold 14pt serif"}
+              ),
+              {
 
-            $(go.Shape, "RoundedRectangle", {
-              fill: "transparent",
-              width: 40,
-              height: 40,
-            }),
-            $(go.TextBlock, "━", { font: "bold 14pt serif" }),
-            {
-              row: 0,
-              column: 0,
-              click: (e, obj) => {
-                const link = obj.part.adornedPart;
-                link.findObject("LinkShape").strokeDashArray = null;
-                console.log("실선 선택", link.data);
-              },
-            }
-          ),
-          $(
-            "ContextMenuButton",
-
-            $(go.Shape, "RoundedRectangle", {
-              fill: "transparent",
-              width: 40,
-              height: 40,
-            }),
-            $(go.TextBlock, "┈", { font: "bold 14pt serif" }),
-            {
-              row: 0,
-              column: 1,
-              click: (e, obj) => {
-                const link = obj.part.adornedPart;
-                link.findObject("LinkShape").strokeDashArray = [10, 10];
-                console.log("점선 선택", link.data);
-              },
-            }
-          ),
-          $(
-            "ContextMenuButton",
-
-            $(go.Shape, "RoundedRectangle", {
-              fill: "transparent",
-              width: 40,
-              height: 40,
-            }),
-            $(go.TextBlock, "↔", { font: "bold 14pt serif" }),
-            {
-              row: 1,
-              column: 0,
-              click: (e, obj) => {
-                const link = obj.part.adornedPart;
-                link.findObject("FromArrow").visible = true;
-                link.findObject("FromArrow").fromArrow = "Backward";
-                console.log("backward로 했음다", link.data);
-              },
-            }
-          ),
-          $(
-            "ContextMenuButton",
-
-            $(go.Shape, "RoundedRectangle", {
-              fill: "transparent",
-              width: 40,
-              height: 40,
-            }),
-            $(go.TextBlock, "→", { font: "bold 14pt serif" }),
-            {
-              row: 1,
-              column: 1,
-              click: (e, obj) => {
-                const link = obj.part.adornedPart;
-                //link.findObject("FromArrow").fromArrow="Standard";
-                link.findObject("FromArrow").visible = false;
-                console.log("원래대로 돌아갔음", link.data);
-              },
-            }
-          )
+                row: 0, column: 0,
+                click: (e, obj) => {
+                  const link = obj.part.adornedPart;
+                  link.findObject("LinkShape").strokeDashArray = null;
+                  console.log("실선 선택", link.data);
+                }
+              }
+          
         ),
-
+        $("ContextMenuButton",
+          
+            $(go.Shape, "RoundedRectangle", { fill: "transparent", width: 40, height: 40 }),    
+              $(go.TextBlock, "┈",
+              {font: "bold 14pt serif"}
+              ),
+              {
+                row: 0, column: 1,
+                click: (e, obj) => {
+                  const link = obj.part.adornedPart;
+                  link.findObject("LinkShape").strokeDashArray = [10, 10];
+                  console.log("점선 선택", link.data);
+                }
+              }
+          
+        ),
+        $("ContextMenuButton",
+         
+            $(go.Shape, "RoundedRectangle", { fill: "transparent", width: 40, height: 40 }),    
+              $(go.TextBlock, "↔",
+              {font: "bold 14pt serif"}
+              ),
+              {
+                row: 1, column: 0,
+                click: (e, obj) => {
+                  const link = obj.part.adornedPart;  
+                  link.findObject("FromArrow").visible = true;
+                  link.findObject("FromArrow").fromArrow="Backward";
+                  console.log("backward로 했음다", link.data);
+                }   
+              }
+          
+        ),
+        $("ContextMenuButton",
+          
+            $(go.Shape, "RoundedRectangle", { fill: "transparent", width: 40, height: 40 }),   
+              $(go.TextBlock, "→",
+              {font: "bold 14pt serif"}
+              ),
+              {
+                row: 1, column: 1,
+                click: (e, obj) => {
+                  const link = obj.part.adornedPart;
+                  //link.findObject("FromArrow").fromArrow="Standard";
+                  link.findObject("FromArrow").visible = false;
+                  console.log("원래대로 돌아갔음", link.data);
+                }
+              }
+            
+        )
+      ),
+      
         routing: go.Link.Orthogonal,
         corner: 5,
         reshapable: true,
@@ -236,20 +214,10 @@ const useGoJS = () => {
       },
 
       // for link shape
-      $(go.Shape, { strokeWidth: 2, stroke: "#000", name: "LinkShape" }),
+      $(go.Shape, { strokeWidth: 2, stroke: "#000", name:"LinkShape"}),
       // for arrowhead 여기서 standaer
-      $(go.Shape, {
-        toArrow: "Standard",
-        scale: 1.5,
-        stroke: null,
-        name: "ToArrow",
-      }),
-      $(go.Shape, {
-        fromArrow: "DoubleForwardSlash",
-        scale: 1.5,
-        stroke: null,
-        name: "FromArrow",
-      })
+      $(go.Shape, { toArrow: "Standard", scale: 1.5,stroke: null, name:"ToArrow"}),
+      $(go.Shape, { fromArrow: "DoubleForwardSlash", scale: 1.5, stroke: null, name: "FromArrow" })
     );
 
     diagram.addDiagramListener("ObjectSingleClicked", function (e) {
@@ -257,9 +225,16 @@ const useGoJS = () => {
       if (part instanceof go.Link) {
         console.log("링크가 클릭되었네요");
       } else if (part instanceof go.Node) {
-        console.log(part.data);
+        console.log("나는 node 입니다" , part.data);
+        const key = part.data.key;
+        console.log("나는 key 입니다",key);
+
+        if(handleChangedSelection(key)){
+          setShowSelectToggle({"value":true,"key":key})
+        }
       }
     });
+
 
     diagram.addDiagramListener("ExternalObjectsDropped", (e) => {
       console.log("from palette\n");
@@ -268,7 +243,7 @@ const useGoJS = () => {
     diagram.addDiagramListener("SelectionMoved", (e) => {
       e.subject.each(function (part) {
         if (part instanceof go.Node) {
-          console.log("move to: " + part.location.toString());
+          console.log('move to: ' + part.location.toString());
         }
       });
     });
@@ -276,9 +251,11 @@ const useGoJS = () => {
     diagram.addDiagramListener("ChangedSelection", (e) => {
       const selectedNode = e.diagram.selection.first();
       if (selectedNode instanceof go.Node) {
-        setShowSelectToggle(true); // 추가된 로직
+        const key = selectedNode.data.key;
+        console.log("나는 key 입니다",key);
+
       } else {
-        setShowSelectToggle(false); // 추가된 로직
+        setShowSelectToggle({"value":false}); // 추가된 로직
       }
     });
 
@@ -286,7 +263,9 @@ const useGoJS = () => {
     return diagram;
   };
 
-  return { initDiagram, diagram, showSelectToggle };
+    
+
+  return { initDiagram, diagram, showSelectToggle};
 };
 
 export default useGoJS;

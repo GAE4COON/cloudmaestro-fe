@@ -6,11 +6,11 @@ function Home() {
   const navigate = useNavigate();
 
   const handleAutoDraw = () => {
-    navigate("/inputnet");
+    navigate("/home/autodraw");
   };
 
   const handleJustDraw = () => {
-    navigate("/draw/aws");
+    navigate("/draw");
   };
 
   return (

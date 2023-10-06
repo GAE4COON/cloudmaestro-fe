@@ -5,13 +5,13 @@ import { ReactDiagram } from "gojs-react";
 import useGoJS from "./useGoJS";
 import SelectToggle from "../components/SelectToggle";
 import { useMediaQuery } from "react-responsive";
-import { nodeDataArrayPalette } from "../db/NodeAWS";
+import { nodeDataArrayPalette } from "../db/Node";
 import { useLocation } from "react-router-dom";
 
 // 페이지
 import useReadJSON from "./useReadJSON";
 import Button from "./Button.js";
-import Palette from "../components/PaletteAWS";
+import Palette from "../components/Palette";
 import "../styles/Draw.css";
 
 function Draw() {
@@ -27,6 +27,8 @@ function Draw() {
 
   const { initDiagram, diagram, showSelectToggle } =
     useGoJS(setSelectedNodeData);
+
+    console.log("show", showSelectToggle.value)
   // Go to Draw page 완료
   const location = useLocation();
   //console.log("location_path",location.state);
@@ -55,42 +57,34 @@ function Draw() {
         <div className="container">
           <Button diagram={diagram} />
           <div className="createspace">
+          
             <div className="workspace">
-              {showSelectToggle && (
-                <div className="handler-content">
-                  <div>토글 선택</div>
-                  <div className="toggle-container">
+             
+              <div className="palette">
+                <Palette
+                  nodeDataArray={nodeDataArrayPalette}
+                  divClassName={paletteClassName}
+                />
+
+              </div>
+             
+               <div className="diagram">
+                  { showSelectToggle.value && (
                     <SelectToggle
-                      className="toogle1"
-                      value={selectedNodeData}
-                      onToggleSelect={handleNodeSelect}
-                      readOnly
-                    />
-                    <SelectToggle
-                      className="toogle2"
-                      value={selectedNodeData}
-                      onToggleSelect={handleNodeSelect}
-                      readOnly
-                    />
-                    <SelectToggle
-                      className="toogle3"
-                      value={selectedNodeData}
-                      onToggleSelect={handleNodeSelect}
-                      readOnly
-                    />
-                    <label className="instance-price">10$</label>
-                  </div>
-                </div>
-              )}
-              <ReactDiagram
-                initDiagram={initDiagram}
-                divClassName={diagramClassName}
-              />
+                    value={selectedNodeData}
+                    uniquekey={showSelectToggle.key}
+                    onToggleSelect={handleNodeSelect}
+                    readOnly
+                  />
+                  )}
+                  <ReactDiagram
+                  initDiagram={initDiagram}
+                  divClassName={diagramClassName}
+                />
+              </div>
             </div>
-            <Palette
-              nodeDataArray={nodeDataArrayPalette}
-              divClassName={paletteClassName}
-            />
+           
+           
           </div>
         </div>
       </div>

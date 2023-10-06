@@ -7,7 +7,7 @@
 }
 
 .img-container {
-  position: relative;
+  /* position: absolute; */
 }
 
 .home-img {
@@ -22,7 +22,7 @@
 
 .home-select-box {
   width: 50%;
-  height: 35%;
+  height: 30%;
   background-color: white;
   bottom: 0;
   left: 0;
@@ -36,7 +36,6 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   font-size: 1rem; /* 이 부분은 상대적 크기 조절의 기준이 됩니다. */
   padding: 20px;
-
 }
 
 .home-select-text {
@@ -81,7 +80,7 @@
     left: 10;
     right: 10;
     width: 80%;
-    height: 60%;
+    /* height: 60%; */
     text-align: center;
   }
 }
