@@ -5,13 +5,13 @@ import { ReactDiagram } from "gojs-react";
 import useGoJS from "./useGoJS";
 import SelectToggle from "../components/SelectToggle";
 import { useMediaQuery } from "react-responsive";
-import { nodeDataArrayPalette } from "../db/NodeAWS";
+import { nodeDataArrayPalette } from "../db/Node";
 import { useLocation } from "react-router-dom";
 
 // 페이지
 import useReadJSON from "./useReadJSON";
 import Button from "./Button.js";
-import Palette from "../components/PaletteAWS";
+import Palette from "../components/Palette";
 import "../styles/Draw.css";
 
 function Draw() {

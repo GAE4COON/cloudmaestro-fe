@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "../styles/LearnMore.css";
+import "../styles/Example.css";
 import { Link } from 'react-router-dom';
 import { useLocation } from "react-router-dom";
 

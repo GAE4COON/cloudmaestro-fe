@@ -57,10 +57,13 @@ export const DropdownMenu = styled.div`
   display: none; // by default, the menu is not displayed
   animation: ${fadeIn} 0.3s forwards, ${slideDown} 0.3s forwards;
   flex-direction: column;
-  width: fit-content;
+  width: 200%;
   border-radius: 8px;
   padding-top: 10px;
   padding-bottom: 10px;
+  // text-align:center;
+  // align-items: center;
+
 
   &:hover {
     display: flex; // display the dropdown menu when the NavLink is hovered over
@@ -155,6 +158,7 @@ export const NavLink = styled(Link)`
   height: 100%;
   cursor: pointer;
 
+
   & img {
     width: 40px;
     height: auto;
@@ -226,3 +230,4 @@ export const UserProfileImage = styled.img`
   width: 40px;
   height: 40px;
 `;
+
