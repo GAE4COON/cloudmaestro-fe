@@ -2,27 +2,74 @@ import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom'; // 변경된 부분
 import "../styles/inputNetwork.css"
 import { Link } from "react-router-dom"
+import axios from 'axios';
+import { useEffect } from 'react';
 
 
 const App = () => {
     const [selectedFile, setSelectedFile] = useState(null);
+    const [file, setFile] = useState(null);
+    const [data, setData] = useState(null);
 
     const navigate = useNavigate();
-    const handleFileChange = (event) => {
+
+    const handleUpload = () => {
+        if (selectedFile) {
+            console.log("file", selectedFile)
+            console.log("Uploading:", selectedFile.name);
+
+            // 파일 전송
+            const fd = new FormData();
+            // fd.append("user upload file",file);
+            fd.append("file", selectedFile);
+            // Object.values(file).forEach((file) => fd.append("file", file));
+
+
+            axios.post('http://localhost:8080/api/v1/file-api/upload', fd, 
+            {
+                headers: {
+                    "Content-Type": `multipart/form-data; `,
+                },
+
+            })
+                .then((response) => {
+                    console.log("response", response);
+
+                })
+                .catch((error) => {
+                    console.log("error", error)
+                    // 예외 처리
+                })
+
+            console.log("upload!!");
+            fetchJson();
+        }
+    };
+
+    const fetchJson = async () => {
+        try {
+            const response = await fetch("http://localhost:8080/api/v1/file-api/json");
+            const jsonData = await response.json();
+            setData(jsonData);
+            console.log(JSON.stringify(data,null,2));
+        } catch (error) {
+            console.error("Error fetching the JSON data:", error);
+        }
+    };
+
+    const uploadFile = async (event) => {
+
         if (event.target.files.length > 0) {
             setSelectedFile(event.target.files[0]);
+            setFile(event.target.files);
+            console.log(event.target.files);
+            console.log(event.target.files[0]);
+
         } else {
             setSelectedFile(null);
         }
     };
 
-    const handleUpload = () => {
-        if (selectedFile) {
-            // TODO: 업로드 로직 구현
-            console.log("file", selectedFile)
-            console.log("Uploading:", selectedFile.name);
-        }
-    };
 
     const downloadExcel = () => {
         const url = "/assets/template/templateExcel.xlsx"; // Excel 파일의 경로
@@ -112,18 +159,18 @@ const App = () => {
                     type="file"
                     id="customFileUpload"
                     className="custom-file-input"
-                    onChange={handleFileChange}
+                    onChange={uploadFile}
                     accept=".xlsx, .xls, .json"
-
                 />
             </div>
 
             <button className="submit-button" onClick={handleUpload}>
-                <Link to={'/draw/network'}
-                    state={{ selectedFile }}>
+                {/* <Link to={'/draw/network'}
+                    state={{ selectedFile }}> */}
                     Submit
-                </Link>
+                {/* </Link> */}
             </button>
+
         </div>
     );
 }
