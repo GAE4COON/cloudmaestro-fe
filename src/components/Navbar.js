@@ -4,6 +4,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { useLocation } from "react-router-dom";
 
 import {
+  NavContainer,
   DropdownMenu,
   HamburgerContainer,
   Hamburger,
@@ -54,7 +55,7 @@ const Navbar = () => {
   };
 
   return (
-    <>
+    <NavContainer>
       <NavStyled ref={menuRef}>
         <NavLinkLogo to="/">
           <img src="/assets/img/logo.png" alt="logo" />
@@ -147,7 +148,7 @@ const Navbar = () => {
           )}
         </NavMenuRight>
       </NavStyled>
-    </>
+    </NavContainer>
   );
 };
 

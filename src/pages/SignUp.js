@@ -13,6 +13,32 @@ function Signup() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
 
+  const checkIdDuplication = async () => {
+    const data = {
+      user_id: id,
+    };
+    try {
+      const response = await axios.post(
+        "/api/v1/users/id-dup-check",
+        JSON.stringify(data),
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.data.result) {
+        alert("이미 사용중인 아이디입니다.");
+      } else {
+        alert("사용 가능한 아이디입니다.");
+      }
+    } catch (error) {
+      console.error("Error checking ID duplication:", error);
+      alert("아이디 중복 확인 중 오류가 발생했습니다. 다시 시도해주세요.");
+    }
+  };
+
   const handleSignUp = () => {
     // 가입 로직을 여기에 구현
     console.log("Signed up with:", { id, password, email, phone });
@@ -69,7 +95,7 @@ function Signup() {
       <div className="input-group">
         <label>아이디</label>
         <input type="text" value={id} onChange={(e) => setId(e.target.value)} />
-        <button onClick={() => console.log("중복 확인")}>중복확인</button>
+        <button onClick={checkIdDuplication}>중복확인</button>
       </div>
 
       <div className="input-group">

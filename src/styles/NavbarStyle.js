@@ -67,8 +67,17 @@ export const DropdownMenu = styled.div`
   }
 `;
 
+export const NavContainer = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000; // This ensures that it is always on top
+`;
+
 export const NavStyled = styled.nav`
   background: #fff;
+  width: 100%;
   height: 35px;
   display: flex;
   justify-content: space-between;
@@ -106,6 +115,7 @@ export const NavMenuRight = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  margin-right: 50px;
 
   @media screen and (max-width: 768px) {
     display: ${({ isOpen }) => (isOpen ? "flex" : "none")};
