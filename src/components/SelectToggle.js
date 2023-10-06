@@ -18,8 +18,6 @@ const windowsOptions = [
 ];
 
 
-
-
 const SelectToggle = ({ uniquekey, onToggleSelect }) => {
   
   const [toggleValues, setToggleValues] = useState([null, null, null]);
@@ -88,7 +86,7 @@ const renderToggle = (index) => (
 );
 
 useEffect(() => {
-  if (uniquekey.includes('Arch_Amazon-EC2_48')) {
+  if (uniquekey.includes('EC2')) {
     fetchData();
   }
 }, [uniquekey]);

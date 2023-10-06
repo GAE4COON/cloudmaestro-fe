@@ -22,6 +22,7 @@ export const nodeDataArrayPalette = [
         key: "firewall",
         figure: "Rectangle",
         source: "/img/Network_icon/firewall.png",
+        source: "/img/Network_icon/firewall.png",
         type: "Network_icon"
     },
     {
@@ -40,11 +41,13 @@ export const nodeDataArrayPalette = [
         key: "L2_switch",
         figure: "Rectangle",
         source: "/img/Network_icon/L2_switch.png",
+        source: "/img/Network_icon/L2_switch.png",
         type: "Network_icon"
     },
     {
         key: "L3_switch",
         figure: "Rectangle",
+        source: "/img/Network_icon/L3_switch.png",
         source: "/img/Network_icon/L3_switch.png",
         type: "Network_icon"
     },
@@ -1928,6 +1931,7 @@ export const nodeDataArrayPalette = [
         type: "Arch_Storage"
     },
     // Group
+    // Group
     {
         isGroup: true,
         key: "AWS Cloud",
@@ -1968,6 +1972,7 @@ export const nodeDataArrayPalette = [
         type: "group"
 
     }, {
+    }, {
         isGroup: true,
         key: "Private subnet",
         stroke: "rgba(255,165,0,0.3)",
@@ -1987,6 +1992,7 @@ export const nodeDataArrayPalette = [
         type: "group"
 
     }, {
+    }, {
         isGroup: true,
         key: "Corporate data center",
         stroke: "rgba(255,165,0,0.3)",
@@ -2005,6 +2011,7 @@ export const nodeDataArrayPalette = [
         stroke: "rgba(0,0,198,0.3)",
         type: "group"
 
+    }, {
     }, {
         isGroup: true,
         key: "AWS account",
