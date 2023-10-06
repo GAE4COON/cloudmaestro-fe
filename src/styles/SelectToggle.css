@@ -1,0 +1,19 @@
+.toggle-component {
+  display: flex; /* 토글들을 수평으로 배열하기 위해 flex 사용 */
+  justify-content: space-between; /* 토글 간 간격 조정 */
+  width: 70%; /* 부모 요소의 너비에 맞게 조절 */
+  max-width: 800px; /* 원하는 최대 너비 설정. 여기서는 800px로 변경 */
+  position: relative;
+  top: 0;
+  left: 10%;
+  z-index: 2; /* 높은 z-index */
+  margin: 0 auto;
+}
+
+select {
+  width: 100%; /* 전체 너비 사용 */
+  padding: 10px; /* 패딩을 추가하여 크기를 늘림 */
+  font-size: 16px; /* 글꼴 크기 증가 */
+  border-radius: 4px; /* 모서리 둥글게 */
+  border: 1px solid #ccc; /* 경계선 스타일링 */
+}

@@ -79,6 +79,7 @@ function Signup() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
+        <div></div>
       </div>
 
       <div className="input-group">
@@ -88,6 +89,7 @@ function Signup() {
           value={passwordConfirm}
           onChange={(e) => setPasswordConfirm(e.target.value)}
         />
+        <div></div>
       </div>
 
       <div className="input-group">
@@ -107,6 +109,7 @@ function Signup() {
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
         />
+        <div></div>
       </div>
 
       <button onClick={handleSignUp} className="submit">

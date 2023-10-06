@@ -201,7 +201,7 @@ export const NavBtn = styled.nav`
 `;
 
 export const NavBtnLink = styled(Link)`
-  width: 60px;
+  width: 65px;
   border-radius: 4px;
   background: #fff;
   padding: 5px 12px;

@@ -27,6 +27,8 @@ function Draw() {
 
   const { initDiagram, diagram, showSelectToggle } =
     useGoJS(setSelectedNodeData);
+
+    console.log("show", showSelectToggle.value)
   // Go to Draw page 완료
   const location = useLocation();
   //console.log("location_path",location.state);
@@ -55,23 +57,34 @@ function Draw() {
         <div className="container">
           <Button diagram={diagram} />
           <div className="createspace">
+          
             <div className="workspace">
-              {showSelectToggle && (
-                <SelectToggle
-                  value={selectedNodeData}
-                  onToggleSelect={handleNodeSelect}
-                  readOnly
+             
+              <div className="palette">
+                <Palette
+                  nodeDataArray={nodeDataArrayPalette}
+                  divClassName={paletteClassName}
                 />
-              )}
-              <ReactDiagram
-                initDiagram={initDiagram}
-                divClassName={diagramClassName}
-              />
+
+              </div>
+             
+               <div className="diagram">
+                  { showSelectToggle.value && (
+                    <SelectToggle
+                    value={selectedNodeData}
+                    uniquekey={showSelectToggle.key}
+                    onToggleSelect={handleNodeSelect}
+                    readOnly
+                  />
+                  )}
+                  <ReactDiagram
+                  initDiagram={initDiagram}
+                  divClassName={diagramClassName}
+                />
+              </div>
             </div>
-            <Palette
-              nodeDataArray={nodeDataArrayPalette}
-              divClassName={paletteClassName}
-            />
+           
+           
           </div>
         </div>
       </div>

@@ -22,6 +22,22 @@
   display: flex;
 }
 
+.handler-content {
+  position: absolute;
+  width: 75%;
+  height: 5rem;
+  background-color: #fff;
+  left: 22.5%;
+  z-index: 10;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.toggle-container{
+
+  display: flex; 
+}
+
+
 
 .Toggletype{
   position: absolute;
@@ -49,12 +65,13 @@
 
 .toggle-component {
   position: absolute;
-  width : 75%;
+  width : 70%;
   top: 0;
-  left: 20%;
+  left: 25%;
   z-index: 10; /* 높은 z-index */
   margin : 0 auto;
 }
+
 
 .button-container {
   opacity: 1;
