@@ -3,7 +3,7 @@ import * as go from "gojs";
 import { ReactDiagram } from "gojs-react";
 
 import useGoJS from "./useGoJS";
-import SelectToggle from "../components/SelectToggle";
+import SelectToggle from "../components/SelectEc2Toggle";
 import { useMediaQuery } from "react-responsive";
 import { nodeDataArrayPalette } from "../db/NodeNetwork";
 import { useLocation } from "react-router-dom";
