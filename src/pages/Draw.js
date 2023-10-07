@@ -13,8 +13,13 @@ import useReadJSON from "./useReadJSON";
 import Button from "./Button.js";
 import Palette from "../components/Palette";
 import "../styles/Draw.css";
+import { useFileUpload } from "../components/useFileInput";
 
 function Draw() {
+
+  const { data } = useFileUpload();
+  console.log("draw data ", data);
+
   const isDesktopOrLaptop = useMediaQuery({ query: "(min-width: 700px)" });
   const paletteClassName = isDesktopOrLaptop
     ? "palette-component"
@@ -28,18 +33,17 @@ function Draw() {
   const { initDiagram, diagram, showSelectToggle, clickedNodeKey } =
     useGoJS(setSelectedNodeData);
 
-    console.log("show", showSelectToggle.value)
+  console.log("show", showSelectToggle.value)
   // Go to Draw page 완료
   const location = useLocation();
-  //console.log("location_path",location.state);
-  const file = location?.state;
+  const file = location.state ? location.state.convert : null;
+  console.log("dataFromLink ", file);
 
   const handleNodeSelect = useCallback(
     (label) => {
       if (diagram) {
         const selectedNode = diagram.selection.first();
         if (selectedNode instanceof go.Node) {
-          //const updatedData = { ...selectedNode.data, text: label };
           diagram.model.commit((model) => {
             model.set(selectedNode.data, "text", label);
           }, "updated text");
@@ -49,7 +53,16 @@ function Draw() {
     },
     [diagram]
   );
-  useReadJSON(file, diagram);
+
+  // useReadJSON(file, diagram);
+
+  useEffect(() => {
+    const diagram = initDiagram();
+    if (file) {
+      console.log("effect", file);
+      diagram.model = new go.GraphLinksModel(file.nodeDataArray, file.linkDataArray);
+    }
+  }, [file]);
 
   return (
     <div>
@@ -57,9 +70,9 @@ function Draw() {
         <div className="container">
           <Button diagram={diagram} />
           <div className="createspace">
-          
+
             <div className="workspace">
-             
+
               <div className="palette">
 
                 <Palette
@@ -69,29 +82,32 @@ function Draw() {
 
               </div>
 
-               <div className="diagram">
+              <div className="diagram">
 
-                  { showSelectToggle.value && (
-                    <SelectToggle
+                {showSelectToggle.value && (
+                  <SelectToggle
                     value={selectedNodeData}
                     uniquekey={showSelectToggle.key}
                     onToggleSelect={handleNodeSelect}
                     readOnly
                   />
-                  )}
-                    { clickedNodeKey && 
-  <div className="clicked_key">
-    {clickedNodeKey}
-  </div> 
-}
-                  <ReactDiagram
+                )}
+                {clickedNodeKey &&
+                  <div className="clicked_key">
+                    {clickedNodeKey}
+                  </div>
+                }
+                <ReactDiagram
                   initDiagram={initDiagram}
                   divClassName={diagramClassName}
+                  nodeDataArray={file?.nodeDataArray}
+                  linkDataArray={file?.linkDataArray}
                 />
+
               </div>
-              
+
             </div>
-           
+
           </div>
         </div>
       </div>
