@@ -3,7 +3,8 @@ import * as go from "gojs";
 import { ReactDiagram } from "gojs-react";
 
 import useGoJS from "./useGoJS";
-import SelectToggle from "../components/SelectEc2Toggle";
+import SelectEc2Toggle from "../components/SelectEc2Toggle";
+import SelectRdsToggle from "../components/SelectRdsToggle";
 import { useMediaQuery } from "react-responsive";
 import { nodeDataArrayPalette } from "../db/NodeAWS";
 import { useLocation } from "react-router-dom";
@@ -24,10 +25,10 @@ function Draw() {
     : "diagram-component-small";
 
   const [selectedNodeData, setSelectedNodeData] = useState(null); // <-- 상태 변수를 추가합니다.
-
+  const [showToggle, setShowToggle] = useState(true);
   const { initDiagram, diagram, showSelectToggle } =
-    useGoJS(setSelectedNodeData);
-
+    useGoJS(setSelectedNodeData, setShowToggle, showToggle);
+  
     console.log("show", showSelectToggle.value)
   // Go to Draw page 완료
   const location = useLocation();
@@ -55,7 +56,7 @@ function Draw() {
     <div>
       <div className="Draw">
         <div className="container">
-          <Button diagram={diagram} />
+          <Button diagram={diagram} showToggle={showToggle} setShowToggle={setShowToggle} />
           <div className="createspace">
           
             <div className="workspace">
@@ -69,8 +70,16 @@ function Draw() {
               </div>
              
                <div className="diagram">
-                  { showSelectToggle.value && (
-                    <SelectToggle
+                  { showToggle && showSelectToggle.value && showSelectToggle.key == "Arch_Amazon-EC2_48" && (
+                    <SelectEc2Toggle
+                    value={selectedNodeData}
+                    uniquekey={showSelectToggle.key}
+                    onToggleSelect={handleNodeSelect}
+                    readOnly
+                  />
+                  )}
+                  { showToggle && showSelectToggle.value && showSelectToggle.key == "Arch_Amazon-RDS_48" && (
+                    <SelectRdsToggle
                     value={selectedNodeData}
                     uniquekey={showSelectToggle.key}
                     onToggleSelect={handleNodeSelect}

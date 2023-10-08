@@ -2,9 +2,9 @@ import React, { useCallback, useState } from "react";
 import * as go from "gojs";
 import "../styles/Button.css"; // contains .diagram-component CSS
 
-const Button = ({ diagram }) => {
+const Button = ({ diagram ,showToggle, setShowToggle}) => {
   const hiddenFileInput = React.useRef(null);
-
+  
   const handleClick = () => {
     hiddenFileInput.current.click();
   };
@@ -87,6 +87,7 @@ const Button = ({ diagram }) => {
       diagram.model.linkDataArray = [];
       diagram.model.commitTransaction("Cleared diagram");
     }
+    setShowToggle(false); // toggle 숨김
   };
 
   return (
