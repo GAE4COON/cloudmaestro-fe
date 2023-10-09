@@ -83,11 +83,12 @@ const Button = ({ diagram }) => {
 
   const handleReset = () => {
     if (diagram) {
-      diagram.model.nodeDataArray = [];
-      diagram.model.linkDataArray = [];
-      diagram.model.commitTransaction("Cleared diagram");
+        diagram.startTransaction("Cleared diagram");
+        diagram.model.nodeDataArray = [];
+        diagram.model.linkDataArray = [];
+        diagram.commitTransaction("Cleared diagram");
     }
-  };
+};
 
   return (
     <div className="top-right-button">

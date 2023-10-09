@@ -30,20 +30,21 @@ function Draw() {
 
   const [selectedNodeData, setSelectedNodeData] = useState(null); // <-- 상태 변수를 추가합니다.
 
-  const { initDiagram, diagram, showSelectToggle, clickedNodeKey } =
-    useGoJS(setSelectedNodeData);
+  const { initDiagram, diagram, showSelectToggle, clickedNodeKey } = useGoJS(setSelectedNodeData);
 
   console.log("show", showSelectToggle.value)
   // Go to Draw page 완료
+
   const location = useLocation();
-  const file = location.state ? location.state.convert : null;
-  console.log("dataFromLink ", file);
+  const file = location.state ? location.state.file : null;
+  // console.log(file);
 
   const handleNodeSelect = useCallback(
     (label) => {
       if (diagram) {
         const selectedNode = diagram.selection.first();
         if (selectedNode instanceof go.Node) {
+          console.log("use model");
           diagram.model.commit((model) => {
             model.set(selectedNode.data, "text", label);
           }, "updated text");
@@ -53,16 +54,12 @@ function Draw() {
     },
     [diagram]
   );
-
-  // useReadJSON(file, diagram);
-
+  
   useEffect(() => {
-    const diagram = initDiagram();
-    if (file) {
-      console.log("effect", file);
-      diagram.model = new go.GraphLinksModel(file.nodeDataArray, file.linkDataArray);
+    if (file && diagram) {
+        diagram.model = go.Model.fromJson(file);
     }
-  }, [file]);
+}, [file, diagram]);
 
   return (
     <div>
@@ -97,12 +94,14 @@ function Draw() {
                     {clickedNodeKey}
                   </div>
                 }
-                <ReactDiagram
-                  initDiagram={initDiagram}
-                  divClassName={diagramClassName}
-                  nodeDataArray={file?.nodeDataArray}
-                  linkDataArray={file?.linkDataArray}
-                />
+                {file &&
+                  <ReactDiagram
+                    initDiagram={initDiagram}
+                    divClassName={diagramClassName}
+                  // nodeDataArray={file?.nodeDataArray}
+                  // linkDataArray={file?.linkDataArray}
+                  />
+                }
 
               </div>
 

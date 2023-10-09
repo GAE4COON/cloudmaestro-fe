@@ -10,9 +10,8 @@ import { useFileUpload, useFileDownload } from '../components/useFileInput'; // 
 const App = () => {
     const {
         selectedFile,
-        data,
-        handleUpload,
-        uploadFile
+        handleInputFIleUpload,
+        uploadFileFormat
     } = useFileUpload();
 
     const downloadExcel = useFileDownload("/assets/template/templateExcel.xlsx", "templateExcel.xlsx");
@@ -38,7 +37,7 @@ const App = () => {
                         </button>
                         <div className='example'>
                             잘 모르겠다면?
-                            <Link to={'/learn'}
+                            <Link to={'/about/example'}
                                 state={{ type: "excel" }}
                                 className='example_link'>
                                 예시 보기
@@ -65,7 +64,7 @@ const App = () => {
                         <div className='example'>
                             잘 모르겠다면?
 
-                            <Link to={'/learn'}
+                            <Link to={'/about/example'}
                                 state={{ type: "json" }}
                                 className='example_link'>
                                 예시 보기
@@ -86,12 +85,12 @@ const App = () => {
                     type="file"
                     id="customFileUpload"
                     className="custom-file-input"
-                    onChange={uploadFile}
+                    onChange={uploadFileFormat}
                     accept=".xlsx, .xls, .json"
                 />
             </div>
 
-            <button className="submit-button" onClick={handleUpload}>
+            <button className="submit-button" onClick={handleInputFIleUpload}>
                     Submit
             </button>
 

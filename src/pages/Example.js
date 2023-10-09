@@ -1,13 +1,18 @@
+
 import React, { useState, useEffect } from "react";
 import "../styles/Example.css";
 import { Link } from 'react-router-dom';
 import { useLocation } from "react-router-dom";
+import { useExampleFile } from "../components/useExampleFile";
+
 
 const Learn = () => {
     const [index, setIndex] = useState(1);
     const [displayedText1, setDisplayedText1] = useState("");
     const location = useLocation();
     const type = location?.state?.type;
+
+    const { getExampleFile } = useExampleFile();
 
     useEffect(() => {
         animateText("Get Started with Clound Migration", setDisplayedText1, 100);
@@ -24,6 +29,13 @@ const Learn = () => {
           }
         }
       }, [location]);
+
+      
+    {/* <button onClick={() => getExampleFile(1)}>1번 템플릿 가져오기</button>
+    <button onClick={() => getExampleFile(2)}>2번 템플릿 가져오기</button> */}
+
+
+
 
     const animateText = (fullText, setter, speed) => {
         let i = 0;
@@ -54,7 +66,7 @@ const Learn = () => {
                 </div>
             </div>
             <div className="img">
-                <Link to='/draw/network' state={img_json}>
+                <Link to='/draw' state={img_json}>
                     <img className="custom-img" src={img_src} alt="도식화하는 이미지" />
                 </Link>
             </div>
@@ -72,7 +84,7 @@ const Learn = () => {
               </div>
           </div>
           <div className="img">
-              <Link to='/draw/aws' state={img_json}>
+              <Link to='/draw' state={img_json}>
                   <img className="custom-img" src={img_src} alt="도식화하는 이미지" />
               </Link>
           </div>

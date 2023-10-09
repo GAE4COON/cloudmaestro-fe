@@ -4,13 +4,10 @@ import axios from 'axios';
 
 export const useFileUpload = () => {
   const [selectedFile, setSelectedFile] = useState(null);
-  const [data, setData] = useState();
-  const [isUploading, setIsUploading] = useState(false);  // 추가된 상태
   const navigate = useNavigate();
 
-  const handleUpload = async () => {
+  const handleInputFIleUpload = async () => {
     if (selectedFile) {
-      setIsUploading(true);  // 업로드 시작
 
       const fd = new FormData();
       fd.append("file", selectedFile);
@@ -21,20 +18,16 @@ export const useFileUpload = () => {
           },
         });
 
-        setData(response.data);
-        
         if (response.data) {
-          navigate('/draw', { state: { convert: response.data } });
+          navigate('/draw', { state: { file: response.data } });
         }
       } catch (error) {
         console.log("error", error);
-      } finally {
-        setIsUploading(false);  // 업로드 완료
       }
     }
   };
 
-  const uploadFile = (event) => {
+  const uploadFileFormat = (event) => {
     if (event.target.files.length > 0) {
       setSelectedFile(event.target.files[0]);
     } else {
@@ -42,13 +35,15 @@ export const useFileUpload = () => {
     }
   };
 
+
+
   return {
     selectedFile,
-    data,
-    handleUpload,
-    uploadFile
+    handleInputFIleUpload,
+    uploadFileFormat
   };
 };
+
 
 export const useFileDownload = (url, fileName) => {
     const downloadFile = () => {
