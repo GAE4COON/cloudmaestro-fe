@@ -3,7 +3,7 @@ import * as go from "gojs";
 import { ReactDiagram } from "gojs-react";
 
 import useGoJS from "./useGoJS";
-import SelectToggle from "../components/SelectToggle";
+import SelectToggle from "../components/cost/SelectEc2Toggle";
 import { useMediaQuery } from "react-responsive";
 import { nodeDataArrayPalette } from "../db/Node";
 import { useLocation } from "react-router-dom";
@@ -28,11 +28,15 @@ function Draw() {
     ? "diagram-component"
     : "diagram-component-small";
 
+  const [finalToggleValue, setFinalToggleValue] = useState({});
   const [selectedNodeData, setSelectedNodeData] = useState(null); // <-- 상태 변수를 추가합니다.
 
   const { initDiagram, diagram, showSelectToggle, clickedNodeKey } = useGoJS(setSelectedNodeData);
 
   console.log("show", showSelectToggle.value)
+
+
+
   // Go to Draw page 완료
 
   const location = useLocation();
@@ -65,7 +69,7 @@ function Draw() {
     <div>
       <div className="Draw">
         <div className="container">
-          <Button diagram={diagram} />
+          <Button diagram={diagram} finalToggleValue={finalToggleValue}setFinalToggleValue={setFinalToggleValue}  />
           <div className="createspace">
 
             <div className="workspace">
@@ -79,13 +83,13 @@ function Draw() {
 
               </div>
 
-              <div className="diagram">
-
-                {showSelectToggle.value && (
-                  <SelectToggle
-                    value={selectedNodeData}
+               <div className="diagram">
+                  { showSelectToggle.value && showSelectToggle.key.includes('EC2') &&(
+                    <SelectToggle
+                    diagram={diagram}
                     uniquekey={showSelectToggle.key}
-                    onToggleSelect={handleNodeSelect}
+                    finalToggleValue={finalToggleValue}
+                    setFinalToggleValue={setFinalToggleValue}
                     readOnly
                   />
                 )}
@@ -94,14 +98,12 @@ function Draw() {
                     {clickedNodeKey}
                   </div>
                 }
-                {file &&
                   <ReactDiagram
                     initDiagram={initDiagram}
                     divClassName={diagramClassName}
                   // nodeDataArray={file?.nodeDataArray}
                   // linkDataArray={file?.linkDataArray}
                   />
-                }
 
               </div>
 

@@ -1,20 +1,34 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import * as go from "gojs";
 import "../styles/Button.css"; // contains .diagram-component CSS
+import SelectToggle from "../../src/components/cost/SelectEc2Toggle";
 
-const Button = ({ diagram }) => {
+const  Button = ({ diagram , finalToggleValue, setFinalToggleValue}) => {
   const hiddenFileInput = React.useRef(null);
 
   const handleClick = () => {
     hiddenFileInput.current.click();
   };
 
+  
   const [savedDiagramJSON, setSavedDiagramJSON] = useState(null);
+  const [finalToggleVal, setFinalToggleVal] = useState({});
+
+  useEffect(() => {
+    console.log("finalToggle 업데이트 후:", finalToggleVal);
+    setFinalToggleValue(finalToggleVal);
+  }, [finalToggleVal]);
+  
   const handleSave = () => {
     if (diagram) {
-      const jsonCombinedArray = diagram.model.toJson();
+      let jsonCombinedArray = diagram.model.toJson();
+      jsonCombinedArray = JSON.parse(jsonCombinedArray);
+      jsonCombinedArray["ec2"] = finalToggleValue;
+      jsonCombinedArray = JSON.stringify(jsonCombinedArray);
       setSavedDiagramJSON(jsonCombinedArray);
-      console.log(jsonCombinedArray);
+      
+      //setSavedDiagramJSON(jsonCombinedArray,finalToggleValue);
+      console.log("저는 json이에요",jsonCombinedArray,finalToggleValue);
       localSaveJSON(jsonCombinedArray);
     }
   };
@@ -66,11 +80,13 @@ const Button = ({ diagram }) => {
     console.log("hello");
     if (e.target.files[0] && e.target.files[0].name.includes("json")) {
       let file = e.target.files[0];
-      console.log(e.target.files[0]);
       let fileReader = new FileReader();
       fileReader.readAsText(file);
       fileReader.onload = () => {
-        console.log(fileReader.result);
+      console.log("쀼엥",fileReader.result);
+      let filejson = JSON.parse(fileReader.result);
+      console.log("힘들엉",filejson["ec2"]);
+      setFinalToggleVal(filejson["ec2"])
         if (fileReader.result && diagram) {
           diagram.model = go.Model.fromJson(fileReader.result);
           console.log(JSON.stringify(diagram.model));
@@ -87,36 +103,41 @@ const Button = ({ diagram }) => {
         diagram.model.nodeDataArray = [];
         diagram.model.linkDataArray = [];
         diagram.commitTransaction("Cleared diagram");
+
     }
 };
 
   return (
-    <div className="top-right-button">
-      <div className="button-container">
-        <div className="button-row">
-          <button onClick={handleClick}>Upload File</button>
-          <input
-            type="file"
-            ref={hiddenFileInput}
-            onChange={onFileChange}
-            style={{ display: "none" }}
-          />
-        </div>
+    <div>
+     
+      <div className="top-right-button">
+        <div className="button-container">
+          <div className="button-row">
+            <button onClick={handleClick}>Upload File</button>
+            <input
+              type="file"
+              ref={hiddenFileInput}
+              onChange={onFileChange}
+              style={{ display: "none" }}
+            />
+          </div>
+          
 
-        <div className="button-row">
-          <button onClick={handleReset}>clear</button>
-        </div>
-        <div className="button-row">
-          <button onClick={handleSave}>save</button>
-        </div>
-        <div className="button-row">
-          <button onClick={localSaveImage}>Save as Image</button>
-        </div>
-        <div className="button-row">
-          <button onClick={handleLoad}>Load</button>
-        </div>
-        <div className="button-row">
-          <button onClick={handleLoad}>Submit</button>
+          <div className="button-row">
+            <button onClick={handleReset}>clear</button>
+          </div>
+          <div className="button-row">
+            <button onClick={handleSave}>save</button>
+          </div>
+          <div className="button-row">
+            <button onClick={localSaveImage}>Save as Image</button>
+          </div>
+          <div className="button-row">
+            <button onClick={handleLoad}>Load</button>
+          </div>
+          <div className="button-row">
+            <button onClick={handleLoad}>Submit</button>
+          </div>
         </div>
       </div>
     </div>

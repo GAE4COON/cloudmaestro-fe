@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import * as go from "gojs";
 import "../styles/App.css"; // contains .diagram-component CSS
+import handleChangedSelection from "./toggle/toggle";
 
-const useGoJS = () => {
+const useGoJS = ({}) => {
   const [diagram, setDiagram] = useState(null);
   const [clickedNodeKey, setClickedNodeKey] = useState();
   const [showSelectToggle, setShowSelectToggle] = useState({ "value": false });
@@ -111,6 +112,17 @@ const useGoJS = () => {
             return k !== -7;
           }),
         ),
+
+
+        // modify or delete -> if unnecessary 
+        new go.Binding("fromLinkable", "key", function (k) {
+          return k !== -7;
+        }),
+        new go.Binding("toLinkable", "key", function (k) {
+          return k !== -7;
+        }),
+      
+
       )
 
     );
@@ -242,17 +254,20 @@ const useGoJS = () => {
       $(go.Shape, { toArrow: "Standard", scale: 1.5, stroke: null, name: "ToArrow" }),
       $(go.Shape, { fromArrow: "DoubleForwardSlash", scale: 1.5, stroke: null, name: "FromArrow" })
     );
-
+    
     diagram.addDiagramListener("ObjectSingleClicked", function (e) {
       const part = e.subject.part;
       if (part instanceof go.Link) {
         console.log("링크가 클릭되었네요");
       } else if (part instanceof go.Node) {
-        console.log("나는 node 입니다", part.data);
 
+        console.log("나는 node 입니다", part.data);
         const key = part.data.key;
-        console.log("나는 key 입니다", key);
-        setClickedNodeKey(key);
+        console.log("나는 key 입니다",key);
+        if(handleChangedSelection(key)){
+          setShowSelectToggle({"value":true,"key":key})
+        }
+
 
       }
     });
