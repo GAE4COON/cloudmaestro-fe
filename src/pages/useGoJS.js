@@ -69,8 +69,8 @@ const useGoJS = () => {
       "Spot",  // Spot 패널 사용으로 변경
       {
         click: (e, node) => {
-          const key = node.data.key;
-          setClickedNodeKey(key);
+          const text = node.data.text;
+          setClickedNodeKey(text);
         }
       },
       { mouseDrop: (e, node) => finishDrop(e, node.containingGroup) },
