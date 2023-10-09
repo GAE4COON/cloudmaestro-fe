@@ -15,6 +15,8 @@ import Palette from "../components/Palette";
 import "../styles/Draw.css";
 import { useFileUpload } from "../components/useFileInput";
 
+import { Link } from "react-router-dom";
+
 function Draw() {
 
   const { data } = useFileUpload();
@@ -37,29 +39,14 @@ function Draw() {
 
   const location = useLocation();
   const file = location.state ? location.state.file : null;
+  const from = location.from;
   // console.log(file);
 
-  const handleNodeSelect = useCallback(
-    (label) => {
-      if (diagram) {
-        const selectedNode = diagram.selection.first();
-        if (selectedNode instanceof go.Node) {
-          console.log("use model");
-          diagram.model.commit((model) => {
-            model.set(selectedNode.data, "text", label);
-          }, "updated text");
-        }
-      }
-      setSelectedNodeData(label);
-    },
-    [diagram]
-  );
-  
   useEffect(() => {
     if (file && diagram) {
-        diagram.model = go.Model.fromJson(file);
+      diagram.model = go.Model.fromJson(file);
     }
-}, [file, diagram]);
+  }, [file, diagram]);
 
   return (
     <div>
@@ -80,7 +67,7 @@ function Draw() {
               </div>
 
               <div className="diagram">
-
+{/* 
                 {showSelectToggle.value && (
                   <SelectToggle
                     value={selectedNodeData}
@@ -88,27 +75,36 @@ function Draw() {
                     onToggleSelect={handleNodeSelect}
                     readOnly
                   />
-                )}
+                )} */}
                 {clickedNodeKey &&
                   <div className="clicked_key">
                     {clickedNodeKey}
                   </div>
                 }
-                {file &&
-                  <ReactDiagram
-                    initDiagram={initDiagram}
-                    divClassName={diagramClassName}
-                  // nodeDataArray={file?.nodeDataArray}
-                  // linkDataArray={file?.linkDataArray}
-                  />
-                }
-
+                <ReactDiagram
+                  initDiagram={initDiagram}
+                  divClassName={diagramClassName}
+                // nodeDataArray={file?.nodeDataArray}
+                // linkDataArray={file?.linkDataArray}
+                />
               </div>
 
             </div>
 
           </div>
         </div>
+
+        {from==="inputNet"&&
+        <Link to={'/input/aws'}
+          state={{ file: diagram.model.toJson() }}>
+          Submit
+        </Link>
+        }
+        {from==="inputAWS"&&
+        <Link>
+          Submit final
+        </Link>
+        }
       </div>
     </div>
   );

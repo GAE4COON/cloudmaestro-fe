@@ -1,8 +1,11 @@
 import React, { useCallback, useState } from "react";
 import * as go from "gojs";
 import "../styles/Button.css"; // contains .diagram-component CSS
+import { useNavigate } from "react-router-dom";
 
 const Button = ({ diagram }) => {
+  const navigate = useNavigate();
+
   const hiddenFileInput = React.useRef(null);
 
   const handleClick = () => {
@@ -55,12 +58,15 @@ const Button = ({ diagram }) => {
     }
   };
 
+
   const handleLoad = () => {
     if (savedDiagramJSON && diagram) {
       diagram.model = go.Model.fromJson(savedDiagramJSON);
       console.log(JSON.stringify(diagram.model));
     }
   };
+
+
 
   const onFileChange = (e) => {
     console.log("hello");
@@ -115,9 +121,7 @@ const Button = ({ diagram }) => {
         <div className="button-row">
           <button onClick={handleLoad}>Load</button>
         </div>
-        <div className="button-row">
-          <button onClick={handleLoad}>Submit</button>
-        </div>
+
       </div>
     </div>
   );

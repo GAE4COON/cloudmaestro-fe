@@ -19,7 +19,8 @@ export const useFileUpload = () => {
         });
 
         if (response.data) {
-          navigate('/draw', { state: { file: response.data } });
+          navigate('/draw', { state: { file: response.data},
+        from: "inputNet"});
         }
       } catch (error) {
         console.log("error", error);

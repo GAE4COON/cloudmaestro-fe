@@ -4,6 +4,8 @@ import Select from 'react-select';
 import "../styles/input.css"
 import { periodOptions, serviceOptions, industrialOptions, wayOptions, costplatOptions } from "../db/inputSelect";
 
+import { Link } from 'react-router-dom';
+
 const App = () => {
     const [selectedPeriod, setSelectedPeriod] = useState(null);
     const [selectedService, setSelectedService] = useState(null);
@@ -11,13 +13,12 @@ const App = () => {
     const [selectedWay, setSelectedWay] = useState(null);
     const [selectedCostPlat, setSelectedCostPlat] = useState(null);
 
-    const [uploadedFiles, setUploadedFiles] = useState([]);
+    const input = [selectedPeriod, selectedService, selectedIndustrial, selectedWay, selectedCostPlat];
 
-    const navigate = useNavigate();
+    const location = useLocation();
 
-    const handleFileChange = (event) => {
-        navigate('/draw/aws'); // 변경된 부분
-    };
+    const file = location.state ? location.state.file : null;
+    console.log(file);
     return (
         <div className="app-container">
             <div className="horizontal-layout">
@@ -72,9 +73,12 @@ const App = () => {
                 </div>
             </div>
             <div className="horizontal-layout">
-                <button onClick={handleFileChange}>
-                    Upload File
-                </button>
+                <Link to={'/draw'}
+                    state={{ file: file,
+                            input: input, 
+                            from: "inputAWS"}}>
+                    Go to Migration!
+                </Link>
             </div>
 
         </div>

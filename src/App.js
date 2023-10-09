@@ -40,7 +40,7 @@ function App() {
               <Route path="/sign-in" element={<Signin />} />
 
               <Route path="/home/autodraw" element={<InputNet />} />
-              <Route path="/inputaws" element={<InputAWS />} />
+              <Route path="/input/aws" element={<InputAWS />} />
             </Routes>
           </div>
           <Footer />
