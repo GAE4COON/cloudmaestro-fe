@@ -3,7 +3,7 @@ import * as go from "gojs";
 import "../styles/Button.css"; // contains .diagram-component CSS
 import SelectToggle from "../../src/components/cost/SelectEc2Toggle";
 import InputAWS from "./InputAWS";
-import { useNavigate } from "react-router-dom";
+import { json, useNavigate } from "react-router-dom";
 
 
 const  Button = ({ diagram , finalToggleValue, setFinalToggleValue}) => {
@@ -74,11 +74,26 @@ const  Button = ({ diagram , finalToggleValue, setFinalToggleValue}) => {
   };
 
   const handleLoad = () => {
-    if (savedDiagramJSON && diagram) {
-      diagram.model = go.Model.fromJson(savedDiagramJSON);
-      console.log(JSON.stringify(diagram.model));
-    }
-    navigate("/inputaws")
+    
+      //console.log("modelmodel",JSON.stringify(diagram.model));
+   
+      // Make a POST request to the backend
+      fetch('http://localhost:8080/api/v1/file-api/network', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(diagram.model)
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Success:', data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+
+    
   };
 
   const onFileChange = (e) => {
