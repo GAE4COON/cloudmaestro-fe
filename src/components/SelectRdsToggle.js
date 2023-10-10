@@ -5,10 +5,10 @@ import axios from 'axios';
 const baseOptions = [
     "PostgreSQL",
     "MySQL",
-    "SQLServerStandard",
+    "SQLServer",
     "AuroraPostgresMySQL",
     "MariaDB",
-    "OracleEnterprise"
+    "Oracle"
   ];
 
 const onTypeOptions = [
@@ -58,9 +58,7 @@ function fetchEngineData(engine, instanceType, setData, setLoading, setError){
     .then(function (response) {
       setData(response.data);
       console.log(response.data);
-      //console.log("response.data",response.data,"platform",platform)
       
-
       const transformData = (data) => {
         const { instanceType, instanceSize } = data;
         const resultMap = {};
@@ -85,7 +83,7 @@ function fetchEngineData(engine, instanceType, setData, setLoading, setError){
         resolve(transformedData);
     }
 
-    if (engine == "SQLServerStandard") {
+    if (engine == "SQLServer") {
         const transformedData=transformData(response.data);
         resolve(transformedData);    }
 
@@ -97,7 +95,7 @@ function fetchEngineData(engine, instanceType, setData, setLoading, setError){
         const transformedData=transformData(response.data);
         resolve(transformedData);    }
     
-    if (engine == "OracleEnterprise") {
+    if (engine == "Oracle") {
         const transformedData=transformData(response.data);
         resolve(transformedData);    }
         
@@ -138,8 +136,7 @@ const SelectRdsToggle = ({ uniquekey, onToggleSelect }) => {
       async function fetchOptions() {
         try {
           const options = await fetchEngineData(toggle1Value, null, setData, setLoading, setError);
-          //반환 값은 딕셔너리인데 set할때 오류가 발생하는 듯
-          console.log("옵션입니당",options);
+         
           setToggle2Options(Object.keys(options));
           setDbOption(options);
           setToggle2Value(null);
