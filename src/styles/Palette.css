@@ -22,7 +22,7 @@
 input[type="text"]{
     position: relative;
     color: black;
-    /* width:80%; */
+    width:100%;
     height: 20px;
     z-index: inherit;
 }
@@ -99,7 +99,7 @@ input[type="radio"] {
     display: flex;
     justify-content: space-between;
     padding: 0.5em;
-    background: #1F4963;
+    background: #446b83;
     border: solid 1px white;
     cursor: pointer;
   }
@@ -135,10 +135,6 @@ input[type="radio"] {
     background: #1a252f;
   }
   
-  input[type="radio"]:checked + .tab-label {
-    background: #1a252f;
-  }
-  
   input[type="radio"]:checked + .tab-label::after {
     transform: rotate(90deg);
   }
@@ -147,7 +143,6 @@ input[type="radio"] {
     max-height: 100vh;
   }
   
-
 .search-container{
     text-align: left;
     font-size: 12px;
@@ -156,7 +151,7 @@ input[type="radio"] {
 .filtered-nodes-container{
     background-color: aliceblue;
     font-size: 10px;
-    width: 80%;
+    width: 100%;
     text-align: left;
     padding:10px;
 }
