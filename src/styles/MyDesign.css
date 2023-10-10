@@ -1,0 +1,75 @@
+.title1{
+    padding-top:40px;
+    color: #525252;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    text-align:center;
+    padding-bottom:20px;
+}
+
+.file-name{
+    text-align: left;
+    padding-left:20px;
+}
+
+.middle-bar{
+    background-color: #809CDA;
+    height: 20px;
+    width: 100%;
+    margin-top:10px;
+}
+
+.instance{
+    display: flex;
+    margin-top:20px;
+}
+
+.instance-title{
+    background-color: #809CDA;
+    border-radius: 20px;
+    color:white;
+    width: auto;
+    padding-left:10px;
+    padding-right:20px;
+    padding-top:3px;
+    
+    height: auto;
+    min-width: 200px;
+}
+
+.instance-cost{
+    text-align: right;
+    padding-right: 10px;
+    margin-left: 20px;
+    padding-bottom: 10px;
+
+    border-bottom: 3px solid #E6E6E6;
+    width: 100%;
+    height: 20px;
+}
+
+.total-container{
+    display: flex;
+    margin-top:30px;
+    padding:10px;
+    justify-content: space-between;
+    border-top: 3px solid #E6E6E6;
+    border-bottom: 3px solid #E6E6E6;
+}
+.total-cost-title{
+    color: #505050;
+    padding-left:10px;
+}
+
+.total-cost{
+    padding-right: 10px;
+}
+
+.pie-chart {
+    display: flex;
+    align-items: center; /* This vertically centers the child items */
+    justify-content: center; /* This horizontally centers the child items */
+    max-height: 350px; /* Setting a specific height for the container */
+}

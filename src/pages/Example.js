@@ -30,12 +30,10 @@ const Learn = () => {
         }
       }, [location]);
 
+
       
     {/* <button onClick={() => getExampleFile(1)}>1번 템플릿 가져오기</button>
     <button onClick={() => getExampleFile(2)}>2번 템플릿 가져오기</button> */}
-
-
-
 
     const animateText = (fullText, setter, speed) => {
         let i = 0;
