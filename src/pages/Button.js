@@ -2,9 +2,13 @@ import React, { useCallback, useEffect, useState } from "react";
 import * as go from "gojs";
 import "../styles/Button.css"; // contains .diagram-component CSS
 import SelectToggle from "../../src/components/cost/SelectEc2Toggle";
+import InputAWS from "./InputAWS";
+import { useNavigate } from "react-router-dom";
+
 
 const  Button = ({ diagram , finalToggleValue, setFinalToggleValue}) => {
   const hiddenFileInput = React.useRef(null);
+  const navigate = useNavigate();
 
   const handleClick = () => {
     hiddenFileInput.current.click();
@@ -74,6 +78,7 @@ const  Button = ({ diagram , finalToggleValue, setFinalToggleValue}) => {
       diagram.model = go.Model.fromJson(savedDiagramJSON);
       console.log(JSON.stringify(diagram.model));
     }
+    navigate("/inputaws")
   };
 
   const onFileChange = (e) => {
@@ -132,11 +137,10 @@ const  Button = ({ diagram , finalToggleValue, setFinalToggleValue}) => {
           <div className="button-row">
             <button onClick={localSaveImage}>Save as Image</button>
           </div>
-          <div className="button-row">
-            <button onClick={handleLoad}>Load</button>
-          </div>
+        
           <div className="button-row">
             <button onClick={handleLoad}>Submit</button>
+            {/* <button onClick={navigateAws}>Submit</button> */}
           </div>
         </div>
       </div>

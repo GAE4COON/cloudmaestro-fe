@@ -16,7 +16,7 @@ const App = () => {
     const navigate = useNavigate();
 
     const handleFileChange = (event) => {
-        navigate('/draw/aws'); // 변경된 부분
+        navigate('/draw'); // 변경된 부분
     };
     return (
         <div className="app-container">
@@ -73,7 +73,7 @@ const App = () => {
             </div>
             <div className="horizontal-layout">
                 <button onClick={handleFileChange}>
-                    Upload File
+                    Submit
                 </button>
             </div>
 
