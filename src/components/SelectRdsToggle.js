@@ -23,7 +23,7 @@ function rdsPrice(priceElement) {
   console.log("engine: "+dbengine+"instance: "+dbinstance+"size: "+dbsize);
   return new Promise((resolve, reject) => {
     axios({
-      url: '/rds/pricing',
+      url: '/pricing-api/rds',
       method: 'post',
       data: {
         "dbEngine": dbengine,
@@ -47,7 +47,7 @@ function rdsPrice(priceElement) {
 function fetchEngineData(engine, instanceType, setData, setLoading, setError){
   return new Promise((resolve, reject) => {setLoading(true);
     axios({
-      url: '/db',
+      url: '/db-api/rds',
       method: 'post',
       data: {
         "engine": engine,

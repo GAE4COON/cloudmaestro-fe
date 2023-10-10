@@ -5,6 +5,8 @@ import { ReactDiagram } from "gojs-react";
 import useGoJS from "./useGoJS";
 import SelectEc2Toggle from "../components/SelectEc2Toggle";
 import SelectRdsToggle from "../components/SelectRdsToggle";
+import SelectS3Toggle from "../components/SelectS3Toggle";
+
 import { useMediaQuery } from "react-responsive";
 import { nodeDataArrayPalette } from "../db/NodeAWS";
 import { useLocation } from "react-router-dom";
@@ -70,7 +72,7 @@ function Draw() {
               </div>
              
                <div className="diagram">
-                  { showToggle && showSelectToggle.value && showSelectToggle.key == "Arch_Amazon-EC2_48" && (
+                  { showToggle && showSelectToggle.value && showSelectToggle.key.includes("Arch_Amazon-EC2_48") && (
                     <SelectEc2Toggle
                     value={selectedNodeData}
                     uniquekey={showSelectToggle.key}
@@ -78,13 +80,16 @@ function Draw() {
                     readOnly
                   />
                   )}
-                  { showToggle && showSelectToggle.value && showSelectToggle.key == "Arch_Amazon-RDS_48" && (
+                  { showToggle && showSelectToggle.value && showSelectToggle.key.includes("Arch_Amazon-RDS_48") && (
                     <SelectRdsToggle
                     value={selectedNodeData}
                     uniquekey={showSelectToggle.key}
                     onToggleSelect={handleNodeSelect}
                     readOnly
                   />
+                  )}
+                  { showToggle && showSelectToggle.value && showSelectToggle.key.includes("Arch_Amazon-Simple-Storage-Service_48") && (
+                    <SelectS3Toggle/>
                   )}
                   <ReactDiagram
                   initDiagram={initDiagram}
