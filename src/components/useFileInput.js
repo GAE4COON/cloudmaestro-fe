@@ -36,8 +36,6 @@ export const useFileUpload = () => {
     }
   };
 
-
-
   return {
     selectedFile,
     handleInputFIleUpload,
