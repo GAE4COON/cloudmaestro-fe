@@ -24,7 +24,6 @@ const Palette = memo(({ divClassName }) => {
   const [selectedTab, setSelectedTab] = useState([]);
   const [filteredNodes, setFilteredNodes] = useState([]);
 
-
   const paletteDivs = useRef({});
 
   useEffect(() => {
@@ -81,31 +80,24 @@ const Palette = memo(({ divClassName }) => {
     let dataToUse = nodeDataArrayPalette.filter(
       (item) => item.type === selectedTab
     );
-    let dataToSearch = nodeDataArrayPalette;
-
-            <div className="search-container">
-                <input
-                    type="text"
-                    placeholder="Search..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                />
-            </div>
-
-    myPalette.model.nodeDataArray = dataToUse;
-
     if (paletteDivs.current[selectedTab]) {
       myPalette.div = paletteDivs.current[selectedTab];
     }
 
+    let dataToSearch = nodeDataArrayPalette;
     if (searchTerm) {
       dataToSearch = dataToSearch.filter(item => {
-          return formatKey(item.key).toLowerCase().includes(searchTerm.toLowerCase());
+        return formatKey(item.key).toLowerCase().includes(searchTerm.toLowerCase());
       });
       setFilteredNodes(dataToSearch);
-  } else {
+
+      myPalette.model.nodeDataArray = dataToSearch; // 팔레트에 검색된 노드들을 설정
+    } else {
       setFilteredNodes([]);
-  }
+      myPalette.model.nodeDataArray = dataToUse;
+
+    }
+    
 
     return () => {
       myPalette.div = null;
@@ -116,24 +108,39 @@ const Palette = memo(({ divClassName }) => {
   return (
     <div className={divClassName}>
       <div id="allSampleContent">
-      <div className="search-container">
-                <input
-                    type="text"
-                    placeholder="Search..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                />
-            </div>
+        <div className="search-container">
+          <input
+            type="text"
+            placeholder="Search..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
 
-            {filteredNodes.length> 0 && (
-                <div className="filtered-nodes-container">
-                    {filteredNodes.map(node => (
-                        <div key={node.key}>
-                          {node.type}: {formatKey(node.key)}
-                        </div>
-                    ))}
+          {filteredNodes.length > 0 && (
+            <div>
+              <div className="filtered-nodes-container">
+                {filteredNodes.map(node => (
+                  <div key={node.key}>
+                    {node.type}: {formatKey(node.key)}
+                  </div>
+                ))}
+              </div>
+
+              <div className="scrollable-tabs-container">
+                <div className="tabs">
+                  <div className="tab">
+                    <input type="radio" id="rd99" name="rd" onClick={() => setSelectedTab("Search")} />
+                    <label className="tab-label" htmlFor="rd99">Search</label>
+                    <div className="tab-content" ref={el => paletteDivs.current['Search'] = el} />
+                  </div>
                 </div>
-            )}
+              </div>
+            </div>
+          )}
+
+
+{filteredNodes.length == 0 &&
 
         <div className="scrollable-tabs-container">
           <div className="tabs">
@@ -615,7 +622,7 @@ const Palette = memo(({ divClassName }) => {
 
             </div>
           </div>
-        </div>
+        </div>}
       </div>
     </div>
   );
