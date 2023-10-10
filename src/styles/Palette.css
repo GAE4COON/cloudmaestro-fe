@@ -19,6 +19,14 @@
     color: fff;
 }
 
+input[type="text"]{
+    position: relative;
+    color: black;
+    /* width:80%; */
+    height: 20px;
+    z-index: inherit;
+}
+
 input[type="radio"]:checked + .tab-label {
     background-color: #809CDA;
 }
@@ -66,4 +74,89 @@ input[type="radio"]:not(:checked) + .tab-label {
     background-color: rgb(232, 232, 232);
     border-radius: 10px;
     box-shadow: inset 0px 0px 5px white;
+}
+
+
+/* This CSS is used to create the accordion for the Palettes */
+input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    z-index: -1;
+  }
+  
+  /* Accordion styles */
+  .tabs {
+    overflow: hidden;
+  }
+  
+  .tab {
+    width: 100%;
+    color: white;
+    overflow: hidden;
+  }
+  
+  .tab-label {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5em;
+    background: #1F4963;
+    border: solid 1px white;
+    cursor: pointer;
+  }
+  
+  .tab-label:hover {
+    background: #627f91;
+  }
+  
+  .tab-label::after {
+    content: "❯";
+    width: 1em;
+    height: 1em;
+    text-align: center;
+    transition: all 0.35s;
+  }
+  
+  .tab-content {
+    max-height: 0;
+    color: #2c3e50;
+    background: white;
+  }
+  
+  .tab-close {
+    display: flex;
+    justify-content: flex-end;
+    padding: 1em;
+    font-size: 0.75em;
+    background: #2c3e50;
+    cursor: pointer;
+  }
+  
+  .tab-close:hover {
+    background: #1a252f;
+  }
+  
+  input[type="radio"]:checked + .tab-label {
+    background: #1a252f;
+  }
+  
+  input[type="radio"]:checked + .tab-label::after {
+    transform: rotate(90deg);
+  }
+  
+  input[type="radio"]:checked ~ .tab-content {
+    max-height: 100vh;
+  }
+  
+
+.search-container{
+    text-align: left;
+    font-size: 12px;
+}
+
+.filtered-nodes-container{
+    background-color: aliceblue;
+    font-size: 10px;
+    width: 80%;
+    text-align: left;
+    padding:10px;
 }

@@ -89,8 +89,6 @@ function Draw() {
                   <ReactDiagram
                     initDiagram={initDiagram}
                     divClassName={diagramClassName}
-                  // nodeDataArray={file?.nodeDataArray}
-                  // linkDataArray={file?.linkDataArray}
                   />
               </div>
 
