@@ -74,24 +74,23 @@ function MyDesign() {
 
             return (
               <>
-              <div className="between-bar">
                 <div key={index} className="instance" onClick={() => handleInstanceClick(index)}>
                   <div className="instance-title">
                     {category}
                   </div>
-                  <div className="instance-dropdown">
+                  <div className="instance-cost-container">
                     <div className="instance-cost">
                       ${cost}/mo
                       <div className="dropdown-icon">
                       <BsChevronDown color="#cdcdcd" />
                       </div>
-                    </div>
+                      </div>
                     {activeDropdown === index && (
                       <div className="instance-dropdown">
                         Additional info for {category}
                       </div>
                     )}
-                  </div>
+                
                 </div>
                 </div>
               </>
