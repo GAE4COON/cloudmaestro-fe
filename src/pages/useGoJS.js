@@ -70,17 +70,18 @@ const useGoJS = ({}) => {
       "Spot",  // Spot 패널 사용으로 변경
       {
         click: (e, node) => {
-          const text = node.data.text;
+          const text = node.data.text|| node.data.key;;
           setClickedNodeKey(text);
         }
       },
-      { mouseDrop: (e, node) => finishDrop(e, node.containingGroup) },
       { resizable: false, resizeObjectName: "Picture" },
       // { background: "#A0BCC2" },
       new go.Binding("layerName", "key", function (key) {
         return key === -7 ? "BottomLayer" : "";
       }),
-      new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
+
+      new go.Binding("location", "locz", go.Point.parse).makeTwoWay(go.Point.stringify),
+
       //마진에 포트 추가해서 링크가 동작되게 만든다
       $(go.Shape,
         {
@@ -112,6 +113,7 @@ const useGoJS = ({}) => {
           new go.Binding("toLinkable", "key", function (k) {
             return k !== -7;
           }),
+          new go.Binding("text", "key"),
         ),
 
 
@@ -122,11 +124,10 @@ const useGoJS = ({}) => {
         new go.Binding("toLinkable", "key", function (k) {
           return k !== -7;
         }),
-      
-
       )
 
     );
+    
 
     diagram.groupTemplate
       = $(go.Group,

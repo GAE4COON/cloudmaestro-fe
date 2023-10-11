@@ -1989,8 +1989,8 @@ export const nodeDataArrayPalette = [
         stroke: "rgba(0,0,198,0.3)",
         type: "group"
 
-    }, {
-    }, {
+    }, 
+    {
         isGroup: true,
         key: "Corporate data center",
         stroke: "rgba(255,165,0,0.3)",
@@ -2009,8 +2009,8 @@ export const nodeDataArrayPalette = [
         stroke: "rgba(0,0,198,0.3)",
         type: "group"
 
-    }, {
-    }, {
+    }, 
+    {
         isGroup: true,
         key: "AWS account",
         stroke: "rgba(255,165,0,0.3)",

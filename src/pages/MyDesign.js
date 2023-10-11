@@ -79,8 +79,8 @@ function MyDesign() {
 
             return (
               <>
-                <div key={index} className="instance" onClick={() => handleInstanceClick(index)}>
-                  <div className="instance-cost-container">
+                <div key={index} className="instance">
+                  <div className="instance-cost-container"  onClick={() => handleInstanceClick(index)}>
 
                     <div className="instance-title">
                       {category}
@@ -117,8 +117,13 @@ function MyDesign() {
           <div className="pie-chart">
             <Doughnut data={createChart(instanceNameArr)} options={chartOptions} />
           </div>
+          <button className="export-button">
+            EXPORT
+        </button>
         </div>
+
       </div>
+      
     </div>
 
   );
