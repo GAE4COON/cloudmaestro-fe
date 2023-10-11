@@ -1,8 +1,8 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import * as go from "gojs";
 import "../styles/Button.css"; // contains .diagram-component CSS
 
-const Button = ({ diagram ,showToggle, setShowToggle}) => {
+const Button = ({ diagram ,showToggle, setShowToggle, finalToggleValue, setFinalToggleValue}) => {
   const hiddenFileInput = React.useRef(null);
   
   const handleClick = () => {
@@ -10,9 +10,19 @@ const Button = ({ diagram ,showToggle, setShowToggle}) => {
   };
 
   const [savedDiagramJSON, setSavedDiagramJSON] = useState(null);
+  const [finalToggleVal, setFinalToggleVal] = useState({});
+
+  useEffect(() => {
+    console.log("finalToggle 업데이트 후:", finalToggleVal);
+    setFinalToggleValue(finalToggleVal);
+  }, [finalToggleVal]);
+  
   const handleSave = () => {
     if (diagram) {
-      const jsonCombinedArray = diagram.model.toJson();
+      let jsonCombinedArray = diagram.model.toJson();
+      jsonCombinedArray = JSON.parse(jsonCombinedArray);
+      jsonCombinedArray["rds"] = finalToggleValue;          //ec2도 해야할 듯
+      jsonCombinedArray = JSON.stringify(jsonCombinedArray);
       setSavedDiagramJSON(jsonCombinedArray);
       console.log(jsonCombinedArray);
       localSaveJSON(jsonCombinedArray);
@@ -63,7 +73,6 @@ const Button = ({ diagram ,showToggle, setShowToggle}) => {
   };
 
   const onFileChange = (e) => {
-    console.log("hello");
     if (e.target.files[0] && e.target.files[0].name.includes("json")) {
       let file = e.target.files[0];
       console.log(e.target.files[0]);
@@ -71,6 +80,8 @@ const Button = ({ diagram ,showToggle, setShowToggle}) => {
       fileReader.readAsText(file);
       fileReader.onload = () => {
         console.log(fileReader.result);
+        let filejson = JSON.parse(fileReader.result);
+        setFinalToggleVal(filejson["rds"])        //여기서 rds뿐이 아닌 ec2도 해줘야 할 듯
         if (fileReader.result && diagram) {
           diagram.model = go.Model.fromJson(fileReader.result);
           console.log(JSON.stringify(diagram.model));

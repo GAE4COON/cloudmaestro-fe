@@ -26,6 +26,7 @@ function Draw() {
     ? "diagram-component"
     : "diagram-component-small";
 
+  const [finalToggleValue, setFinalToggleValue] = useState({}); //selectcost에서 쓰는 usestate
   const [selectedNodeData, setSelectedNodeData] = useState(null); // <-- 상태 변수를 추가합니다.
   const [showToggle, setShowToggle] = useState(true);
   const { initDiagram, diagram, showSelectToggle } =
@@ -58,7 +59,7 @@ function Draw() {
     <div>
       <div className="Draw">
         <div className="container">
-          <Button diagram={diagram} showToggle={showToggle} setShowToggle={setShowToggle} />
+          <Button diagram={diagram} showToggle={showToggle} setShowToggle={setShowToggle} finalToggleValue={finalToggleValue} setFinalToggleValue={setFinalToggleValue} />
           <div className="createspace">
           
             <div className="workspace">
@@ -74,17 +75,22 @@ function Draw() {
                <div className="diagram">
                   { showToggle && showSelectToggle.value && showSelectToggle.key.includes("Arch_Amazon-EC2_48") && (
                     <SelectEc2Toggle
-                    value={selectedNodeData}
+                    //여기서 다이어 그램을 넘겨주자
+                    //finaltoggle usestate를 넘겨주자
+                    //value={selectedNodeData}
                     uniquekey={showSelectToggle.key}
+                    finalToggleValue={finalToggleValue}
+                    setFinalToggleValue={setFinalToggleValue}
                     onToggleSelect={handleNodeSelect}
                     readOnly
                   />
                   )}
                   { showToggle && showSelectToggle.value && showSelectToggle.key.includes("Arch_Amazon-RDS_48") && (
                     <SelectRdsToggle
-                    value={selectedNodeData}
+                    diagram={diagram}
                     uniquekey={showSelectToggle.key}
-                    onToggleSelect={handleNodeSelect}
+                    finalToggleValue={finalToggleValue}
+                    setFinalToggleValue={setFinalToggleValue}
                     readOnly
                   />
                   )}

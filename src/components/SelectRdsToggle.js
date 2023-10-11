@@ -14,7 +14,7 @@ const baseOptions = [
 const onTypeOptions = [
   { value: "T3.1", label: "on-demand" }
 ];
-
+ 
 
 function rdsPrice(priceElement) {
   let dbengine=priceElement[0];
@@ -112,18 +112,21 @@ function fetchEngineData(engine, instanceType, setData, setLoading, setError){
 }
 
 
-const SelectRdsToggle = ({ uniquekey, onToggleSelect }) => {
+const SelectRdsToggle = ({ diagram, uniquekey, finalToggleValue, setFinalToggleValue}) => {
   
   const [toggle1Value, setToggle1Value] = useState(null);
   const [toggle2Value, setToggle2Value] = useState(null);
   const [toggle3Value, setToggle3Value] = useState(null);
-  const [toggle4Value, setToggle4Value] = useState(null);
-  const [finalToggleValue, setFinalToggleValue] = useState([]);
+
+
+  const [uniqueKey,setUniqueKey] = useState(null);
+
 
   const [toggle2Options, setToggle2Options] = useState([]);
   const [toggle3Options, setToggle3Options] = useState([]);
   const [toggle4Options, setToggle4Options] = useState([]);
   const [price ,setPrice] = useState(null);
+  const [select, setSelect] = useState(["Engine", "InstanceType","Size"]);
 
   const [dbOption, setDbOption] = useState(null);
 
@@ -131,12 +134,31 @@ const SelectRdsToggle = ({ uniquekey, onToggleSelect }) => {
   const [error, setError] = useState(null);
   const [data, setData] = useState(null);
 
+  //삭제시 다이어그램에 있는 노드 데이터 삭제
+  const handleDeletKey = (uniqueKey) => {
+    setFinalToggleValue((prev) => {
+      const newState = {...prev};
+      delete newState[uniqueKey];
+      return newState;
+    });
+  }
+
+  diagram.addDiagramListener("SelectionDeleting", function (e) {
+      e.subject.each(function (part) {
+        handleDeletKey(part.key);
+      });
+  });
+
+  
+
+  //첫번째 토글이 set 되었을때 db에 인스턴스와 size 질의
   useEffect(() => {
     if (toggle1Value) {
       async function fetchOptions() {
         try {
+          console.log("엔진",toggle1Value);
           const options = await fetchEngineData(toggle1Value, null, setData, setLoading, setError);
-         
+          console.log("options",options);
           setToggle2Options(Object.keys(options));
           setDbOption(options);
           setToggle2Value(null);
@@ -150,75 +172,159 @@ const SelectRdsToggle = ({ uniquekey, onToggleSelect }) => {
     } else {
       setToggle2Options([]);
       setToggle2Value(null);
-      setToggle3Value(null);
     }
   }, [toggle1Value]);
-
+  
+  //선택한 노드의 key 저장
+  useEffect(() => {
+    setUniqueKey(uniquekey);
+    setToggle1Value(null);
+    setToggle2Value(null);
+    setToggle3Value(null);
+  },[uniquekey]);
+  
+  
+  //toggle2 즉 size를 set해준다
   useEffect(() => {
     if (toggle2Value) {
-
-    
     setToggle3Options(dbOption[toggle2Value]);
     setToggle3Value(null);
     }
   }, [toggle2Value]);
 
+
+  useEffect(() => {          //이미 유니크키가 세팅이 완료된경우일듯
+    if (
+        finalToggleValue[uniqueKey] &&
+        finalToggleValue[uniqueKey].length === 4  
+        
+      ) {
+        console.log("setselect 전 finaltoggle입니당",finalToggleValue[uniqueKey][1]);
+        setSelect([             //이놈부터 오류가 발생함
+          finalToggleValue[uniqueKey][0],
+          finalToggleValue[uniqueKey][1],
+          finalToggleValue[uniqueKey][2],
+        ]);                      //이놈까지 오류가 발생함
+        setToggle1Value(finalToggleValue[uniqueKey][0]);
+        //setToggle2Value(finalToggleValue[uniqueKey][1]);  //이걸 없애면 뜨는데
+        setPrice(finalToggleValue[uniqueKey][3]);
+      } else {
+        setPrice("Loading");
+        setSelect(["Engine", "InstanceType","Size"]);
+      }
+  }, [finalToggleValue, uniqueKey]);
+
   useEffect(() => {
-
-      if(finalToggleValue.length == 3)
-          {
-            async function priceOptions() {
+    console.log("hello", finalToggleValue[uniqueKey]);
+      const fetchPrice = async () => {
+          if (finalToggleValue[uniqueKey] 
+            && finalToggleValue[uniqueKey].length == 4
+            && finalToggleValue[uniqueKey][0] != "Engine"
+            && finalToggleValue[uniqueKey][1] != "IntanceType"
+            && finalToggleValue[uniqueKey][2] != "Size"
+            && finalToggleValue[uniqueKey][3] === "Loading") {
               try {
-                const calculatedPrice = await rdsPrice(finalToggleValue);
-                console.log("calcul",calculatedPrice);
+                console.log(finalToggleValue[uniqueKey], "가격인데...?? 이까지 오나??" ); // 이 부분 추가
+
+                const calculatedPrice = await rdsPrice(finalToggleValue[uniqueKey]);
+                console.log("calcul", calculatedPrice);
+
+                setFinalToggleValue(prev => {
+                  const updated = [...prev[uniqueKey]];
+                  updated[3] = calculatedPrice;
+                  return { ...prev, [uniqueKey]: updated };
+                });
                 setPrice(calculatedPrice);
-
+                setSelect([                 
+                  finalToggleValue[uniqueKey][0],
+                  finalToggleValue[uniqueKey][1],
+                  finalToggleValue[uniqueKey][2],
+                ]);   
               } catch (err) {
-                console.error("Error fetching engine data:", err);
+                console.error("Error fetching platform data:", err);
               }
-             
+          } 
+
+          else if (       
+            finalToggleValue
+            && finalToggleValue[uniqueKey]
+            && finalToggleValue[uniqueKey].length === 4
+          ) {
+            console.log("setselect 전 finaltoggle입니당",finalToggleValue[uniqueKey]);
+            setSelect([                 
+              finalToggleValue[uniqueKey][0],
+              finalToggleValue[uniqueKey][1],
+              finalToggleValue[uniqueKey][2],
+            ]);                          
+            setToggle1Value(finalToggleValue[uniqueKey][0]);
+            //setToggle2Value(finalToggleValue[uniqueKey][1]);
+            setPrice(finalToggleValue[uniqueKey][3]);
+          } else {
+            
+            setPrice("Loading");
+            setSelect(["Engine", "InstanceType","Size"]);
           }
-          priceOptions()
-     
-    }
-
-      
-  },[finalToggleValue])
-
-
-
+        
+        }
+        fetchPrice();
+  
+  }, [finalToggleValue, uniqueKey]);
 
 
   const handleChange = (index, event) => {
     const newValue = event.target.value;
-
     if (index === 0) {
       setToggle1Value(newValue);
-      setFinalToggleValue([newValue]);
+      setFinalToggleValue(prev => {
+        const updated =  ["Engine","InstanceType","Size"]; //여기서 문제가 말생하네...?? 왜 발생하지
+        updated[index] = newValue;
+        updated[3] ="Loading";
+        return { ...prev, [uniqueKey]: updated };
+      });
+      console.log("0번 성공저장");
     } else if (index === 1) {
+      console.log("전");
       setToggle2Value(newValue);
-      setFinalToggleValue(prev => [prev[0], newValue]);
+      setFinalToggleValue(prev => {
+        const updated = [...prev[uniqueKey]];
+        updated[index] = newValue;
+        updated[2] = "Size";
+        updated[3] ="Loading";
+        return { ...prev, [uniqueKey]: updated };
+      });
+      setToggle3Value(null);
+      console.log("1번째 성공 저장");
     } else if (index === 2) {
       setToggle3Value(newValue);
       setToggle4Options(onTypeOptions);
-      setFinalToggleValue(prev => [prev[0],prev[1], newValue]);
+      setFinalToggleValue(prev => {
+        const updated = [...prev[uniqueKey]];
+        updated[index] = newValue;
+        updated[3] ="Loading";
+        console.log("Updated finalToggleValue:", updated); // 이 부분 추가
+        return { ...prev, [uniqueKey]: updated };
+      });
     } 
   };
 
 
   console.log("FinalToggle",finalToggleValue);
 
-  const renderToggle = (index, Select, value, options) => (
-    <select onChange={(e) => handleChange(index, e)}>
-      <option disabled>{Select}</option>
+  const renderToggle = (index, Select, value, options) => {
+    return (
+      <select
+        value={value || ""}
+        onChange={(e) => handleChange(index, e)}
+      >
+        <option value="" disabled>{Select}</option>
       {options.map((option, idx) => (
         <option key={idx}>
           {option}
         </option>
       ))}
     </select>
-  );
-  
+      );
+    };
 
   const Item = ({price}) =>{
 
@@ -235,9 +341,9 @@ const SelectRdsToggle = ({ uniquekey, onToggleSelect }) => {
   return (
     <div className ="ec2">
       <div className="toggle-component">
-        {renderToggle(0, "Engine", toggle1Value, baseOptions)}
-        {renderToggle(1, "Instance Type", toggle2Value, toggle2Options)}
-        {renderToggle(2, "Size", toggle3Value, toggle3Options)}
+        {renderToggle(0, select[0], toggle1Value, baseOptions)}
+        {renderToggle(1, select[1], toggle2Value, toggle2Options)}
+        {renderToggle(2, select[2], toggle3Value, toggle3Options)}
         
 
         <div className="price">

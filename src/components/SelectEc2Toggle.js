@@ -185,7 +185,7 @@ const SelectToggle = ({ uniquekey, onToggleSelect }) => {
     } else if (index === 3) {
       setToggle4Value(newValue);
       setFinalToggleValue(prev => [prev[0],prev[1],prev[2], newValue]);
-     
+
     }
   };
 
