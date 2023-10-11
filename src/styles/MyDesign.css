@@ -104,3 +104,42 @@
     justify-content: center; /* This horizontally centers the child items */
     max-height: 350px; /* Setting a specific height for the container */
 }
+
+
+/* table design */
+
+table {
+  border: 1px solid #ddd;
+  border-spacing: 0;
+  border-radius: 5px;
+  
+}
+
+th {
+  padding: 10px;
+  
+}
+
+table thead th {
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+table tbody tr td {
+  min-width: 100px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: center;
+
+  margin: 0;
+}
+
+table tbody tr td:nth-child(1) {
+  min-width: auto;
+}
+
+
+table tbody tr.disabled_row:hover {
+  background-color: transparent;
+  cursor: default;
+}

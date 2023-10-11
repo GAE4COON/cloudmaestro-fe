@@ -2,7 +2,10 @@ import React, { useState } from "react"; // add useState
 import { useNavigate } from "react-router-dom";
 import "../styles/MyDesign.css";
 import Sidebar from '../components/MyPageSideBar';
-import {BsChevronDown} from "react-icons/bs";
+import { BsChevronDown } from "react-icons/bs";
+import DataTable from '../components/EC2Table';
+import { headers, items } from '../db/EC2TableData';
+
 
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
@@ -41,12 +44,13 @@ const chartOptions = {
 
 function MyDesign() {
 
-  const [activeDropdown, setActiveDropdown] = useState(null);  // to control the currently active dropdown
+  const [activeDropdown, setActiveDropdown] = useState(null);  
 
   const handleInstanceClick = (index) => {
-    // if the clicked instance is already active, deactivate it. Otherwise, activate it.
     setActiveDropdown(activeDropdown === index ? null : index);
   };
+
+
 
   var instanceNameArr = [{ "Compute": 593.34 }, { "Security": 254.12 }, { "Storage": 21.00 }, { "Database": 124.16 }]
   const totalCost = instanceNameArr.reduce((sum, instanceObj) => {
@@ -83,16 +87,20 @@ function MyDesign() {
                     <div className="instance-cost">
                       ${cost}/mo
                       <div className="dropdown-icon">
-                      <BsChevronDown color="#cdcdcd" />
+                        <BsChevronDown color="#cdcdcd" />
                       </div>
-                      </div>
+                    </div>
                     {activeDropdown === index && (
                       <div className="instance-dropdown">
-                        Additional info for {category}
+                        {category}
+                        <DataTable
+                          headers={headers}
+                          items={items}
+                        />
                       </div>
                     )}
-                
-                </div>
+
+                  </div>
                 </div>
               </>
             );
