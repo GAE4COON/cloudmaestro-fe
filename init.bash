@@ -9,3 +9,5 @@ npm install @react-oauth/google@latest
 npm install axios
 npm install jwt-decode
 npm install react-responsive
+npm install --save chart.js react-chartjs-2 
+npm install react-table --save

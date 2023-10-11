@@ -1,6 +1,6 @@
 function handleChangedSelection(key) {
   console.log("key",key)
-  if (key.includes('Arch_Amazon-EC2_48')) {
+  if (key.includes('EC2')) {
       console.log("hi");
       return true;
   }

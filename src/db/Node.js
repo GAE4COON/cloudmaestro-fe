@@ -1,2255 +1,1934 @@
 export const nodeDataArrayPalette = [
     // Network icon
     {
-        key: "anti_ddos",
-        text: "1",
+        key: "Anti_DDoS",
         figure: "Rectangle",
-        source: "/img/Network_icon/anti_ddos.png",
+        source: "/img/Network_icon/Anti_DDoS.png",
         type: "Network_icon"
     },
     {
-        key: "ap",
-        text: "1",
+        key: "AP",
         figure: "Rectangle",
-        source: "/img/Network_icon/ap.png",
+        source: "/img/Network_icon/AP.png",
         type: "Network_icon"
     },
     {
         key: "database",
-        text: "1",
         figure: "Rectangle",
         source: "/img/Network_icon/database.png",
         type: "Network_icon"
     },
     {
         key: "firewall",
-        text: "1",
         figure: "Rectangle",
         source: "/img/Network_icon/firewall.png",
         type: "Network_icon"
     },
     {
-        key: "Hub",
-        text: "1",
+        key: "hub",
         figure: "Rectangle",
-        source: "/img/Network_icon/Hub.png",
+        source: "/img/Network_icon/hub.png",
         type: "Network_icon"
     },
     {
-        key: "image19",
-        text: "1",
+        key: "ips",
         figure: "Rectangle",
-        source: "/img/Network_icon/image19.png",
+        source: "/img/Network_icon/ips.png",
         type: "Network_icon"
     },
     {
         key: "L2_switch",
-        text: "1",
         figure: "Rectangle",
         source: "/img/Network_icon/L2_switch.png",
         type: "Network_icon"
     },
     {
         key: "L3_switch",
-        text: "1",
         figure: "Rectangle",
         source: "/img/Network_icon/L3_switch.png",
         type: "Network_icon"
     },
     {
         key: "L4_switch",
-        text: "1",
         figure: "Rectangle",
         source: "/img/Network_icon/L4_switch.png",
         type: "Network_icon"
     },
     {
         key: "L7_switch",
-        text: "1",
         figure: "Rectangle",
         source: "/img/Network_icon/L7_switch.png",
         type: "Network_icon"
     },
     {
         key: "network",
-        text: "1",
         figure: "Rectangle",
         source: "/img/Network_icon/network.png",
         type: "Network_icon"
     },
     {
-        key: "pc",
-        text: "1",
+        key: "PC",
         figure: "Rectangle",
-        source: "/img/Network_icon/pc.png",
+        source: "/img/Network_icon/PC.png",
         type: "Network_icon"
     },
     {
         key: "router",
-        text: "1",
         figure: "Rectangle",
         source: "/img/Network_icon/router.png",
         type: "Network_icon"
     },
     {
         key: "server",
-        text: "1",
         figure: "Rectangle",
         source: "/img/Network_icon/server.png",
         type: "Network_icon"
     },
     {
-        key: "waf",
-        text: "1",
+        key: "Network_WAF",
         figure: "Rectangle",
-        source: "/img/Network_icon/waf.png",
+        source: "/img/Network_icon/WAF.png",
         type: "Network_icon"
     },
-
-
     // AWS icon
     {
-        key: "Arch_Amazon-Athena_48",
-        text: "1",
+        key: "Athena",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Analytics/Arch_Amazon-Athena_48.svg",
-        type: "Arch_Analytics"
+        type: "Analytics"
     },
     {
-        key: "Arch_Amazon-CloudSearch_48",
-        text: "1",
+        key: "CloudSearch",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Analytics/Arch_Amazon-CloudSearch_48.svg",
-        type: "Arch_Analytics"
+        type: "Analytics"
+
     },
     {
-        key: "Arch_Amazon-DataZone_48",
-        text: "1",
+        key: "DataZone",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Analytics/Arch_Amazon-DataZone_48.svg",
-        type: "Arch_Analytics"
+        type: "Analytics"
     },
     {
-        key: "Arch_Amazon-EMR_48",
-        text: "1",
+        key: "EMR",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Analytics/Arch_Amazon-EMR_48.svg",
-        type: "Arch_Analytics"
+        type: "Analytics"
     },
     {
-        key: "Arch_Amazon-FinSpace_48",
-        text: "1",
+        key: "FinSpace",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Analytics/Arch_Amazon-FinSpace_48.svg",
-        type: "Arch_Analytics"
+        type: "Analytics"
     },
     {
-        key: "Arch_Amazon-Kinesis-Data-Analytics_48",
-        text: "1",
+        key: "Kinesis Data Analytics",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Analytics/Arch_Amazon-Kinesis-Data-Analytics_48.svg",
-        type: "Arch_Analytics"
+        type: "Analytics"
     },
     {
-        key: "Arch_Amazon-Kinesis-Data-Firehose_48",
-        text: "1",
+        key: "Kinesis Data Firehose",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Analytics/Arch_Amazon-Kinesis-Data-Firehose_48.svg",
-        type: "Arch_Analytics"
+        type: "Analytics"
     },
     {
-        key: "Arch_Amazon-Kinesis-Data-Streams_48",
-        text: "1",
+        key: "Kinesis Data Streams",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Analytics/Arch_Amazon-Kinesis-Data-Streams_48.svg",
-        type: "Arch_Analytics"
+        type: "Analytics"
     },
     {
-        key: "Arch_Amazon-Kinesis-Video-Streams_48",
-        text: "1",
+        key: "Analytics_Kinesis Video Streams",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Analytics/Arch_Amazon-Kinesis-Video-Streams_48.svg",
-        type: "Arch_Analytics"
+        type: "Analytics"
     },
     {
-        key: "Arch_Amazon-Kinesis_48",
-        text: "1",
+        key: "Kinesis",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Analytics/Arch_Amazon-Kinesis_48.svg",
-        type: "Arch_Analytics"
+        type: "Analytics"
     },
     {
-        key: "Arch_Amazon-Managed-Streaming-for-Apache-Kafka_48",
-        text: "1",
+        key: "Managed Streaming for Apache Kafka",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Analytics/Arch_Amazon-Managed-Streaming-for-Apache-Kafka_48.svg",
-        type: "Arch_Analytics"
+        type: "Analytics"
     },
     {
-        key: "Arch_Amazon-OpenSearch-Service_48",
-        text: "1",
+        key: "OpenSearch Service",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Analytics/Arch_Amazon-OpenSearch-Service_48.svg",
-        type: "Arch_Analytics"
+        type: "Analytics"
     },
     {
-        key: "Arch_Amazon-QuickSight_48",
-        text: "1",
+        key: "QuickSight",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Analytics/Arch_Amazon-QuickSight_48.svg",
-        type: "Arch_Analytics"
+        type: "Analytics"
     },
     {
-        key: "Arch_Amazon-Redshift_48",
-        text: "1",
+        key: "Redshift",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Analytics/Arch_Amazon-Redshift_48.svg",
-        type: "Arch_Analytics"
+        type: "Analytics"
     },
     {
-        key: "Arch_AWS-Clean-Rooms_48",
-        text: "1",
+        key: "Clean Rooms",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Analytics/Arch_AWS-Clean-Rooms_48.svg",
-        type: "Arch_Analytics"
+        type: "Analytics"
     },
     {
-        key: "Arch_AWS-Data-Exchange_48",
-        text: "1",
+        key: "Data Exchange",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Analytics/Arch_AWS-Data-Exchange_48.svg",
-        type: "Arch_Analytics"
+        type: "Analytics"
     },
     {
-        key: "Arch_AWS-Data-Pipeline_48",
-        text: "1",
+        key: "Data Pipeline",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Analytics/Arch_AWS-Data-Pipeline_48.svg",
-        type: "Arch_Analytics"
+        type: "Analytics"
     },
     {
-        key: "Arch_AWS-Glue-DataBrew_48",
-        text: "1",
+        key: "Glue DataBrew",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Analytics/Arch_AWS-Glue-DataBrew_48.svg",
-        type: "Arch_Analytics"
+        type: "Analytics"
     },
     {
-        key: "Arch_AWS-Glue-Elastic-Views_48",
-        text: "1",
+        key: "Glue Elastic Views",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Analytics/Arch_AWS-Glue-Elastic-Views_48.svg",
-        type: "Arch_Analytics"
+        type: "Analytics"
     },
     {
-        key: "Arch_AWS-Glue_48",
-        text: "1",
+        key: "Glue",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Analytics/Arch_AWS-Glue_48.svg",
-        type: "Arch_Analytics"
+        type: "Analytics"
     },
     {
-        key: "Arch_AWS-Lake-Formation_48",
-        text: "1",
+        key: "Lake Formation",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Analytics/Arch_AWS-Lake-Formation_48.svg",
-        type: "Arch_Analytics"
+        type: "Analytics"
     },
     {
-        key: "Arch_Amazon-API-Gateway_48",
-        text: "1",
+        key: "API Gateway",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_App-Integration/Arch_Amazon-API-Gateway_48.svg",
-        type: "Arch_App-Integration"
+        type: "App-Integration"
     },
     {
-        key: "Arch_Amazon-AppFlow_48",
-        text: "1",
+        key: "AppFlow",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_App-Integration/Arch_Amazon-AppFlow_48.svg",
-        type: "Arch_App-Integration"
+        type: "App-Integration"
     },
     {
-        key: "Arch_Amazon-EventBridge_48",
-        text: "1",
+        key: "EventBridge",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_App-Integration/Arch_Amazon-EventBridge_48.svg",
-        type: "Arch_App-Integration"
+        type: "App-Integration"
     },
     {
-        key: "Arch_Amazon-Managed-Workflows-for-Apache-Airflow_48",
-        text: "1",
+        key: "Managed Workflows for Apache Airflow",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_App-Integration/Arch_Amazon-Managed-Workflows-for-Apache-Airflow_48.svg",
-        type: "Arch_App-Integration"
+        type: "App-Integration"
     },
     {
-        key: "Arch_Amazon-MQ_48",
-        text: "1",
+        key: "MQ",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_App-Integration/Arch_Amazon-MQ_48.svg",
-        type: "Arch_App-Integration"
+        type: "App-Integration"
     },
     {
-        key: "Arch_Amazon-Simple-Notification-Service_48",
-        text: "1",
+        key: "Simple Notification Service",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_App-Integration/Arch_Amazon-Simple-Notification-Service_48.svg",
-        type: "Arch_App-Integration"
+        type: "App-Integration"
     },
     {
-        key: "Arch_Amazon-Simple-Queue-Service_48",
-        text: "1",
+        key: "Simple Queue Service",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_App-Integration/Arch_Amazon-Simple-Queue-Service_48.svg",
-        type: "Arch_App-Integration"
+        type: "App-Integration"
     },
     {
-        key: "Arch_AWS-AppSync_48",
-        text: "1",
+        key: "AppSync",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_App-Integration/Arch_AWS-AppSync_48.svg",
-        type: "Arch_App-Integration"
+        type: "App-Integration"
     },
     {
-        key: "Arch_AWS-Console-Mobile-Application_48",
-        text: "1",
+        key: "Console Mobile Application",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_App-Integration/Arch_AWS-Console-Mobile-Application_48.svg",
-        type: "Arch_App-Integration"
+        type: "App-Integration"
     },
     {
-        key: "Arch_AWS-Express-Workflows_48",
-        text: "1",
+        key: "Express Workflows",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_App-Integration/Arch_AWS-Express-Workflows_48.svg",
-        type: "Arch_App-Integration"
+        type: "App-Integration"
     },
     {
-        key: "Arch_AWS-Step-Functions_48",
-        text: "1",
+        key: "Step Functions",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_App-Integration/Arch_AWS-Step-Functions_48.svg",
-        type: "Arch_App-Integration"
+        type: "App-Integration"
     },
     {
-        key: "Arch_Amazon-Managed-Blockchain_48",
-        text: "1",
+        key: "Managed Blockchain",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Blockchain/Arch_Amazon-Managed-Blockchain_48.svg",
-        type: "Arch_Blockchain"
+        type: "Blockchain"
     },
     {
-        key: "Arch_Amazon-Quantum-Ledger-Database_48",
-        text: "1",
+        key: "Quantum Ledger Database",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Blockchain/Arch_Amazon-Quantum-Ledger-Database_48.svg",
-        type: "Arch_Blockchain"
+        type: "Blockchain"
     },
     {
-        key: "Arch_Alexa-For-Business_48",
-        text: "1",
+        key: "Alexa For Business",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Business-Applications/Arch_Alexa-For-Business_48.svg",
-        type: "Arch_Business-Applications"
+        type: "Business-Applications"
     },
     {
-        key: "Arch_Amazon-Chime-SDK_48",
-        text: "1",
+        key: "Chime SDK",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Business-Applications/Arch_Amazon-Chime-SDK_48.svg",
-        type: "Arch_Business-Applications"
+        type: "Business-Applications"
     },
     {
-        key: "Arch_Amazon-Chime_48",
-        text: "1",
+        key: "Chime",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Business-Applications/Arch_Amazon-Chime_48.svg",
-        type: "Arch_Business-Applications"
+        type: "Business-Applications"
     },
     {
-        key: "Arch_Amazon-Connect_48",
-        text: "1",
+        key: "Connect",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Business-Applications/Arch_Amazon-Connect_48.svg",
-        type: "Arch_Business-Applications"
+        type: "Business-Applications"
     },
     {
-        key: "Arch_Amazon-Honeycode_48",
-        text: "1",
+        key: "Honeycode",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Business-Applications/Arch_Amazon-Honeycode_48.svg",
-        type: "Arch_Business-Applications"
+        type: "Business-Applications"
     },
     {
-        key: "Arch_Amazon-Pinpoint-APIs_48",
-        text: "1",
+        key: "Pinpoint APIs",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Business-Applications/Arch_Amazon-Pinpoint-APIs_48.svg",
-        type: "Arch_Business-Applications"
+        type: "Business-Applications"
     },
     {
-        key: "Arch_Amazon-Pinpoint_48",
-        text: "1",
+        key: "Pinpoint",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Business-Applications/Arch_Amazon-Pinpoint_48.svg",
-        type: "Arch_Business-Applications"
+        type: "Business-Applications"
     },
     {
-        key: "Arch_Amazon-Simple-Email-Service_48",
-        text: "1",
+        key: "Simple Email Service",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Business-Applications/Arch_Amazon-Simple-Email-Service_48.svg",
-        type: "Arch_Business-Applications"
+        type: "Business-Applications"
     },
     {
-        key: "Arch_Amazon-WorkDocs-SDK_48",
-        text: "1",
+        key: "WorkDocs SDK",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Business-Applications/Arch_Amazon-WorkDocs-SDK_48.svg",
-        type: "Arch_Business-Applications"
+        type: "Business-Applications"
     },
     {
-        key: "Arch_Amazon-WorkDocs_48",
-        text: "1",
+        key: "WorkDocs",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Business-Applications/Arch_Amazon-WorkDocs_48.svg",
-        type: "Arch_Business-Applications"
+        type: "Business-Applications"
     },
     {
-        key: "Arch_Amazon-WorkMail_48",
-        text: "1",
+        key: "WorkMail",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Business-Applications/Arch_Amazon-WorkMail_48.svg",
-        type: "Arch_Business-Applications"
+        type: "Business-Applications"
     },
     {
-        key: "Arch_AWS-Supply-Chain_48",
-        text: "1",
+        key: "Supply Chain",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Business-Applications/Arch_AWS-Supply-Chain_48.svg",
-        type: "Arch_Business-Applications"
+        type: "Business-Applications"
     },
     {
-        key: "Arch_AWS-Wickr_48",
-        text: "1",
+        key: "Wickr",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Business-Applications/Arch_AWS-Wickr_48.svg",
-        type: "Arch_Business-Applications"
+        type: "Business-Applications"
     },
     {
-        key: "Arch_AWS-Application-Cost-Profiler_48",
-        text: "1",
+        key: "Application Cost Profiler",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Cloud-Financial-Management/Arch_AWS-Application-Cost-Profiler_48.svg",
-        type: "Arch_Cloud-Financial-Management"
+        type: "Cloud-Financial-Management"
     },
     {
-        key: "Arch_AWS-Billing-Conductor_48",
-        text: "1",
+        key: "Billing Conductor",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Cloud-Financial-Management/Arch_AWS-Billing-Conductor_48.svg",
-        type: "Arch_Cloud-Financial-Management"
+        type: "Cloud-Financial-Management"
     },
     {
-        key: "Arch_AWS-Budgets_48",
-        text: "1",
+        key: "Budgets",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Cloud-Financial-Management/Arch_AWS-Budgets_48.svg",
-        type: "Arch_Cloud-Financial-Management"
+        type: "Cloud-Financial-Management"
     },
     {
-        key: "Arch_AWS-Cost-and-Usage-Report_48",
-        text: "1",
+        key: "Cost and Usage Report",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Cloud-Financial-Management/Arch_AWS-Cost-and-Usage-Report_48.svg",
-        type: "Arch_Cloud-Financial-Management"
+        type: "Cloud-Financial-Management"
     },
     {
-        key: "Arch_AWS-Cost-Explorer_48",
-        text: "1",
+        key: "Cost Explorer",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Cloud-Financial-Management/Arch_AWS-Cost-Explorer_48.svg",
-        type: "Arch_Cloud-Financial-Management"
+        type: "Cloud-Financial-Management"
     },
     {
-        key: "Arch_Reserved-Instance-Reporting_48",
-        text: "1",
+        key: "Reserved Instance Reporting",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Cloud-Financial-Management/Arch_Reserved-Instance-Reporting_48.svg",
-        type: "Arch_Cloud-Financial-Management"
+        type: "Cloud-Financial-Management"
     },
     {
-        key: "Arch_Savings-Plans_48",
-        text: "1",
+        key: "Savings Plans",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Cloud-Financial-Management/Arch_Savings-Plans_48.svg",
-        type: "Arch_Cloud-Financial-Management"
+        type: "Cloud-Financial-Management"
     },
     {
-        key: "Arch_Amazon-EC2-Auto-Scaling_48",
-        text: "1",
+        key: "EC2 Auto Scaling",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Compute/Arch_Amazon-EC2-Auto-Scaling_48.svg",
-        type: "Arch_Compute"
+        type: "Compute"
     },
     {
-        key: "Arch_Amazon-EC2-Image-Builder_48",
-        text: "1",
+        key: "EC2 Image Builder",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Compute/Arch_Amazon-EC2-Image-Builder_48.svg",
-        type: "Arch_Compute"
+        type: "Compute"
     },
     {
-        key: "Arch_Amazon-EC2_48",
-        text: "1",
+        key: "EC2",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Compute/Arch_Amazon-EC2_48.svg",
-        type: "Arch_Compute"
+        type: "Compute"
     },
     {
-        key: "Arch_Amazon-Genomics-CLI_48",
-        text: "1",
+        key: "Genomics CLI",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Compute/Arch_Amazon-Genomics-CLI_48.svg",
-        type: "Arch_Compute"
+        type: "Compute"
     },
     {
-        key: "Arch_Amazon-Lightsail-for-Research_48",
-        text: "1",
+        key: "Lightsail for Research",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Compute/Arch_Amazon-Lightsail-for-Research_48.svg",
-        type: "Arch_Compute"
+        type: "Compute"
     },
     {
-        key: "Arch_Amazon-Lightsail_48",
-        text: "1",
+        key: "Lightsail",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Compute/Arch_Amazon-Lightsail_48.svg",
-        type: "Arch_Compute"
+        type: "Compute"
     },
     {
-        key: "Arch_AWS-App-Runner_48",
-        text: "1",
+        key: "App Runner",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Compute/Arch_AWS-App-Runner_48.svg",
-        type: "Arch_Compute"
+        type: "Compute"
     },
     {
-        key: "Arch_AWS-Batch_48",
-        text: "1",
+        key: "Batch",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Compute/Arch_AWS-Batch_48.svg",
-        type: "Arch_Compute"
+        type: "Compute"
     },
     {
-        key: "Arch_AWS-Compute-Optimizer_48",
-        text: "1",
+        key: "Compute Optimizer",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Compute/Arch_AWS-Compute-Optimizer_48.svg",
-        type: "Arch_Compute"
+        type: "Compute"
     },
     {
-        key: "Arch_AWS-Elastic-Beanstalk_48",
-        text: "1",
+        key: "Elastic Beanstalk",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Compute/Arch_AWS-Elastic-Beanstalk_48.svg",
-        type: "Arch_Compute"
+        type: "Compute"
     },
     {
-        key: "Arch_AWS-Lambda_48",
-        text: "1",
+        key: "Lambda",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Compute/Arch_AWS-Lambda_48.svg",
-        type: "Arch_Compute"
+        type: "Compute"
     },
     {
-        key: "Arch_AWS-Local-Zones_48",
-        text: "1",
+        key: "Local Zones",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Compute/Arch_AWS-Local-Zones_48.svg",
-        type: "Arch_Compute"
+        type: "Compute"
     },
     {
-        key: "Arch_AWS-Nitro-Enclaves_48",
-        text: "1",
+        key: "Nitro Enclaves",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Compute/Arch_AWS-Nitro-Enclaves_48.svg",
-        type: "Arch_Compute"
+        type: "Compute"
     },
     {
-        key: "Arch_AWS-Outposts-family_48",
-        text: "1",
+        key: "Outposts family",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Compute/Arch_AWS-Outposts-family_48.svg",
-        type: "Arch_Compute"
+        type: "Compute"
     },
     {
-        key: "Arch_AWS-Outposts-rack_48",
-        text: "1",
+        key: "Outposts rack",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Compute/Arch_AWS-Outposts-rack_48.svg",
-        type: "Arch_Compute"
+        type: "Compute"
     },
     {
-        key: "Arch_AWS-Outposts-servers_48",
-        text: "1",
+        key: "Outposts servers",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Compute/Arch_AWS-Outposts-servers_48.svg",
-        type: "Arch_Compute"
+        type: "Compute"
     },
     {
-        key: "Arch_AWS-Parallel-Cluster_48",
-        text: "1",
+        key: "Parallel Cluster",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Compute/Arch_AWS-Parallel-Cluster_48.svg",
-        type: "Arch_Compute"
+        type: "Compute"
     },
     {
-        key: "Arch_AWS-Serverless-Application-Repository_48",
-        text: "1",
+        key: "Serverless Application Repository",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Compute/Arch_AWS-Serverless-Application-Repository_48.svg",
-        type: "Arch_Compute"
+        type: "Compute"
     },
     {
-        key: "Arch_AWS-SimSpace-Weaver_48",
-        text: "1",
+        key: "SimSpace Weaver",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Compute/Arch_AWS-SimSpace-Weaver_48.svg",
-        type: "Arch_Compute"
+        type: "Compute"
     },
     {
-        key: "Arch_AWS-Thinkbox-Deadline_48",
-        text: "1",
+        key: "Thinkbox Deadline",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Compute/Arch_AWS-Thinkbox-Deadline_48.svg",
-        type: "Arch_Compute"
+        type: "Compute"
     },
     {
-        key: "Arch_AWS-Thinkbox-Frost_48",
-        text: "1",
+        key: "Thinkbox Frost",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Compute/Arch_AWS-Thinkbox-Frost_48.svg",
-        type: "Arch_Compute"
+        type: "Compute"
     },
     {
-        key: "Arch_AWS-Thinkbox-Krakatoa_48",
-        text: "1",
+        key: "Thinkbox Krakatoa",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Compute/Arch_AWS-Thinkbox-Krakatoa_48.svg",
-        type: "Arch_Compute"
+        type: "Compute"
     },
     {
-        key: "Arch_AWS-Thinkbox-Sequoia_48",
-        text: "1",
+        key: "Thinkbox Sequoia",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Compute/Arch_AWS-Thinkbox-Sequoia_48.svg",
-        type: "Arch_Compute"
+        type: "Compute"
     },
     {
-        key: "Arch_AWS-Thinkbox-Stoke_48",
-        text: "1",
+        key: "Thinkbox Stoke",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Compute/Arch_AWS-Thinkbox-Stoke_48.svg",
-        type: "Arch_Compute"
+        type: "Compute"
     },
     {
-        key: "Arch_AWS-Thinkbox-XMesh_48",
-        text: "1",
+        key: "Thinkbox XMesh",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Compute/Arch_AWS-Thinkbox-XMesh_48.svg",
-        type: "Arch_Compute"
+        type: "Compute"
     },
     {
-        key: "Arch_AWS-Wavelength_48",
-        text: "1",
+        key: "Wavelength",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Compute/Arch_AWS-Wavelength_48.svg",
-        type: "Arch_Compute"
+        type: "Compute"
     },
     {
-        key: "Arch_Bottlerocket_48",
-        text: "1",
+        key: "Bottlerocket",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Compute/Arch_Bottlerocket_48.svg",
-        type: "Arch_Compute"
+        type: "Compute"
     },
     {
-        key: "Arch_Elastic-Fabric-Adapter_48",
-        text: "1",
+        key: "Elastic Fabric Adapter",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Compute/Arch_Elastic-Fabric-Adapter_48.svg",
-        type: "Arch_Compute"
+        type: "Compute"
     },
     {
-        key: "Arch_NICE-DCV_48",
-        text: "1",
+        key: "NICE DCV",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Compute/Arch_NICE-DCV_48.svg",
-        type: "Arch_Compute"
+        type: "Compute"
     },
     {
-        key: "Arch_NICE-EnginFrame_48",
-        text: "1",
+        key: "NICE EnginFrame",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Compute/Arch_NICE-EnginFrame_48.svg",
-        type: "Arch_Compute"
+        type: "Compute"
     },
     {
-        key: "Arch_VMware-Cloud-on-AWS_48",
-        text: "1",
+        key: "VMware Cloud on",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Compute/Arch_VMware-Cloud-on-AWS_48.svg",
-        type: "Arch_Compute"
+        type: "Compute"
     },
     {
-        key: "Arch_Amazon-ECS-Anywhere_48",
-        text: "1",
+        key: "ECS Anywhere",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Containers/Arch_Amazon-ECS-Anywhere_48.svg",
-        type: "Arch_Containers"
+        type: "Containers"
     },
     {
-        key: "Arch_Amazon-EKS-Anywhere_48",
-        text: "1",
+        key: "EKS Anywhere",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Containers/Arch_Amazon-EKS-Anywhere_48.svg",
-        type: "Arch_Containers"
+        type: "Containers"
     },
     {
-        key: "Arch_Amazon-EKS-Cloud_48",
-        text: "1",
+        key: "EKS Cloud",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Containers/Arch_Amazon-EKS-Cloud_48.svg",
-        type: "Arch_Containers"
+        type: "Containers"
     },
     {
-        key: "Arch_Amazon-EKS-Distro_48",
-        text: "1",
+        key: "EKS Distro",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Containers/Arch_Amazon-EKS-Distro_48.svg",
-        type: "Arch_Containers"
+        type: "Containers"
     },
     {
-        key: "Arch_Amazon-Elastic-Container-Registry_48",
-        text: "1",
+        key: "Elastic Container Registry",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Containers/Arch_Amazon-Elastic-Container-Registry_48.svg",
-        type: "Arch_Containers"
+        type: "Containers"
     },
     {
-        key: "Arch_Amazon-Elastic-Container-Service_48",
-        text: "1",
+        key: "Elastic Container Service",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Containers/Arch_Amazon-Elastic-Container-Service_48.svg",
-        type: "Arch_Containers"
+        type: "Containers"
     },
     {
-        key: "Arch_Amazon-Elastic-Kubernetes-Service_48",
-        text: "1",
+        key: "Elastic Kubernetes Service",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Containers/Arch_Amazon-Elastic-Kubernetes-Service_48.svg",
-        type: "Arch_Containers"
+        type: "Containers"
     },
     {
-        key: "Arch_AWS-Fargate_48",
-        text: "1",
+        key: "Fargate",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Containers/Arch_AWS-Fargate_48.svg",
-        type: "Arch_Containers"
+        type: "Containers"
     },
     {
-        key: "Arch_Red-Hat-OpenShift-Service-on-AWS_48",
-        text: "1",
+        key: "Red Hat OpenShift Service on",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Containers/Arch_Red-Hat-OpenShift-Service-on-AWS_48.svg",
-        type: "Arch_Containers"
+        type: "Containers"
     },
     {
-        key: "Arch_AWS-Activate_48",
-        text: "1",
+        key: "Activate",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Customer-Enablement/Arch_AWS-Activate_48.svg",
-        type: "Arch_Customer-Enablement"
+        type: "Customer-Enablement"
     },
     {
-        key: "Arch_AWS-IQ_48",
-        text: "1",
+        key: "IQ",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Customer-Enablement/Arch_AWS-IQ_48.svg",
-        type: "Arch_Customer-Enablement"
+        type: "Customer-Enablement"
     },
     {
-        key: "Arch_AWS-Managed-Services_48",
-        text: "1",
+        key: "Managed Services",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Customer-Enablement/Arch_AWS-Managed-Services_48.svg",
-        type: "Arch_Customer-Enablement"
+        type: "Customer-Enablement"
     },
     {
-        key: "Arch_AWS-Professional-Services_48",
-        text: "1",
+        key: "Professional Services",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Customer-Enablement/Arch_AWS-Professional-Services_48.svg",
-        type: "Arch_Customer-Enablement"
+        type: "Customer-Enablement"
     },
     {
-        key: "Arch_AWS-re_Post_48",
-        text: "1",
+        key: "re Post",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Customer-Enablement/Arch_AWS-re_Post_48.svg",
-        type: "Arch_Customer-Enablement"
+        type: "Customer-Enablement"
     },
     {
-        key: "Arch_AWS-Support_48",
-        text: "1",
+        key: "Support",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Customer-Enablement/Arch_AWS-Support_48.svg",
-        type: "Arch_Customer-Enablement"
+        type: "Customer-Enablement"
     },
     {
-        key: "Arch_AWS-Training-Certification_48",
-        text: "1",
+        key: "Training Certification",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Customer-Enablement/Arch_AWS-Training-Certification_48.svg",
-        type: "Arch_Customer-Enablement"
+        type: "Customer-Enablement"
     },
     {
-        key: "Arch_Amazon-Aurora_48",
-        text: "1",
+        key: "Aurora",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Database/Arch_Amazon-Aurora_48.svg",
-        type: "Arch_Database"
+        type: "Database"
     },
     {
-        key: "Arch_Amazon-DocumentDB_48",
-        text: "1",
+        key: "DocumentDB",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Database/Arch_Amazon-DocumentDB_48.svg",
-        type: "Arch_Database"
+        type: "Database"
     },
     {
-        key: "Arch_Amazon-DynamoDB_48",
-        text: "1",
+        key: "DynamoDB",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Database/Arch_Amazon-DynamoDB_48.svg",
-        type: "Arch_Database"
+        type: "Database"
     },
     {
-        key: "Arch_Amazon-ElastiCache_48",
-        text: "1",
+        key: "ElastiCache",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Database/Arch_Amazon-ElastiCache_48.svg",
-        type: "Arch_Database"
+        type: "Database"
     },
     {
-        key: "Arch_Amazon-Keyspaces_48",
-        text: "1",
+        key: "Keyspaces",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Database/Arch_Amazon-Keyspaces_48.svg",
-        type: "Arch_Database"
+        type: "Database"
     },
     {
-        key: "Arch_Amazon-MemoryDB-for-Redis_48",
-        text: "1",
+        key: "MemoryDB for Redis",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Database/Arch_Amazon-MemoryDB-for-Redis_48.svg",
-        type: "Arch_Database"
+        type: "Database"
     },
     {
-        key: "Arch_Amazon-Neptune_48",
-        text: "1",
+        key: "Neptune",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Database/Arch_Amazon-Neptune_48.svg",
-        type: "Arch_Database"
+        type: "Database"
     },
     {
-        key: "Arch_Amazon-RDS-on-VMware_48",
-        text: "1",
+        key: "RDS on VMware",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Database/Arch_Amazon-RDS-on-VMware_48.svg",
-        type: "Arch_Database"
+        type: "Database"
     },
     {
-        key: "Arch_Amazon-RDS_48",
-        text: "1",
+        key: "RDS",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Database/Arch_Amazon-RDS_48.svg",
-        type: "Arch_Database"
+        type: "Database"
     },
     {
-        key: "Arch_Amazon-Timestream_48",
-        text: "1",
+        key: "Timestream",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Database/Arch_Amazon-Timestream_48.svg",
-        type: "Arch_Database"
+        type: "Database"
     },
     {
-        key: "Arch_AWS-Database-Migration-Service_48",
-        text: "1",
+        key: "Database Migration Service",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Database/Arch_AWS-Database-Migration-Service_48.svg",
-        type: "Arch_Database"
+        type: "Database"
     },
     {
-        key: "Arch_Amazon-CodeCatalyst_48",
-        text: "1",
+        key: "CodeCatalyst",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Developer-Tools/Arch_Amazon-CodeCatalyst_48.svg",
-        type: "Arch_Developer-Tools"
+        type: "Developer-Tools"
     },
     {
-        key: "Arch_Amazon-Corretto_48",
-        text: "1",
+        key: "Corretto",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Developer-Tools/Arch_Amazon-Corretto_48.svg",
-        type: "Arch_Developer-Tools"
+        type: "Developer-Tools"
     },
     {
-        key: "Arch_AWS-Application-Composer_48",
-        text: "1",
+        key: "Application Composer",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Developer-Tools/Arch_AWS-Application-Composer_48.svg",
-        type: "Arch_Developer-Tools"
+        type: "Developer-Tools"
     },
     {
-        key: "Arch_AWS-Cloud-Control-API_48",
-        text: "1",
+        key: "Cloud Control API",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Developer-Tools/Arch_AWS-Cloud-Control-API_48.svg",
-        type: "Arch_Developer-Tools"
+        type: "Developer-Tools"
     },
     {
-        key: "Arch_AWS-Cloud-Development-Kit_48",
-        text: "1",
+        key: "Cloud Development Kit",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Developer-Tools/Arch_AWS-Cloud-Development-Kit_48.svg",
-        type: "Arch_Developer-Tools"
+        type: "Developer-Tools"
     },
     {
-        key: "Arch_AWS-Cloud9_48",
-        text: "1",
+        key: "Cloud9",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Developer-Tools/Arch_AWS-Cloud9_48.svg",
-        type: "Arch_Developer-Tools"
+        type: "Developer-Tools"
     },
     {
-        key: "Arch_AWS-CloudShell_48",
-        text: "1",
+        key: "CloudShell",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Developer-Tools/Arch_AWS-CloudShell_48.svg",
-        type: "Arch_Developer-Tools"
+        type: "Developer-Tools"
     },
     {
-        key: "Arch_AWS-CodeArtifact_48",
-        text: "1",
+        key: "CodeArtifact",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Developer-Tools/Arch_AWS-CodeArtifact_48.svg",
-        type: "Arch_Developer-Tools"
+        type: "Developer-Tools"
     },
     {
-        key: "Arch_AWS-CodeBuild_48",
-        text: "1",
+        key: "CodeBuild",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Developer-Tools/Arch_AWS-CodeBuild_48.svg",
-        type: "Arch_Developer-Tools"
+        type: "Developer-Tools"
     },
     {
-        key: "Arch_AWS-CodeCommit_48",
-        text: "1",
+        key: "CodeCommit",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Developer-Tools/Arch_AWS-CodeCommit_48.svg",
-        type: "Arch_Developer-Tools"
+        type: "Developer-Tools"
     },
     {
-        key: "Arch_AWS-CodeDeploy_48",
-        text: "1",
+        key: "CodeDeploy",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Developer-Tools/Arch_AWS-CodeDeploy_48.svg",
-        type: "Arch_Developer-Tools"
+        type: "Developer-Tools"
     },
     {
-        key: "Arch_AWS-CodePipeline_48",
-        text: "1",
+        key: "CodePipeline",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Developer-Tools/Arch_AWS-CodePipeline_48.svg",
-        type: "Arch_Developer-Tools"
+        type: "Developer-Tools"
     },
     {
-        key: "Arch_AWS-CodeStar_48",
-        text: "1",
+        key: "CodeStar",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Developer-Tools/Arch_AWS-CodeStar_48.svg",
-        type: "Arch_Developer-Tools"
+        type: "Developer-Tools"
     },
     {
-        key: "Arch_AWS-Command-Line-Interface_48",
-        text: "1",
+        key: "Command Line Interface",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Developer-Tools/Arch_AWS-Command-Line-Interface_48.svg",
-        type: "Arch_Developer-Tools"
+        type: "Developer-Tools"
     },
     {
-        key: "Arch_AWS-Tools-and-SDKs_48",
-        text: "1",
+        key: "Tools and SDKs",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Developer-Tools/Arch_AWS-Tools-and-SDKs_48.svg",
-        type: "Arch_Developer-Tools"
+        type: "Developer-Tools"
     },
     {
-        key: "Arch_AWS-X-Ray_48",
-        text: "1",
+        key: "X Ray",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Developer-Tools/Arch_AWS-X-Ray_48.svg",
-        type: "Arch_Developer-Tools"
+        type: "Developer-Tools"
     },
     {
-        key: "Arch_Amazon-AppStream_48",
-        text: "1",
+        key: "AppStream",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_End-User-Computing/Arch_Amazon-AppStream_48.svg",
-        type: "Arch_End-User-Computing"
+        type: "End-User-Computing"
     },
     {
-        key: "Arch_Amazon-WorkLink_48",
-        text: "1",
+        key: "WorkLink",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_End-User-Computing/Arch_Amazon-WorkLink_48.svg",
-        type: "Arch_End-User-Computing"
+        type: "End-User-Computing"
     },
     {
-        key: "Arch_Amazon-WorkSpaces-Family_48",
-        text: "1",
+        key: "WorkSpaces Family",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_End-User-Computing/Arch_Amazon-WorkSpaces-Family_48.svg",
-        type: "Arch_End-User-Computing"
+        type: "End-User-Computing"
     },
     {
-        key: "Arch_Amazon-Location-Service_48",
-        text: "1",
+        key: "Location Service",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Front-End-Web-Mobile/Arch_Amazon-Location-Service_48.svg",
-        type: "Arch_Front-End-Web-Mobile"
+        type: "Front-End-Web-Mobile"
     },
     {
-        key: "Arch_AWS-Amplify_48",
-        text: "1",
+        key: "Amplify",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Front-End-Web-Mobile/Arch_AWS-Amplify_48.svg",
-        type: "Arch_Front-End-Web-Mobile"
+        type: "Front-End-Web-Mobile"
     },
     {
-        key: "Arch_AWS-Device-Farm_48",
-        text: "1",
+        key: "Device Farm",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Front-End-Web-Mobile/Arch_AWS-Device-Farm_48.svg",
-        type: "Arch_Front-End-Web-Mobile"
+        type: "Front-End-Web-Mobile"
     },
     {
-        key: "Arch_Amazon-GameLift_48",
-        text: "1",
+        key: "GameLift",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Games/Arch_Amazon-GameLift_48.svg",
-        type: "Arch_Games"
+        type: "Games"
     },
     {
-        key: "Arch_Amazon-GameSparks_48",
-        text: "1",
+        key: "GameSparks",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Games/Arch_Amazon-GameSparks_48.svg",
-        type: "Arch_Games"
+        type: "Games"
     },
     {
-        key: "Arch_AWS-GameKit_48",
-        text: "1",
+        key: "GameKit",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Games/Arch_AWS-GameKit_48.svg",
-        type: "Arch_Games"
+        type: "Games"
     },
     {
-        key: "Arch_Open-3D-Engine_48",
-        text: "1",
+        key: "Open 3D Engine",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Games/Arch_Open-3D-Engine_48.svg",
-        type: "Arch_Games"
+        type: "Games"
     },
     {
-        key: "Arch_AWS-Marketplace_Dark_48",
-        text: "1",
+        key: "Marketplace Dark",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_General-Icons/Arch_AWS-Marketplace_Dark_48.svg",
-        type: "Arch_General-Icons"
+        type: "General-Icons"
     },
     {
-        key: "Arch_AWS-Marketplace_Light_48",
-        text: "1",
+        key: "Marketplace Light",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_General-Icons/Arch_AWS-Marketplace_Light_48.svg",
-        type: "Arch_General-Icons"
+        type: "General-Icons"
     },
     {
-        key: "Arch_AWS-IoT-1-Click_48",
-        text: "1",
+        key: "IoT 1 Click",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Internet-of-Things/Arch_AWS-IoT-1-Click_48.svg",
-        type: "Arch_Internet-of-Things"
+        type: "Internet-of-Things"
     },
     {
-        key: "Arch_AWS-IoT-Analytics_48",
-        text: "1",
+        key: "IoT Analytics",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Internet-of-Things/Arch_AWS-IoT-Analytics_48.svg",
-        type: "Arch_Internet-of-Things"
+        type: "Internet-of-Things"
     },
     {
-        key: "Arch_AWS-IoT-Button_48",
-        text: "1",
+        key: "IoT Button",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Internet-of-Things/Arch_AWS-IoT-Button_48.svg",
-        type: "Arch_Internet-of-Things"
+        type: "Internet-of-Things"
     },
     {
-        key: "Arch_AWS-IoT-Core_48",
-        text: "1",
+        key: "IoT Core",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Internet-of-Things/Arch_AWS-IoT-Core_48.svg",
-        type: "Arch_Internet-of-Things"
+        type: "Internet-of-Things"
     },
     {
-        key: "Arch_AWS-IoT-Device-Defender_48",
-        text: "1",
+        key: "IoT Device Defender",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Internet-of-Things/Arch_AWS-IoT-Device-Defender_48.svg",
-        type: "Arch_Internet-of-Things"
+        type: "Internet-of-Things"
     },
     {
-        key: "Arch_AWS-IoT-Device-Management_48",
-        text: "1",
+        key: "IoT Device Management",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Internet-of-Things/Arch_AWS-IoT-Device-Management_48.svg",
-        type: "Arch_Internet-of-Things"
+        type: "Internet-of-Things"
     },
     {
-        key: "Arch_AWS-IoT-EduKit_48",
-        text: "1",
+        key: "IoT EduKit",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Internet-of-Things/Arch_AWS-IoT-EduKit_48.svg",
-        type: "Arch_Internet-of-Things"
+        type: "Internet-of-Things"
     },
     {
-        key: "Arch_AWS-IoT-Events_48",
-        text: "1",
+        key: "IoT Events",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Internet-of-Things/Arch_AWS-IoT-Events_48.svg",
-        type: "Arch_Internet-of-Things"
+        type: "Internet-of-Things"
     },
     {
-        key: "Arch_AWS-IoT-ExpressLink_48",
-        text: "1",
+        key: "IoT ExpressLink",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Internet-of-Things/Arch_AWS-IoT-ExpressLink_48.svg",
-        type: "Arch_Internet-of-Things"
+        type: "Internet-of-Things"
     },
     {
-        key: "Arch_AWS-IoT-FleetWise_48",
-        text: "1",
+        key: "IoT FleetWise",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Internet-of-Things/Arch_AWS-IoT-FleetWise_48.svg",
-        type: "Arch_Internet-of-Things"
+        type: "Internet-of-Things"
     },
     {
-        key: "Arch_AWS-IoT-Greengrass_48",
-        text: "1",
+        key: "IoT Greengrass",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Internet-of-Things/Arch_AWS-IoT-Greengrass_48.svg",
-        type: "Arch_Internet-of-Things"
+        type: "Internet-of-Things"
     },
     {
-        key: "Arch_AWS-IoT-RoboRunner_48",
-        text: "1",
+        key: "IoT RoboRunner",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Internet-of-Things/Arch_AWS-IoT-RoboRunner_48.svg",
-        type: "Arch_Internet-of-Things"
+        type: "Internet-of-Things"
     },
     {
-        key: "Arch_AWS-IoT-SiteWise_48",
-        text: "1",
+        key: "IoT SiteWise",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Internet-of-Things/Arch_AWS-IoT-SiteWise_48.svg",
-        type: "Arch_Internet-of-Things"
+        type: "Internet-of-Things"
     },
     {
-        key: "Arch_AWS-IoT-Things-Graph_48",
-        text: "1",
+        key: "IoT Things Graph",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Internet-of-Things/Arch_AWS-IoT-Things-Graph_48.svg",
-        type: "Arch_Internet-of-Things"
+        type: "Internet-of-Things"
     },
     {
-        key: "Arch_AWS-IoT-TwinMaker_48",
-        text: "1",
+        key: "IoT TwinMaker",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Internet-of-Things/Arch_AWS-IoT-TwinMaker_48.svg",
-        type: "Arch_Internet-of-Things"
+        type: "Internet-of-Things"
     },
     {
-        key: "Arch_FreeRTOS_48",
-        text: "1",
+        key: "FreeRTOS",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Internet-of-Things/Arch_FreeRTOS_48.svg",
-        type: "Arch_Internet-of-Things"
+        type: "Internet-of-Things"
     },
     {
-        key: "Arch_Amazon-Augmented-AI-A2I_48",
-        text: "1",
+        key: "Augmented AI A2I",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Machine-Learning/Arch_Amazon-Augmented-AI-A2I_48.svg",
-        type: "Arch_Machine-Learning"
+        type: "Machine-Learning"
     },
     {
-        key: "Arch_Amazon-CodeGuru_48",
-        text: "1",
+        key: "CodeGuru",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Machine-Learning/Arch_Amazon-CodeGuru_48.svg",
-        type: "Arch_Machine-Learning"
+        type: "Machine-Learning"
     },
     {
-        key: "Arch_Amazon-CodeWhisperer_48",
-        text: "1",
+        key: "CodeWhisperer",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Machine-Learning/Arch_Amazon-CodeWhisperer_48.svg",
-        type: "Arch_Machine-Learning"
+        type: "Machine-Learning"
     },
     {
-        key: "Arch_Amazon-Comprehend-Medical_48",
-        text: "1",
+        key: "Comprehend Medical",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Machine-Learning/Arch_Amazon-Comprehend-Medical_48.svg",
-        type: "Arch_Machine-Learning"
+        type: "Machine-Learning"
     },
     {
-        key: "Arch_Amazon-Comprehend_48",
-        text: "1",
+        key: "Comprehend",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Machine-Learning/Arch_Amazon-Comprehend_48.svg",
-        type: "Arch_Machine-Learning"
+        type: "Machine-Learning"
     },
     {
-        key: "Arch_Amazon-DevOps-Guru_48",
-        text: "1",
+        key: "DevOps Guru",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Machine-Learning/Arch_Amazon-DevOps-Guru_48.svg",
-        type: "Arch_Machine-Learning"
+        type: "Machine-Learning"
     },
     {
-        key: "Arch_Amazon-Elastic-Inference_48",
-        text: "1",
+        key: "Elastic Inference",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Machine-Learning/Arch_Amazon-Elastic-Inference_48.svg",
-        type: "Arch_Machine-Learning"
+        type: "Machine-Learning"
     },
     {
-        key: "Arch_Amazon-Forecast_48",
-        text: "1",
+        key: "Forecast",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Machine-Learning/Arch_Amazon-Forecast_48.svg",
-        type: "Arch_Machine-Learning"
+        type: "Machine-Learning"
     },
     {
-        key: "Arch_Amazon-Fraud-Detector_48",
-        text: "1",
+        key: "Fraud Detector",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Machine-Learning/Arch_Amazon-Fraud-Detector_48.svg",
-        type: "Arch_Machine-Learning"
+        type: "Machine-Learning"
     },
     {
-        key: "Arch_Amazon-HealthLake_48",
-        text: "1",
+        key: "HealthLake",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Machine-Learning/Arch_Amazon-HealthLake_48.svg",
-        type: "Arch_Machine-Learning"
+        type: "Machine-Learning"
     },
     {
-        key: "Arch_Amazon-Kendra_48",
-        text: "1",
+        key: "Kendra",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Machine-Learning/Arch_Amazon-Kendra_48.svg",
-        type: "Arch_Machine-Learning"
+        type: "Machine-Learning"
     },
     {
-        key: "Arch_Amazon-Lex_48",
-        text: "1",
+        key: "Lex",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Machine-Learning/Arch_Amazon-Lex_48.svg",
-        type: "Arch_Machine-Learning"
+        type: "Machine-Learning"
     },
     {
-        key: "Arch_Amazon-Lookout-for-Equipment_48",
-        text: "1",
+        key: "Lookout for Equipment",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Machine-Learning/Arch_Amazon-Lookout-for-Equipment_48.svg",
-        type: "Arch_Machine-Learning"
+        type: "Machine-Learning"
     },
     {
-        key: "Arch_Amazon-Lookout-for-Metrics_48",
-        text: "1",
+        key: "Lookout for Metrics",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Machine-Learning/Arch_Amazon-Lookout-for-Metrics_48.svg",
-        type: "Arch_Machine-Learning"
+        type: "Machine-Learning"
     },
     {
-        key: "Arch_Amazon-Lookout-for-Vision_48",
-        text: "1",
+        key: "Lookout for Vision",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Machine-Learning/Arch_Amazon-Lookout-for-Vision_48.svg",
-        type: "Arch_Machine-Learning"
+        type: "Machine-Learning"
     },
     {
-        key: "Arch_Amazon-Monitron_48",
-        text: "1",
+        key: "Monitron",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Machine-Learning/Arch_Amazon-Monitron_48.svg",
-        type: "Arch_Machine-Learning"
+        type: "Machine-Learning"
     },
     {
-        key: "Arch_Amazon-Omics_48",
-        text: "1",
+        key: "Omics",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Machine-Learning/Arch_Amazon-Omics_48.svg",
-        type: "Arch_Machine-Learning"
+        type: "Machine-Learning"
     },
     {
-        key: "Arch_Amazon-Personalize_48",
-        text: "1",
+        key: "Personalize",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Machine-Learning/Arch_Amazon-Personalize_48.svg",
-        type: "Arch_Machine-Learning"
+        type: "Machine-Learning"
     },
     {
-        key: "Arch_Amazon-Polly_48",
-        text: "1",
+        key: "Polly",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Machine-Learning/Arch_Amazon-Polly_48.svg",
-        type: "Arch_Machine-Learning"
+        type: "Machine-Learning"
     },
     {
-        key: "Arch_Amazon-Rekognition_48",
-        text: "1",
+        key: "Rekognition",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Machine-Learning/Arch_Amazon-Rekognition_48.svg",
-        type: "Arch_Machine-Learning"
+        type: "Machine-Learning"
     },
     {
-        key: "Arch_Amazon-SageMaker-Ground-Truth_48",
-        text: "1",
+        key: "SageMaker Ground Truth",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Machine-Learning/Arch_Amazon-SageMaker-Ground-Truth_48.svg",
-        type: "Arch_Machine-Learning"
+        type: "Machine-Learning"
     },
     {
-        key: "Arch_Amazon-SageMaker-Studio-Lab_48",
-        text: "1",
+        key: "SageMaker Studio Lab",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Machine-Learning/Arch_Amazon-SageMaker-Studio-Lab_48.svg",
-        type: "Arch_Machine-Learning"
+        type: "Machine-Learning"
     },
     {
-        key: "Arch_Amazon-SageMaker_48",
-        text: "1",
+        key: "SageMaker",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Machine-Learning/Arch_Amazon-SageMaker_48.svg",
-        type: "Arch_Machine-Learning"
+        type: "Machine-Learning"
     },
     {
-        key: "Arch_Amazon-Textract_48",
-        text: "1",
+        key: "Textract",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Machine-Learning/Arch_Amazon-Textract_48.svg",
-        type: "Arch_Machine-Learning"
+        type: "Machine-Learning"
     },
     {
-        key: "Arch_Amazon-Transcribe_48",
-        text: "1",
+        key: "Transcribe",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Machine-Learning/Arch_Amazon-Transcribe_48.svg",
-        type: "Arch_Machine-Learning"
+        type: "Machine-Learning"
     },
     {
-        key: "Arch_Amazon-Translate_48",
-        text: "1",
+        key: "Translate",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Machine-Learning/Arch_Amazon-Translate_48.svg",
-        type: "Arch_Machine-Learning"
+        type: "Machine-Learning"
     },
     {
-        key: "Arch_Apache-MXNet-on-AWS_48",
-        text: "1",
+        key: "Apache MXNet on",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Machine-Learning/Arch_Apache-MXNet-on-AWS_48.svg",
-        type: "Arch_Machine-Learning"
+        type: "Machine-Learning"
     },
     {
-        key: "Arch_AWS-Deep-Learning-AMIs_48",
-        text: "1",
+        key: "Deep Learning AMIs",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Machine-Learning/Arch_AWS-Deep-Learning-AMIs_48.svg",
-        type: "Arch_Machine-Learning"
+        type: "Machine-Learning"
     },
     {
-        key: "Arch_AWS-Deep-Learning-Containers_48",
-        text: "1",
+        key: "Deep Learning Containers",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Machine-Learning/Arch_AWS-Deep-Learning-Containers_48.svg",
-        type: "Arch_Machine-Learning"
+        type: "Machine-Learning"
     },
     {
-        key: "Arch_AWS-DeepComposer_48",
-        text: "1",
+        key: "DeepComposer",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Machine-Learning/Arch_AWS-DeepComposer_48.svg",
-        type: "Arch_Machine-Learning"
+        type: "Machine-Learning"
     },
     {
-        key: "Arch_AWS-DeepLens_48",
-        text: "1",
+        key: "DeepLens",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Machine-Learning/Arch_AWS-DeepLens_48.svg",
-        type: "Arch_Machine-Learning"
+        type: "Machine-Learning"
     },
     {
-        key: "Arch_AWS-DeepRacer_48",
-        text: "1",
+        key: "DeepRacer",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Machine-Learning/Arch_AWS-DeepRacer_48.svg",
-        type: "Arch_Machine-Learning"
+        type: "Machine-Learning"
     },
     {
-        key: "Arch_AWS-Neuron_48",
-        text: "1",
+        key: "Neuron",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Machine-Learning/Arch_AWS-Neuron_48.svg",
-        type: "Arch_Machine-Learning"
+        type: "Machine-Learning"
     },
     {
-        key: "Arch_AWS-Panorama_48",
-        text: "1",
+        key: "Panorama",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Machine-Learning/Arch_AWS-Panorama_48.svg",
-        type: "Arch_Machine-Learning"
+        type: "Machine-Learning"
     },
     {
-        key: "Arch_TensorFlow-on-AWS_48",
-        text: "1",
+        key: "TensorFlow on",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Machine-Learning/Arch_TensorFlow-on-AWS_48.svg",
-        type: "Arch_Machine-Learning"
+        type: "Machine-Learning"
     },
     {
-        key: "Arch_TorchServe_48",
-        text: "1",
+        key: "TorchServe",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Machine-Learning/Arch_TorchServe_48.svg",
-        type: "Arch_Machine-Learning"
+        type: "Machine-Learning"
     },
     {
-        key: "Arch_Amazon-CloudWatch_48",
-        text: "1",
+        key: "CloudWatch",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Management-Governance/Arch_Amazon-CloudWatch_48.svg",
-        type: "Arch_Management-Governance"
+        type: "Management-Governance"
     },
     {
-        key: "Arch_Amazon-Managed-Grafana_48",
-        text: "1",
+        key: "Managed Grafana",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Management-Governance/Arch_Amazon-Managed-Grafana_48.svg",
-        type: "Arch_Management-Governance"
+        type: "Management-Governance"
     },
     {
-        key: "Arch_Amazon-Managed-Service-for-Prometheus_48",
-        text: "1",
+        key: "Managed Service for Prometheus",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Management-Governance/Arch_Amazon-Managed-Service-for-Prometheus_48.svg",
-        type: "Arch_Management-Governance"
+        type: "Management-Governance"
     },
     {
-        key: "Arch_AWS-AppConfig_48",
-        text: "1",
+        key: "AppConfig",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Management-Governance/Arch_AWS-AppConfig_48.svg",
-        type: "Arch_Management-Governance"
+        type: "Management-Governance"
     },
     {
-        key: "Arch_AWS-Application-Auto-Scaling_48",
-        text: "1",
+        key: "Application Auto Scaling",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Management-Governance/Arch_AWS-Application-Auto-Scaling_48.svg",
-        type: "Arch_Management-Governance"
+        type: "Management-Governance"
     },
     {
-        key: "Arch_AWS-Auto-Scaling_48",
-        text: "1",
+        key: "Auto Scaling",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Management-Governance/Arch_AWS-Auto-Scaling_48.svg",
-        type: "Arch_Management-Governance"
+        type: "Management-Governance"
     },
     {
-        key: "Arch_AWS-Backint-Agent_48",
-        text: "1",
+        key: "Backint Agent",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Management-Governance/Arch_AWS-Backint-Agent_48.svg",
-        type: "Arch_Management-Governance"
+        type: "Management-Governance"
     },
     {
-        key: "Arch_AWS-Chatbot_48",
-        text: "1",
+        key: "Chatbot",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Management-Governance/Arch_AWS-Chatbot_48.svg",
-        type: "Arch_Management-Governance"
+        type: "Management-Governance"
     },
     {
-        key: "Arch_AWS-CloudFormation_48",
-        text: "1",
+        key: "CloudFormation",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Management-Governance/Arch_AWS-CloudFormation_48.svg",
-        type: "Arch_Management-Governance"
+        type: "Management-Governance"
     },
     {
-        key: "Arch_AWS-CloudTrail_48",
-        text: "1",
+        key: "CloudTrail",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Management-Governance/Arch_AWS-CloudTrail_48.svg",
-        type: "Arch_Management-Governance"
+        type: "Management-Governance"
     },
     {
-        key: "Arch_AWS-Config_48",
-        text: "1",
+        key: "Config",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Management-Governance/Arch_AWS-Config_48.svg",
-        type: "Arch_Management-Governance"
+        type: "Management-Governance"
     },
     {
-        key: "Arch_AWS-Control-Tower_48",
-        text: "1",
+        key: "Control Tower",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Management-Governance/Arch_AWS-Control-Tower_48.svg",
-        type: "Arch_Management-Governance"
+        type: "Management-Governance"
     },
     {
-        key: "Arch_AWS-Distro-for-OpenTelemetry_48",
-        text: "1",
+        key: "Distro for OpenTelemetry",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Management-Governance/Arch_AWS-Distro-for-OpenTelemetry_48.svg",
-        type: "Arch_Management-Governance"
+        type: "Management-Governance"
     },
     {
-        key: "Arch_AWS-Fault-Injection-Simulator_48",
-        text: "1",
+        key: "Fault Injection Simulator",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Management-Governance/Arch_AWS-Fault-Injection-Simulator_48.svg",
-        type: "Arch_Management-Governance"
+        type: "Management-Governance"
     },
     {
-        key: "Arch_AWS-Health-Dashboard_48",
-        text: "1",
+        key: "Health Dashboard",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Management-Governance/Arch_AWS-Health-Dashboard_48.svg",
-        type: "Arch_Management-Governance"
+        type: "Management-Governance"
     },
     {
-        key: "Arch_AWS-Launch-Wizard_48",
-        text: "1",
+        key: "Launch Wizard",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Management-Governance/Arch_AWS-Launch-Wizard_48.svg",
-        type: "Arch_Management-Governance"
+        type: "Management-Governance"
     },
     {
-        key: "Arch_AWS-License-Manager_48",
-        text: "1",
+        key: "License Manager",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Management-Governance/Arch_AWS-License-Manager_48.svg",
-        type: "Arch_Management-Governance"
+        type: "Management-Governance"
     },
     {
-        key: "Arch_AWS-Management-Console_48",
-        text: "1",
+        key: "Management Console",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Management-Governance/Arch_AWS-Management-Console_48.svg",
-        type: "Arch_Management-Governance"
+        type: "Management-Governance"
     },
     {
-        key: "Arch_AWS-OpsWorks_48",
-        text: "1",
+        key: "OpsWorks",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Management-Governance/Arch_AWS-OpsWorks_48.svg",
-        type: "Arch_Management-Governance"
+        type: "Management-Governance"
     },
     {
-        key: "Arch_AWS-Organizations_48",
-        text: "1",
+        key: "Organizations",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Management-Governance/Arch_AWS-Organizations_48.svg",
-        type: "Arch_Management-Governance"
+        type: "Management-Governance"
     },
     {
-        key: "Arch_AWS-Proton_48",
-        text: "1",
+        key: "Proton",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Management-Governance/Arch_AWS-Proton_48.svg",
-        type: "Arch_Management-Governance"
+        type: "Management-Governance"
     },
     {
-        key: "Arch_AWS-Resilience-Hub_48",
-        text: "1",
+        key: "Resilience Hub",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Management-Governance/Arch_AWS-Resilience-Hub_48.svg",
-        type: "Arch_Management-Governance"
+        type: "Management-Governance"
     },
     {
-        key: "Arch_AWS-Resource-Explorer_48",
-        text: "1",
+        key: "Resource Explorer",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Management-Governance/Arch_AWS-Resource-Explorer_48.svg",
-        type: "Arch_Management-Governance"
+        type: "Management-Governance"
     },
     {
-        key: "Arch_AWS-Service-Catalog_48",
-        text: "1",
+        key: "Service Catalog",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Management-Governance/Arch_AWS-Service-Catalog_48.svg",
-        type: "Arch_Management-Governance"
+        type: "Management-Governance"
     },
     {
-        key: "Arch_AWS-Service-Management-Connector_48",
-        text: "1",
+        key: "Service Management Connector",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Management-Governance/Arch_AWS-Service-Management-Connector_48.svg",
-        type: "Arch_Management-Governance"
+        type: "Management-Governance"
     },
     {
-        key: "Arch_AWS-Systems-Manager_48",
-        text: "1",
+        key: "Systems Manager",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Management-Governance/Arch_AWS-Systems-Manager_48.svg",
-        type: "Arch_Management-Governance"
+        type: "Management-Governance"
     },
     {
-        key: "Arch_AWS-Telco-Network-Builder_48",
-        text: "1",
+        key: "Telco Network Builder",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Management-Governance/Arch_AWS-Telco-Network-Builder_48.svg",
-        type: "Arch_Management-Governance"
+        type: "Management-Governance"
     },
     {
-        key: "Arch_AWS-Trusted-Advisor_48",
-        text: "1",
+        key: "Trusted Advisor",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Management-Governance/Arch_AWS-Trusted-Advisor_48.svg",
-        type: "Arch_Management-Governance"
+        type: "Management-Governance"
     },
     {
-        key: "Arch_AWS-Well-Architected-Tool_48",
-        text: "1",
+        key: "Well itected Tool",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Management-Governance/Arch_AWS-Well-Architected-Tool_48.svg",
-        type: "Arch_Management-Governance"
+        type: "Management-Governance"
     },
     {
-        key: "Arch_Amazon-Elastic-Transcoder_48",
-        text: "1",
+        key: "Elastic Transcoder",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Media-Services/Arch_Amazon-Elastic-Transcoder_48.svg",
-        type: "Arch_Media-Services"
+        type: "Media-Services"
     },
     {
-        key: "Arch_Amazon-Interactive-Video-Service_48",
-        text: "1",
+        key: "Interactive Video Service",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Media-Services/Arch_Amazon-Interactive-Video-Service_48.svg",
-        type: "Arch_Media-Services"
+        type: "Media-Services"
     },
     {
-        key: "Arch_Amazon-Kinesis-Video-Streams_48",
-        text: "1",
+        key: "Media-Services_Kinesis Video Streams",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Media-Services/Arch_Amazon-Kinesis-Video-Streams_48.svg",
-        type: "Arch_Media-Services"
+        type: "Media-Services"
     },
     {
-        key: "Arch_Amazon-Nimble-Studio_48",
-        text: "1",
+        key: "Nimble Studio",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Media-Services/Arch_Amazon-Nimble-Studio_48.svg",
-        type: "Arch_Media-Services"
+        type: "Media-Services"
     },
     {
-        key: "Arch_AWS-Elemental-Appliances-&-Software_48",
-        text: "1",
+        key: "Elemental Appliances & Software",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Media-Services/Arch_AWS-Elemental-Appliances-&-Software_48.svg",
-        type: "Arch_Media-Services"
+        type: "Media-Services"
     },
     {
-        key: "Arch_AWS-Elemental-Conductor_48",
-        text: "1",
+        key: "Elemental Conductor",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Media-Services/Arch_AWS-Elemental-Conductor_48.svg",
-        type: "Arch_Media-Services"
+        type: "Media-Services"
     },
     {
-        key: "Arch_AWS-Elemental-Delta_48",
-        text: "1",
+        key: "Elemental Delta",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Media-Services/Arch_AWS-Elemental-Delta_48.svg",
-        type: "Arch_Media-Services"
+        type: "Media-Services"
     },
     {
-        key: "Arch_AWS-Elemental-Link_48",
-        text: "1",
+        key: "Elemental Link",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Media-Services/Arch_AWS-Elemental-Link_48.svg",
-        type: "Arch_Media-Services"
+        type: "Media-Services"
     },
     {
-        key: "Arch_AWS-Elemental-Live_48",
-        text: "1",
+        key: "Elemental Live",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Media-Services/Arch_AWS-Elemental-Live_48.svg",
-        type: "Arch_Media-Services"
+        type: "Media-Services"
     },
     {
-        key: "Arch_AWS-Elemental-MediaConnect_48",
-        text: "1",
+        key: "Elemental MediaConnect",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Media-Services/Arch_AWS-Elemental-MediaConnect_48.svg",
-        type: "Arch_Media-Services"
+        type: "Media-Services"
     },
     {
-        key: "Arch_AWS-Elemental-MediaConvert_48",
-        text: "1",
+        key: "Elemental MediaConvert",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Media-Services/Arch_AWS-Elemental-MediaConvert_48.svg",
-        type: "Arch_Media-Services"
+        type: "Media-Services"
     },
     {
-        key: "Arch_AWS-Elemental-MediaLive_48",
-        text: "1",
+        key: "Elemental MediaLive",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Media-Services/Arch_AWS-Elemental-MediaLive_48.svg",
-        type: "Arch_Media-Services"
+        type: "Media-Services"
     },
     {
-        key: "Arch_AWS-Elemental-MediaPackage_48",
-        text: "1",
+        key: "Elemental MediaPackage",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Media-Services/Arch_AWS-Elemental-MediaPackage_48.svg",
-        type: "Arch_Media-Services"
+        type: "Media-Services"
     },
     {
-        key: "Arch_AWS-Elemental-MediaStore_48",
-        text: "1",
+        key: "Elemental MediaStore",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Media-Services/Arch_AWS-Elemental-MediaStore_48.svg",
-        type: "Arch_Media-Services"
+        type: "Media-Services"
     },
     {
-        key: "Arch_AWS-Elemental-MediaTailor_48",
-        text: "1",
+        key: "Elemental MediaTailor",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Media-Services/Arch_AWS-Elemental-MediaTailor_48.svg",
-        type: "Arch_Media-Services"
+        type: "Media-Services"
     },
     {
-        key: "Arch_AWS-Elemental-Server_48",
-        text: "1",
+        key: "Elemental Server",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Media-Services/Arch_AWS-Elemental-Server_48.svg",
-        type: "Arch_Media-Services"
+        type: "Media-Services"
     },
     {
-        key: "Arch_AWS-Application-Discovery-Service_48",
-        text: "1",
+        key: "Application Discovery Service",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Migration-Transfer/Arch_AWS-Application-Discovery-Service_48.svg",
-        type: "Arch_Migration-Transfer"
+        type: "Migration-Transfer"
     },
     {
-        key: "Arch_AWS-Application-Migration-Service_48",
-        text: "1",
+        key: "Application Migration Service",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Migration-Transfer/Arch_AWS-Application-Migration-Service_48.svg",
-        type: "Arch_Migration-Transfer"
+        type: "Migration-Transfer"
     },
     {
-        key: "Arch_AWS-DataSync_48",
-        text: "1",
+        key: "DataSync",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Migration-Transfer/Arch_AWS-DataSync_48.svg",
-        type: "Arch_Migration-Transfer"
+        type: "Migration-Transfer"
     },
     {
-        key: "Arch_AWS-Mainframe-Modernization_48",
-        text: "1",
+        key: "Mainframe Modernization",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Migration-Transfer/Arch_AWS-Mainframe-Modernization_48.svg",
-        type: "Arch_Migration-Transfer"
+        type: "Migration-Transfer"
     },
     {
-        key: "Arch_AWS-Migration-Evaluator_48",
-        text: "1",
+        key: "Migration Evaluator",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Migration-Transfer/Arch_AWS-Migration-Evaluator_48.svg",
-        type: "Arch_Migration-Transfer"
+        type: "Migration-Transfer"
     },
     {
-        key: "Arch_AWS-Migration-Hub_48",
-        text: "1",
+        key: "Migration Hub",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Migration-Transfer/Arch_AWS-Migration-Hub_48.svg",
-        type: "Arch_Migration-Transfer"
+        type: "Migration-Transfer"
     },
     {
-        key: "Arch_AWS-Transfer-Family_48",
-        text: "1",
+        key: "Transfer Family",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Migration-Transfer/Arch_AWS-Transfer-Family_48.svg",
-        type: "Arch_Migration-Transfer"
+        type: "Migration-Transfer"
     },
     {
-        key: "Arch_Amazon-CloudFront_48",
-        text: "1",
+        key: "CloudFront",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Networking-Content-Delivery/Arch_Amazon-CloudFront_48.svg",
-        type: "Arch_Networking-Content-Delivery"
+        type: "Networking-Content-Delivery"
     },
     {
-        key: "Arch_Amazon-Route-53_48",
-        text: "1",
+        key: "Route 53",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Networking-Content-Delivery/Arch_Amazon-Route-53_48.svg",
-        type: "Arch_Networking-Content-Delivery"
+        type: "Networking-Content-Delivery"
     },
     {
-        key: "Arch_Amazon-Virtual-Private-Cloud_48",
-        text: "1",
+        key: "Virtual Private Cloud",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Networking-Content-Delivery/Arch_Amazon-Virtual-Private-Cloud_48.svg",
-        type: "Arch_Networking-Content-Delivery"
+        type: "Networking-Content-Delivery"
     },
     {
-        key: "Arch_Amazon-VPC-Lattice_48",
-        text: "1",
+        key: "VPC Lattice",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Networking-Content-Delivery/Arch_Amazon-VPC-Lattice_48.svg",
-        type: "Arch_Networking-Content-Delivery"
+        type: "Networking-Content-Delivery"
     },
     {
-        key: "Arch_AWS-App-Mesh_48",
-        text: "1",
+        key: "App Mesh",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Networking-Content-Delivery/Arch_AWS-App-Mesh_48.svg",
-        type: "Arch_Networking-Content-Delivery"
+        type: "Networking-Content-Delivery"
     },
     {
-        key: "Arch_AWS-Client-VPN_48",
-        text: "1",
+        key: "Client VPN",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Networking-Content-Delivery/Arch_AWS-Client-VPN_48.svg",
-        type: "Arch_Networking-Content-Delivery"
+        type: "Networking-Content-Delivery"
     },
     {
-        key: "Arch_AWS-Cloud-Map_48",
-        text: "1",
+        key: "Cloud Map",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Networking-Content-Delivery/Arch_AWS-Cloud-Map_48.svg",
-        type: "Arch_Networking-Content-Delivery"
+        type: "Networking-Content-Delivery"
     },
     {
-        key: "Arch_AWS-Cloud-WAN_48",
-        text: "1",
+        key: "Cloud WAN",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Networking-Content-Delivery/Arch_AWS-Cloud-WAN_48.svg",
-        type: "Arch_Networking-Content-Delivery"
+        type: "Networking-Content-Delivery"
     },
     {
-        key: "Arch_AWS-Direct-Connect_48",
-        text: "1",
+        key: "Direct Connect",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Networking-Content-Delivery/Arch_AWS-Direct-Connect_48.svg",
-        type: "Arch_Networking-Content-Delivery"
+        type: "Networking-Content-Delivery"
     },
     {
-        key: "Arch_AWS-Global-Accelerator_48",
-        text: "1",
+        key: "Global Accelerator",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Networking-Content-Delivery/Arch_AWS-Global-Accelerator_48.svg",
-        type: "Arch_Networking-Content-Delivery"
+        type: "Networking-Content-Delivery"
     },
     {
-        key: "Arch_AWS-Private-5G_48",
-        text: "1",
+        key: "Private 5G",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Networking-Content-Delivery/Arch_AWS-Private-5G_48.svg",
-        type: "Arch_Networking-Content-Delivery"
+        type: "Networking-Content-Delivery"
     },
     {
-        key: "Arch_AWS-PrivateLink_48",
-        text: "1",
+        key: "PrivateLink",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Networking-Content-Delivery/Arch_AWS-PrivateLink_48.svg",
-        type: "Arch_Networking-Content-Delivery"
+        type: "Networking-Content-Delivery"
     },
     {
-        key: "Arch_AWS-Site-to-Site-VPN_48",
-        text: "1",
+        key: "Site to Site VPN",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Networking-Content-Delivery/Arch_AWS-Site-to-Site-VPN_48.svg",
-        type: "Arch_Networking-Content-Delivery"
+        type: "Networking-Content-Delivery"
     },
     {
-        key: "Arch_AWS-Transit-Gateway_48",
-        text: "1",
+        key: "Transit Gateway",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Networking-Content-Delivery/Arch_AWS-Transit-Gateway_48.svg",
-        type: "Arch_Networking-Content-Delivery"
+        type: "Networking-Content-Delivery"
     },
     {
-        key: "Arch_AWS-Verified-Access_48",
-        text: "1",
+        key: "Verified Access",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Networking-Content-Delivery/Arch_AWS-Verified-Access_48.svg",
-        type: "Arch_Networking-Content-Delivery"
+        type: "Networking-Content-Delivery"
     },
     {
-        key: "Arch_Elastic-Load-Balancing_48",
-        text: "1",
+        key: "Elastic Load Balancing",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Networking-Content-Delivery/Arch_Elastic-Load-Balancing_48.svg",
-        type: "Arch_Networking-Content-Delivery"
+        type: "Networking-Content-Delivery"
     },
     {
-        key: "Arch_Amazon-Braket_48",
-        text: "1",
+        key: "Braket",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Quantum-Technologies/Arch_Amazon-Braket_48.svg",
-        type: "Arch_Quantum-Technologies"
+        type: "Quantum-Technologies"
     },
     {
-        key: "Arch_AWS-RoboMaker_48",
-        text: "1",
+        key: "RoboMaker",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Robotics/Arch_AWS-RoboMaker_48.svg",
-        type: "Arch_Robotics"
+        type: "Robotics"
     },
     {
-        key: "Arch_AWS-Ground-Station_48",
-        text: "1",
+        key: "Ground Station",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Satellite/Arch_AWS-Ground-Station_48.svg",
-        type: "Arch_Satellite"
+        type: "Satellite"
     },
     {
-        key: "Arch_Amazon-Cloud-Directory_48",
-        text: "1",
+        key: "Cloud Directory",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Security-Identity-Compliance/Arch_Amazon-Cloud-Directory_48.svg",
-        type: "Arch_Security-Identity-Compliance"
+        type: "Security-Identity-Compliance"
     },
     {
-        key: "Arch_Amazon-Cognito_48",
-        text: "1",
+        key: "Cognito",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Security-Identity-Compliance/Arch_Amazon-Cognito_48.svg",
-        type: "Arch_Security-Identity-Compliance"
+        type: "Security-Identity-Compliance"
     },
     {
-        key: "Arch_Amazon-Detective_48",
-        text: "1",
+        key: "Detective",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Security-Identity-Compliance/Arch_Amazon-Detective_48.svg",
-        type: "Arch_Security-Identity-Compliance"
+        type: "Security-Identity-Compliance"
     },
     {
-        key: "Arch_Amazon-GuardDuty_48",
-        text: "1",
+        key: "GuardDuty",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Security-Identity-Compliance/Arch_Amazon-GuardDuty_48.svg",
-        type: "Arch_Security-Identity-Compliance"
+        type: "Security-Identity-Compliance"
     },
     {
-        key: "Arch_Amazon-Inspector_48",
-        text: "1",
+        key: "Inspector",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Security-Identity-Compliance/Arch_Amazon-Inspector_48.svg",
-        type: "Arch_Security-Identity-Compliance"
+        type: "Security-Identity-Compliance"
     },
     {
-        key: "Arch_Amazon-Macie_48",
-        text: "1",
+        key: "Macie",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Security-Identity-Compliance/Arch_Amazon-Macie_48.svg",
-        type: "Arch_Security-Identity-Compliance"
+        type: "Security-Identity-Compliance"
     },
     {
-        key: "Arch_Amazon-Security-Lake_48",
-        text: "1",
+        key: "Security Lake",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Security-Identity-Compliance/Arch_Amazon-Security-Lake_48.svg",
-        type: "Arch_Security-Identity-Compliance"
+        type: "Security-Identity-Compliance"
     },
     {
-        key: "Arch_Amazon-Verified-Permissions_48",
-        text: "1",
+        key: "Verified Permissions",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Security-Identity-Compliance/Arch_Amazon-Verified-Permissions_48.svg",
-        type: "Arch_Security-Identity-Compliance"
+        type: "Security-Identity-Compliance"
     },
     {
-        key: "Arch_AWS-Artifact_48",
-        text: "1",
+        key: "Artifact",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Security-Identity-Compliance/Arch_AWS-Artifact_48.svg",
-        type: "Arch_Security-Identity-Compliance"
+        type: "Security-Identity-Compliance"
     },
     {
-        key: "Arch_AWS-Audit-Manager_48",
-        text: "1",
+        key: "Audit Manager",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Security-Identity-Compliance/Arch_AWS-Audit-Manager_48.svg",
-        type: "Arch_Security-Identity-Compliance"
+        type: "Security-Identity-Compliance"
     },
     {
-        key: "Arch_AWS-Certificate-Manager_48",
-        text: "1",
+        key: "Certificate Manager",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Security-Identity-Compliance/Arch_AWS-Certificate-Manager_48.svg",
-        type: "Arch_Security-Identity-Compliance"
+        type: "Security-Identity-Compliance"
     },
     {
-        key: "Arch_AWS-CloudHSM_48",
-        text: "1",
+        key: "CloudHSM",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Security-Identity-Compliance/Arch_AWS-CloudHSM_48.svg",
-        type: "Arch_Security-Identity-Compliance"
+        type: "Security-Identity-Compliance"
     },
     {
-        key: "Arch_AWS-Directory-Service_48",
-        text: "1",
+        key: "Directory Service",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Security-Identity-Compliance/Arch_AWS-Directory-Service_48.svg",
-        type: "Arch_Security-Identity-Compliance"
+        type: "Security-Identity-Compliance"
     },
     {
-        key: "Arch_AWS-Firewall-Manager_48",
-        text: "1",
+        key: "Firewall Manager",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Security-Identity-Compliance/Arch_AWS-Firewall-Manager_48.svg",
-        type: "Arch_Security-Identity-Compliance"
+        type: "Security-Identity-Compliance"
     },
     {
-        key: "Arch_AWS-IAM-Identity-Center_48",
-        text: "1",
+        key: "IAM Identity Center",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Security-Identity-Compliance/Arch_AWS-IAM-Identity-Center_48.svg",
-        type: "Arch_Security-Identity-Compliance"
+        type: "Security-Identity-Compliance"
     },
     {
-        key: "Arch_AWS-Identity-and-Access-Management_48",
-        text: "1",
+        key: "Identity and Access Management",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Security-Identity-Compliance/Arch_AWS-Identity-and-Access-Management_48.svg",
-        type: "Arch_Security-Identity-Compliance"
+        type: "Security-Identity-Compliance"
     },
     {
-        key: "Arch_AWS-Key-Management-Service_48",
-        text: "1",
+        key: "Key Management Service",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Security-Identity-Compliance/Arch_AWS-Key-Management-Service_48.svg",
-        type: "Arch_Security-Identity-Compliance"
+        type: "Security-Identity-Compliance"
     },
     {
-        key: "Arch_AWS-Network-Firewall_48",
-        text: "1",
+        key: "Network Firewall",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Security-Identity-Compliance/Arch_AWS-Network-Firewall_48.svg",
-        type: "Arch_Security-Identity-Compliance"
+        type: "Security-Identity-Compliance"
     },
     {
-        key: "Arch_AWS-Private-Certificate-Authority_48",
-        text: "1",
+        key: "Private Certificate Authority",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Security-Identity-Compliance/Arch_AWS-Private-Certificate-Authority_48.svg",
-        type: "Arch_Security-Identity-Compliance"
+        type: "Security-Identity-Compliance"
     },
     {
-        key: "Arch_AWS-Resource-Access-Manager_48",
-        text: "1",
+        key: "Resource Access Manager",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Security-Identity-Compliance/Arch_AWS-Resource-Access-Manager_48.svg",
-        type: "Arch_Security-Identity-Compliance"
+        type: "Security-Identity-Compliance"
     },
     {
-        key: "Arch_AWS-Secrets-Manager_48",
-        text: "1",
+        key: "Secrets Manager",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Security-Identity-Compliance/Arch_AWS-Secrets-Manager_48.svg",
-        type: "Arch_Security-Identity-Compliance"
+        type: "Security-Identity-Compliance"
     },
     {
-        key: "Arch_AWS-Security-Hub_48",
-        text: "1",
+        key: "Security Hub",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Security-Identity-Compliance/Arch_AWS-Security-Hub_48.svg",
-        type: "Arch_Security-Identity-Compliance"
+        type: "Security-Identity-Compliance"
     },
     {
-        key: "Arch_AWS-Shield_48",
-        text: "1",
+        key: "Shield",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Security-Identity-Compliance/Arch_AWS-Shield_48.svg",
-        type: "Arch_Security-Identity-Compliance"
+        type: "Security-Identity-Compliance"
     },
     {
-        key: "Arch_AWS-Signer_48",
-        text: "1",
+        key: "Signer",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Security-Identity-Compliance/Arch_AWS-Signer_48.svg",
-        type: "Arch_Security-Identity-Compliance"
+        type: "Security-Identity-Compliance"
     },
     {
-        key: "Arch_AWS-WAF_48",
-        text: "1",
+        key: "AWS_WAF",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Security-Identity-Compliance/Arch_AWS-WAF_48.svg",
-        type: "Arch_Security-Identity-Compliance"
+        type: "Security-Identity-Compliance"
     },
     {
-        key: "Arch_Amazon-EFS_48",
-        text: "1",
+        key: "EFS",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Storage/Arch_Amazon-EFS_48.svg",
-        type: "Arch_Storage"
+        type: "Storage"
     },
     {
-        key: "Arch_Amazon-Elastic-Block-Store_48",
-        text: "1",
+        key: "Elastic Block Store",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Storage/Arch_Amazon-Elastic-Block-Store_48.svg",
-        type: "Arch_Storage"
+        type: "Storage"
     },
     {
-        key: "Arch_Amazon-File-Cache_48",
-        text: "1",
+        key: "File Cache",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Storage/Arch_Amazon-File-Cache_48.svg",
-        type: "Arch_Storage"
+        type: "Storage"
     },
     {
-        key: "Arch_Amazon-FSx-for-Lustre_48",
-        text: "1",
+        key: "FSx for Lustre",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Storage/Arch_Amazon-FSx-for-Lustre_48.svg",
-        type: "Arch_Storage"
+        type: "Storage"
     },
     {
-        key: "Arch_Amazon-FSx-for-NetApp-ONTAP_48",
-        text: "1",
+        key: "FSx for NetApp ONTAP",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Storage/Arch_Amazon-FSx-for-NetApp-ONTAP_48.svg",
-        type: "Arch_Storage"
+        type: "Storage"
     },
     {
-        key: "Arch_Amazon-FSx-for-OpenZFS_48",
-        text: "1",
+        key: "FSx for OpenZFS",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Storage/Arch_Amazon-FSx-for-OpenZFS_48.svg",
-        type: "Arch_Storage"
+        type: "Storage"
     },
     {
-        key: "Arch_Amazon-FSx-for-WFS_48",
-        text: "1",
+        key: "FSx for WFS",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Storage/Arch_Amazon-FSx-for-WFS_48.svg",
-        type: "Arch_Storage"
+        type: "Storage"
     },
     {
-        key: "Arch_Amazon-FSx_48",
-        text: "1",
+        key: "FSx",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Storage/Arch_Amazon-FSx_48.svg",
-        type: "Arch_Storage"
+        type: "Storage"
     },
     {
-        key: "Arch_Amazon-S3-on-Outposts_48",
-        text: "1",
+        key: "S3 on Outposts",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Storage/Arch_Amazon-S3-on-Outposts_48.svg",
-        type: "Arch_Storage"
+        type: "Storage"
     },
     {
-        key: "Arch_Amazon-Simple-Storage-Service-Glacier_48",
-        text: "1",
+        key: "Simple Storage Service Glacier",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Storage/Arch_Amazon-Simple-Storage-Service-Glacier_48.svg",
-        type: "Arch_Storage"
+        type: "Storage"
     },
     {
-        key: "Arch_Amazon-Simple-Storage-Service_48",
-        text: "1",
+        key: "Simple Storage Service",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Storage/Arch_Amazon-Simple-Storage-Service_48.svg",
-        type: "Arch_Storage"
+        type: "Storage"
     },
     {
-        key: "Arch_AWS-Backup_48",
-        text: "1",
+        key: "Backup",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Storage/Arch_AWS-Backup_48.svg",
-        type: "Arch_Storage"
+        type: "Storage"
     },
     {
-        key: "Arch_AWS-Elastic-Disaster-Recovery_48",
-        text: "1",
+        key: "Elastic Disaster Recovery",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Storage/Arch_AWS-Elastic-Disaster-Recovery_48.svg",
-        type: "Arch_Storage"
+        type: "Storage"
     },
     {
-        key: "Arch_AWS-Snowball-Edge_48",
-        text: "1",
+        key: "Snowball Edge",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Storage/Arch_AWS-Snowball-Edge_48.svg",
-        type: "Arch_Storage"
+        type: "Storage"
     },
     {
-        key: "Arch_AWS-Snowball_48",
-        text: "1",
+        key: "Snowball",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Storage/Arch_AWS-Snowball_48.svg",
-        type: "Arch_Storage"
+        type: "Storage"
     },
     {
-        key: "Arch_AWS-Snowcone_48",
-        text: "1",
+        key: "Snowcone",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Storage/Arch_AWS-Snowcone_48.svg",
-        type: "Arch_Storage"
+        type: "Storage"
     },
     {
-        key: "Arch_AWS-Snowmobile_48",
-        text: "1",
+        key: "Snowmobile",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Storage/Arch_AWS-Snowmobile_48.svg",
-        type: "Arch_Storage"
+        type: "Storage"
     },
     {
-        key: "Arch_AWS-Storage-Gateway_48",
-        text: "1",
+        key: "Storage Gateway",
         figure: "Rectangle",
         source: "/img/AWS_icon/Arch_Storage/Arch_AWS-Storage-Gateway_48.svg",
-        type: "Arch_Storage"
+        type: "Storage"
     },
+    // Group
     // Group
     {
         isGroup: true,
@@ -2291,6 +1970,7 @@ export const nodeDataArrayPalette = [
         type: "group"
 
     }, {
+    }, {
         isGroup: true,
         key: "Private subnet",
         stroke: "rgba(255,165,0,0.3)",
@@ -2309,7 +1989,8 @@ export const nodeDataArrayPalette = [
         stroke: "rgba(0,0,198,0.3)",
         type: "group"
 
-    }, {
+    }, 
+    {
         isGroup: true,
         key: "Corporate data center",
         stroke: "rgba(255,165,0,0.3)",
@@ -2328,7 +2009,8 @@ export const nodeDataArrayPalette = [
         stroke: "rgba(0,0,198,0.3)",
         type: "group"
 
-    }, {
+    }, 
+    {
         isGroup: true,
         key: "AWS account",
         stroke: "rgba(255,165,0,0.3)",

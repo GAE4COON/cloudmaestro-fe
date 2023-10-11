@@ -9,6 +9,7 @@ import Signin from "./pages/SignIn";
 import { AuthProvider } from "./utils/auth/authContext";
 import Introduce from "./pages/Introduce";
 import Example from "./pages/Example";
+import MyDesign from "./pages/MyDesign";
 
 import InputNet from "./pages/InputNetwork";
 import InputAWS from "./pages/InputAWS";
@@ -40,7 +41,10 @@ function App() {
               <Route path="/sign-in" element={<Signin />} />
 
               <Route path="/home/autodraw" element={<InputNet />} />
-              <Route path="/inputaws" element={<InputAWS />} />
+              <Route path="/input/aws" element={<InputAWS />} />
+
+              <Route path="/mypage/design" element={<MyDesign />} />
+
             </Routes>
           </div>
           <Footer />
