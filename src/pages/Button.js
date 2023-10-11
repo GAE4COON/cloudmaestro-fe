@@ -1,4 +1,5 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
+
 import * as go from "gojs";
 import "../styles/Button.css"; // contains .diagram-component CSS
 import SelectToggle from "../../src/components/cost/SelectEc2Toggle";
@@ -6,10 +7,9 @@ import InputAWS from "./InputAWS";
 import { json, useNavigate } from "react-router-dom";
 
 
-const  Button = ({ diagram , finalToggleValue, setFinalToggleValue}) => {
+const Button = ({ diagram ,showToggle, setShowToggle, finalToggleValue, setFinalToggleValue}) => {
   const hiddenFileInput = React.useRef(null);
   const navigate = useNavigate();
-
   const handleClick = () => {
     hiddenFileInput.current.click();
   };
@@ -19,7 +19,6 @@ const  Button = ({ diagram , finalToggleValue, setFinalToggleValue}) => {
   const [finalToggleVal, setFinalToggleVal] = useState({});
 
   useEffect(() => {
-    console.log("finalToggle 업데이트 후:", finalToggleVal);
     setFinalToggleValue(finalToggleVal);
   }, [finalToggleVal]);
   
@@ -27,7 +26,7 @@ const  Button = ({ diagram , finalToggleValue, setFinalToggleValue}) => {
     if (diagram) {
       let jsonCombinedArray = diagram.model.toJson();
       jsonCombinedArray = JSON.parse(jsonCombinedArray);
-      jsonCombinedArray["ec2"] = finalToggleValue;
+      jsonCombinedArray["cost"] = finalToggleValue;          //ec2도 해야할 듯
       jsonCombinedArray = JSON.stringify(jsonCombinedArray);
       setSavedDiagramJSON(jsonCombinedArray);
       
@@ -97,16 +96,14 @@ const  Button = ({ diagram , finalToggleValue, setFinalToggleValue}) => {
   };
 
   const onFileChange = (e) => {
-    console.log("hello");
     if (e.target.files[0] && e.target.files[0].name.includes("json")) {
       let file = e.target.files[0];
       let fileReader = new FileReader();
       fileReader.readAsText(file);
       fileReader.onload = () => {
-      console.log("쀼엥",fileReader.result);
-      let filejson = JSON.parse(fileReader.result);
-      console.log("힘들엉",filejson["ec2"]);
-      setFinalToggleVal(filejson["ec2"])
+        console.log(fileReader.result);
+        let filejson = JSON.parse(fileReader.result);
+        setFinalToggleVal(filejson["cost"])        //여기서 rds뿐이 아닌 ec2도 해줘야 할 듯
         if (fileReader.result && diagram) {
           diagram.model = go.Model.fromJson(fileReader.result);
           console.log(JSON.stringify(diagram.model));
@@ -125,7 +122,10 @@ const  Button = ({ diagram , finalToggleValue, setFinalToggleValue}) => {
         diagram.commitTransaction("Cleared diagram");
 
     }
+
+    setShowToggle(false); // toggle 숨김
 };
+
 
   return (
     <div>
