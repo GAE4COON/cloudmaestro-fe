@@ -121,7 +121,6 @@ const SelectRdsToggle = ({ diagram, uniquekey, finalToggleValue, setFinalToggleV
 
   const [uniqueKey,setUniqueKey] = useState(null);
 
-
   const [toggle2Options, setToggle2Options] = useState([]);
   const [toggle3Options, setToggle3Options] = useState([]);
   const [toggle4Options, setToggle4Options] = useState([]);
@@ -200,11 +199,11 @@ const SelectRdsToggle = ({ diagram, uniquekey, finalToggleValue, setFinalToggleV
         
       ) {
         console.log("setselect 전 finaltoggle입니당",finalToggleValue[uniqueKey][1]);
-        setSelect([             //이놈부터 오류가 발생함
+        setSelect([
           finalToggleValue[uniqueKey][0],
           finalToggleValue[uniqueKey][1],
           finalToggleValue[uniqueKey][2],
-        ]);                      //이놈까지 오류가 발생함
+        ]);
         setToggle1Value(finalToggleValue[uniqueKey][0]);
         //setToggle2Value(finalToggleValue[uniqueKey][1]);  //이걸 없애면 뜨는데
         setPrice(finalToggleValue[uniqueKey][3]);
@@ -230,6 +229,9 @@ const SelectRdsToggle = ({ diagram, uniquekey, finalToggleValue, setFinalToggleV
                 console.log("calcul", calculatedPrice);
 
                 setFinalToggleValue(prev => {
+                  if (!prev[uniqueKey] || !Array.isArray(prev[uniqueKey])) {
+                    return prev; // 이전 상태를 반환하거나 초기 상태를 설정할 수 있습니다.
+                  }
                   const updated = [...prev[uniqueKey]];
                   updated[3] = calculatedPrice;
                   return { ...prev, [uniqueKey]: updated };
@@ -243,7 +245,7 @@ const SelectRdsToggle = ({ diagram, uniquekey, finalToggleValue, setFinalToggleV
               } catch (err) {
                 console.error("Error fetching platform data:", err);
               }
-          } 
+          }   
 
           else if (       
             finalToggleValue

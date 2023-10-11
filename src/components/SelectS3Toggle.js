@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import '../styles/SelectS3Toggle.css';
 
-function SeclectS3Toggle() {
+const SeclectS3Toggle = ({diagram, uniquekey, finalToggleValue, setFinalToggleValue}) => {
     const [text, setText] = useState("");
     const [s3Cost, setS3Cost] = useState("");
 
@@ -17,10 +17,29 @@ function SeclectS3Toggle() {
         return Math.trunc(cost * 100) / 100;
     }
 
-    const onChange = (e) => {
+    useEffect(() => {
+        if ( finalToggleValue && finalToggleValue[uniquekey]) {
+            setText(finalToggleValue[uniquekey].text || "");
+            setS3Cost(finalToggleValue[uniquekey].cost || 0);
+        } else {
+            setText("");
+            setS3Cost(0);
+        }
+    }, [finalToggleValue, uniquekey]);
+
+     const onChange = (e) => {
         const value = e.target.value;
         setText(value);
-        setS3Cost(calculateCost(Number(value)));
+        const cost = calculateCost(Number(value));
+        setS3Cost(cost);
+
+        setFinalToggleValue(prev => ({
+            ...prev,
+            [uniquekey]: {
+                text: value,
+                cost
+            }
+        }));
     }
 
     return (
@@ -34,6 +53,7 @@ function SeclectS3Toggle() {
             <div><p>$ {s3Cost} /Hour</p></div> 
         </div>
     )
-}
+
+};
 
 export default SeclectS3Toggle;

@@ -35,7 +35,6 @@ function Draw() {
     console.log("show", showSelectToggle.value)
   // Go to Draw page 완료
   const location = useLocation();
-  //console.log("location_path",location.state);
   const file = location?.state;
 
   const handleNodeSelect = useCallback(
@@ -75,9 +74,6 @@ function Draw() {
                <div className="diagram">
                   { showToggle && showSelectToggle.value && showSelectToggle.key.includes("Arch_Amazon-EC2_48") && (
                     <SelectEc2Toggle
-                    //여기서 다이어 그램을 넘겨주자
-                    //finaltoggle usestate를 넘겨주자
-                    //value={selectedNodeData}
                     uniquekey={showSelectToggle.key}
                     finalToggleValue={finalToggleValue}
                     setFinalToggleValue={setFinalToggleValue}
@@ -95,7 +91,13 @@ function Draw() {
                   />
                   )}
                   { showToggle && showSelectToggle.value && showSelectToggle.key.includes("Arch_Amazon-Simple-Storage-Service_48") && (
-                    <SelectS3Toggle/>
+                    <SelectS3Toggle
+                    diagram={diagram}
+                    uniquekey={showSelectToggle.key}
+                    finalToggleValue={finalToggleValue}
+                    setFinalToggleValue={setFinalToggleValue}
+                    readOnly
+                    />
                   )}
                   <ReactDiagram
                   initDiagram={initDiagram}

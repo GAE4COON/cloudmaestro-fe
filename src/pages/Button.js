@@ -13,7 +13,6 @@ const Button = ({ diagram ,showToggle, setShowToggle, finalToggleValue, setFinal
   const [finalToggleVal, setFinalToggleVal] = useState({});
 
   useEffect(() => {
-    console.log("finalToggle 업데이트 후:", finalToggleVal);
     setFinalToggleValue(finalToggleVal);
   }, [finalToggleVal]);
   
@@ -21,7 +20,7 @@ const Button = ({ diagram ,showToggle, setShowToggle, finalToggleValue, setFinal
     if (diagram) {
       let jsonCombinedArray = diagram.model.toJson();
       jsonCombinedArray = JSON.parse(jsonCombinedArray);
-      jsonCombinedArray["rds"] = finalToggleValue;          //ec2도 해야할 듯
+      jsonCombinedArray["cost"] = finalToggleValue;          //ec2도 해야할 듯
       jsonCombinedArray = JSON.stringify(jsonCombinedArray);
       setSavedDiagramJSON(jsonCombinedArray);
       console.log(jsonCombinedArray);
@@ -81,7 +80,7 @@ const Button = ({ diagram ,showToggle, setShowToggle, finalToggleValue, setFinal
       fileReader.onload = () => {
         console.log(fileReader.result);
         let filejson = JSON.parse(fileReader.result);
-        setFinalToggleVal(filejson["rds"])        //여기서 rds뿐이 아닌 ec2도 해줘야 할 듯
+        setFinalToggleVal(filejson["cost"])        //여기서 rds뿐이 아닌 ec2도 해줘야 할 듯
         if (fileReader.result && diagram) {
           diagram.model = go.Model.fromJson(fileReader.result);
           console.log(JSON.stringify(diagram.model));
