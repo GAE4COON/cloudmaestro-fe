@@ -265,11 +265,12 @@ const useGoJS = ({}) => {
         console.log("나는 node 입니다", part.data);
         const key = part.data.key;
         console.log("나는 key 입니다",key);
-        if(handleChangedSelection(key)){
-          setShowSelectToggle({"value":true,"key":key})
+        if(key){
+          if(handleChangedSelection(key)){
+            setShowSelectToggle({"value":true,"key":key})
+          }
         }
-
-
+      
       }
     });
 

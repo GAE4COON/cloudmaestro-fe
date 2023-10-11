@@ -1,15 +1,14 @@
 import React, { useCallback, useEffect, useState } from "react";
 import * as go from "gojs";
-import SelectToggle from "../../src/components/cost/SelectEc2Toggle";
-
 import "../styles/Button.css"; // contains .diagram-component CSS
-import { useNavigate } from "react-router-dom";
+import SelectToggle from "../../src/components/cost/SelectEc2Toggle";
+import InputAWS from "./InputAWS";
+import { json, useNavigate } from "react-router-dom";
+
 
 const  Button = ({ diagram , finalToggleValue, setFinalToggleValue}) => {
-  const navigate = useNavigate();
-
-
   const hiddenFileInput = React.useRef(null);
+  const navigate = useNavigate();
 
   const handleClick = () => {
     hiddenFileInput.current.click();
@@ -74,15 +73,28 @@ const  Button = ({ diagram , finalToggleValue, setFinalToggleValue}) => {
     }
   };
 
-
   const handleLoad = () => {
-    if (savedDiagramJSON && diagram) {
-      diagram.model = go.Model.fromJson(savedDiagramJSON);
-      console.log(JSON.stringify(diagram.model));
-    }
+    
+      //console.log("modelmodel",JSON.stringify(diagram.model));
+   
+      // Make a POST request to the backend
+      fetch('http://localhost:8080/api/v1/file-api/network', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(diagram.model)
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Success:', data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+
+    
   };
-
-
 
   const onFileChange = (e) => {
     console.log("hello");
@@ -131,23 +143,22 @@ const  Button = ({ diagram , finalToggleValue, setFinalToggleValue}) => {
           </div>
           
 
-        <div className="button-row">
-          <button onClick={handleReset}>clear</button>
+          <div className="button-row">
+            <button onClick={handleReset}>clear</button>
+          </div>
+          <div className="button-row">
+            <button onClick={handleSave}>save</button>
+          </div>
+          <div className="button-row">
+            <button onClick={localSaveImage}>Save as Image</button>
+          </div>
+        
+          <div className="button-row">
+            <button onClick={handleLoad}>Submit</button>
+            {/* <button onClick={navigateAws}>Submit</button> */}
+          </div>
         </div>
-        <div className="button-row">
-          <button onClick={handleSave}>save</button>
-        </div>
-        <div className="button-row">
-          <button onClick={localSaveImage}>Save as Image</button>
-        </div>
-        <div className="button-row">
-          <button onClick={handleLoad}>Load</button>
-        </div>
-
-
       </div>
-    </div>
-
     </div>
   );
 };
