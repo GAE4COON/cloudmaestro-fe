@@ -1,8 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./styles/App.css";
 import Home from "./pages/Home";
-import DrawAWS from "./pages/DrawAWS";
-import DrawNetwork from "./pages/DrawNetwork";
+import Draw from "./pages/Draw";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import Signup from "./pages/SignUp";
@@ -33,9 +32,8 @@ function App() {
               <Route path="/about" element={<Introduce />} />
               <Route path="/learn" element={<LearnMore />} />
 
-              <Route path="/draw/aws" element={<DrawAWS />} />
-              <Route path="/draw/network" element={<DrawNetwork />} />
-
+              <Route path="/draw/aws" element={<Draw />} />
+              
               <Route path="/sign-up" element={<Signup />} />
               <Route path="/sign-in" element={<Signin />} />
 
