@@ -44,7 +44,7 @@ const chartOptions = {
 
 function MyDesign() {
 
-  const [activeDropdown, setActiveDropdown] = useState(null);  
+  const [activeDropdown, setActiveDropdown] = useState(null);
 
   const handleInstanceClick = (index) => {
     setActiveDropdown(activeDropdown === index ? null : index);
@@ -80,27 +80,28 @@ function MyDesign() {
             return (
               <>
                 <div key={index} className="instance" onClick={() => handleInstanceClick(index)}>
-                  <div className="instance-title">
-                    {category}
-                  </div>
                   <div className="instance-cost-container">
+
+                    <div className="instance-title">
+                      {category}
+                    </div>
                     <div className="instance-cost">
                       ${cost}/mo
                       <div className="dropdown-icon">
                         <BsChevronDown color="#cdcdcd" />
                       </div>
                     </div>
-                    {activeDropdown === index && (
-                      <div className="instance-dropdown">
-                        {category}
-                        <DataTable
-                          headers={headers}
-                          items={items}
-                        />
-                      </div>
-                    )}
-
                   </div>
+                  {activeDropdown === index && (
+                    <div className="instance-dropdown">
+                      {category}
+                      <DataTable
+                        headers={headers}
+                        items={items}
+                      />
+                    </div>
+                  )}
+
                 </div>
               </>
             );
