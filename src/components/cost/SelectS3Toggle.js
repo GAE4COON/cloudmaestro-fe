@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import '../styles/SelectS3Toggle.css';
+import '../../styles/SelectS3Toggle.css';
 
 const SeclectS3Toggle = ({diagram, uniquekey, finalToggleValue, setFinalToggleValue}) => {
     const [text, setText] = useState("");

@@ -4,8 +4,8 @@ import { ReactDiagram } from "gojs-react";
 
 import useGoJS from "./useGoJS";
 import SelectEc2Toggle from "../components/cost/SelectEc2Toggle";
-import SelectRdsToggle from "../components/SelectRdsToggle";
-import SelectS3Toggle from "../components/SelectS3Toggle";
+import SelectRdsToggle from "../components/cost/SelectRdsToggle";
+import SelectS3Toggle from "../components/cost/SelectS3Toggle";
 import { useMediaQuery } from "react-responsive";
 import { nodeDataArrayPalette } from "../db/Node";
 
