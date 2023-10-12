@@ -64,14 +64,22 @@ export const DropdownMenu = styled.div`
   // text-align:center;
   // align-items: center;
 
-
   &:hover {
     display: flex; // display the dropdown menu when the NavLink is hovered over
   }
 `;
 
+export const NavContainer = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000; // This ensures that it is always on top
+`;
+
 export const NavStyled = styled.nav`
   background: #fff;
+  width: 100%;
   height: 35px;
   display: flex;
   justify-content: space-between;
@@ -109,6 +117,7 @@ export const NavMenuRight = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  margin-right: 50px;
 
   @media screen and (max-width: 768px) {
     display: ${({ isOpen }) => (isOpen ? "flex" : "none")};
@@ -157,7 +166,6 @@ export const NavLink = styled(Link)`
   padding: 0 1rem;
   height: 100%;
   cursor: pointer;
-
 
   & img {
     width: 40px;
@@ -230,4 +238,3 @@ export const UserProfileImage = styled.img`
   width: 40px;
   height: 40px;
 `;
-

@@ -6,6 +6,7 @@
 .main-content {
   display: flex;
   flex-direction: column;
+  margin-top: 35px;
   min-height: 90vh;
   padding-left:10%;
   padding-right: 10%;
@@ -194,7 +195,6 @@
    background-image:
      linear-gradient(to right, rgb(231, 231, 231) .5px, transparent .5px),
      linear-gradient(to bottom, rgb(231, 231, 231)  .5px, transparent .5px);
-
 
 }
 
