@@ -12,7 +12,7 @@ import { nodeDataArrayPalette } from "../db/Node";
 import { useLocation } from "react-router-dom";
 
 // 페이지
-import useReadJSON from "./useReadJSON";
+// import useReadJSON from "./useReadJSON";
 import Button from "./Button.js";
 import Palette from "../components/Palette";
 import "../styles/Draw.css";
@@ -72,7 +72,7 @@ function Draw() {
     },
     [diagram]
   );
-  useReadJSON(file,diagram);
+  // useReadJSON(file,diagram);
 
   return (
     <div>
