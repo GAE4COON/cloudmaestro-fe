@@ -3,9 +3,12 @@ import * as go from "gojs";
 import { ReactDiagram } from "gojs-react";
 
 import useGoJS from "./useGoJS";
-import SelectToggle from "../components/cost/SelectEc2Toggle";
+import SelectEc2Toggle from "../components/cost/SelectEc2Toggle";
+import SelectRdsToggle from "../components/cost/SelectRdsToggle";
+import SelectS3Toggle from "../components/cost/SelectS3Toggle";
 import { useMediaQuery } from "react-responsive";
 import { nodeDataArrayPalette } from "../db/Node";
+
 import { useLocation } from "react-router-dom";
 
 // 페이지
@@ -32,8 +35,10 @@ function Draw() {
 
   const [finalToggleValue, setFinalToggleValue] = useState({});
   const [selectedNodeData, setSelectedNodeData] = useState(null); // <-- 상태 변수를 추가합니다.
+  const [showToggle, setShowToggle] = useState(true);
 
-  const { initDiagram, diagram, showSelectToggle, clickedNodeKey } = useGoJS(setSelectedNodeData);
+  const { initDiagram, diagram, showSelectToggle, clickedNodeKey } =
+    useGoJS(setSelectedNodeData, setShowToggle, showToggle);
 
   console.log("show", showSelectToggle.value)
 
@@ -52,15 +57,32 @@ function Draw() {
     }
   }, [file, diagram]);
 
+  const handleNodeSelect = useCallback(
+    (label) => {
+      if (diagram) {
+        const selectedNode = diagram.selection.first();
+        if (selectedNode instanceof go.Node) {
+          //const updatedData = { ...selectedNode.data, text: label };
+          diagram.model.commit((model) => {
+            model.set(selectedNode.data, "text", label);
+          }, "updated text");
+        }
+      }
+      setSelectedNodeData(label);
+    },
+    [diagram]
+  );
+  useReadJSON(file,diagram);
+
   return (
     <div>
       <div className="Draw">
         <div className="container">
-          <Button diagram={diagram} finalToggleValue={finalToggleValue}setFinalToggleValue={setFinalToggleValue}  />
+          <Button diagram={diagram} showToggle={showToggle} setShowToggle={setShowToggle} finalToggleValue={finalToggleValue} setFinalToggleValue={setFinalToggleValue} />
           <div className="createspace">
-
+          
             <div className="workspace">
-
+             
               <div className="palette">
 
                 <Palette
@@ -69,15 +91,32 @@ function Draw() {
                 />
 
               </div>
-
-               <div className="diagram">
-                  { showSelectToggle.value && showSelectToggle.key.includes('EC2') &&(
-                    <SelectToggle
+                  <div className="diagram">
+                  { showToggle && showSelectToggle.value && showSelectToggle.key.includes('EC2') && (
+                    <SelectEc2Toggle
+                    uniquekey={showSelectToggle.key}
+                    finalToggleValue={finalToggleValue}
+                    setFinalToggleValue={setFinalToggleValue}
+                    onToggleSelect={handleNodeSelect}
+                    readOnly
+                  />
+                  )}
+                  { showToggle && showSelectToggle.value && showSelectToggle.key.includes("RDS") && (
+                    <SelectRdsToggle
                     diagram={diagram}
                     uniquekey={showSelectToggle.key}
                     finalToggleValue={finalToggleValue}
                     setFinalToggleValue={setFinalToggleValue}
                     readOnly
+                  />
+                )}
+                { showToggle && showSelectToggle.value && showSelectToggle.key.includes("Simple Storage Service") && (
+                  <SelectS3Toggle
+                  diagram={diagram}
+                  uniquekey={showSelectToggle.key}
+                  finalToggleValue={finalToggleValue}
+                  setFinalToggleValue={setFinalToggleValue}
+                  readOnly
                   />
                 )}
                 {clickedNodeKey &&
@@ -114,3 +153,4 @@ function Draw() {
 }
 
 export default Draw;
+

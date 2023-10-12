@@ -115,10 +115,6 @@ const SelectToggle = ({ diagram, uniquekey, finalToggleValue, setFinalToggleValu
   }, [toggle2Value]);
   
 
-
-
-  
-
   // 다시 불러와도 가격 안 사라지게 
   useEffect(() => {
 
