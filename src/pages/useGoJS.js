@@ -3,7 +3,8 @@ import * as go from "gojs";
 import "../styles/App.css"; // contains .diagram-component CSS
 import handleChangedSelection from "./toggle/toggle";
 
-const useGoJS = ({}) => {
+
+const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
   const [diagram, setDiagram] = useState(null);
   const [clickedNodeKey, setClickedNodeKey] = useState();
   const [showSelectToggle, setShowSelectToggle] = useState({ "value": false });
@@ -35,7 +36,7 @@ const useGoJS = ({}) => {
   }
   const initDiagram = () => {
     const $ = go.GraphObject.make;
-
+    
     const diagram = $(go.Diagram, {
       "undoManager.isEnabled": true,
       "resizingTool.isGridSnapEnabled": true,
@@ -266,16 +267,18 @@ const useGoJS = ({}) => {
         console.log("나는 node 입니다", part.data);
         const key = part.data.key;
         console.log("나는 key 입니다",key);
-        if(handleChangedSelection(key)){
-          setShowSelectToggle({"value":true,"key":key})
+        if(key){
+          if(handleChangedSelection(key)){
+            setShowSelectToggle({"value":true,"key":key})
+          }
         }
-
-
+      
       }
     });
 
     diagram.addDiagramListener("ExternalObjectsDropped", (e) => {
       console.log("from palette\n");
+      setShowToggle(true);
     });
 
     diagram.addDiagramListener("SelectionMoved", (e) => {

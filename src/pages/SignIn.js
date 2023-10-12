@@ -4,7 +4,6 @@ import axios from "axios";
 import "../styles/signin.css";
 
 function SignIn() {
-  // Define state variables
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const [Greeting, setGreeting] = useState("");
@@ -36,6 +35,14 @@ function SignIn() {
           />
         </div>
 
+        <div className="input-group">
+          <label>비밀번호</label>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
         <div className="input-group">
           <label>비밀번호</label>
           <input
