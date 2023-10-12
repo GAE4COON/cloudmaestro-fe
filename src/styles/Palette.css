@@ -1,153 +1,127 @@
-.tab-content {
-    width: 100%;
-    height: 80%;
-    
+/* Basic styles */
+.tabs {
+  width: 100%;
+  background-color: whitesmoke;
+  border: solid 1px black;
+  overflow: hidden;
 }
 
-.tabs {
-    width: 100%;
-    border: solid 1px black;
+.tab-content {
+  width: 100%;
+  height: 200px;
 }
 
 .tab {
-    width: 100%;
-    position: relative;
+  width: 100%;
+  position: relative;
+  color: white;
+  overflow: hidden;
+}
+
+/* Input styles */
+input[type="text"] {
+  position: relative;
+  color: black;
+  width: 100%;
+  height: 20px;
+  z-index: inherit;
+}
+
+/* Accordion styles */
+input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  z-index: -1;
 }
 
 .tab-label {
-    color: fff;
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5em;
+  background: #446b83;
+  border: solid 1px white;
+  cursor: pointer;
+  color: #fff; /* Fixed incorrect color value */
 }
 
-input[type="text"]{
-    position: relative;
-    color: black;
-    width:100%;
-    height: 20px;
-    z-index: inherit;
+.tab-label:hover {
+  background: #627f91;
+}
+
+.tab-label::after {
+  content: "❯";
+  width: 1em;
+  height: 1em;
+  text-align: center;
+  transition: all 0.35s;
 }
 
 input[type="radio"]:checked + .tab-label {
-    background-color: #809CDA;
+  background-color: #809CDA;
 }
 
-input[type="radio"]:not(:checked) + .tab-label {
-    background-color: #3E629A;
+input[type="radio"]:not(:checked) + .tab-label,
+.tab-close:hover {
+  background: #3E629A;
 }
 
-/* width 고정하면 안댑니다.. */
+.tab-content {
+  max-height: 0;
+  color: #2c3e50;
+  background: white;
+}
+
+input[type="radio"]:checked ~ .tab-content {
+  max-height: 100vh;
+}
+
+/* Scrollable styles */
+.scrollable-tabs-container,
+.tab-content > div[style*="overflow: auto;"] {
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #959595;
+    border-radius: 10px;
+    background-clip: padding-box;
+    border: 2px solid transparent;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: rgb(232, 232, 232);
+    border-radius: 10px;
+    box-shadow: inset 0px 0px 5px white;
+  }
+}
+
 .scrollable-tabs-container {
-    max-height: 100vh;
-    height: 80%;
-    width: 90%;
-    overflow-y: auto;
-    overflow-x: hidden;
+  max-height: 570px;
+  width: 90%;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
-.tab-content > div[style*="overflow: auto;"]::-webkit-scrollbar {
-    width: 10px;
+/* Miscellaneous styles */
+.search-container,
+.filtered-nodes-container {
+  text-align: left;
+  font-size: 12px;
 }
 
-.tab-content > div[style*="overflow: auto;"]::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    background-clip: padding-box;
-    border: 2px solid transparent;
+.filtered-nodes-container {
+  background-color: aliceblue;
+  font-size: 10px;
+  width: 100%;
+  padding: 10px;
 }
 
-.tab-content > div[style*="overflow: auto;"]::-webkit-scrollbar-track {
-    border-radius: 10px;
-    box-shadow: inset 0px 0px 5px white;
-}
-
-.scrollable-tabs-container::-webkit-scrollbar{ /* .tab-content 추가 */
-    width: 10px;
-}
-
-.scrollable-tabs-container::-webkit-scrollbar-thumb { /* .tab-content 추가 */
-    border-radius: 10px;
-    background-clip: padding-box;
-    border: 2px solid transparent;
-}
-.scrollable-tabs-container::-webkit-scrollbar-track{ /* .tab-content 추가 */
-    border-radius: 10px;
-    box-shadow: inset 0px 0px 5px white;
-}
-
-
-/* This CSS is used to create the accordion for the Palettes */
-input[type="radio"] {
-    position: absolute;
-    opacity: 0;
-    z-index: -1;
-  }
-  
-  /* Accordion styles */
-  .tabs {
-    overflow: hidden;
-  }
-  
-  .tab {
-    width: 100%;
-    color: white;
-    overflow: hidden;
-  }
-  
-  .tab-label {
-    display: flex;
-    justify-content: space-between;
-    padding: 0.5em;
-    background: #446b83;
-    border: solid 1px white;
-    cursor: pointer;
-  }
-  
-  .tab-label:hover {
-    background: #627f91;
-  }
-  
-  .tab-label::after {
-    content: "❯";
-    width: 1em;
-    height: 1em;
-    text-align: center;
-    transition: all 0.35s;
-  }
-  
-  .tab-content {
-    max-height: 0;
-    color: #2c3e50;
-    background: white;
-  }
-  
-  .tab-close {
-    display: flex;
-    justify-content: flex-end;
-    padding: 1em;
-    font-size: 0.75em;
-    background: #2c3e50;
-    cursor: pointer;
-  }
-  
-  .tab-close:hover {
-    background: #1a252f;
-  }
-  
-  input[type="radio"]:checked + .tab-label::after {
-    transform: rotate(90deg);
-  }
-  
-  input[type="radio"]:checked ~ .tab-content {
-    max-height: 100vh;
-  }
-  
-.search-container{
-    text-align: left;
-    font-size: 12px;
-}
-
-.filtered-nodes-container{
-    background-color: aliceblue;
-    font-size: 10px;
-    width: 100%;
-    text-align: left;
-    padding:10px;
+.tab-close {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1em;
+  font-size: 0.75em;
+  background: #2c3e50;
+  cursor: pointer;
 }

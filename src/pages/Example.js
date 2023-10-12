@@ -32,8 +32,7 @@ const Learn = () => {
 
 
       
-    {/* <button onClick={() => getExampleFile(1)}>1번 템플릿 가져오기</button>
-    <button onClick={() => getExampleFile(2)}>2번 템플릿 가져오기</button> */}
+
 
     const animateText = (fullText, setter, speed) => {
         let i = 0;
@@ -96,6 +95,9 @@ const Learn = () => {
           <p>{displayedText1}</p> 
           </div>
         </div>
+
+        <button onClick={() => getExampleFile(1)}>1번 템플릿 가져오기</button>
+        <button onClick={() => getExampleFile(2)}>2번 템플릿 가져오기</button>
 
         {nameSection("Network Excel")}
         <div className="Excels">

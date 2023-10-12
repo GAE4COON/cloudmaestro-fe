@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { fileUpload } from '../apis/file';
+
 
 export const useFileUpload = () => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -12,12 +13,7 @@ export const useFileUpload = () => {
       const fd = new FormData();
       fd.append("file", selectedFile);
       try {
-        const response = await axios.post('http://localhost:8080/api/v1/file-api/upload', fd, {
-          headers: {
-            "Content-Type": `multipart/form-data; `,
-          },
-        });
-
+        const response = await fileUpload(fd);
         if (response.data) {
           navigate('/draw', { state: { file: response.data},
         from: "inputNet"});

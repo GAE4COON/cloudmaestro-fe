@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { requestExample } from '../apis/file';
+
 
 export const useExampleFile = () => {
     const navigate = useNavigate();
 
     const getExampleFile = async (order) => {
         try {
-            const response = await axios.get(`http://localhost:8080/api/v1/file-api/example/${order}`);  // 백틱 사용
+            const response = await requestExample(order);
 
             if (response.data) {
                 console.log(response.data);
