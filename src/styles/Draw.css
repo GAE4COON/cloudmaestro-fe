@@ -11,9 +11,7 @@
   width: 100%;
   position: relative;
   z-index: 1;
-  /* 낮은 z-index 값 */
-  margin-top: 3px;
-  /* 아래쪽 여백 추가 */
+  margin-top: 20px;
 }
 
 .container {

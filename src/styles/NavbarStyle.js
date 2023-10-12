@@ -64,7 +64,6 @@ export const DropdownMenu = styled.div`
   // text-align:center;
   // align-items: center;
 
-
   &:hover {
     display: flex; // display the dropdown menu when the NavLink is hovered over
   }
@@ -75,7 +74,7 @@ export const NavContainer = styled.div`
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 1000; 
+  z-index: 1000; // This ensures that it is always on top
 `;
 
 export const NavStyled = styled.nav`
@@ -168,7 +167,6 @@ export const NavLink = styled(Link)`
   height: 100%;
   cursor: pointer;
 
-
   & img {
     width: 40px;
     height: auto;
@@ -240,4 +238,3 @@ export const UserProfileImage = styled.img`
   width: 40px;
   height: 40px;
 `;
-
