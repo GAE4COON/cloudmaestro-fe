@@ -78,7 +78,9 @@ function Draw() {
     <div>
       <div className="Draw">
         <div className="container">
+          <div className="button-container">
           <Button diagram={diagram} showToggle={showToggle} setShowToggle={setShowToggle} finalToggleValue={finalToggleValue} setFinalToggleValue={setFinalToggleValue} />
+          </div>
           <div className="createspace">
           
             <div className="workspace">

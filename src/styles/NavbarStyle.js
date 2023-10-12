@@ -75,7 +75,7 @@ export const NavContainer = styled.div`
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 1000; // This ensures that it is always on top
+  z-index: 1000; 
 `;
 
 export const NavStyled = styled.nav`

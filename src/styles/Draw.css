@@ -3,6 +3,9 @@
   display: flex;
 }
 
+.button-container{
+}
+
 /* Draw */
 .Draw {
   width: 100%;
