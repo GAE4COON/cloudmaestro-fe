@@ -83,7 +83,6 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
 
       new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
 
-
       //마진에 포트 추가해서 링크가 동작되게 만든다
       $(go.Shape, {
         width: 70,
@@ -157,25 +156,21 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
         new go.Binding("text", "key")
       ),
 
-      $(
-        go.Panel,
-        "Auto",
-        $(
-          go.Shape,
-          "Rectangle",
-          {
-            margin: 10,
-            fill: "transparent",
-            stroke: "rgba(128,128,128,0.5)",
-            strokeWidth: 5,
-          },
-          new go.Binding("stroke"),
-          new go.Binding("fill", "stroke")
+        $(go.Panel, "Auto",
+          $(go.Shape,
+            "Rectangle",
+            {
+              margin: 10,
+              fill: "transparent",
+              stroke: "rgb(128,128,128)",
+              strokeWidth: 3
+            },
+            new go.Binding("stroke")),
+            // new go.Binding("fill", "stroke")),
+          $(go.Placeholder, { padding: 30 }),
         ),
-        $(go.Placeholder, { padding: 30 })
-      )
-    );
-
+        // $(go.Placeholder, { padding: 30 })
+      );
     diagram.linkTemplate = $(
       go.Link,
       {

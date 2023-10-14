@@ -56,27 +56,45 @@ const Palette = memo(({ divClassName }) => {
         )
 
       );
-
-    myPalette.groupTemplate = $(
-      go.Group,
-      "Auto",
-      { background: "#A0BCC2" },
-
-      $(
-        go.Shape,
-        "Rectangle",
-        { margin: 10, width: 50, height: 50 },
-        { fill: "white", stroke: "grey", strokeWidth: 5 },
-        new go.Binding("stroke")
-      ),
-
-      $(
-        go.TextBlock,
-        { font: "bold 10pt sans-serif" },
-        new go.Binding("text", "key")
-      )
-    );
-
+      function computeStroke(data) {
+        // source가 있으면 테두리를 표시하지 않음
+        if (data.source) {
+          return "transparent";
+        }
+        // source가 없으면 노드 데이터의 stroke 값을 사용하거나, 기본값으로 "grey"를 사용함
+        return data.stroke || "grey";
+      }
+      
+      myPalette.groupTemplate = $(
+        go.Group, "Auto",
+        $(go.Panel, "Vertical",
+          $(go.Panel, "Auto",
+            $(go.Shape, "Rectangle", 
+            {
+              width: 47, 
+              height: 47,
+              fill: "transparent",
+              strokeWidth: 3
+            },
+              new go.Binding("stroke", "", computeStroke)
+            ),
+            $(go.Picture,
+              { margin: 5, width: 50, height: 50},
+              new go.Binding("source")
+            )
+          ),
+          $(go.TextBlock,
+            {
+              alignment: go.Spot.BottomCenter,
+              font: "bold 10pt sans-serif",
+              width: 80,
+              overflow: go.TextBlock.WrapFit,
+              textAlign: "center"
+            },
+            new go.Binding("text", "key", formatKey))
+        )
+      );
+      
     let dataToUse = nodeDataArrayPalette.filter(
       (item) => item.type === selectedTab
     );
@@ -610,14 +628,14 @@ const Palette = memo(({ divClassName }) => {
                   type="radio"
                   id="rd26"
                   name="rd"
-                  onClick={() => setSelectedTab("group")}
+                  onClick={() => setSelectedTab("AWS_Groups")}
                 />
                 <label className="tab-label" htmlFor="rd26">
                   Group
                 </label>
                 <div
                   className="tab-content"
-                  ref={(el) => (paletteDivs.current["group"] = el)}
+                  ref={(el) => (paletteDivs.current["AWS_Groups"] = el)}
                 />
 
               </div>

@@ -6,7 +6,7 @@ echo "" > $OUTPUT_FILE   # 파일 초기화
 COUNTER=1  # rd 카운터 초기화
 
 # ./public/img/Network_icon/ 하위의 모든 디렉토리를 순회
-for DIRECTORY in $(find ./public/img/Network_icon/ -type d); do
+for DIRECTORY in $(find ./public/img/AWS_icon/AWS_Groups/ -type d); do
     # 최상위 디렉토리는 제외
 
         # HTML 형식으로 출력
