@@ -53,7 +53,7 @@ function fetchEngineData(dbengine, instanceType, setData, setLoading, setError){
       method: 'post',
       data: {
         "engine": dbengine,
-        "instanceType":instanceType
+        // "instanceType":"hello"
       },
       baseURL: 'http://localhost:8080',
     })

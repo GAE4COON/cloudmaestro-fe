@@ -158,11 +158,11 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
             {
               margin: 10,
               fill: "transparent",
-              stroke: "rgba(128,128,128,0.5)",
-              strokeWidth: 5
+              stroke: "rgb(128,128,128)",
+              strokeWidth: 3
             },
-            new go.Binding("stroke"),
-            new go.Binding("fill", "stroke")),
+            new go.Binding("stroke")),
+            // new go.Binding("fill", "stroke")),
           $(go.Placeholder, { padding: 30 }),
         ),
       );

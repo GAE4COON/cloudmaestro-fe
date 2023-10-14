@@ -1927,99 +1927,144 @@ export const nodeDataArrayPalette = [
         source: "/img/AWS_icon/Arch_Storage/Arch_AWS-Storage-Gateway_48.svg",
         type: "Storage"
     },
+
     // Group
-    // Group
+    {
+        isGroup: true,
+        stroke: "rgb(0,0,0)",
+        key: "AWS Cloud Logo",
+        source: "/img/AWS_icon/AWS_Groups/AWS_Cloud.svg",
+        type: "AWS_Groups"
+    },
     {
         isGroup: true,
         key: "AWS Cloud",
-        stroke: "rgba(255,165,0,0.3)",
-        type: "group"
-    },
-    {
-        isGroup: true,
-        key: "Region",
-        stroke: "rgba(0,198,0,0.3)",
-        type: "group"
+        stroke: "rgb(0,0,0)",
 
+        source: "/img/AWS_icon/AWS_Groups/AWS_Cloud_2.svg",
+        type: "AWS_Groups"
     },
     {
         isGroup: true,
-        key: "Availability Zone",
-        stroke: "rgba(0,0,198,0.3)",
-        type: "group"
+        key: "IoT Greengrass",
+        stroke: "rgb(122,161,22)",
 
+        source: "/img/AWS_icon/AWS_Groups/AWS_IoT_Greengrass.svg",
+        type: "AWS_Groups"
     },
     {
         isGroup: true,
-        key: "Security Group",
-        stroke: "rgba(255,165,0,0.3)",
-        type: "group"
-    },
-    {
-        isGroup: true,
-        key: "Auto Scaling Group",
-        stroke: "rgba(0,198,0,0.3)",
-        type: "group"
+        stroke: "rgb(122,161,22)",
 
+        key: "IoT Greengrass Deployment",
+        source: "/img/AWS_icon/AWS_Groups/AWS_IoT_Greengrass_Deployment.svg",
+        type: "AWS_Groups"
     },
     {
         isGroup: true,
-        key: "Virtual pricate cloud (VPC)",
-        stroke: "rgba(0,0,198,0.3)",
-        type: "group"
+        stroke: "rgb(231,21,123)",
 
-    }, {
-    }, {
-        isGroup: true,
-        key: "Private subnet",
-        stroke: "rgba(255,165,0,0.3)",
-        type: "group"
+        key: "Step Fuctions workflow",
+        source: "/img/AWS_icon/AWS_Groups/AWS_Step_Fuctions_workflow.svg",
+        type: "AWS_Groups"
     },
     {
         isGroup: true,
-        key: "Public subnet",
-        stroke: "rgba(0,198,0,0.3)",
-        type: "group"
+        stroke: "rgb(125,137,152)",
 
-    },
-    {
-        isGroup: true,
-        key: "Server contents",
-        stroke: "rgba(0,0,198,0.3)",
-        type: "group"
 
-    }, 
-    {
-        isGroup: true,
         key: "Corporate data center",
-        stroke: "rgba(255,165,0,0.3)",
-        type: "group"
+        source: "/img/AWS_icon/AWS_Groups/Corporate_data_center.svg",
+        type: "AWS_Groups"
     },
     {
         isGroup: true,
-        key: "EC2 instance contents",
-        stroke: "rgba(0,198,0,0.3)",
-        type: "group"
+        stroke: "rgb(237,113,0)",
 
+        key: "EC2 instace contents",
+        source: "/img/AWS_icon/AWS_Groups/EC2_instace_contents.svg",
+        type: "AWS_Groups"
     },
     {
         isGroup: true,
+        stroke: "rgb(237,113,0)",
+
+        key: "Elatic Beanstalk container",
+        source: "/img/AWS_icon/AWS_Groups/Elatic_Beanstalk_container.svg",
+        type: "AWS_Groups"
+    },
+    {
+        isGroup: true,
+        stroke: "rgb(0,164,166)",
+
+        key: "Private subnet",
+        source: "/img/AWS_icon/AWS_Groups/Private_subnet.svg",
+        type: "AWS_Groups"
+    },
+    {
+        isGroup: true,
+        stroke: "rgb(122,161,22)",
+
+        key: "Public subnet",
+
+        source: "/img/AWS_icon/AWS_Groups/Public_subnet.svg",
+        type: "AWS_Groups"
+    },
+    {
+        isGroup: true,
+        stroke: "rgb(0,164,166)",
+
+        key: "Region",
+        source: "/img/AWS_icon/AWS_Groups/Region.svg",
+        type: "AWS_Groups"
+    },
+    {
+        isGroup: true,
+        stroke: "rgb(0,164,166)",
+
+        key: "Availability Zone",
+        // source: "/img/AWS_icon/AWS_Groups/Region.svg",
+        type: "AWS_Groups"
+    },
+    {
+        isGroup: true,
+        stroke: "rgb(221,52,76)",
+ 
+        key: "Security Group",
+        // source: "/img/AWS_icon/AWS_Groups/Region.svg",
+        type: "AWS_Groups"
+    },
+    {
+        isGroup: true,
+        stroke: "rgb(125,137,152)",
+
+        key: "Server contents",
+        source: "/img/AWS_icon/AWS_Groups/Server_contents.svg",
+        type: "AWS_Groups"
+    },
+    {
+        isGroup: true,
+        stroke: "rgb(237,113,0)",
+
         key: "Spot Fleet",
-        stroke: "rgba(0,0,198,0.3)",
-        type: "group"
-
-    }, 
-    {
-        isGroup: true,
-        key: "AWS account",
-        stroke: "rgba(255,165,0,0.3)",
-        type: "group"
+        source: "/img/AWS_icon/AWS_Groups/Spot_Fleet.svg",
+        type: "AWS_Groups"
     },
     {
         isGroup: true,
-        key: "Elastic Beanstalk Container",
-        stroke: "rgba(0,198,0,0.3)",
-        type: "group"
+        stroke: "rgb(237,113,0)",
 
+        key: "Auto Scaling group",
+        source: "/img/AWS_icon/AWS_Groups/Auto_Scaling_group.svg",
+        type: "AWS_Groups"
     },
+    {
+        isGroup: true,
+        stroke: "rgb(140,79,255)",
+
+        key: "VPC",
+        source: "/img/AWS_icon/AWS_Groups/VPC.svg",
+        type: "AWS_Groups"
+    },
+  
 ]
