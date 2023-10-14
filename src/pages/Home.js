@@ -36,23 +36,6 @@ function Home() {
     navigate("/draw");
   };
 
-  const uploadFile = async (event) => {
-    if (event.target.files.length > 0) {
-      console.log(event.target.files[0]);
-
-      const file = event.target.files[0];
-      const fd = new FormData();
-      fd.append("file", file);
-      try {
-        const response = await summaryFile(fd);
-        console.log(response.data);
-        navigate('/summary', { state: { file: response.data } });
-
-      } catch (error) {
-        console.log("error", error);
-      }
-    } 
-  };
 
   return (
     <Fragment>
@@ -61,15 +44,6 @@ function Home() {
           <h1>{Greeting}</h1>
           <h1>{Greeting}</h1>
 
-          <label htmlFor="customFileUpload" className="custom-file-label">
-          Upload
-        </label>
-        <input
-          type="file"
-          id="customFileUpload"
-          className="custom-file-input"
-          onChange={uploadFile}
-        />
           <img
             src="assets/img/Cloud-architecture.png"
             alt="logo"
