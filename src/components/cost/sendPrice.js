@@ -5,7 +5,7 @@ export function ec2Price(priceElement) {
     console.log("instance",instance);
     return new Promise((resolve, reject) => {
       axios({
-        url: '/vantage/ec2',
+        url: '/api/v1/pricing-api/ec2',
         method: 'post',
         data: {
           "platform": priceElement[0],
@@ -35,7 +35,7 @@ export function ec2Price(priceElement) {
   export function fetchPlatformData(platform, instanceType, setData, setLoading, setError){
     return new Promise((resolve, reject) => {setLoading(true);
       axios({
-        url: '/ec2/apiname',
+        url: '/api/v1/db-api/ec2',
         method: 'post',
         data: {
           "platform": platform,

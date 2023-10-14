@@ -65,6 +65,15 @@ const Palette = memo(({ divClassName }) => {
 
       );
 
+      function computeStroke(data) {
+        // source가 있으면 테두리를 표시하지 않음
+        if (data.source) {
+          return "transparent";
+        }
+        // source가 없으면 노드 데이터의 stroke 값을 사용하거나, 기본값으로 "grey"를 사용함
+        return data.stroke || "grey";
+      }
+      
       myPalette.groupTemplate = $(
         go.Group, "Auto",
         $(go.Panel, "Vertical",
@@ -628,14 +637,14 @@ const Palette = memo(({ divClassName }) => {
                   type="radio"
                   id="rd26"
                   name="rd"
-                  onClick={() => setSelectedTab("group")}
+                  onClick={() => setSelectedTab("AWS_Groups")}
                 />
                 <label className="tab-label" htmlFor="rd26">
                   Group
                 </label>
                 <div
                   className="tab-content"
-                  ref={(el) => (paletteDivs.current["group"] = el)}
+                  ref={(el) => (paletteDivs.current["AWS_Groups"] = el)}
                 />
 
               </div>

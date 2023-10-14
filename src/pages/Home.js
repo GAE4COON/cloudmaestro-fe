@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "../styles/home.css";
 import { useCookies } from "react-cookie";
 import { loginTest } from "../apis/auth.js";
+import { summaryFile } from "../apis/file";
 
 function Home() {
   const navigate = useNavigate();
@@ -35,12 +36,14 @@ function Home() {
     navigate("/draw");
   };
 
+
   return (
     <Fragment>
       <div className="home-content">
         <div className="img-container">
           <h1>{Greeting}</h1>
           <h1>{Greeting}</h1>
+
           <img
             src="assets/img/Cloud-architecture.png"
             alt="logo"

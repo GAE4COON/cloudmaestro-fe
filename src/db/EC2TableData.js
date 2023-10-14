@@ -1,4 +1,4 @@
-export const headers = [
+const compute = [
     {
         text: 'Instance',
         value: 'instance',
@@ -8,8 +8,8 @@ export const headers = [
         value: 'platform',
     },
     {
-        text: 'Type',
-        value: 'type',
+        text: 'InstanceType',
+        value: 'instancetype',
     },
     {
         text: 'Size',
@@ -20,14 +20,55 @@ export const headers = [
         value: 'billing',
     },
     {
-        text: 'EA',
-        value: 'ea',
+        text: 'Cost',
+        value: 'cost',
+    },
+]
+
+const database = [
+    {
+        text: 'Instance',
+        value: 'instance',
+    },
+    {
+        text: 'Engine',
+        value: 'engine',
+    },
+
+    {
+        text: 'InstanceType',
+        value: 'instancetype',
+    },
+    {
+        text: 'Size',
+        value: 'size',
     },
     {
         text: 'Cost',
         value: 'cost',
     },
 ];
+
+const storage = [
+    {
+        text: 'Instance',
+        value: 'instance',
+    },
+    {
+        text: 'Storage',
+        value: 'storage',
+    },
+    {
+        text: 'Cost',
+        value: 'cost',
+    },
+];
+
+export const headers={};
+headers["compute"] = compute;
+headers["database"] = database;
+headers["storage"] = storage;
+
 
 export const items = [
     {

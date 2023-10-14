@@ -21,17 +21,17 @@ const Button = ({ diagram ,showToggle, setShowToggle, finalToggleValue, setFinal
   useEffect(() => {
     setFinalToggleValue(finalToggleVal);
   }, [finalToggleVal]);
-  
+
   const handleSave = () => {
     if (diagram) {
       let jsonCombinedArray = diagram.model.toJson();
       jsonCombinedArray = JSON.parse(jsonCombinedArray);
-      jsonCombinedArray["cost"] = finalToggleValue;          //ec2도 해야할 듯
+      jsonCombinedArray["cost"] = finalToggleValue; //ec2도 해야할 듯
       jsonCombinedArray = JSON.stringify(jsonCombinedArray);
       setSavedDiagramJSON(jsonCombinedArray);
       
       //setSavedDiagramJSON(jsonCombinedArray,finalToggleValue);
-      console.log("저는 json이에요",jsonCombinedArray,finalToggleValue);
+      console.log("저는 json이에요", jsonCombinedArray, finalToggleValue);
       localSaveJSON(jsonCombinedArray);
     }
   };
@@ -101,26 +101,28 @@ const Button = ({ diagram ,showToggle, setShowToggle, finalToggleValue, setFinal
       let fileReader = new FileReader();
       fileReader.readAsText(file);
       fileReader.onload = () => {
-        console.log(fileReader.result);
+        console.log("json",fileReader.result);
         let filejson = JSON.parse(fileReader.result);
-        setFinalToggleVal(filejson["cost"])        //여기서 rds뿐이 아닌 ec2도 해줘야 할 듯
+        setFinalToggleVal(filejson["cost"]); //여기서 rds뿐이 아닌 ec2도 해줘야 할 듯
         if (fileReader.result && diagram) {
           diagram.model = go.Model.fromJson(fileReader.result);
           console.log(JSON.stringify(diagram.model));
+          setShowToggle(true);
         }
       };
     } else if (e.target.files[0] && !e.target.files[0].name.includes("json")) {
       alert("Json형식의 파일을 넣어주세용 ㅜㅜ");
     }
+    e.target.value = null;
   };
 
   const handleReset = () => {
     if (diagram) {
-        diagram.startTransaction("Cleared diagram");
-        setFinalToggleValue({});
-        diagram.model.nodeDataArray = [];
-        diagram.model.linkDataArray = [];
-        diagram.commitTransaction("Cleared diagram");
+      diagram.startTransaction("Cleared diagram");
+      setFinalToggleValue({});
+      diagram.model.nodeDataArray = [];
+      diagram.model.linkDataArray = [];
+      diagram.commitTransaction("Cleared diagram");
     }
 
     setShowToggle(false); // toggle 숨김
