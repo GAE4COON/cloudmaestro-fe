@@ -130,27 +130,29 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
     );
     
 
-    diagram.groupTemplate
-      = $(go.Group,
-        "Auto", "Vertical",
-        {
-          mouseDragEnter: (e, grp, prev) => highlightGroup(e, grp, true),
-          mouseDragLeave: (e, grp, next) => highlightGroup(e, grp, false),
-          mouseDrop: finishDrop,
-          ungroupable: true,
-        },
+    diagram.groupTemplate = $(
+      go.Group,
+      "Auto",
+      "Vertical",
+      {
+        mouseDragEnter: (e, grp, prev) => highlightGroup(e, grp, true),
+        mouseDragLeave: (e, grp, next) => highlightGroup(e, grp, false),
+        mouseDrop: finishDrop,
+        ungroupable: true,
+      },
 
-        $(go.TextBlock,
-          {
-            font: "bold 12pt sans-serif",
-            alignment: go.Spot.TopLeft,
-            portId: "",
-            cursor: "pointer",
-            fromLinkable: true,
-            toLinkable: true,
-          },
-          new go.Binding("text", "key"),
-        ),
+      $(
+        go.TextBlock,
+        {
+          font: "bold 12pt sans-serif",
+          alignment: go.Spot.TopLeft,
+          portId: "",
+          cursor: "pointer",
+          fromLinkable: true,
+          toLinkable: true,
+        },
+        new go.Binding("text", "key")
+      ),
 
         $(go.Panel, "Auto",
           $(go.Shape,
@@ -158,13 +160,14 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
             {
               margin: 10,
               fill: "transparent",
-              stroke: "rgba(128,128,128,0.5)",
-              strokeWidth: 5
+              stroke: "rgb(128,128,128)",
+              strokeWidth: 3
             },
-            new go.Binding("stroke"),
-            new go.Binding("fill", "stroke")),
+            new go.Binding("stroke")),
+            // new go.Binding("fill", "stroke")),
           $(go.Placeholder, { padding: 30 }),
         ),
+        // $(go.Placeholder, { padding: 30 })
       );
 
     diagram.linkTemplate = $(

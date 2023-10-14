@@ -17,6 +17,14 @@ function formatKey(key) {
   return result;
 }
 
+function computeStroke(data) {
+  if (data.source) {
+    return "transparent";
+  }
+  return data.stroke || "grey";
+}
+
+
 const Palette = memo(({ divClassName }) => {
   // const [setNodeDataArray] = useState([]);
   const [nodeDataArray, setNodeDataArray] = useState([]);
@@ -57,25 +65,35 @@ const Palette = memo(({ divClassName }) => {
 
       );
 
-    myPalette.groupTemplate = $(
-      go.Group,
-      "Auto",
-      { background: "#A0BCC2" },
-
-      $(
-        go.Shape,
-        "Rectangle",
-        { margin: 10, width: 50, height: 50 },
-        { fill: "white", stroke: "grey", strokeWidth: 5 },
-        new go.Binding("stroke")
-      ),
-
-      $(
-        go.TextBlock,
-        { font: "bold 10pt sans-serif" },
-        new go.Binding("text", "key")
-      )
-    );
+      myPalette.groupTemplate = $(
+        go.Group, "Auto",
+        $(go.Panel, "Vertical",
+          $(go.Panel, "Auto",
+            $(go.Shape, "Rectangle", 
+            {
+              width: 47, 
+              height: 47,
+              fill: "transparent",
+              strokeWidth: 3
+            },
+              new go.Binding("stroke", "", computeStroke)
+            ),
+            $(go.Picture,
+              { margin: 5, width: 50, height: 50},
+              new go.Binding("source")
+            )
+          ),
+          $(go.TextBlock,
+            {
+              alignment: go.Spot.BottomCenter,
+              font: "bold 10pt sans-serif",
+              width: 80,
+              overflow: go.TextBlock.WrapFit,
+              textAlign: "center"
+            },
+            new go.Binding("text", "key", formatKey))
+        )
+      );
 
     let dataToUse = nodeDataArrayPalette.filter(
       (item) => item.type === selectedTab
