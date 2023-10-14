@@ -101,17 +101,19 @@ const Button = ({ diagram ,showToggle, setShowToggle, finalToggleValue, setFinal
       let fileReader = new FileReader();
       fileReader.readAsText(file);
       fileReader.onload = () => {
-        console.log(fileReader.result);
+        console.log("json",fileReader.result);
         let filejson = JSON.parse(fileReader.result);
         setFinalToggleVal(filejson["cost"])        //여기서 rds뿐이 아닌 ec2도 해줘야 할 듯
         if (fileReader.result && diagram) {
           diagram.model = go.Model.fromJson(fileReader.result);
           console.log(JSON.stringify(diagram.model));
+          setShowToggle(true);
         }
       };
     } else if (e.target.files[0] && !e.target.files[0].name.includes("json")) {
       alert("Json형식의 파일을 넣어주세용 ㅜㅜ");
     }
+    e.target.value = null;
   };
 
   const handleReset = () => {
