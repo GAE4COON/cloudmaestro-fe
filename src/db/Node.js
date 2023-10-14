@@ -1932,16 +1932,8 @@ export const nodeDataArrayPalette = [
     {
         isGroup: true,
         stroke: "rgb(0,0,0)",
-        key: "AWS Cloud Logo",
-        source: "/img/AWS_icon/AWS_Groups/AWS_Cloud.svg",
-        type: "AWS_Groups"
-    },
-    {
-        isGroup: true,
         key: "AWS Cloud",
-        stroke: "rgb(0,0,0)",
-
-        source: "/img/AWS_icon/AWS_Groups/AWS_Cloud_2.svg",
+        source: "/img/AWS_icon/AWS_Groups/AWS_Cloud.svg",
         type: "AWS_Groups"
     },
     {

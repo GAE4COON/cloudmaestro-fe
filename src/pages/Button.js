@@ -92,7 +92,7 @@ const Button = ({ diagram ,showToggle, setShowToggle, finalToggleValue, setFinal
         console.error('Error:', error);
       });
 
-    
+
   };
 
   const onFileChange = (e) => {

@@ -137,16 +137,15 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
       "Auto",
       "Vertical",
       {
+        // layout: $(go.GridLayout, { alignment: go.GridLayout.Position }),
         mouseDragEnter: (e, grp, prev) => highlightGroup(e, grp, true),
         mouseDragLeave: (e, grp, next) => highlightGroup(e, grp, false),
         mouseDrop: finishDrop,
         ungroupable: true,
       },
-
-      $(
-        go.TextBlock,
+      $(go.TextBlock,
         {
-          font: "bold 12pt sans-serif",
+          font: "10pt sans-serif",
           alignment: go.Spot.TopLeft,
           portId: "",
           cursor: "pointer",
@@ -155,22 +154,21 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
         },
         new go.Binding("text", "key")
       ),
-
-        $(go.Panel, "Auto",
-          $(go.Shape,
-            "Rectangle",
-            {
-              margin: 10,
-              fill: "transparent",
-              stroke: "rgb(128,128,128)",
-              strokeWidth: 3
-            },
-            new go.Binding("stroke")),
-            // new go.Binding("fill", "stroke")),
-          $(go.Placeholder, { padding: 30 }),
+      $(go.Panel, "Auto",
+        $(go.Shape,
+          "Rectangle",
+          {
+            margin: 10,
+            fill: "transparent",
+            stroke: "rgb(128,128,128)",
+            strokeWidth: 3
+          },
+          new go.Binding("stroke")
         ),
-        // $(go.Placeholder, { padding: 30 })
-      );
+        $(go.Placeholder, { padding: 30 }),
+      )
+    );
+    
     diagram.linkTemplate = $(
       go.Link,
       {
