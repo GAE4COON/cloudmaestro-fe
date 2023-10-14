@@ -27,6 +27,7 @@ const Button = ({ diagram ,showToggle, setShowToggle, finalToggleValue, setFinal
       let jsonCombinedArray = diagram.model.toJson();
       jsonCombinedArray = JSON.parse(jsonCombinedArray);
       jsonCombinedArray["cost"] = finalToggleValue;          //ec2도 해야할 듯
+      console.log("final toggle value: ", finalToggleValue);
       jsonCombinedArray = JSON.stringify(jsonCombinedArray);
       setSavedDiagramJSON(jsonCombinedArray);
       

@@ -15,6 +15,7 @@ import InputNet from "./pages/InputNetwork";
 import InputAWS from "./pages/InputAWS";
 
 import Back from "./pages/Backend/BackEnd";
+import Summary from "./pages/Summary";
 
 
 function App() {
@@ -44,6 +45,9 @@ function App() {
               <Route path="/input/aws" element={<InputAWS />} />
 
               <Route path="/mypage/design" element={<MyDesign />} />
+
+              <Route path="/summary" element={<Summary />} />
+
 
             </Routes>
           </div>

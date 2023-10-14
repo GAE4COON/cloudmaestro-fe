@@ -1,5 +1,5 @@
 {
-    "class": "GraphLinksModel",
+    "class2": "GraphLinksModel",
     "linkKeyProperty": "key",
     "nodeDataArray": [
         {
@@ -7,92 +7,99 @@
             "figure": "Rectangle",
             "source": "/img/AWS_icon/Arch_Database/Arch_Amazon-RDS_48.svg",
             "type": "Database",
-            "locz": "62.9964756282115 -67.5341570201794"
+            "loc": "62.9964756282115 -67.5341570201794"
         },
         {
             "key": "RDS2",
             "figure": "Rectangle",
             "source": "/img/AWS_icon/Arch_Database/Arch_Amazon-RDS_48.svg",
             "type": "Database",
-            "locz": "-220.0804286686635 -64.4572527233044"
+            "loc": "-220.0804286686635 -64.4572527233044"
         },
         {
             "key": "RDS3",
             "figure": "Rectangle",
             "source": "/img/AWS_icon/Arch_Database/Arch_Amazon-RDS_48.svg",
             "type": "Database",
-            "locz": "-65.465072223351 47.08119942513309"
+            "loc": "-65.465072223351 47.08119942513309"
         },
         {
             "key": "Simple Storage Service",
             "figure": "Rectangle",
             "source": "/img/AWS_icon/Arch_Storage/Arch_Amazon-Simple-Storage-Service_48.svg",
             "type": "Storage",
-            "locz": "-203.92655903975725 110.92824793641876"
+            "loc": "-203.92655903975725 110.92824793641876"
         },
         {
             "key": "Simple Storage Service2",
             "figure": "Rectangle",
             "source": "/img/AWS_icon/Arch_Storage/Arch_Amazon-Simple-Storage-Service_48.svg",
             "type": "Storage",
-            "locz": "190.6887974055553 82.4658429798206"
+            "loc": "190.6887974055553 82.4658429798206"
         },
         {
             "key": "Simple Storage Service3",
             "figure": "Rectangle",
             "source": "/img/AWS_icon/Arch_Storage/Arch_Amazon-Simple-Storage-Service_48.svg",
             "type": "Storage",
-            "locz": "36.8426670344615 -162.91877005728878"
+            "loc": "36.8426670344615 -162.91877005728878"
+        },
+        {
+            "key": "EC21",
+            "figure": "Rectangle",
+            "source": "/img/AWS_icon/Arch_Storage/Arch_Amazon-Simple-Storage-Service_48.svg",
+            "type": "Compute",
+            "loc": "36.8426670344615 -162.91877005728878"
         }
     ],
     "linkDataArray": [],
-    "cost": {
-        "EC21": {
+    "cost": [
+        {"EC21": {
             "platform": "linux",
             "instancetype": "r6gd",
             "size": "4xlarge",
             "billing": "on-demand",
             "cost": "1.1072"
-        },
-        "EC22": {
+        }},
+        {"EC22": {
             "platform": "windows",
             "instancetype": "c5d",
             "size": "12xlarge",
             "billing": "on-demand",
             "cost": "4.848"
-        },
-        "EC23": {
+        }},
+        {"EC23": {
             "platform": "linux",
             "instancetype": "r6g",
             "size": "4xlarge",
             "billing": "on-demand",
             "cost": "0.976"
-        },
-        "RDS": {
+        }},
+        {"RDS": {
             "engine": "AuroraPostgresMySQL",
             "instancetype": "db.r6i",
             "size": "large",
             "cost": "0.350000000"
-        },
-        "RDS2": {
+        }},
+        {"RDS2": {
             "engine": "MariaDB",
             "instancetype": "db.m6i",
             "size": "4xlarge",
             "cost": "1.8880000000"
-        },
-        "RDS3": {
+        }},
+        {"RDS3": {
             "engine": "SQLServer",
             "instancetype": "db.z1d",
             "size": "xlarge",
             "cost": "2.7740000000"
-        },
-        "Simple Storage Service": {
+        }},
+        {"Simple Storage Service": {
             "storage": "2",
             "cost": 0.05
-        },
-        "Simple Storage Service2": {
+        }},
+        {"Simple Storage Service2": {
             "storage": "4",
             "cost": 0.1
-        }
-    }
+        }}
+    ]
 }

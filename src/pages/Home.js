@@ -45,7 +45,9 @@ function Home() {
       fd.append("file", file);
       try {
         const response = await summaryFile(fd);
-          console.log(response.data);
+        console.log(response.data);
+        navigate('/summary', { state: { file: response.data } });
+
       } catch (error) {
         console.log("error", error);
       }

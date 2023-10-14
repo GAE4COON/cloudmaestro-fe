@@ -81,7 +81,7 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
         return key === -7 ? "BottomLayer" : "";
       }),
 
-      new go.Binding("location", "locz", go.Point.parse).makeTwoWay(go.Point.stringify),
+      new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
 
       //마진에 포트 추가해서 링크가 동작되게 만든다
       $(go.Shape,
