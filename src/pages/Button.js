@@ -95,27 +95,9 @@ const Button = ({
       const Jdata = response.data.result;
 
       diagram.model = go.Model.fromJson(Jdata);
-
-      //console.log(go.Model.fromJson(JSON.parse(Jdata)));
     } catch (error) {
       console.error("rehost error: ", error);
     }
-
-    //console.log("modelmodel",JSON.stringify(diagram.model));
-    // fetch('http://localhost:8080/api/v1/file-api/network', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify(diagram.model)
-    // })
-    // .then(response => response.json())
-    // .then(data => {
-    //   console.log('Success:', data);
-    // })
-    // .catch((error) => {
-    //   console.error('Error:', error);
-    // });
   };
 
   const onFileChange = (e) => {
