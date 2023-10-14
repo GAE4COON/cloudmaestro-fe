@@ -5,16 +5,16 @@ import "../styles/Button.css"; // contains .diagram-component CSS
 import SelectToggle from "../../src/components/cost/SelectEc2Toggle";
 import InputAWS from "./InputAWS";
 import { json, useNavigate } from "react-router-dom";
-import { summaryFile } from "../apis/file";
 
-const Button = ({ diagram, showToggle, setShowToggle, finalToggleValue, setFinalToggleValue }) => {
+
+const Button = ({ diagram ,showToggle, setShowToggle, finalToggleValue, setFinalToggleValue}) => {
   const hiddenFileInput = React.useRef(null);
   const navigate = useNavigate();
   const handleClick = () => {
     hiddenFileInput.current.click();
   };
 
-
+  
   const [savedDiagramJSON, setSavedDiagramJSON] = useState(null);
   const [finalToggleVal, setFinalToggleVal] = useState({});
 
@@ -26,11 +26,10 @@ const Button = ({ diagram, showToggle, setShowToggle, finalToggleValue, setFinal
     if (diagram) {
       let jsonCombinedArray = diagram.model.toJson();
       jsonCombinedArray = JSON.parse(jsonCombinedArray);
-      jsonCombinedArray["cost"] = finalToggleValue;          //ec2도 해야할 듯
+      jsonCombinedArray["cost"] = finalToggleValue; //ec2도 해야할 듯
       jsonCombinedArray = JSON.stringify(jsonCombinedArray);
       setSavedDiagramJSON(jsonCombinedArray);
-
-
+      
       //setSavedDiagramJSON(jsonCombinedArray,finalToggleValue);
       console.log("저는 json이에요", jsonCombinedArray, finalToggleValue);
       localSaveJSON(jsonCombinedArray);
@@ -73,7 +72,28 @@ const Button = ({ diagram, showToggle, setShowToggle, finalToggleValue, setFinal
     }
   };
 
+  const handleLoad = () => {
+    
+      //console.log("modelmodel",JSON.stringify(diagram.model));
+   
+      // Make a POST request to the backend
+      fetch('http://localhost:8080/api/v1/file-api/network', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(diagram.model)
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Success:', data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
 
+    
+  };
 
   const onFileChange = (e) => {
     if (e.target.files[0] && e.target.files[0].name.includes("json")) {
@@ -81,17 +101,19 @@ const Button = ({ diagram, showToggle, setShowToggle, finalToggleValue, setFinal
       let fileReader = new FileReader();
       fileReader.readAsText(file);
       fileReader.onload = () => {
-        console.log(fileReader.result);
+        console.log("json",fileReader.result);
         let filejson = JSON.parse(fileReader.result);
-        setFinalToggleVal(filejson["cost"])        //여기서 rds뿐이 아닌 ec2도 해줘야 할 듯
+        setFinalToggleVal(filejson["cost"]); //여기서 rds뿐이 아닌 ec2도 해줘야 할 듯
         if (fileReader.result && diagram) {
           diagram.model = go.Model.fromJson(fileReader.result);
           console.log(JSON.stringify(diagram.model));
+          setShowToggle(true);
         }
       };
     } else if (e.target.files[0] && !e.target.files[0].name.includes("json")) {
       alert("Json형식의 파일을 넣어주세용 ㅜㅜ");
     }
+    e.target.value = null;
   };
 
   const handleReset = () => {
@@ -104,12 +126,12 @@ const Button = ({ diagram, showToggle, setShowToggle, finalToggleValue, setFinal
     }
 
     setShowToggle(false); // toggle 숨김
-  };
+};
 
 
   return (
     <div>
-
+     
       <div className="top-right-button">
         <div className="button-container">
           <div className="button-row">
@@ -121,7 +143,7 @@ const Button = ({ diagram, showToggle, setShowToggle, finalToggleValue, setFinal
               style={{ display: "none" }}
             />
           </div>
-
+          
 
           <div className="button-row">
             <button onClick={handleReset}>clear</button>
@@ -132,11 +154,11 @@ const Button = ({ diagram, showToggle, setShowToggle, finalToggleValue, setFinal
           <div className="button-row">
             <button onClick={localSaveImage}>Save as Image</button>
           </div>
-
-          {/* <div className="button-row">
-            <button onClick={summaryRequest}>Submit</button>
+        
+          <div className="button-row">
+            <button onClick={handleLoad}>Submit</button>
             {/* <button onClick={navigateAws}>Submit</button> */}
-          {/* </div> */}
+          </div>
         </div>
       </div>
     </div>
