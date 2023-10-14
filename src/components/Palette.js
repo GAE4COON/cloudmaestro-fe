@@ -17,6 +17,14 @@ function formatKey(key) {
   return result;
 }
 
+function computeStroke(data) {
+  if (data.source) {
+    return "transparent";
+  }
+  return data.stroke || "grey";
+}
+
+
 const Palette = memo(({ divClassName }) => {
   // const [setNodeDataArray] = useState([]);
   const [nodeDataArray, setNodeDataArray] = useState([]);
@@ -65,6 +73,7 @@ const Palette = memo(({ divClassName }) => {
         return data.stroke || "grey";
       }
       
+
       myPalette.groupTemplate = $(
         go.Group, "Auto",
         $(go.Panel, "Vertical",
@@ -94,10 +103,9 @@ const Palette = memo(({ divClassName }) => {
             new go.Binding("text", "key", formatKey))
         )
       );
-      
-    let dataToUse = nodeDataArrayPalette.filter(
-      (item) => item.type === selectedTab
-    );
+      let dataToUse = nodeDataArrayPalette.filter(
+        (item) => item.type === selectedTab
+      );
     if (paletteDivs.current[selectedTab]) {
       myPalette.div = paletteDivs.current[selectedTab];
     }
