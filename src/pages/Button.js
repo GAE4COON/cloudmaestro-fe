@@ -5,33 +5,38 @@ import "../styles/Button.css"; // contains .diagram-component CSS
 import SelectToggle from "../../src/components/cost/SelectEc2Toggle";
 import InputAWS from "./InputAWS";
 import { json, useNavigate } from "react-router-dom";
+import { rehostRequest } from "../apis/file";
 
-
-const Button = ({ diagram ,showToggle, setShowToggle, finalToggleValue, setFinalToggleValue}) => {
+const Button = ({
+  diagram,
+  showToggle,
+  setShowToggle,
+  finalToggleValue,
+  setFinalToggleValue,
+}) => {
   const hiddenFileInput = React.useRef(null);
   const navigate = useNavigate();
   const handleClick = () => {
     hiddenFileInput.current.click();
   };
 
-  
   const [savedDiagramJSON, setSavedDiagramJSON] = useState(null);
   const [finalToggleVal, setFinalToggleVal] = useState({});
 
   useEffect(() => {
     setFinalToggleValue(finalToggleVal);
   }, [finalToggleVal]);
-  
+
   const handleSave = () => {
     if (diagram) {
       let jsonCombinedArray = diagram.model.toJson();
       jsonCombinedArray = JSON.parse(jsonCombinedArray);
-      jsonCombinedArray["cost"] = finalToggleValue;          //ec2도 해야할 듯
+      jsonCombinedArray["cost"] = finalToggleValue; //ec2도 해야할 듯
       jsonCombinedArray = JSON.stringify(jsonCombinedArray);
       setSavedDiagramJSON(jsonCombinedArray);
-      
+
       //setSavedDiagramJSON(jsonCombinedArray,finalToggleValue);
-      console.log("저는 json이에요",jsonCombinedArray,finalToggleValue);
+      console.log("저는 json이에요", jsonCombinedArray, finalToggleValue);
       localSaveJSON(jsonCombinedArray);
     }
   };
@@ -72,27 +77,45 @@ const Button = ({ diagram ,showToggle, setShowToggle, finalToggleValue, setFinal
     }
   };
 
-  const handleLoad = () => {
-    
-      //console.log("modelmodel",JSON.stringify(diagram.model));
-   
-      // Make a POST request to the backend
-      fetch('http://localhost:8080/api/v1/file-api/network', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(diagram.model)
-      })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Success:', data);
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
+  const handleLoad = async () => {
+    try {
+      /*     const dataToSend = {
+        class: "GraphLinksModel",
+        linkKeyProperty: "key",
+        nodeDataArray: diagram.model.nodeDataArray,
+        linkDataArray: diagram.model.linkDataArray,
+        ec2: {},
+      };*/
 
-    
+      const jsonString = diagram.model.toJson();
+
+      const response = await rehostRequest(jsonString);
+      console.log("response", response.data.result);
+
+      const Jdata = response.data.result;
+
+      diagram.model = go.Model.fromJson(Jdata);
+
+      //console.log(go.Model.fromJson(JSON.parse(Jdata)));
+    } catch (error) {
+      console.error("rehost error: ", error);
+    }
+
+    //console.log("modelmodel",JSON.stringify(diagram.model));
+    // fetch('http://localhost:8080/api/v1/file-api/network', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify(diagram.model)
+    // })
+    // .then(response => response.json())
+    // .then(data => {
+    //   console.log('Success:', data);
+    // })
+    // .catch((error) => {
+    //   console.error('Error:', error);
+    // });
   };
 
   const onFileChange = (e) => {
@@ -103,7 +126,7 @@ const Button = ({ diagram ,showToggle, setShowToggle, finalToggleValue, setFinal
       fileReader.onload = () => {
         console.log(fileReader.result);
         let filejson = JSON.parse(fileReader.result);
-        setFinalToggleVal(filejson["cost"])        //여기서 rds뿐이 아닌 ec2도 해줘야 할 듯
+        setFinalToggleVal(filejson["cost"]); //여기서 rds뿐이 아닌 ec2도 해줘야 할 듯
         if (fileReader.result && diagram) {
           diagram.model = go.Model.fromJson(fileReader.result);
           console.log(JSON.stringify(diagram.model));
@@ -116,20 +139,18 @@ const Button = ({ diagram ,showToggle, setShowToggle, finalToggleValue, setFinal
 
   const handleReset = () => {
     if (diagram) {
-        diagram.startTransaction("Cleared diagram");
-        setFinalToggleValue({});
-        diagram.model.nodeDataArray = [];
-        diagram.model.linkDataArray = [];
-        diagram.commitTransaction("Cleared diagram");
+      diagram.startTransaction("Cleared diagram");
+      setFinalToggleValue({});
+      diagram.model.nodeDataArray = [];
+      diagram.model.linkDataArray = [];
+      diagram.commitTransaction("Cleared diagram");
     }
 
     setShowToggle(false); // toggle 숨김
-};
-
+  };
 
   return (
     <div>
-     
       <div className="top-right-button">
         <div className="button-container">
           <div className="button-row">
@@ -141,7 +162,6 @@ const Button = ({ diagram ,showToggle, setShowToggle, finalToggleValue, setFinal
               style={{ display: "none" }}
             />
           </div>
-          
 
           <div className="button-row">
             <button onClick={handleReset}>clear</button>
@@ -152,7 +172,7 @@ const Button = ({ diagram ,showToggle, setShowToggle, finalToggleValue, setFinal
           <div className="button-row">
             <button onClick={localSaveImage}>Save as Image</button>
           </div>
-        
+
           <div className="button-row">
             <button onClick={handleLoad}>Submit</button>
             {/* <button onClick={navigateAws}>Submit</button> */}
