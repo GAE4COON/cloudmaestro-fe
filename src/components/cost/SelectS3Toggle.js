@@ -36,7 +36,7 @@ const SeclectS3Toggle = ({diagram, uniquekey, finalToggleValue, setFinalToggleVa
         setFinalToggleValue(prev => ({
             ...prev,
             [uniquekey]: {
-                text: value,
+                storage: value,
                 cost
             }
         }));

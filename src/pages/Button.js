@@ -117,10 +117,10 @@ const Button = ({ diagram ,showToggle, setShowToggle, finalToggleValue, setFinal
   const handleReset = () => {
     if (diagram) {
         diagram.startTransaction("Cleared diagram");
+        setFinalToggleValue({});
         diagram.model.nodeDataArray = [];
         diagram.model.linkDataArray = [];
         diagram.commitTransaction("Cleared diagram");
-
     }
 
     setShowToggle(false); // toggle 숨김
