@@ -11,6 +11,9 @@ import { useLocation } from "react-router-dom";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 
+import html2canvas from "html2canvas";
+import { jsPDF } from "jspdf";
+
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const createChart = ((array) => {
@@ -45,6 +48,44 @@ const chartOptions = {
 
 function Summary() {
 
+  const [isExporting, setIsExporting] = useState(false);
+
+  function exportToPDF() {
+    setIsExporting(true);  // Open all dropdowns
+  
+    // Small delay to ensure React re-renders with open dropdowns before capturing
+    setTimeout(() => {
+        const input = document.getElementById('export-container');
+        html2canvas(input)
+        .then((canvas) => {
+            const imgData = canvas.toDataURL('image/png');
+            // const pdf = new jsPDF();
+
+            var imgWidth = 210; // 이미지 가로 길이(mm) A4 기준
+            var pageHeight = imgWidth * 1.414;  // 출력 페이지 세로 길이 계산 A4 기준
+            var imgHeight = canvas.height * imgWidth / canvas.width;
+            var heightLeft = imgHeight;
+
+            var doc = new jsPDF('p', 'mm');
+            var position = 0;
+
+            // 첫 페이지 출력
+            doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+            heightLeft -= pageHeight;
+
+            // 한 페이지 이상일 경우 루프 돌면서 출력
+            while (heightLeft >= 20) {
+                position = heightLeft - imgHeight;
+                doc.addPage();
+                doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+            }
+            doc.save('sample.pdf');
+            setIsExporting(false);  // Close all dropdowns after export
+        });
+    }, 100);
+  }
+  
   const location = useLocation();
   const file = location.state ? location.state.file : null;
   console.log(file);
@@ -58,6 +99,8 @@ function Summary() {
   var resourceCost={};
   var filteredItems={};
 
+  console.log("file!!!! ",file);
+
   Object.entries(file).map(([resourceName,valueObject])=>{
     var items=[];
     var cost = 0.0;
@@ -66,23 +109,18 @@ function Summary() {
       items.push(detail);
       detail.cost = parseFloat(detail.cost).toFixed(2);
       detail.instance = instanceName;
-      console.log("dtype ",detail);
     })
     cost = parseFloat(cost.toFixed(2));
     resourceCost[resourceName] = cost;
     filteredItems[resourceName] = items;
-    console.log("filter",filteredItems);
-
   })
-
-  //   const filteredItems = items.filter(item => item.type === category);
 
 
   var instanceNameArr = Object.entries(resourceCost).map(([key, value]) => ({ [key]: value }));
   const totalCost = Object.values(resourceCost).reduce((sum, value) => sum + value, 0).toFixed(2);
 
   return (
-      <div style={{ flex: 1, padding: '20px', marginLeft:'100px', marginRight:'100px'}}>
+      <div id="export-container" style={{ flex: 1, padding: '20px', marginLeft:'100px', marginRight:'100px'}}>
         <div className="title1">
           도식화 히스토리
         </div>
@@ -111,9 +149,8 @@ function Summary() {
                       </div>
                     </div>
                   </div>
-                  {activeDropdown === index && (
+                  { (isExporting || activeDropdown === index) && (
                     <div className="instance-dropdown">
-                      {category}
                       <DataTable
                         headers={headers[category]}
                         items={filteredItems[category]}
@@ -136,7 +173,7 @@ function Summary() {
           <div className="pie-chart">
             <Doughnut data={createChart(instanceNameArr)} options={chartOptions} />
           </div>
-          <button className="export-button">
+          <button className="export-button" onClick={exportToPDF}>
             EXPORT
         </button>
         </div>

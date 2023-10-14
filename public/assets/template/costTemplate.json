@@ -50,56 +50,70 @@
             "source": "/img/AWS_icon/Arch_Storage/Arch_Amazon-Simple-Storage-Service_48.svg",
             "type": "Compute",
             "loc": "36.8426670344615 -162.91877005728878"
+        },
+        {
+            "key": "EC22",
+            "figure": "Rectangle",
+            "source": "/img/AWS_icon/Arch_Storage/Arch_Amazon-Simple-Storage-Service_48.svg",
+            "type": "Compute",
+            "loc": "36.8426670344615 -162.91877005728878"
+        },
+        {
+            "key": "EC23",
+            "figure": "Rectangle",
+            "source": "/img/AWS_icon/Arch_Storage/Arch_Amazon-Simple-Storage-Service_48.svg",
+            "type": "Compute",
+            "loc": "36.8426670344615 -162.91877005728878"
         }
     ],
     "linkDataArray": [],
-    "cost": [
-        {"EC21": {
+    "cost": {
+        "EC21": {
             "platform": "linux",
             "instancetype": "r6gd",
             "size": "4xlarge",
             "billing": "on-demand",
             "cost": "1.1072"
-        }},
-        {"EC22": {
+        },
+        "EC22": {
             "platform": "windows",
             "instancetype": "c5d",
             "size": "12xlarge",
             "billing": "on-demand",
             "cost": "4.848"
-        }},
-        {"EC23": {
+        },
+        "EC23": {
             "platform": "linux",
             "instancetype": "r6g",
             "size": "4xlarge",
             "billing": "on-demand",
             "cost": "0.976"
-        }},
-        {"RDS": {
+        },
+        "RDS": {
             "engine": "AuroraPostgresMySQL",
             "instancetype": "db.r6i",
             "size": "large",
             "cost": "0.350000000"
-        }},
-        {"RDS2": {
+        },
+        "RDS2": {
             "engine": "MariaDB",
             "instancetype": "db.m6i",
             "size": "4xlarge",
             "cost": "1.8880000000"
-        }},
-        {"RDS3": {
+        },
+        "RDS3": {
             "engine": "SQLServer",
             "instancetype": "db.z1d",
             "size": "xlarge",
             "cost": "2.7740000000"
-        }},
-        {"Simple Storage Service": {
+        },
+        "Simple Storage Service": {
             "storage": "2",
             "cost": 0.05
-        }},
-        {"Simple Storage Service2": {
+        },
+        "Simple Storage Service2": {
             "storage": "4",
             "cost": 0.1
-        }}
-    ]
+        }
+    }
 }
