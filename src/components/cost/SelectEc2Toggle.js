@@ -40,22 +40,21 @@ const SelectToggle = ({ diagram, uniquekey, finalToggleValue, setFinalToggleValu
 
 
 
-  // delete with node and data 
-  const handleDeletKey = (uniqueKey) => {
-    setFinalToggleValue((prev) => {
-      const newState = {...prev};
-      delete newState[uniqueKey];
-      return newState;
-    });
-  }
-
-  diagram.addDiagramListener("SelectionDeleting", function (e) {
-      e.subject.each(function (part) {
-        handleDeletKey(part.key);
-      });
-    
-   
+ //삭제시 다이어그램에 있는 노드 데이터 삭제
+ const handleDeletKey = (uniqueKey) => {
+  setFinalToggleValue((prev) => {
+    const newState = {...prev};
+    delete newState[uniqueKey];
+    return newState;
   });
+}
+
+diagram.addDiagramListener("SelectionDeleting", function (e) {
+    e.subject.each(function (part) {
+      handleDeletKey(part.key);
+    });
+});
+
   
   
   useEffect(() => {

@@ -96,6 +96,7 @@ function Draw() {
                   <div className="diagram">
                   { showToggle && showSelectToggle.value && showSelectToggle.key.includes('EC2') && (
                     <SelectEc2Toggle
+                    diagram={diagram}
                     uniquekey={showSelectToggle.key}
                     finalToggleValue={finalToggleValue}
                     setFinalToggleValue={setFinalToggleValue}
