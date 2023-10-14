@@ -64,6 +64,7 @@ const Palette = memo(({ divClassName }) => {
         )
 
       );
+
       function computeStroke(data) {
         // source가 있으면 테두리를 표시하지 않음
         if (data.source) {
@@ -106,6 +107,7 @@ const Palette = memo(({ divClassName }) => {
       let dataToUse = nodeDataArrayPalette.filter(
         (item) => item.type === selectedTab
       );
+
     if (paletteDivs.current[selectedTab]) {
       myPalette.div = paletteDivs.current[selectedTab];
     }
