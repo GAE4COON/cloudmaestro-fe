@@ -145,7 +145,7 @@ const Navbar = () => {
           )}
           {user && (
             <SpecialNavLink className="special-nav-link" onClick={logoutNclose}>
-              Sign Out
+              SignOut
             </SpecialNavLink>
           )}
         </NavMenuLeft>
@@ -165,17 +165,17 @@ const Navbar = () => {
               {/* <span>{user.name}</span> */}
               <NavBtn>
                 <NavBtnLink onClick={(e) => handleSignOut(e)}>
-                  Sign out
+                  SignOut
                 </NavBtnLink>
               </NavBtn>
             </>
           ) : (
             <>
               <NavBtn>
-                <NavBtnLink to="/sign-up">Sign Up</NavBtnLink>
+                <NavBtnLink to="/sign-up">회원가입</NavBtnLink>
               </NavBtn>
               <NavBtn>
-                <NavBtnLink to="/sign-in">Sign In</NavBtnLink>
+                <NavBtnLink to="/sign-in">로그인</NavBtnLink>
               </NavBtn>
             </>
           )}
