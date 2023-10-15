@@ -417,25 +417,6 @@ function Signup() {
         <a href="/privacy">개인정보취급 방침</a> 및 개인정보3자제공에 동의하게
         됩니다.
       </p>
-      {user ? (
-        <div>
-          <img
-            src={user.picture}
-            alt={user.name}
-            style={{
-              borderRadius: "50%",
-              width: "50px",
-              height: "50px",
-            }}
-          />
-          <h3>{user.name}</h3>
-        </div>
-      ) : null}
-      <div
-        id="signInDiv"
-        className="googleDiv"
-        style={{ visibility: user ? "hidden" : "visible" }}
-      ></div>
     </div>
   );
 }

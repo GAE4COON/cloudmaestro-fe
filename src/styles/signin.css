@@ -68,7 +68,7 @@ button:focus {
 .sign-in-form p, .sign-in-form {
     width: 100%; /* 가운데 정렬을 위한 100% 너비 */
     text-align: center; /* 텍스트를 가운데 정렬 */
-    font-size: 0.3rem;
+    font-size: 10px;
     color: #555;
 }
 
