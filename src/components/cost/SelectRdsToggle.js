@@ -24,7 +24,7 @@ function rdsPrice(priceElement) {           //여기서 bad request가 뜬다
   console.log("engine: "+dbengine+"instance: "+dbinstance+"size: "+dbsize);
   return new Promise((resolve, reject) => {
     axios({
-      url: '/pricing-api/rds',
+      url: '/api/v1/pricing-api/rds',
       method: 'post',
       data: {
         "dbEngine": dbengine,
@@ -49,7 +49,7 @@ function fetchEngineData(dbengine, instanceType, setData, setLoading, setError){
   console.log("db에 접근 엔진:",dbengine);
   return new Promise((resolve, reject) => {setLoading(true);
     axios({
-      url: '/db-api/rds',
+      url: '/api/v1/db-api/rds',
       method: 'post',
       data: {
         "engine": dbengine,

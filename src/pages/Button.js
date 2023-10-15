@@ -117,7 +117,9 @@ const Button = ({
   const handleReset = () => {
     if (diagram) {
       diagram.startTransaction("Cleared diagram");
+
       setFinalToggleValue({});
+      console.log("final from reset2", finalToggleVal);
       diagram.model.nodeDataArray = [];
       diagram.model.linkDataArray = [];
       diagram.commitTransaction("Cleared diagram");
