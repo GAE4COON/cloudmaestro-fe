@@ -12,7 +12,7 @@ const useIntersectionObserver = (ref) => {
       (entries) => {
         setIntersectionRatio(entries[0].intersectionRatio);
       },
-      { threshold: [0, 0.12, 0.25, 0.37, 0.5, 0.62, 0.75, 0.87, 1] }
+      { threshold: [0, 0.3, 0.37, 0.42, 0.5, 0.58, 0.63, 0.8, 1] }
     );
 
     if (target) {

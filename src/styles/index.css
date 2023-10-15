@@ -1,8 +1,6 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    'sans-serif','Pretendard-Medium';
+  font-family: "GmarketSansMedium";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -17,3 +15,10 @@ code {
   font-weight: normal;
   src: url("../assets/font/Pretendard-Regular.otf") format("truetype");
 }
+
+@font-face {
+  font-family: "GmarketSansMedium";
+  font-weight: normal;
+  src: url("../assets/font/GmarketSansMedium.otf") format("truetype");
+}
+

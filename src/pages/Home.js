@@ -36,7 +36,6 @@ function Home() {
     navigate("/draw");
   };
 
-
   return (
     <Fragment>
       <div className="home-content">
@@ -52,8 +51,7 @@ function Home() {
           <div className="home-select-box">
             <h1>WELCOME TO CLOUD MAESTRO!</h1>
             <h2 className="home-select-text">
-              Automated Diagram of a Cloud Architecture with Security
-              Considerations
+              보안성을 고려한 클라우드 아키텍처 자동 도식화 플랫폼
             </h2>
             <button className="home-btn" onClick={handleAutoDraw}>
               Auto Draw!
