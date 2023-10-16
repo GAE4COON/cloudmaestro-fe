@@ -1,12 +1,12 @@
 import axios from 'axios';
 
 export function ec2Price(priceElement) {
-    let instance = "aws" + "-ec2" + "-" + priceElement["instanceType"] + "_" + priceElement["instanceSize"];
+    let instance = "aws" + "-ec2" + "-" + priceElement["instancetype"] + "_" + priceElement["instancesize"];
     console.log("instance",instance);
-    console.log("billingOption",priceElement["billingOption"]);
+    console.log("billingOption",priceElement["billingoption"]);
     console.log("platform",priceElement["platform"]);
     let platform = priceElement["platform"]
-    let billingOption = priceElement["billingOption"]
+    let billingOption = priceElement["billingoption"]
     return new Promise((resolve, reject) => {
       axios({
         url: '/api/v1/pricing-api/ec2',

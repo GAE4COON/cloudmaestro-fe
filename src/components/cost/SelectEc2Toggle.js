@@ -126,12 +126,12 @@ diagram.addDiagramListener("SelectionDeleting", function (e) {
         console.log(uniqueKey, "comdone" ); // 이 부분 추가
         setSelect([
           Object.values(finalToggleValue[uniqueKey]["platform"]),
-          Object.values(finalToggleValue[uniqueKey]["instanceType"]),
-          Object.values(finalToggleValue[uniqueKey]["instanceSize"]),
-          Object.values(finalToggleValue[uniqueKey]["billingOption"]),
+          Object.values(finalToggleValue[uniqueKey]["instancetype"]),
+          Object.values(finalToggleValue[uniqueKey]["instancesize"]),
+          Object.values(finalToggleValue[uniqueKey]["billingoption"]),
         ]);
         setToggle1Value(finalToggleValue[uniqueKey]["platform"]);
-        setToggle2Value(finalToggleValue[uniqueKey]["instanceType"]);
+        setToggle2Value(finalToggleValue[uniqueKey]["instancetype"]);
         //setToggle3Value(finalToggleValue[uniqueKey]["instanceSize"]);
         setPrice(finalToggleValue[uniqueKey]["price"]);
       } else {
@@ -150,12 +150,12 @@ diagram.addDiagramListener("SelectionDeleting", function (e) {
       const fetchPrice = async () => {
           if (finalToggleValue[uniqueKey] 
             && Object.keys(finalToggleValue[uniqueKey]).length == 5
-            && !(Object.values(finalToggleValue[uniqueKey]["instanceSize"]).includes("S"))  //여기 value를 수정하면 될듯
-            && !(Object.values(finalToggleValue[uniqueKey]["billingOption"]).includes("B"))
+            && !(Object.values(finalToggleValue[uniqueKey]["instancesize"]).includes("S"))  //여기 value를 수정하면 될듯
+            && !(Object.values(finalToggleValue[uniqueKey]["billingoption"]).includes("B"))
             && Object.values(finalToggleValue[uniqueKey]["price"]).includes("L")
             ) {
 
-              console.log("instance",Object.values(finalToggleValue[uniqueKey]["instanceSize"]));
+              console.log("instance",Object.values(finalToggleValue[uniqueKey]["instancesize"]));
 
               try {
                 const calculatedPrice = await ec2Price(finalToggleValue[uniqueKey]);
@@ -178,9 +178,9 @@ diagram.addDiagramListener("SelectionDeleting", function (e) {
                 
                 setSelect([
                   Object.values(finalToggleValue[uniqueKey]["platform"]),
-                  Object.values(finalToggleValue[uniqueKey]["instanceType"]),
-                  Object.values(finalToggleValue[uniqueKey]["instanceSize"]),
-                  Object.values(finalToggleValue[uniqueKey]["billingOption"]),
+                  Object.values(finalToggleValue[uniqueKey]["instancetype"]),
+                  Object.values(finalToggleValue[uniqueKey]["instancesize"]),
+                  Object.values(finalToggleValue[uniqueKey]["billingoption"]),
                 ]);
               } catch (err) {
                 console.error("Error fetching platform data:", err);
@@ -230,9 +230,9 @@ diagram.addDiagramListener("SelectionDeleting", function (e) {
         // return { ...prev, [uniqueKey]: updated };
         const updatedEntry = {
           platform: "Platform",
-          instanceType: "InstanceType",
-          instanceSize: "Size",
-          billingOption:"BillingOption",
+          instancetype: "InstanceType",
+          instancesize: "Size",
+          billingoption:"BillingOption",
           price: "Loading"
         };
         updatedEntry.platform = newValue;
@@ -244,9 +244,9 @@ diagram.addDiagramListener("SelectionDeleting", function (e) {
       setToggle2Value(newValue);
       setFinalToggleValue(prev => {
         const updatedEntry = {...prev[uniqueKey]};
-        updatedEntry.instanceType = newValue;
-        updatedEntry.instanceSize = "Size";
-        updatedEntry.billingOption = "BilliongOption";
+        updatedEntry.instancetype = newValue;
+        updatedEntry.instancesize = "Size";
+        updatedEntry.billingoption = "BilliongOption";
         updatedEntry.price = "Loading"
         return { ...prev, [uniqueKey]: updatedEntry };
         
@@ -273,8 +273,8 @@ diagram.addDiagramListener("SelectionDeleting", function (e) {
         // console.log("Updated finalToggleValue:", updated); // 이 부분 추가
         // return { ...prev, [uniqueKey]: updated };
         const updatedEntry = {...prev[uniqueKey]};
-        updatedEntry.instanceSize = newValue;
-        updatedEntry.billingOption = "BillingOption";
+        updatedEntry.instancesize = newValue;
+        updatedEntry.billingoption = "BillingOption";
         updatedEntry.price = "Loading"
         return { ...prev, [uniqueKey]: updatedEntry };
 
@@ -290,7 +290,7 @@ diagram.addDiagramListener("SelectionDeleting", function (e) {
         // updated[4] ="Loading";
         // return { ...prev, [uniqueKey]: updated };
         const updatedEntry = {...prev[uniqueKey]};
-        updatedEntry.billingOption = newValue;
+        updatedEntry.billingoption = newValue;
         updatedEntry.price = "Loading";
         return { ...prev, [uniqueKey]: updatedEntry };
 
