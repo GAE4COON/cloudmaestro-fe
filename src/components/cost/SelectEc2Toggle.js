@@ -82,7 +82,7 @@ diagram.addDiagramListener("SelectionDeleting", function (e) {
     setUniqueKey(uniquekey);
     setToggle1Value(null);
     setToggle3Value(null);
-    setToggle4Value(null);
+    //setToggle4Value(null);
 
   },[uniquekey]);
 
@@ -112,37 +112,36 @@ diagram.addDiagramListener("SelectionDeleting", function (e) {
   
     fetchOptions();
   }, [toggle2Value]);
-  
-
-  // 다시 불러와도 가격 안 사라지게 
-  // useEffect(() => {
-
-    
-  //   if (
-  //       finalToggleValue[uniqueKey] &&
-  //       finalToggleValue[uniqueKey].length === 5 &&
-  //       !(Object.values(finalToggleValue[uniqueKey]["price"]).includes("L"))
-        
-  //     ) {
-
-  //       console.log(uniqueKey, "comdone" ); // 이 부분 추가
-  //       setSelect([
-  //         Object.values(finalToggleValue[uniqueKey]["platform"]),
-  //         Object.values(finalToggleValue[uniqueKey]["instanceType"]),
-  //         Object.values(finalToggleValue[uniqueKey]["instanceSize"]),
-  //         Object.values(finalToggleValue[uniqueKey]["billingOption"])
-  //       ]);
-  //       setToggle1Value(finalToggleValue[uniqueKey]["platform"]);
-  //       setToggle2Value(finalToggleValue[uniqueKey][1]);
-  //       setPrice(finalToggleValue[uniqueKey]["price"]);
-  //     } else {
-  //       setPrice("Loading");
-  //       setSelect(["Platform", "Instance Type","Size", "Billing Option"]);
-  //     }
 
 
 
-  // }, [finalToggleValue, uniqueKey]);
+
+  useEffect(() => {
+
+    if (
+        finalToggleValue[uniqueKey] &&
+        Object.keys(finalToggleValue[uniqueKey]).length == 5
+      ) {
+
+        console.log(uniqueKey, "comdone" ); // 이 부분 추가
+        setSelect([
+          Object.values(finalToggleValue[uniqueKey]["platform"]),
+          Object.values(finalToggleValue[uniqueKey]["instanceType"]),
+          Object.values(finalToggleValue[uniqueKey]["instanceSize"]),
+          Object.values(finalToggleValue[uniqueKey]["billingOption"]),
+        ]);
+        setToggle1Value(finalToggleValue[uniqueKey]["platform"]);
+        setToggle2Value(finalToggleValue[uniqueKey]["instanceType"]);
+        //setToggle3Value(finalToggleValue[uniqueKey]["instanceSize"]);
+        setPrice(finalToggleValue[uniqueKey]["price"]);
+      } else {
+        setPrice("Loading");
+        setSelect(["Platform", "Instance Type","Size", "Billing Option"]);
+      }
+
+
+
+  }, [finalToggleValue, uniqueKey]);
 
 
   // 마지막 토글을 선택할때만 값이 불러와지게 수정 
@@ -151,9 +150,9 @@ diagram.addDiagramListener("SelectionDeleting", function (e) {
       const fetchPrice = async () => {
           if (finalToggleValue[uniqueKey] 
             && Object.keys(finalToggleValue[uniqueKey]).length == 5
-            && finalToggleValue[uniqueKey]["instanceSize"] !== "Size"
             && !(Object.values(finalToggleValue[uniqueKey]["instanceSize"]).includes("S"))  //여기 value를 수정하면 될듯
             && !(Object.values(finalToggleValue[uniqueKey]["billingOption"]).includes("B"))
+            && Object.values(finalToggleValue[uniqueKey]["price"]).includes("L")
             ) {
 
               console.log("instance",Object.values(finalToggleValue[uniqueKey]["instanceSize"]));
@@ -164,9 +163,9 @@ diagram.addDiagramListener("SelectionDeleting", function (e) {
                 setPrice(calculatedPrice);
 
                 setFinalToggleValue(prev => {
-                  // if (!prev[uniqueKey] ) {
-                  //   return prev; // 이전 상태를 반환하거나 초기 상태를 설정할 수 있습니다.
-                  // }
+                  if (!prev[uniqueKey] ) {
+                    return prev; // 이전 상태를 반환하거나 초기 상태를 설정할 수 있습니다.
+                  }
                   console.log("이까지 오니");
                   // const updated = [...prev[uniqueKey]];
                   // updated[3] = calculatedPrice;
@@ -176,6 +175,13 @@ diagram.addDiagramListener("SelectionDeleting", function (e) {
                   return { ...prev, [uniqueKey]: updatedEntry};
                 });
                 
+                
+                setSelect([
+                  Object.values(finalToggleValue[uniqueKey]["platform"]),
+                  Object.values(finalToggleValue[uniqueKey]["instanceType"]),
+                  Object.values(finalToggleValue[uniqueKey]["instanceSize"]),
+                  Object.values(finalToggleValue[uniqueKey]["billingOption"]),
+                ]);
               } catch (err) {
                 console.error("Error fetching platform data:", err);
               }
@@ -184,7 +190,7 @@ diagram.addDiagramListener("SelectionDeleting", function (e) {
           // else if (
 
           //   finalToggleValue[uniqueKey] &&
-          //   finalToggleValue[uniqueKey].length === 5
+          //   Object.keys(finalToggleValue[uniqueKey]).length == 5
           // ) {
     
           //   console.log("setselect 전 finaltoggle입니당",finalToggleValue[uniqueKey]);
@@ -192,10 +198,11 @@ diagram.addDiagramListener("SelectionDeleting", function (e) {
           //     Object.values(finalToggleValue[uniqueKey]["platform"]),
           //     Object.values(finalToggleValue[uniqueKey]["instanceType"]),
           //     Object.values(finalToggleValue[uniqueKey]["instanceSize"]),
-          //     Object.values(finalToggleValue[uniqueKey]["billingOption"])
+          //     Object.values(finalToggleValue[uniqueKey]["billingOption"]),
+    
           //   ]);
           //   setToggle1Value(Object.values(finalToggleValue[uniqueKey]["platform"]));
-          //   //setToggle2Value(Object.values(finalToggleValue[uniqueKey]["instanceType"]));
+          //   setToggle2Value(Object.values(finalToggleValue[uniqueKey]["instanceType"]));
           //   setPrice(finalToggleValue[uniqueKey]["price"]);
           // } else {
           //   setPrice("Loading");
@@ -316,7 +323,7 @@ console.log("FinalToggle",finalToggleValue);
   // 가격 표시 
   
   const Item = ({price}) =>{
-    console.log("price로 들어가나,",price);
+    //console.log("price로 들어가나,",price);
     if(!price || price.length < 1) {
       return null;
     }
