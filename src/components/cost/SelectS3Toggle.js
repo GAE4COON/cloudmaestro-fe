@@ -17,10 +17,11 @@ const SeclectS3Toggle = ({diagram, uniquekey, finalToggleValue, setFinalToggleVa
         return Math.trunc(cost * 100) / 100;
     }
 
-    useEffect(() => {
-        if ( finalToggleValue && finalToggleValue[uniquekey]) {
-            setText(finalToggleValue[uniquekey].text || "");
-            setS3Cost(finalToggleValue[uniquekey].cost || 0);
+    useEffect(() => {           //여기 문제인 듯 함
+        console.log("final: ",finalToggleValue);
+        if ( finalToggleValue[uniquekey]) {
+            setText(finalToggleValue[uniquekey].storage);
+            setS3Cost(finalToggleValue[uniquekey].cost);
         } else {
             setText("");
             setS3Cost(0);
