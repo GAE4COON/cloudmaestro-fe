@@ -41,7 +41,7 @@
     min-width: 200px;
 }
 
-.instance-cost{
+.instance-price{
     text-align: right;
     justify-content: right;
     /* margin-left: 20px; */
@@ -54,7 +54,7 @@
 
 }
 
-.instance-cost-container{
+.instance-price-container{
     width: 100%;
     display: flex;
 
@@ -91,11 +91,11 @@
     /* color: white; */
     
 }
-.total-cost-title{
+.total-price-title{
     padding-left:10px;
 }
 
-.total-cost{
+.total-price{
     padding-right: 10px;
 }
 
