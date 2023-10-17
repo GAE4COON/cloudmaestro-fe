@@ -14,7 +14,7 @@
 .tab {
   width: 100%;
   position: relative;
-  color: white;
+  /* color: white; */
   overflow: hidden;
 }
 
@@ -36,16 +36,17 @@ input[type="radio"] {
 
 .tab-label {
   display: flex;
+  font-size: 14px;
   justify-content: space-between;
   padding: 0.5em;
-  background: #446b83;
+  /* background: #446b83; */
   border: solid 1px white;
   cursor: pointer;
-  color: #fff; /* Fixed incorrect color value */
+  /* color: #fff; */
 }
 
 .tab-label:hover {
-  background: #627f91;
+  background: #98b8ff;
 }
 
 .tab-label::after {
@@ -57,17 +58,18 @@ input[type="radio"] {
 }
 
 input[type="radio"]:checked + .tab-label {
-  background-color: #809CDA;
+  background-color: #d0dfff;
 }
 
 input[type="radio"]:not(:checked) + .tab-label,
 .tab-close:hover {
-  background: #3E629A;
+  /* background: #79acff;
+   */
+   color: black;
 }
 
 .tab-content {
   max-height: 0;
-  color: #2c3e50;
   background: white;
 }
 
@@ -107,12 +109,12 @@ input[type="radio"]:checked ~ .tab-content {
 .search-container,
 .filtered-nodes-container {
   text-align: left;
-  font-size: 12px;
+  font-size: 7px;
 }
 
 .filtered-nodes-container {
   background-color: aliceblue;
-  font-size: 10px;
+  font-size: 7px;
   width: 100%;
   padding: 10px;
 }
@@ -121,7 +123,5 @@ input[type="radio"]:checked ~ .tab-content {
   display: flex;
   justify-content: flex-end;
   padding: 1em;
-  font-size: 0.75em;
-  background: #2c3e50;
   cursor: pointer;
 }

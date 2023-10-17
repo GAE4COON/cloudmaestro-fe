@@ -17,11 +17,11 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 
 const createChart = (array) => {
   const data = {
-    labels: array.map((obj) => Object.keys(obj)[0]), // Extract the keys (e.g., "Compute", "Security", etc.)
+    labels: array.map((obj) => Object.keys(obj)[0]),
 
     datasets: [
       {
-        label: "cost",
+        label: "price",
         data: array.map((obj) => Object.values(obj)[0]), // Extract the values (e.g., 503, 12, etc.)
         backgroundColor: ["#173577", "#3064D6", "#799DEE", "#D1DEFB"],
       },
@@ -93,15 +93,15 @@ function Summary() {
 
   Object.entries(file).map(([resourceName, valueObject]) => {
     var items = [];
-    var cost = 0.0;
+    var price = 0.0;
     Object.entries(valueObject).map(([instanceName, detail]) => {
-      cost += parseFloat(detail.cost);
+      price += parseFloat(detail.price);
       items.push(detail);
-      detail.cost = parseFloat(detail.cost).toFixed(2);
+      detail.price = parseFloat(detail.price).toFixed(2);
       detail.instance = instanceName;
     });
-    cost = parseFloat(cost.toFixed(2));
-    resourceCost[resourceName] = cost;
+    price = parseFloat(price.toFixed(2));
+    resourceCost[resourceName] = price;
     filteredItems[resourceName] = items;
   });
 
@@ -124,22 +124,22 @@ function Summary() {
     >
       <div className="title1">도식화 히스토리</div>
       <div className="file-name">MyCompany_Cloud1</div>
-      <div className="cost-container">
+      <div className="price-container">
         <div className="middle-bar"></div>
 
         {instanceNameArr.map((instanceObj, index) => {
-          const [category, cost] = Object.entries(instanceObj)[0];
+          const [category, price] = Object.entries(instanceObj)[0];
 
           return (
             <>
               <div key={index} className="instance">
                 <div
-                  className="instance-cost-container"
+                  className="instance-price-container"
                   onClick={() => handleInstanceClick(index)}
                 >
                   <div className="instance-title">{category}</div>
-                  <div className="instance-cost">
-                    ${cost}/mo
+                  <div className="instance-price">
+                    ${price}/mo
                     <div className="dropdown-icon">
                       <BsChevronDown color="#cdcdcd" />
                     </div>
@@ -158,8 +158,8 @@ function Summary() {
           );
         })}
         <div className="total-container">
-          <div className="total-cost-title">total</div>
-          <div className="total-cost">${totalCost}/mo</div>
+          <div className="total-price-title">total</div>
+          <div className="total-price">${totalCost}/mo</div>
         </div>
         <div className="pie-chart">
           <Doughnut

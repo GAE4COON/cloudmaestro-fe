@@ -9,19 +9,19 @@ const compute = [
     },
     {
         text: 'InstanceType',
-        value: 'instancetype',
+        value: 'instanceType',
     },
     {
-        text: 'Size',
-        value: 'size',
+        text: 'InstanceSize',
+        value: 'instanceSize',
     },
     {
         text: 'Billing',
-        value: 'billing',
+        value: 'billingOption',
     },
     {
-        text: 'Cost',
-        value: 'cost',
+        text: 'Price',
+        value: 'price',
     },
 ]
 
@@ -32,20 +32,20 @@ const database = [
     },
     {
         text: 'Engine',
-        value: 'engine',
+        value: 'dbEngine',
     },
 
     {
         text: 'InstanceType',
-        value: 'instancetype',
+        value: 'instanceType',
     },
     {
         text: 'Size',
-        value: 'size',
+        value: 'instanceSize',
     },
     {
-        text: 'Cost',
-        value: 'cost',
+        text: 'Price',
+        value: 'price',
     },
 ];
 
@@ -59,8 +59,8 @@ const storage = [
         value: 'storage',
     },
     {
-        text: 'Cost',
-        value: 'cost',
+        text: 'Price',
+        value: 'price',
     },
 ];
 
@@ -78,7 +78,7 @@ export const items = [
         size: "micro",
         billing: "on-demand",
         ea: "2",
-        cost: "$534.00/mo",
+        price: "$534.00/mo",
     },
     {
         instance: "EC2",
@@ -87,7 +87,7 @@ export const items = [
         size: "micro",
         billing: "on-demand",
         ea: "2",
-        cost: "$534.00/mo",
+        price: "$534.00/mo",
     },
     {
         instance: "EC2",
@@ -96,6 +96,6 @@ export const items = [
         size: "micro",
         billing: "on-demand",
         ea: "2",
-        cost: "$534.00/mo",
+        price: "$534.00/mo",
     }
 ];
