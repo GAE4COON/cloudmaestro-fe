@@ -82,6 +82,7 @@ const Button = ({
       //console.log("modelmodel",JSON.stringify(diagram.model));
 
       const jsonString = diagram.model.toJson();
+      console.log("jsonString", jsonString);
 
       const response = await rehostRequest(jsonString);
       console.log("response", response.data.result);
@@ -130,32 +131,30 @@ const Button = ({
 
   return (
     <div>
-      <div className="top-right-button">
-        <div className="button-container">
-          <div className="button-row">
-            <button onClick={handleClick}>Upload File</button>
-            <input
-              type="file"
-              ref={hiddenFileInput}
-              onChange={onFileChange}
-              style={{ display: "none" }}
-            />
-          </div>
+      <div className="button-container">
+        <div className="button-row">
+          <button onClick={handleClick}>Upload File</button>
+          <input
+            type="file"
+            ref={hiddenFileInput}
+            onChange={onFileChange}
+            style={{ display: "none" }}
+          />
+        </div>
 
-          <div className="button-row">
-            <button onClick={handleReset}>clear</button>
-          </div>
-          <div className="button-row">
-            <button onClick={handleSave}>save</button>
-          </div>
-          <div className="button-row">
-            <button onClick={localSaveImage}>Save as Image</button>
-          </div>
+        <div className="button-row">
+          <button onClick={handleReset}>clear</button>
+        </div>
+        <div className="button-row">
+          <button onClick={handleSave}>save</button>
+        </div>
+        <div className="button-row">
+          <button onClick={localSaveImage}>Save as Image</button>
+        </div>
 
-          <div className="button-row">
-            <button onClick={handleLoad}>Submit</button>
-            {/* <button onClick={navigateAws}>Submit</button> */}
-          </div>
+        <div className="button-row">
+          <button onClick={handleLoad}>Submit</button>
+          {/* <button onClick={navigateAws}>Submit</button> */}
         </div>
       </div>
     </div>

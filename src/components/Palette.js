@@ -9,10 +9,12 @@ function formatKey(key) {
   key = String(key);
 
   // _를 공백으로 대체합니다.
-  let words = key.replace(/_/g, ' ').split(' ');
+  let words = key.replace(/_/g, " ").split(" ");
 
   // 각 단어의 첫 글자를 대문자로 바꿉니다.
-  let result = words.map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+  let result = words
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
 
   return result;
 }
@@ -23,7 +25,6 @@ function computeStroke(data) {
   }
   return data.stroke || "grey";
 }
-
 
 const Palette = memo(({ divClassName }) => {
   // const [setNodeDataArray] = useState([]);
@@ -44,65 +45,80 @@ const Palette = memo(({ divClassName }) => {
       model: new go.GraphLinksModel(nodeDataArray),
     });
 
-    myPalette.nodeTemplate =
-      $(go.Node, "Auto",
-        $(go.Panel, "Vertical",
-          $(go.Picture,
-            { margin: 5, width: 50, height: 50, background: "white" },
-            new go.Binding("source")
-          ),
+    myPalette.nodeTemplate = $(
+      go.Node,
+      "Auto",
+      $(
+        go.Panel,
+        "Vertical",
+        $(
+          go.Picture,
+          { margin: 5, width: 50, height: 50, background: "white" },
+          new go.Binding("source")
+        ),
 
-          $(go.TextBlock,
-            {
-              alignment: go.Spot.BottomCenter,
-              font: "bold 10pt sans-serif",
-              width: 80,  // 예를 들어, 최대 너비를 100픽셀로 설정
-              overflow: go.TextBlock.WrapFit,  // 너비를 초과하는 텍스트를 래핑
-              textAlign: "center"
-            },
-            new go.Binding("text", "key", formatKey))
+        $(
+          go.TextBlock,
+          {
+            alignment: go.Spot.BottomCenter,
+            font: "bold 10pt sans-serif",
+            width: 80, // 예를 들어, 최대 너비를 100픽셀로 설정
+            overflow: go.TextBlock.WrapFit, // 너비를 초과하는 텍스트를 래핑
+            textAlign: "center",
+          },
+          new go.Binding("text", "key", formatKey)
         )
+      )
+    );
 
-      );
-
-      function computeStroke(data) {
-        // source가 있으면 테두리를 표시하지 않음
-        if (data.source) {
-          return "transparent";
-        }
-        // source가 없으면 노드 데이터의 stroke 값을 사용하거나, 기본값으로 "grey"를 사용함
-        return data.stroke || "grey";
+    function computeStroke(data) {
+      // source가 있으면 테두리를 표시하지 않음
+      if (data.source) {
+        return "transparent";
       }
-      
-      myPalette.groupTemplate = $(
-        go.Group, "Auto",
-        $(go.Panel, "Vertical",
-          $(go.Panel, "Auto",
-            $(go.Shape, "Rectangle", 
+      // source가 없으면 노드 데이터의 stroke 값을 사용하거나, 기본값으로 "grey"를 사용함
+      return data.stroke || "grey";
+    }
+
+    myPalette.groupTemplate = $(
+      go.Group,
+      "Auto",
+      $(
+        go.Panel,
+        "Vertical",
+        $(
+          go.Panel,
+          "Auto",
+          $(
+            go.Shape,
+            "Rectangle",
             {
-              width: 47, 
+              width: 47,
               height: 47,
               fill: "transparent",
-              strokeWidth: 3
+              strokeWidth: 3,
             },
-              new go.Binding("stroke", "", computeStroke)
-            ),
-            $(go.Picture,
-              { margin: 5, width: 50, height: 50},
-              new go.Binding("source")
-            )
+            new go.Binding("stroke", "", computeStroke)
           ),
-          $(go.TextBlock,
-            {
-              alignment: go.Spot.BottomCenter,
-              font: "bold 10pt sans-serif",
-              width: 80,
-              overflow: go.TextBlock.WrapFit,
-              textAlign: "center"
-            },
-            new go.Binding("text", "key", formatKey))
+          $(
+            go.Picture,
+            { margin: 5, width: 50, height: 50 },
+            new go.Binding("source")
+          )
+        ),
+        $(
+          go.TextBlock,
+          {
+            alignment: go.Spot.BottomCenter,
+            font: "bold 10pt sans-serif",
+            width: 80,
+            overflow: go.TextBlock.WrapFit,
+            textAlign: "center",
+          },
+          new go.Binding("text", "key", formatKey)
         )
-      );
+      )
+    );
 
     let dataToUse = nodeDataArrayPalette.filter(
       (item) => item.type === selectedTab
@@ -113,8 +129,10 @@ const Palette = memo(({ divClassName }) => {
 
     let dataToSearch = nodeDataArrayPalette;
     if (searchTerm) {
-      dataToSearch = dataToSearch.filter(item => {
-        return formatKey(item.key).toLowerCase().includes(searchTerm.toLowerCase());
+      dataToSearch = dataToSearch.filter((item) => {
+        return formatKey(item.key)
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase());
       });
       setFilteredNodes(dataToSearch);
 
@@ -122,13 +140,10 @@ const Palette = memo(({ divClassName }) => {
     } else {
       setFilteredNodes([]);
       myPalette.model.nodeDataArray = dataToUse;
-
     }
-
 
     return () => {
       myPalette.div = null;
-
     };
   }, [nodeDataArray, selectedTab, searchTerm]);
 
@@ -147,7 +162,7 @@ const Palette = memo(({ divClassName }) => {
         {filteredNodes.length > 0 && (
           <div>
             <div className="filtered-nodes-container">
-              {filteredNodes.map(node => (
+              {filteredNodes.map((node) => (
                 <div key={node.key}>
                   {node.type}: {formatKey(node.key)}
                 </div>
@@ -157,26 +172,44 @@ const Palette = memo(({ divClassName }) => {
             <div className="scrollable-tabs-container">
               <div className="tabs">
                 <div className="tab">
-                  <input type="radio" id="rd99" name="rd" onClick={() => setSelectedTab("Search")} />
-                  <label className="tab-label" htmlFor="rd99">Search</label>
-                  <div className="tab-content" ref={el => paletteDivs.current['Search'] = el} />
+                  <input
+                    type="radio"
+                    id="rd99"
+                    name="rd"
+                    onClick={() => setSelectedTab("Search")}
+                  />
+                  <label className="tab-label" htmlFor="rd99">
+                    Search
+                  </label>
+                  <div
+                    className="tab-content"
+                    ref={(el) => (paletteDivs.current["Search"] = el)}
+                  />
                 </div>
               </div>
             </div>
           </div>
         )}
 
-
-        {filteredNodes.length == 0 &&
-
+        {filteredNodes.length == 0 && (
           <div className="scrollable-tabs-container">
             <div className="tabs">
               {/* Network node */}
               <div className="tab">
-                <input type="radio" id="rd27" name="rd" onClick={() => setSelectedTab("Network_icon")} />
+                <input
+                  type="radio"
+                  id="rd27"
+                  name="rd"
+                  onClick={() => setSelectedTab("Network_icon")}
+                />
 
-                <label className="tab-label" htmlFor="rd27">Network</label>
-                <div className="tab-content" ref={el => paletteDivs.current['Network_icon'] = el} />
+                <label className="tab-label" htmlFor="rd27">
+                  Network
+                </label>
+                <div
+                  className="tab-content"
+                  ref={(el) => (paletteDivs.current["Network_icon"] = el)}
+                />
               </div>
               <div className="tab">
                 <input
@@ -202,13 +235,11 @@ const Palette = memo(({ divClassName }) => {
                   onClick={() => setSelectedTab("App-Integration")}
                 />
                 <label className="tab-label" htmlFor="rd2">
-                  App-Integration
+                  App Integration
                 </label>
                 <div
                   className="tab-content"
-                  ref={(el) =>
-                    (paletteDivs.current["App-Integration"] = el)
-                  }
+                  ref={(el) => (paletteDivs.current["App-Integration"] = el)}
                 />
               </div>
 
@@ -224,9 +255,7 @@ const Palette = memo(({ divClassName }) => {
                 </label>
                 <div
                   className="tab-content"
-                  ref={(el) =>
-                    (paletteDivs.current["Blockchain"] = el)
-                  }
+                  ref={(el) => (paletteDivs.current["Blockchain"] = el)}
                 />
               </div>
 
@@ -235,12 +264,10 @@ const Palette = memo(({ divClassName }) => {
                   type="radio"
                   id="rd4"
                   name="rd"
-                  onClick={() =>
-                    setSelectedTab("Business-Applications")
-                  }
+                  onClick={() => setSelectedTab("Business-Applications")}
                 />
                 <label className="tab-label" htmlFor="rd4">
-                  Business-Applications
+                  Business Applications
                 </label>
                 <div
                   className="tab-content"
@@ -255,19 +282,15 @@ const Palette = memo(({ divClassName }) => {
                   type="radio"
                   id="rd5"
                   name="rd"
-                  onClick={() =>
-                    setSelectedTab("Cloud-Financial-Management")
-                  }
+                  onClick={() => setSelectedTab("Cloud-Financial-Management")}
                 />
                 <label className="tab-label" htmlFor="rd5">
-                  Cloud-Financial-Management
+                  Cloud Financial Management
                 </label>
                 <div
                   className="tab-content"
                   ref={(el) =>
-                  (paletteDivs.current[
-                    "Cloud-Financial-Management"
-                  ] = el)
+                    (paletteDivs.current["Cloud-Financial-Management"] = el)
                   }
                 />
               </div>
@@ -300,9 +323,7 @@ const Palette = memo(({ divClassName }) => {
                 </label>
                 <div
                   className="tab-content"
-                  ref={(el) =>
-                    (paletteDivs.current["Containers"] = el)
-                  }
+                  ref={(el) => (paletteDivs.current["Containers"] = el)}
                 />
               </div>
 
@@ -314,7 +335,7 @@ const Palette = memo(({ divClassName }) => {
                   onClick={() => setSelectedTab("Customer-Enablement")}
                 />
                 <label className="tab-label" htmlFor="rd8">
-                  Customer-Enablement
+                  Customer Enablement
                 </label>
                 <div
                   className="tab-content"
@@ -348,13 +369,11 @@ const Palette = memo(({ divClassName }) => {
                   onClick={() => setSelectedTab("Developer-Tools")}
                 />
                 <label className="tab-label" htmlFor="rd10">
-                  Developer-Tools
+                  Developer Tools
                 </label>
                 <div
                   className="tab-content"
-                  ref={(el) =>
-                    (paletteDivs.current["Developer-Tools"] = el)
-                  }
+                  ref={(el) => (paletteDivs.current["Developer-Tools"] = el)}
                 />
               </div>
 
@@ -366,13 +385,11 @@ const Palette = memo(({ divClassName }) => {
                   onClick={() => setSelectedTab("End-User-Computing")}
                 />
                 <label className="tab-label" htmlFor="rd11">
-                  End-User-Computing
+                  End User Computing
                 </label>
                 <div
                   className="tab-content"
-                  ref={(el) =>
-                    (paletteDivs.current["End-User-Computing"] = el)
-                  }
+                  ref={(el) => (paletteDivs.current["End-User-Computing"] = el)}
                 />
               </div>
 
@@ -381,12 +398,10 @@ const Palette = memo(({ divClassName }) => {
                   type="radio"
                   id="rd12"
                   name="rd"
-                  onClick={() =>
-                    setSelectedTab("Front-End-Web-Mobile")
-                  }
+                  onClick={() => setSelectedTab("Front-End-Web-Mobile")}
                 />
                 <label className="tab-label" htmlFor="rd12">
-                  Front-End-Web-Mobile
+                  Front End Web Mobile
                 </label>
                 <div
                   className="tab-content"
@@ -420,13 +435,11 @@ const Palette = memo(({ divClassName }) => {
                   onClick={() => setSelectedTab("General-Icons")}
                 />
                 <label className="tab-label" htmlFor="rd14">
-                  General-Icons
+                  General Icons
                 </label>
                 <div
                   className="tab-content"
-                  ref={(el) =>
-                    (paletteDivs.current["General-Icons"] = el)
-                  }
+                  ref={(el) => (paletteDivs.current["General-Icons"] = el)}
                 />
               </div>
 
@@ -438,13 +451,11 @@ const Palette = memo(({ divClassName }) => {
                   onClick={() => setSelectedTab("Internet-of-Things")}
                 />
                 <label className="tab-label" htmlFor="rd15">
-                  Internet-of-Things
+                  Internet of Things
                 </label>
                 <div
                   className="tab-content"
-                  ref={(el) =>
-                    (paletteDivs.current["Internet-of-Things"] = el)
-                  }
+                  ref={(el) => (paletteDivs.current["Internet-of-Things"] = el)}
                 />
               </div>
 
@@ -456,13 +467,11 @@ const Palette = memo(({ divClassName }) => {
                   onClick={() => setSelectedTab("Machine-Learning")}
                 />
                 <label className="tab-label" htmlFor="rd16">
-                  Machine-Learning
+                  Machine Learning
                 </label>
                 <div
                   className="tab-content"
-                  ref={(el) =>
-                    (paletteDivs.current["Machine-Learning"] = el)
-                  }
+                  ref={(el) => (paletteDivs.current["Machine-Learning"] = el)}
                 />
               </div>
 
@@ -471,12 +480,10 @@ const Palette = memo(({ divClassName }) => {
                   type="radio"
                   id="rd17"
                   name="rd"
-                  onClick={() =>
-                    setSelectedTab("Management-Governance")
-                  }
+                  onClick={() => setSelectedTab("Management-Governance")}
                 />
                 <label className="tab-label" htmlFor="rd17">
-                  Management-Governance
+                  Management Governance
                 </label>
                 <div
                   className="tab-content"
@@ -494,13 +501,11 @@ const Palette = memo(({ divClassName }) => {
                   onClick={() => setSelectedTab("Media-Services")}
                 />
                 <label className="tab-label" htmlFor="rd18">
-                  Media-Services
+                  Media Services
                 </label>
                 <div
                   className="tab-content"
-                  ref={(el) =>
-                    (paletteDivs.current["Media-Services"] = el)
-                  }
+                  ref={(el) => (paletteDivs.current["Media-Services"] = el)}
                 />
               </div>
 
@@ -512,13 +517,11 @@ const Palette = memo(({ divClassName }) => {
                   onClick={() => setSelectedTab("Migration-Transfer")}
                 />
                 <label className="tab-label" htmlFor="rd19">
-                  Migration-Transfer
+                  Migration Transfer
                 </label>
                 <div
                   className="tab-content"
-                  ref={(el) =>
-                    (paletteDivs.current["Migration-Transfer"] = el)
-                  }
+                  ref={(el) => (paletteDivs.current["Migration-Transfer"] = el)}
                 />
               </div>
 
@@ -527,18 +530,15 @@ const Palette = memo(({ divClassName }) => {
                   type="radio"
                   id="rd20"
                   name="rd"
-                  onClick={() =>
-                    setSelectedTab("Networking-Content-Delivery")
-                  }
+                  onClick={() => setSelectedTab("Networking-Content-Delivery")}
                 />
                 <label className="tab-label" htmlFor="rd20">
-                  Networking-Content-Delivery
+                  Networking Content Delivery
                 </label>
                 <div
                   className="tab-content"
                   ref={(el) =>
-                  (paletteDivs.current["Networking-Content-Delivery"
-                  ] = el)
+                    (paletteDivs.current["Networking-Content-Delivery"] = el)
                   }
                 />
               </div>
@@ -548,12 +548,10 @@ const Palette = memo(({ divClassName }) => {
                   type="radio"
                   id="rd21"
                   name="rd"
-                  onClick={() =>
-                    setSelectedTab("Quantum-Technologies")
-                  }
+                  onClick={() => setSelectedTab("Quantum-Technologies")}
                 />
                 <label className="tab-label" htmlFor="rd21">
-                  Quantum-Technologies
+                  Quantum Technologies
                 </label>
                 <div
                   className="tab-content"
@@ -600,18 +598,15 @@ const Palette = memo(({ divClassName }) => {
                   type="radio"
                   id="rd24"
                   name="rd"
-                  onClick={() =>
-                    setSelectedTab("Security-Identity-Compliance")
-                  }
+                  onClick={() => setSelectedTab("Security-Identity-Compliance")}
                 />
                 <label className="tab-label" htmlFor="rd24">
-                  Security-Identity-Compliance
+                  Security Identity Compliance
                 </label>
                 <div
                   className="tab-content"
                   ref={(el) =>
-                  (paletteDivs.current["Security-Identity-Compliance"
-                  ] = el)
+                    (paletteDivs.current["Security-Identity-Compliance"] = el)
                   }
                 />
               </div>
@@ -646,10 +641,10 @@ const Palette = memo(({ divClassName }) => {
                   className="tab-content"
                   ref={(el) => (paletteDivs.current["AWS_Groups"] = el)}
                 />
-
               </div>
             </div>
-          </div>}
+          </div>
+        )}
       </div>
     </div>
   );
