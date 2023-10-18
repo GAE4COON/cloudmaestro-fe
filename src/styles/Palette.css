@@ -14,12 +14,14 @@
 .tab {
   width: 100%;
   position: relative;
+}
 
 input[type="radio"] {
   position: absolute;
   opacity: 0;
   z-index: -1;
 }
+
 
 .tab-label {
   height: 2.5vh;
@@ -159,6 +161,4 @@ input[type="text"]::placeholder {
   background-position: right center;
   background-size: 16px 16px;
 
-} =
-
-
+}
