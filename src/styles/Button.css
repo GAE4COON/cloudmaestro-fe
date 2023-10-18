@@ -1,14 +1,14 @@
 /* Top-right-button */
 /* Button */
 
-.top-right-button {
+/* .top-right-button {
   width: 100%; /* 이 부분을 추가하면 부모 div 안에서 너비를 차지하게 됩니다. */
-  background: #fff;
+ /* background: #fff;
     z-index: 100; 
     display: flex;
     flex-direction: row;
     justify-content: center;
-  }
+  }*/
   
   .button-container {
     display: flex;

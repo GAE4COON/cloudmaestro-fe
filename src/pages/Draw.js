@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useEffect } from "react";
 import * as go from "gojs";
 import { ReactDiagram } from "gojs-react";
+import styled from "styled-components";
 
 import useGoJS from "./useGoJS";
 import SelectEc2Toggle from "../components/cost/SelectEc2Toggle";
@@ -22,7 +23,6 @@ import { Navigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 function Draw() {
-
   const navigate = useNavigate();
   const { data } = useFileUpload();
   console.log("draw data ", data);
@@ -39,10 +39,13 @@ function Draw() {
   const [selectedNodeData, setSelectedNodeData] = useState(null); // <-- 상태 변수를 추가합니다.
   const [showToggle, setShowToggle] = useState(true);
 
-  const { initDiagram, diagram, showSelectToggle, clickedNodeKey } =
-    useGoJS(setSelectedNodeData, setShowToggle, showToggle);
+  const { initDiagram, diagram, showSelectToggle, clickedNodeKey } = useGoJS(
+    setSelectedNodeData,
+    setShowToggle,
+    showToggle
+  );
 
-  console.log("show", showSelectToggle.value)
+  console.log("show", showSelectToggle.value);
 
   // Go to Draw page 완료
 
@@ -57,34 +60,34 @@ function Draw() {
     }
   }, [file, diagram]);
 
-  
   const summaryRequest = async () => {
     if (diagram) {
       let jsonData = diagram.model.toJson();
       jsonData = JSON.parse(jsonData);
       jsonData.cost = finalToggleValue; // ec2도 해야할 듯
-  
+
       const formData = new FormData(); // FormData 객체 생성
-  
+
       // JSON 데이터를 문자열로 변환하여 FormData에 추가
       formData.append("jsonData", JSON.stringify(jsonData));
-  
+
       // 파일 데이터를 FormData에 추가
-      const fileData = new Blob([JSON.stringify(jsonData)], { type: "application/json" });
+      const fileData = new Blob([JSON.stringify(jsonData)], {
+        type: "application/json",
+      });
       formData.append("file", fileData, "diagram.json");
-  
+
       try {
         // FormData를 서버에 전송
         const response = await summaryFile(formData);
         console.log(response.data);
-        navigate('/summary', { state: { file: response.data } });
+        navigate("/summary", { state: { file: response.data } });
       } catch (error) {
         console.log("error", error);
       }
     }
   };
-  
-  
+
   const handleNodeSelect = useCallback(
     (label) => {
       if (diagram) {
@@ -107,23 +110,26 @@ function Draw() {
       <div className="Draw">
         <div className="container">
           <div className="button-container">
-          <Button diagram={diagram} showToggle={showToggle} setShowToggle={setShowToggle} finalToggleValue={finalToggleValue} setFinalToggleValue={setFinalToggleValue} />
+            <Button
+              diagram={diagram}
+              showToggle={showToggle}
+              setShowToggle={setShowToggle}
+              finalToggleValue={finalToggleValue}
+              setFinalToggleValue={setFinalToggleValue}
+            />
           </div>
-          <div className="createspace">
-          
-            <div className="workspace">
-             
-              <div className="palette">
-
-                <Palette
-                  nodeDataArray={nodeDataArrayPalette}
-                  divClassName={paletteClassName}
-                />
-
-              </div>
-                  <div className="diagram">
-                  { showToggle && showSelectToggle.value && showSelectToggle.key.includes('EC2') && (
-                    <SelectEc2Toggle
+          <div className="workspace">
+            <div className="palette">
+              <Palette
+                nodeDataArray={nodeDataArrayPalette}
+                divClassName={paletteClassName}
+              />
+            </div>
+            <div className="diagram">
+              {showToggle &&
+                showSelectToggle.value &&
+                showSelectToggle.key.includes("EC2") && (
+                  <SelectEc2Toggle
                     diagram={diagram}
                     uniquekey={showSelectToggle.key}
                     finalToggleValue={finalToggleValue}
@@ -131,9 +137,11 @@ function Draw() {
                     onToggleSelect={handleNodeSelect}
                     readOnly
                   />
-                  )}
-                  { showToggle && showSelectToggle.value && showSelectToggle.key.includes("RDS") && (
-                    <SelectRdsToggle
+                )}
+              {showToggle &&
+                showSelectToggle.value &&
+                showSelectToggle.key.includes("RDS") && (
+                  <SelectRdsToggle
                     diagram={diagram}
                     uniquekey={showSelectToggle.key}
                     finalToggleValue={finalToggleValue}
@@ -141,43 +149,37 @@ function Draw() {
                     readOnly
                   />
                 )}
-                { showToggle && showSelectToggle.value && showSelectToggle.key.includes("Simple Storage Service") && (
+              {showToggle &&
+                showSelectToggle.value &&
+                showSelectToggle.key.includes("Simple Storage Service") && (
                   <SelectS3Toggle
-                  diagram={diagram}
-                  uniquekey={showSelectToggle.key}
-                  finalToggleValue={finalToggleValue}
-                  setFinalToggleValue={setFinalToggleValue}
-                  readOnly
+                    diagram={diagram}
+                    uniquekey={showSelectToggle.key}
+                    finalToggleValue={finalToggleValue}
+                    setFinalToggleValue={setFinalToggleValue}
+                    readOnly
                   />
                 )}
-                {clickedNodeKey &&
-                  <div className="clicked_key">
-                    {clickedNodeKey}
-                  </div>
-                }
-
-                  <ReactDiagram
-                    initDiagram={initDiagram}
-                    divClassName={diagramClassName}
-                  />
-              </div>
-
+              {clickedNodeKey && (
+                <div className="clicked_key">{clickedNodeKey}</div>
+              )}
+              <StyledDiagram>
+                <ReactDiagram
+                  initDiagram={initDiagram}
+                  divClassName={diagramClassName}
+                />
+              </StyledDiagram>
             </div>
-
           </div>
         </div>
 
-        {from==="inputNet"&&
-        <Link to={'/input/aws'}
-          state={{ file: diagram.model.toJson() }}>
-          Submit
-        </Link>
-        }
+        {from === "inputNet" && (
+          <Link to={"/input/aws"} state={{ file: diagram.model.toJson() }}>
+            Submit
+          </Link>
+        )}
 
-        <button onClick={summaryRequest}>
-          Go to summary
-        </button>
-
+        <button onClick={summaryRequest}>Go to summary</button>
       </div>
     </div>
   );
@@ -185,3 +187,9 @@ function Draw() {
 
 export default Draw;
 
+const StyledDiagram = styled.div`
+  float: left;
+  width: 100%;
+  height: 100%; // 원하는 높이로 설정
+  border: 1px solid black;
+`;

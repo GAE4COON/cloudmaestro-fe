@@ -19,9 +19,7 @@
   }
 }
 
-.createspace {
-  display: flex;
-}
+
 
 .handler-content {
   position: absolute;
@@ -123,80 +121,6 @@
   margin-bottom: 10px; /* Adjust as needed */
 }
 
-/*장어진 workspace를 100씩으로 주게된건 workspace의 크기는 diagram의 영향을 받기때문에 diagram을 수정하는 크기만큼 표시하기 위함*/
-.workspace{
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;  
-  position : relative;
-  width: 100%; /* Optional: 부모 요소의 너비를 100%로 설정 */
-  height: 100vh; /*  Optional: 뷰포트 높이를 기준으로 높이 설정 */
-}
-
-.select-toggle-container,
-.react-diagram-container {
-  width: 100%;  /* 부모 컨테이너의 가로 길이에 맞춤 */
-}
-
-.react-diagram-container {
-  flex-grow: 1;  /* 가능한 경우 남은 공간을 채움 */
-}
-
-
-
-.palette-component{
-  position: absolute;
-  float : left;
-  width : 25%;
-  height : 80%;
-  border: "solid 1px black";
-}
-
-.palette-component-small{
-  position: absolute;
-  float : left;
-  width : 20%;
-  height : 80%;
-  border: "solid 1px black";
-}
-
-.diagram-component{
-  position: relative;
-  z-index: 1;
-  float : left;
-  width : 75%;
-  height : 80%;
-  border: solid 1px black;
-  background-color: white;
-  top: 0%;
-  left: 22.5%;
-  position: absolute;
-  background-size:20px 20px;
-  display: flex;
-   /* create a grid pattern using linear gradients */
-   background-image:
-     linear-gradient(to right, rgb(231, 231, 231) .5px, transparent .5px),
-     linear-gradient(to bottom, rgb(231, 231, 231)  .5px, transparent .5px);
-
-}
-
-.diagram-component-small{
-  position: relative;
-  float : left;
-  width : 70%;
-  height : 80%;
-  border: solid 1px black;
-  background-color: white;
-  top: 0%;
-  left: 20%;
-  background-size:20px 20px;
-  
-   /* create a grid pattern using linear gradients */
-   background-image:
-     linear-gradient(to right, rgb(231, 231, 231) .5px, transparent .5px),
-     linear-gradient(to bottom, rgb(231, 231, 231)  .5px, transparent .5px);
-
-}
 
 .side-menu {
   width: 200px;

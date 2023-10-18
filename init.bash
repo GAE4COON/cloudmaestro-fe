@@ -13,3 +13,4 @@ npm install --save chart.js react-chartjs-2
 npm install react-table --save
 npm i antd
 npm i react-cookie
+npm install gsap
