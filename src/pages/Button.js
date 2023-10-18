@@ -95,15 +95,18 @@ const Button = ({
   };
 
   const onFileChange = (e) => {
+    //handleReset();
     if (e.target.files[0] && e.target.files[0].name.includes("json")) {
       let file = e.target.files[0];
       let fileReader = new FileReader();
       fileReader.readAsText(file);
       fileReader.onload = () => {
-        console.log("json", fileReader.result);
-        let filejson = JSON.parse(fileReader.result);
-        setFinalToggleVal(filejson["cost"]); //여기서 rds뿐이 아닌 ec2도 해줘야 할 듯
-        if (fileReader.result && diagram) {
+      console.log("json", fileReader.result);
+      let filejson = JSON.parse(fileReader.result);
+       if (filejson.hasOwnProperty("cost")) {
+         setFinalToggleVal(filejson["cost"]);
+       }        
+      if (fileReader.result && diagram) {
           diagram.model = go.Model.fromJson(fileReader.result);
           console.log(JSON.stringify(diagram.model));
           setShowToggle(true);
@@ -118,7 +121,6 @@ const Button = ({
   const handleReset = () => {
     if (diagram) {
       diagram.startTransaction("Cleared diagram");
-
       setFinalToggleValue({});
       console.log("final from reset2", finalToggleVal);
       diagram.model.nodeDataArray = [];

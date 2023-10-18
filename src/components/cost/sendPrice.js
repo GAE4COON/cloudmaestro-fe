@@ -1,24 +1,34 @@
 import axios from 'axios';
 
 export function ec2Price(priceElement) {
-    let instance = "aws" + "-ec2" + "-" + priceElement[1] + "_" + priceElement[2];
+    let instance = "aws" + "-ec2" + "-" + priceElement["instanceType"] + "_" + priceElement["instanceSize"];
     console.log("instance",instance);
+    console.log("billingOption",priceElement["billingOption"]);
+    console.log("platform",priceElement["platform"]);
+    let platform = priceElement["platform"]
+    let billingOption = priceElement["billingOption"]
     return new Promise((resolve, reject) => {
       axios({
         url: '/api/v1/pricing-api/ec2',
         method: 'post',
         data: {
-          "platform": priceElement[0],
+          "platform": platform,
           "instance": instance,
-          "lifeCycle": priceElement[3]
+          "lifeCycle":billingOption
         },
         baseURL: 'http://localhost:8080',
       })
       .then(function (response) {
         // 가정: response에 원하는 데이터가 있음
         console.log("response",response.data);
-       
-        resolve([response.data.amount, response.data.currency, response.data.unit]);
+        let data = response.data.amount;
+        // if(data !== null){
+        //   resolve(data);
+        // }
+        resolve(data);
+        //resolve(data);
+        //resolve(response.data.currency);
+        //return response.data.currency;
         
        
       })
