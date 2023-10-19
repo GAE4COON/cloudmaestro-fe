@@ -15,8 +15,8 @@ export const nodeDataArrayPalette = [
         type: "Network_icon"
     },
     {
-        text: "Databse",
-        key: "Databse",
+        text: "Database",
+        key: "Database",
         figure: "Rectangle",
         source: "/img/Network_icon/database.png",
         type: "Network_icon"
