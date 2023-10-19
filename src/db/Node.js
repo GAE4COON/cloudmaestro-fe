@@ -31,7 +31,7 @@ export const nodeDataArrayPalette = [
     type: "Network_icon",
   },
   {
-    key: "IPS",
+    key: "ips",
     figure: "Rectangle",
     source: "/img/Network_icon/ips.png",
     type: "Network_icon",
@@ -2112,6 +2112,7 @@ export const nodeDataArrayPalette = [
   },
   {
     isGroup: true,
+    text: "IoT Greengrass",
     key: "IoT Greengrass",
     stroke: "rgb(122,161,22)",
 
@@ -2121,7 +2122,7 @@ export const nodeDataArrayPalette = [
   {
     isGroup: true,
     stroke: "rgb(122,161,22)",
-
+    text: "IoT Greengrass Deployment",
     key: "IoT Greengrass Deployment",
     source: "/img/AWS_icon/AWS_Groups/AWS_IoT_Greengrass_Deployment.svg",
     type: "AWS_Groups",
@@ -2129,7 +2130,7 @@ export const nodeDataArrayPalette = [
   {
     isGroup: true,
     stroke: "rgb(231,21,123)",
-
+    text: "Step Fuctions workflow",
     key: "Step Fuctions workflow",
     source: "/img/AWS_icon/AWS_Groups/AWS_Step_Fuctions_workflow.svg",
     type: "AWS_Groups",
@@ -2137,7 +2138,7 @@ export const nodeDataArrayPalette = [
   {
     isGroup: true,
     stroke: "rgb(125,137,152)",
-
+    text: "Corporate data center",
     key: "Corporate data center",
     source: "/img/AWS_icon/AWS_Groups/Corporate_data_center.svg",
     type: "AWS_Groups",
@@ -2145,7 +2146,7 @@ export const nodeDataArrayPalette = [
   {
     isGroup: true,
     stroke: "rgb(237,113,0)",
-
+    text: "EC2 instace contents",
     key: "EC2 instace contents",
     source: "/img/AWS_icon/AWS_Groups/EC2_instace_contents.svg",
     type: "AWS_Groups",
@@ -2153,7 +2154,7 @@ export const nodeDataArrayPalette = [
   {
     isGroup: true,
     stroke: "rgb(237,113,0)",
-
+    text: "Elatic Beanstalk container",
     key: "Elatic Beanstalk container",
     source: "/img/AWS_icon/AWS_Groups/Elatic_Beanstalk_container.svg",
     type: "AWS_Groups",
@@ -2161,7 +2162,7 @@ export const nodeDataArrayPalette = [
   {
     isGroup: true,
     stroke: "rgb(0,164,166)",
-
+    text: "Private subnet",
     key: "Private subnet",
     source: "/img/AWS_icon/AWS_Groups/Private_subnet.svg",
     type: "AWS_Groups",
@@ -2169,7 +2170,7 @@ export const nodeDataArrayPalette = [
   {
     isGroup: true,
     stroke: "rgb(122,161,22)",
-
+    text: "Public subnet",
     key: "Public subnet",
 
     source: "/img/AWS_icon/AWS_Groups/Public_subnet.svg",
@@ -2178,7 +2179,7 @@ export const nodeDataArrayPalette = [
   {
     isGroup: true,
     stroke: "rgb(0,164,166)",
-
+    text: "Region",
     key: "Region",
     source: "/img/AWS_icon/AWS_Groups/Region.svg",
     type: "AWS_Groups",
@@ -2186,7 +2187,7 @@ export const nodeDataArrayPalette = [
   {
     isGroup: true,
     stroke: "rgb(0,164,166)",
-
+    text: "Availability Zone",
     key: "Availability Zone",
     // source: "/img/AWS_icon/AWS_Groups/Region.svg",
     type: "AWS_Groups",
@@ -2194,7 +2195,7 @@ export const nodeDataArrayPalette = [
   {
     isGroup: true,
     stroke: "rgb(221,52,76)",
-
+    text: "Security Group",
     key: "Security Group",
     // source: "/img/AWS_icon/AWS_Groups/Region.svg",
     type: "AWS_Groups",
@@ -2202,7 +2203,7 @@ export const nodeDataArrayPalette = [
   {
     isGroup: true,
     stroke: "rgb(125,137,152)",
-
+    text: "Server contents",
     key: "Server contents",
     source: "/img/AWS_icon/AWS_Groups/Server_contents.svg",
     type: "AWS_Groups",
@@ -2210,7 +2211,7 @@ export const nodeDataArrayPalette = [
   {
     isGroup: true,
     stroke: "rgb(237,113,0)",
-
+    text: "Spot Fleet",
     key: "Spot Fleet",
     source: "/img/AWS_icon/AWS_Groups/Spot_Fleet.svg",
     type: "AWS_Groups",
@@ -2218,7 +2219,7 @@ export const nodeDataArrayPalette = [
   {
     isGroup: true,
     stroke: "rgb(237,113,0)",
-
+    text: "Auto Scaling group",
     key: "Auto Scaling group",
     source: "/img/AWS_icon/AWS_Groups/Auto_Scaling_group.svg",
     type: "AWS_Groups",
@@ -2226,9 +2227,17 @@ export const nodeDataArrayPalette = [
   {
     isGroup: true,
     stroke: "rgb(140,79,255)",
-
+    text: "VPC",
     key: "VPC",
     source: "/img/AWS_icon/AWS_Groups/VPC.svg",
+    type: "AWS_Groups",
+  },
+  {
+    isGroup: true,
+    stroke: "rgb(150,150,150)",
+    text: "Secrvice",
+    key: "Secrvice",
+    // source: "/img/AWS_icon/AWS_Groups/VPC.svg",
     type: "AWS_Groups",
   },
 ];

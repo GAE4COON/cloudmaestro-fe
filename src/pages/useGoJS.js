@@ -320,6 +320,7 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
       if (part instanceof go.Link) {
         console.log("링크가 클릭되었네요");
       } else if (part instanceof go.Node) {
+
         console.log("나는 node 입니다", part.data);
         const key = part.data.key;
         console.log("나는 key 입니다", key);
