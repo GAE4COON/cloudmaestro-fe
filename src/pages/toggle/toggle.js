@@ -1,5 +1,5 @@
 function handleChangedSelection(key = '') {
-  console.log("key", key);
+  //console.log("key", key);
   
   // Check if key is a string
   if (typeof key !== 'string') {
@@ -8,19 +8,19 @@ function handleChangedSelection(key = '') {
   }
 
   if (key.includes('EC2')) {
-      console.log("hi");
+      //console.log("hi");
       return true;
   }
   if (key.includes('RDS')) {
-    console.log("나인뎅/11111");
+    //console.log("나인뎅/11111");
     return true;
   }
   if (key.includes('S3')) {
-    console.log("hi");
+    //console.log("hi");
     return true;
   }
   if (key.includes('Simple Storage Service')) {
-    console.log("hi");
+    //console.log("hi");
     return true;
   }
   return false;

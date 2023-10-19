@@ -147,10 +147,8 @@ const Button = ({
         <div className="button-row">
           <button onClick={localSaveImage}>Save as Image</button>
         </div>
-
         <div className="button-row">
           <button onClick={handleLoad}>Rehost</button>
-          {/* <button onClick={navigateAws}>Submit</button> */}
         </div>
       </div>
     </div>
