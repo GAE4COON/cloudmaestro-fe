@@ -23,6 +23,10 @@ function handleChangedSelection(key = '') {
     //console.log("hi");
     return true;
   }
+  if (key.includes('WAF')) {
+    console.log("hi");
+    return true;
+  }
   return false;
 }
 export default handleChangedSelection;

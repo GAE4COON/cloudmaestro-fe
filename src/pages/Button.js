@@ -96,6 +96,7 @@ const Button = ({
       fileReader.readAsText(file);
       fileReader.onload = () => {
         //console.log("json", fileReader.result);
+
         let filejson = JSON.parse(fileReader.result);
         if (filejson.hasOwnProperty("cost")) {
           setFinalToggleVal(filejson["cost"]);
