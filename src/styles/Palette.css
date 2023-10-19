@@ -14,23 +14,19 @@
 .tab {
   width: 100%;
   position: relative;
-  /* color: white; */
-  overflow: hidden;
 }
 
-/* Input styles */
-
-
-/* Accordion styles */
 input[type="radio"] {
   position: absolute;
   opacity: 0;
   z-index: -1;
 }
 
+
 .tab-label {
+  height: 2.5vh;
   display: flex;
-  font-size: 14px;
+  font-size: 2vh;
   justify-content: space-between;
   padding: 0.5em;
   background: #829fdf;
@@ -94,8 +90,8 @@ input[type="radio"]:checked ~ .tab-content {
 }
 
 .scrollable-tabs-container {
-  max-height: 570px;
-  width: 90%;
+  max-height: 87vh;
+  width: 100%;
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -103,16 +99,29 @@ input[type="radio"]:checked ~ .tab-content {
 
 
 /* Miscellaneous styles */
-.search-container,
-.filtered-nodes-container {
+.search-container{
+  width: 100%;
   text-align: left;
+
+  font-size: 8px;
+  height: 3vh;
+  display: flex;
+}
+
+.filtered-nodes-container {
+
   font-size: 7px;
 }
 
 .filtered-nodes-container {
   font-size: 7px;
+
   width: 100%;
   padding: 10px;
+  max-height: 50vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: #e9f0f6;
 }
 
 .tab-close {
@@ -142,7 +151,7 @@ input[type="text"]:focus {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-/* 검색 아이콘 스타일 */
+
 input[type="text"]::placeholder {
   color: #888;
   font-weight: normal;
@@ -151,4 +160,5 @@ input[type="text"]::placeholder {
   background-repeat: no-repeat;
   background-position: right center;
   background-size: 16px 16px;
+
 }
