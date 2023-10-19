@@ -18,4 +18,4 @@ export const summaryFile = (file) =>
   });
 
 export const rehostRequest = (data) =>
-  api.post("/api/v1/file-api/network", data);
+  api.post("/api/v1/file-api/rehost/ssohost", data);
