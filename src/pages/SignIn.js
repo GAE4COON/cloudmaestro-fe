@@ -38,21 +38,21 @@ function SignIn() {
         // 다른 쿠키 설정들 (예: maxAge, domain, secure 등)도 추가 가능
       });
 
-      console.log("로그인 성공 :", response.data);
+      //console.log("로그인 성공 :", response.data);
 
       navigate("/");
     } catch (error) {
-      console.log("로그인 실패 :", error.response);
+      //console.log("로그인 실패 :", error.response);
       alert("로그인 실패");
     }
   };
 
   async function handleCallbackResponse(response) {
-    console.log(response.credential);
+    //console.log(response.credential);
     try {
       var userObject = jwt_decode(response.credential);
       setUser(userObject);
-      console.log(userObject);
+      //console.log(userObject);
 
       setTimeout(() => {
         navigate("/sign-in");

@@ -2,25 +2,20 @@ import React, { useCallback, useState, useEffect } from "react";
 
 import * as go from "gojs";
 import "../styles/Button.css"; // contains .diagram-component CSS
-import SelectToggle from "../../src/components/cost/SelectEc2Toggle";
-import InputAWS from "./InputAWS";
 import { json, useNavigate } from "react-router-dom";
 import { rehostRequest } from "../apis/file";
 
 const Button = ({
   diagram,
-  showToggle,
   setShowToggle,
   finalToggleValue,
   setFinalToggleValue,
 }) => {
   const hiddenFileInput = React.useRef(null);
-  const navigate = useNavigate();
   const handleClick = () => {
     hiddenFileInput.current.click();
   };
 
-  const [savedDiagramJSON, setSavedDiagramJSON] = useState(null);
   const [finalToggleVal, setFinalToggleVal] = useState({});
 
   useEffect(() => {
@@ -33,10 +28,9 @@ const Button = ({
       jsonCombinedArray = JSON.parse(jsonCombinedArray);
       jsonCombinedArray["cost"] = finalToggleValue; //ec2도 해야할 듯
       jsonCombinedArray = JSON.stringify(jsonCombinedArray);
-      setSavedDiagramJSON(jsonCombinedArray);
 
       //setSavedDiagramJSON(jsonCombinedArray,finalToggleValue);
-      console.log("저는 json이에요", jsonCombinedArray, finalToggleValue);
+      //console.log("저는 json이에요", jsonCombinedArray, finalToggleValue);
       localSaveJSON(jsonCombinedArray);
     }
   };
@@ -79,13 +73,13 @@ const Button = ({
 
   const handleLoad = async () => {
     try {
-      //console.log("modelmodel",JSON.stringify(diagram.model));
+      ////console.log("modelmodel",JSON.stringify(diagram.model));
 
       const jsonString = diagram.model.toJson();
-      console.log("jsonString", jsonString);
+      //console.log("jsonString", jsonString);
 
       const response = await rehostRequest(jsonString);
-      console.log("response", response.data.result);
+      //console.log("response", response.data.result);
       const Jdata = response.data.result;
 
       diagram.model = go.Model.fromJson(Jdata);
@@ -101,19 +95,19 @@ const Button = ({
       let fileReader = new FileReader();
       fileReader.readAsText(file);
       fileReader.onload = () => {
-      console.log("json", fileReader.result);
-      let filejson = JSON.parse(fileReader.result);
-       if (filejson.hasOwnProperty("cost")) {
-         setFinalToggleVal(filejson["cost"]);
-       }        
-      if (fileReader.result && diagram) {
+        //console.log("json", fileReader.result);
+        let filejson = JSON.parse(fileReader.result);
+        if (filejson.hasOwnProperty("cost")) {
+          setFinalToggleVal(filejson["cost"]);
+        }
+        if (fileReader.result && diagram) {
           diagram.model = go.Model.fromJson(fileReader.result);
-          console.log(JSON.stringify(diagram.model));
+          //console.log(JSON.stringify(diagram.model));
           setShowToggle(true);
         }
       };
     } else if (e.target.files[0] && !e.target.files[0].name.includes("json")) {
-      alert("Json형식의 파일을 넣어주세용 ㅜㅜ");
+      alert("Json형식의 파일을 넣어주세요.");
     }
     e.target.value = null;
   };
@@ -122,7 +116,7 @@ const Button = ({
     if (diagram) {
       diagram.startTransaction("Cleared diagram");
       setFinalToggleValue({});
-      console.log("final from reset2", finalToggleVal);
+      //console.log("final from reset2", finalToggleVal);
       diagram.model.nodeDataArray = [];
       diagram.model.linkDataArray = [];
       diagram.commitTransaction("Cleared diagram");
@@ -155,7 +149,7 @@ const Button = ({
         </div>
 
         <div className="button-row">
-          <button onClick={handleLoad}>Submit</button>
+          <button onClick={handleLoad}>Rehost</button>
           {/* <button onClick={navigateAws}>Submit</button> */}
         </div>
       </div>

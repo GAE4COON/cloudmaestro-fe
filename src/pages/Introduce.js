@@ -26,30 +26,27 @@ const LogoSection = () => {
 };
 
 const TabSection = () => {
+  const tabs = [
+    {
+      key: "1",
+      label: "Cloud Migration이란?",
+      children: "온프레미스의 정보자산을 Cloud 환경으로 이전하는 과정"
+    },
+    {
+      key: "2",
+      label: "클라우드 보안의 Rehost란?",
+      children: "ISO 27001 is an international standard for Information Security Management Systems (ISMS). It provides a framework for establishing, implementing, maintaining, and continually improving an ISMS within the context of an organization's overall business risks. The standard outlines a risk management process and specifies a set of controls that organizations can implement to secure their information assets."
+    },
+    {
+      key: "3",
+      label: "ISO 27001이란?",
+      children: "ISO 27001 is an international standard for Information Security Management Systems (ISMS). It provides a framework for establishing, implementing, maintaining, and continually improving an ISMS within the context of an organization's overall business risks. The standard outlines a risk management process and specifies a set of controls that organizations can implement to secure their information assets."
+    }
+  ];
   return (
     <div className="container2">
-      <StyledTabs>
-        <Tabs.TabPane tab="Cloud Migration이란?" key="1">
-          온프레미스의 정보자산을 Cloud 환경으로 이전하는 과정
-        </Tabs.TabPane>
-        <Tabs.TabPane tab="클라우드 보안의 Rehost란?" key="2">
-          ISO 27001 is an international standard for Information Security
-          Management Systems (ISMS). It provides a framework for establishing,
-          implementing, maintaining, and continually improving an ISMS within
-          the context of an organization's overall business risks. The standard
-          outlines a risk management process and specifies a set of controls
-          that organizations can implement to secure their information assets.
-        </Tabs.TabPane>
-        <Tabs.TabPane tab="ISO 27001이란?" key="3">
-          ISO 27001 is an international standard for Information Security
-          Management Systems (ISMS). It provides a framework for establishing,
-          implementing, maintaining, and continually improving an ISMS within
-          the context of an organization's overall business risks. The standard
-          outlines a risk management process and specifies a set of controls
-          that organizations can implement to secure their information assets.
-        </Tabs.TabPane>
-      </StyledTabs>
-    </div>
+      <StyledTabs items = {tabs}/>
+      </div>
   );
 };
 

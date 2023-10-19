@@ -1,7 +1,5 @@
 import React, { useState } from "react"; // add useState
-import { useNavigate } from "react-router-dom";
 import "../styles/MyDesign.css";
-import Sidebar from "../components/MyPageSideBar";
 import { BsChevronDown } from "react-icons/bs";
 import DataTable from "../components/EC2Table";
 import { headers, items } from "../db/EC2TableData";
@@ -78,7 +76,7 @@ function Summary() {
 
   const location = useLocation();
   const file = location.state ? location.state.file : null;
-  console.log(file);
+  //console.log(file);
 
   const [activeDropdown, setActiveDropdown] = useState(null);
 
@@ -89,7 +87,7 @@ function Summary() {
   var resourceCost = {};
   var filteredItems = {};
 
-  console.log("file!!!! ", file);
+  //console.log("file!!!! ", file);
 
   Object.entries(file).map(([resourceName, valueObject]) => {
     var items = [];

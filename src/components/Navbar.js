@@ -77,15 +77,15 @@ const Navbar = () => {
           <img src="/assets/img/logo.png" alt="logo" />
         </NavLinkLogo>
 
-        <NavMenuLeft isOpen={isOpen} onMouseLeave={closeMenu}>
-          <NavLink
-            onClick={closeMenu}
-            to="/home"
-            onMouseEnter={() => setDropdownOpen(true)} // 호버 시 드롭다운 열기
-            onMouseLeave={() => setDropdownOpen(false)} // 호버 떼면 드롭다운 닫기
+        <NavMenuLeft $isOpen={isOpen} onMouseLeave={closeMenu}>
+          <div
+            onMouseEnter={() => setDropdownOpen(true)}
+            onMouseLeave={() => setDropdownOpen(false)}
             className={location.pathname.startsWith("/home") ? "active" : ""}
           >
-            Home
+            <NavLink onClick={closeMenu} to="/home">
+              Home
+            </NavLink>
             {isDropdownOpen && (
               <DropdownMenu>
                 <NavLink onClick={closeMenu} to="/home">
@@ -100,7 +100,7 @@ const Navbar = () => {
                 </NavLink>
               </DropdownMenu>
             )}
-          </NavLink>
+          </div>
 
           <NavLink
             onClick={closeMenu}
@@ -110,14 +110,15 @@ const Navbar = () => {
             Draw
           </NavLink>
 
-          <NavLink
+          <div
             onClick={closeMenu}
-            to="/about"
-            onMouseEnter={() => setDropdownOpen(true)} // 호버 시 드롭다운 열기
-            onMouseLeave={() => setDropdownOpen(false)} // 호버 떼면 드롭다운 닫기
+            onMouseEnter={() => setDropdownOpen(true)}
+            onMouseLeave={() => setDropdownOpen(false)}
             className={location.pathname.startsWith("/about") ? "active" : ""}
           >
-            About
+            <NavLink to="/about">
+              About
+            </NavLink>
             {isDropdownOpen && (
               <DropdownMenu>
                 <NavLink onClick={closeMenu} to="/about">
@@ -132,7 +133,8 @@ const Navbar = () => {
                 </NavLink>
               </DropdownMenu>
             )}
-          </NavLink>
+          </div>
+
 
           {!user && (
             <SpecialNavLink
@@ -156,7 +158,7 @@ const Navbar = () => {
           </Hamburger>
         </HamburgerContainer>
 
-        <NavMenuRight isOpen={isOpen}>
+        <NavMenuRight $isOpen={isOpen}>
           {user ? (
             <>
               <NavBtn>

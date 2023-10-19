@@ -19,13 +19,12 @@ import Palette from "../components/Palette";
 import "../styles/Draw.css";
 import { useFileUpload } from "../components/useFileInput";
 import { summaryFile } from "../apis/file";
-import { Navigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 function Draw() {
   const navigate = useNavigate();
   const { data } = useFileUpload();
-  console.log("draw data ", data);
+  //console.log("draw data ", data);
 
   const isDesktopOrLaptop = useMediaQuery({ query: "(min-width: 700px)" });
   const paletteClassName = isDesktopOrLaptop
@@ -45,14 +44,14 @@ function Draw() {
     showToggle
   );
 
-  console.log("show", showSelectToggle.value);
+  //console.log("show", showSelectToggle.value);
 
   // Go to Draw page 완료
 
   const location = useLocation();
   const file = location.state ? location.state.file : null;
   const from = location.from;
-  // console.log(file);
+  // //console.log(file);
 
   useEffect(() => {
     if (file && diagram) {
@@ -80,10 +79,10 @@ function Draw() {
       try {
         // FormData를 서버에 전송
         const response = await summaryFile(formData);
-        console.log(response.data);
+        //console.log(response.data);
         navigate("/summary", { state: { file: response.data } });
       } catch (error) {
-        console.log("error", error);
+        //console.log("error", error);
       }
     }
   };

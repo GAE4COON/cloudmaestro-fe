@@ -41,7 +41,6 @@ const chartOptions = {
   }
 };
 
-
 function MyDesign() {
 
   const [activeDropdown, setActiveDropdown] = useState(null);
@@ -80,7 +79,7 @@ function MyDesign() {
             return (
               <>
                 <div key={index} className="instance">
-                  <div className="instance-cost-container"  onClick={() => handleInstanceClick(index)}>
+                  <div className="instance-cost-container" onClick={() => handleInstanceClick(index)}>
 
                     <div className="instance-title">
                       {category}
@@ -119,11 +118,11 @@ function MyDesign() {
           </div>
           <button className="export-button">
             EXPORT
-        </button>
+          </button>
         </div>
 
       </div>
-      
+
     </div>
 
   );
