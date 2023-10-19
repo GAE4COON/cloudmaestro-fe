@@ -11,7 +11,7 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
   const [DiagramCheck, setDiagramCheck] = useState(null);
 
   useEffect(() => {
-    console.log("Updated clickedNodeKey:", clickedNodeKey);
+    //console.log("Updated clickedNodeKey:", clickedNodeKey);
   }, [clickedNodeKey]);
 
   function highlightGroup(e, grp, show) {
@@ -227,7 +227,7 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
               click: (e, obj) => {
                 const link = obj.part.adornedPart;
                 link.findObject("LinkShape").strokeDashArray = null;
-                console.log("실선 선택", link.data);
+                //console.log("실선 선택", link.data);
               },
             }
           ),
@@ -246,7 +246,7 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
               click: (e, obj) => {
                 const link = obj.part.adornedPart;
                 link.findObject("LinkShape").strokeDashArray = [10, 10];
-                console.log("점선 선택", link.data);
+                //console.log("점선 선택", link.data);
               },
             }
           ),
@@ -266,7 +266,7 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
                 const link = obj.part.adornedPart;
                 link.findObject("FromArrow").visible = true;
                 link.findObject("FromArrow").fromArrow = "Backward";
-                console.log("backward로 했음다", link.data);
+                //console.log("backward로 했음다", link.data);
               },
             }
           ),
@@ -286,7 +286,7 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
                 const link = obj.part.adornedPart;
                 //link.findObject("FromArrow").fromArrow="Standard";
                 link.findObject("FromArrow").visible = false;
-                console.log("원래대로 돌아갔음", link.data);
+                //console.log("원래대로 돌아갔음", link.data);
               },
             }
           )
@@ -319,11 +319,11 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
     diagram.addDiagramListener("ObjectSingleClicked", function (e) {
       const part = e.subject.part;
       if (part instanceof go.Link) {
-        console.log("링크가 클릭되었네요");
+        //console.log("링크가 클릭되었네요");
       } else if (part instanceof go.Node) {
-        console.log("나는 node 입니다", part.data);
+        //console.log("나는 node 입니다", part.data);
         const key = part.data.key;
-        console.log("나는 key 입니다", key);
+        //console.log("나는 key 입니다", key);
         if (key) {
           if (handleChangedSelection(key)) {
             setShowSelectToggle({ value: true, key: key });
@@ -333,14 +333,14 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
     });
 
     diagram.addDiagramListener("ExternalObjectsDropped", (e) => {
-      console.log("from palette\n");
+      //console.log("from palette\n");
       setShowToggle(true);
     });
 
     diagram.addDiagramListener("SelectionMoved", (e) => {
       e.subject.each(function (part) {
         if (part instanceof go.Node) {
-          console.log("move to: " + part.location.toString());
+          //console.log("move to: " + part.location.toString());
         }
       });
     });
@@ -349,7 +349,7 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
       const selectedNode = e.diagram.selection.first();
       if (selectedNode instanceof go.Node) {
         const key = selectedNode.data.key;
-        console.log("나는 key 입니다", key);
+        //console.log("나는 key 입니다", key);
       } else {
         setShowSelectToggle({ value: false }); // 추가된 로직
       }

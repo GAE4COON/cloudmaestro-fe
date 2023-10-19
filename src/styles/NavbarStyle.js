@@ -110,8 +110,8 @@ export const NavMenuLeft = styled.div`
     text-align: center;
     position: fixed;
 
-    right: ${({ isOpen }) => (isOpen ? "0" : "-50%")};
-    visibility: ${({ isOpen }) => (isOpen ? "visible" : "hidden")};
+    right: ${({ $isOpen }) => ($isOpen ? "0" : "-50%")}; // Notice the change here
+    visibility: ${({ $isOpen }) => ($isOpen ? "visible" : "hidden")}; // And here
     top: 40px;
     background: #fff;
     z-index: 1;
@@ -126,7 +126,7 @@ export const NavMenuRight = styled.div`
   margin-right: 50px;
 
   @media screen and (max-width: 768px) {
-    display: ${({ isOpen }) => (isOpen ? "flex" : "none")};
+    display: ${({ $isOpen }) => ($isOpen ? "flex" : "none")}; // Notice the change here
     flex-direction: column;
     width: 100%;
     text-align: center;
@@ -137,6 +137,7 @@ export const NavMenuRight = styled.div`
     z-index: 1;
   }
 `;
+
 
 export const NavLinkLogo = styled(Link)`
   display: flex;

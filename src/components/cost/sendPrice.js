@@ -2,9 +2,9 @@ import axios from 'axios';
 
 export function ec2Price(priceElement) {
     let instance = "aws" + "-ec2" + "-" + priceElement["instanceType"] + "_" + priceElement["instanceSize"];
-    console.log("instance",instance);
-    console.log("billingOption",priceElement["billingOption"]);
-    console.log("platform",priceElement["platform"]);
+    //console.log("instance",instance);
+    //console.log("billingOption",priceElement["billingOption"]);
+    //console.log("platform",priceElement["platform"]);
     let platform = priceElement["platform"]
     let billingOption = priceElement["billingOption"]
     return new Promise((resolve, reject) => {
@@ -20,7 +20,7 @@ export function ec2Price(priceElement) {
       })
       .then(function (response) {
         // 가정: response에 원하는 데이터가 있음
-        console.log("response",response.data);
+        //console.log("response",response.data);
         let data = response.data.amount;
         // if(data !== null){
         //   resolve(data);
@@ -55,7 +55,7 @@ export function ec2Price(priceElement) {
       })
       .then(function (response) {
         setData(response.data);
-        //console.log("response.data",response.data,"platform",platform)
+        ////console.log("response.data",response.data,"platform",platform)
         if(platform == "linux"){
           const newLinuxOptions = response.data.map(item => ({
             value: item,
