@@ -49,6 +49,7 @@
 }
 
 .diagram {
+  position: relative;
   display: inline;
   width: 75%;
   height: 100%;

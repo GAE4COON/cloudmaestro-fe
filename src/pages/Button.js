@@ -101,12 +101,12 @@ const Button = ({
       let fileReader = new FileReader();
       fileReader.readAsText(file);
       fileReader.onload = () => {
-      console.log("json", fileReader.result);
-      let filejson = JSON.parse(fileReader.result);
-       if (filejson.hasOwnProperty("cost")) {
-         setFinalToggleVal(filejson["cost"]);
-       }        
-      if (fileReader.result && diagram) {
+        console.log("json", fileReader.result);
+        let filejson = JSON.parse(fileReader.result);
+        if (filejson.hasOwnProperty("cost")) {
+          setFinalToggleVal(filejson["cost"]);
+        }
+        if (fileReader.result && diagram) {
           diagram.model = go.Model.fromJson(fileReader.result);
           console.log(JSON.stringify(diagram.model));
           setShowToggle(true);

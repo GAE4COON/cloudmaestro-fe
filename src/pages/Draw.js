@@ -12,6 +12,7 @@ import { useMediaQuery } from "react-responsive";
 import { nodeDataArrayPalette } from "../db/Node";
 
 import { useLocation, useNavigate } from "react-router-dom";
+import { Alert } from "antd";
 
 // 페이지
 // import useReadJSON from "./useReadJSON";
@@ -39,12 +40,15 @@ function Draw() {
   const [finalToggleValue, setFinalToggleValue] = useState({});
   const [selectedNodeData, setSelectedNodeData] = useState(null); // <-- 상태 변수를 추가합니다.
   const [showToggle, setShowToggle] = useState(true);
+  const [alertMessage, setAlertMessage] = useState(null);
 
-  const { initDiagram, diagram, showSelectToggle, clickedNodeKey } = useGoJS(
-    setSelectedNodeData,
-    setShowToggle,
-    showToggle
-  );
+  const {
+    initDiagram,
+    diagram,
+    showSelectToggle,
+    clickedNodeKey,
+    DiagramCheck,
+  } = useGoJS(setSelectedNodeData, setShowToggle, showToggle);
 
   console.log("show", showSelectToggle.value);
 
@@ -54,6 +58,16 @@ function Draw() {
   const file = location.state ? location.state.file : null;
   const from = location.from;
   // console.log(file);
+
+  useEffect(() => {
+    if (
+      DiagramCheck &&
+      DiagramCheck.result &&
+      DiagramCheck.result.status === "success"
+    ) {
+      setAlertMessage(DiagramCheck.result.message);
+    }
+  }, [DiagramCheck]);
 
   useEffect(() => {
     if (file && diagram) {
@@ -119,6 +133,17 @@ function Draw() {
               setFinalToggleValue={setFinalToggleValue}
             />
           </div>
+          <div className="alert-container">
+            {/* <Alert message="Success Tips" type="success" showIcon closable />
+            <Alert
+              message="Informational Notes"
+              type="info"
+              showIcon
+              closable
+            />
+            <Alert message="Warning" type="warning" showIcon closable /> */}
+          </div>
+
           <div className="workspace">
             <div className="palette">
               <Palette
@@ -127,6 +152,15 @@ function Draw() {
               />
             </div>
             <div className="diagram">
+              {alertMessage && (
+                <StyleAlert
+                  message={alertMessage}
+                  type="error"
+                  showIcon
+                  closable
+                  onClose={() => setAlertMessage(null)}
+                />
+              )}
               {showToggle &&
                 showSelectToggle.value &&
                 showSelectToggle.key.includes("EC2") && (
@@ -161,7 +195,7 @@ function Draw() {
                     readOnly
                   />
                 )}
-                {showToggle &&
+              {showToggle &&
                 showSelectToggle.value &&
                 showSelectToggle.key.includes("WAF") && (
                   <SelectWafToggle
@@ -175,6 +209,7 @@ function Draw() {
               {clickedNodeKey && (
                 <div className="clicked_key">{clickedNodeKey}</div>
               )}
+
               <StyledDiagram>
                 <ReactDiagram
                   initDiagram={initDiagram}
@@ -204,4 +239,13 @@ const StyledDiagram = styled.div`
   width: 100%;
   height: 100%; // 원하는 높이로 설정
   border: 1px solid black;
+`;
+
+const StyleAlert = styled(Alert)`
+  position: absolute;
+  width: 20%;
+  font-size: 12px;
+  z-index: 100;
+  left: 78%;
+  top: 20%;
 `;

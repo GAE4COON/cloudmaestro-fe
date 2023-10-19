@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import * as go from "gojs";
 import "../styles/App.css"; // contains .diagram-component CSS
 import handleChangedSelection from "./toggle/toggle";
+import { alertCheck } from "../apis/file";
 
 const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
   const [diagram, setDiagram] = useState(null);
   const [clickedNodeKey, setClickedNodeKey] = useState();
   const [showSelectToggle, setShowSelectToggle] = useState({ value: false });
+  const [DiagramCheck, setDiagramCheck] = useState(null);
 
   useEffect(() => {
     console.log("Updated clickedNodeKey:", clickedNodeKey);
@@ -42,6 +44,29 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
       "resizingTool.isGridSnapEnabled": true,
       "commandHandler.archetypeGroupData": { text: "Group", isGroup: true },
       "contextMenuTool.isEnabled": true,
+      ModelChanged: async (e) => {
+        // 오직 트랜잭션 완료 시에만 로그 출력
+        if (e.isTransactionFinished) {
+          const jsonString = e.model.toIncrementalJson(e);
+          const data = JSON.parse(jsonString); // JSON 문자열을 JavaScript 객체로 변환
+          if (data.insertedLinkKeys) {
+            console.log("insertedLinkKeys", data.modifiedLinkData);
+            try {
+              const response = await alertCheck(data.modifiedLinkData[0]);
+              if (response && response.data) {
+                console.log("API Response:", response.data);
+                setDiagramCheck(response.data);
+              }
+            } catch (error) {
+              // Handle API error here
+              console.error("API Error:", error);
+            }
+          }
+          // if (data.insertedNodeKeys) {
+          //   console.log("insertedLinkKeys", data.insertedLinkKeys);
+          // }
+        }
+      },
       model: new go.GraphLinksModel({
         linkKeyProperty: "key",
       }),
@@ -81,7 +106,9 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
         return key === -7 ? "BottomLayer" : "";
       }),
 
-      new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
+      new go.Binding("location", "loc", go.Point.parse).makeTwoWay(
+        go.Point.stringify
+      ),
 
       //마진에 포트 추가해서 링크가 동작되게 만든다
       $(go.Shape, {
@@ -156,21 +183,25 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
         new go.Binding("text", "key")
       ),
 
-        $(go.Panel, "Auto",
-          $(go.Shape,
-            "Rectangle",
-            {
-              margin: 10,
-              fill: "transparent",
-              stroke: "rgb(128,128,128)",
-              strokeWidth: 3
-            },
-            new go.Binding("stroke")),
-            // new go.Binding("fill", "stroke")),
-          $(go.Placeholder, { padding: 30 }),
+      $(
+        go.Panel,
+        "Auto",
+        $(
+          go.Shape,
+          "Rectangle",
+          {
+            margin: 10,
+            fill: "transparent",
+            stroke: "rgb(128,128,128)",
+            strokeWidth: 3,
+          },
+          new go.Binding("stroke")
         ),
-        // $(go.Placeholder, { padding: 30 })
-      );
+        // new go.Binding("fill", "stroke")),
+        $(go.Placeholder, { padding: 30 })
+      )
+      // $(go.Placeholder, { padding: 30 })
+    );
     diagram.linkTemplate = $(
       go.Link,
       {
@@ -290,7 +321,6 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
       if (part instanceof go.Link) {
         console.log("링크가 클릭되었네요");
       } else if (part instanceof go.Node) {
-
         console.log("나는 node 입니다", part.data);
         const key = part.data.key;
         console.log("나는 key 입니다", key);
@@ -330,7 +360,13 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
     return diagram;
   };
 
-  return { initDiagram, diagram, showSelectToggle, clickedNodeKey };
+  return {
+    initDiagram,
+    diagram,
+    showSelectToggle,
+    clickedNodeKey,
+    DiagramCheck,
+  };
 };
 
 export default useGoJS;
