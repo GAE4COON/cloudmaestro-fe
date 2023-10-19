@@ -8,6 +8,7 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
   const [diagram, setDiagram] = useState(null);
   const [clickedNodeKey, setClickedNodeKey] = useState();
   const [showSelectToggle, setShowSelectToggle] = useState({ value: false });
+  const [DiagramCheck, setDiagramCheck] = useState(null);
 
   useEffect(() => {
     console.log("Updated clickedNodeKey:", clickedNodeKey);
@@ -53,8 +54,8 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
             try {
               const response = await alertCheck(data.modifiedLinkData[0]);
               if (response && response.data) {
-                // Handle the API response here
                 console.log("API Response:", response.data);
+                setDiagramCheck(response.data);
               }
             } catch (error) {
               // Handle API error here
@@ -320,7 +321,6 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
       if (part instanceof go.Link) {
         console.log("링크가 클릭되었네요");
       } else if (part instanceof go.Node) {
-
         console.log("나는 node 입니다", part.data);
         const key = part.data.key;
         console.log("나는 key 입니다", key);
@@ -360,7 +360,13 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
     return diagram;
   };
 
-  return { initDiagram, diagram, showSelectToggle, clickedNodeKey };
+  return {
+    initDiagram,
+    diagram,
+    showSelectToggle,
+    clickedNodeKey,
+    DiagramCheck,
+  };
 };
 
 export default useGoJS;
