@@ -5,6 +5,20 @@ const SeclectS3Toggle = ({diagram, uniquekey, finalToggleValue, setFinalToggleVa
     const [text, setText] = useState("");
     const [s3Cost, setS3Cost] = useState("");
 
+    const handleDeletKey = (uniqueKey) => {
+        setFinalToggleValue((prev) => {
+          const newState = {...prev};
+          delete newState[uniqueKey];
+          return newState;
+        });
+      }
+    
+      diagram.addDiagramListener("SelectionDeleting", function (e) {
+          e.subject.each(function (part) {
+            handleDeletKey(part.key);
+          });
+      });
+    
     const calculateCost = (gb) => {
         let cost = 0;
         if (gb <= 50000) {
@@ -49,7 +63,7 @@ const SeclectS3Toggle = ({diagram, uniquekey, finalToggleValue, setFinalToggleVa
             type="text"
             onChange={onChange}
             value={text}
-            placeholder="Storage (GB)"
+            placeholder="Storage(GB)"
             />
             <div><p>$ {s3Cost} /Hour</p></div> 
         </div>
