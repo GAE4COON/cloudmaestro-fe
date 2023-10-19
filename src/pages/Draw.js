@@ -128,7 +128,8 @@ function Draw() {
             <div className="diagram">
               {showToggle &&
                 showSelectToggle.value &&
-                showSelectToggle.key.includes("EC2") && (
+                showSelectToggle.key.includes("EC2")&& 
+                ! (showSelectToggle.key.includes(" ") ) &&(
                   <SelectEc22Toggle
                     diagram={diagram}
                     uniquekey={showSelectToggle.key}

@@ -1,22 +1,31 @@
-.ec2 {
-  display: flex;               
-  flex-direction: column;      /* 자식 요소들을 수직으로 나열합니다 */
-  align-items: center;         /* 수직 정렬의 경우 align-items를 사용하여 중앙에 위치시킵니다 */
-}
 
+.ec2 {
+  display: flex;
+  width: 60%;
+  margin: 0 auto; /* centers the element horizontally */
+  border-radius: 4px;
+
+}
 .toggle-component {
   display: flex;
-  align-items: center;
+  flex-direction: column; 
   position: absolute;
   padding: 3px 0 3px 5px;
   background-color: #fff;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
   border-radius: 5px;  
   width: 40%;
-  margin-top: 4px;
-  padding-top: 2px;
+  padding-top: 10px;
   padding-right: 8px;
   z-index:10;
+  top:1px;
+  margin : 0 auto;
+
+}
+
+.toggle {
+  display: flex;          /* 자식 요소들을 수평으로 나열 */
+  align-items: center;    /* 중앙에 위치시킵니다 */
 }
 
 .price {
@@ -50,8 +59,25 @@ select {
   background-color: #d0d0d0;
 }
 
-/* .element에 대한 스타일이 필요하다면 아래와 같이 추가 */
-.element {
-  /* 필요한 스타일을 여기에 추가하세요 */
-  margin-top: 10px;  /* 예: .toggle-component와의 간격을 조정하려면 margin-top을 사용하세요 */
+
+.element div {
+  display:flex;
+
+}
+.element div div{
+ 
+  font-size: 9px;            
+  color: #333;
+  background-color: #ffffff;
+  margin: 3px;  
+  padding : 6px 6px;           /* 양 옆에 10px의 margin을 추가하여 요소들 사이에 간격 추가 */
+  width: fit-content;         
+  text-align: center;    
+  justify-content: space-between;
+  border: 1px solid #e0e0e0;  /* 테두리 추가 */
+  border-radius: 8px;       
+}
+
+.element div > *:not(:last-child) {
+  margin-right: 10px;  /* 오른쪽 마진 적용. 마지막 요소를 제외한 모든 요소에 적용됩니다. */
 }

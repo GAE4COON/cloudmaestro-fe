@@ -127,17 +127,20 @@ const SelectEc22Toggle = ({ diagram, uniquekey, finalToggleValue, setFinalToggle
         && (Object.values(finalToggleValue[uniqueKey]["cost"]).includes("L"))
        )
       {
+        let ec2price = ec2Option["insertEC2EntityDetails"][price][4].split(' ')[0];
+        ec2price = ec2price.slice(1);
         setFinalToggleValue(prev => {
           if (!prev[uniqueKey] ) {
             return prev; // 이전 상태를 반환하거나 초기 상태를 설정할 수 있습니다.
           }
           console.log("이까지 오니");
           const updatedEntry = {...prev[uniqueKey]};
-          updatedEntry.cost = ec2Option["insertEC2EntityDetails"][price][4].split(' ')[0];
+          updatedEntry.cost = ec2price;
           return { ...prev, [uniqueKey]: updatedEntry};
         });
         //setPrice(calculatedPrice); //여기서 값이 잘 안들어 가는듯??
-        setPrice(ec2Option["insertEC2EntityDetails"][price][4].split(' ')[0]);
+       
+        setPrice(ec2price);
         setElement(ec2Option["insertEC2EntityDetails"][price]);
         
 
@@ -247,7 +250,7 @@ const SelectEc22Toggle = ({ diagram, uniquekey, finalToggleValue, setFinalToggle
 
 
   const Item = ({price}) =>{
-    if(!price || price.length < 1) {
+    if(!price || price.length<1) {
       return null;
     }
     if (price.length ==  5) {
@@ -255,36 +258,55 @@ const SelectEc22Toggle = ({ diagram, uniquekey, finalToggleValue, setFinalToggle
       // JSX로 표시하려면 다음과 같이 수정할 수 있습니다.
       return (
         <div>
-          {price[0]} {price[1]} {price[2]} {price[3]} {price[4]}
+          <div>
+            {price[0]} 
+          </div>
+          <div>
+            {price[1]}
+          </div>
+          <div>
+            {price[2]}
+          </div>
+          <div>
+            {price[3]}
+          </div>
+          <div>
+            On Demand
+          </div>
+        </div>
+      );
+    }
+
+    if(!price || price!="Loading") {
+      return (
+        <div>
+          ${price}
         </div>
       );
     }
     
-    return (
-      <div>
-        {price}
-      </div>
-    );
+    
   }
 
 
   return (
     <div className ="ec2">
         <div className="toggle-component">
-          
-            
-            {renderToggle(0, label[0], select[0], toggle1Value, baseOptions)}
-            {renderToggle(1,  label[1], select[1], toggle2Value, toggle2Options)}
-            {renderToggle(2, label[2], select[2], toggle3Value, toggle3Options)}
-            
-            {/* Price */}
-            <div className="price">
-              <Item price={price} />
+    
+            <div className="toggle">
+              {renderToggle(0, label[0], select[0], toggle1Value, baseOptions)}
+              {renderToggle(1,  label[1], select[1], toggle2Value, toggle2Options)}
+              {renderToggle(2, label[2], select[2], toggle3Value, toggle3Options)}
+              
+              {/* Price */}
+              <div className="price">
+                <Item price={price} />
+              </div>
             </div>
-  -
-
+            <div className="element">
+              <Item price={element} />
+            </div>
         </div>
-      
     </div>
   );
 };
