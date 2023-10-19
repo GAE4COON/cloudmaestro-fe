@@ -187,6 +187,7 @@ const SelectRdsToggle = ({ diagram, uniquekey, finalToggleValue, setFinalToggleV
   //toggle2 즉 size를 set해준다
   useEffect(() => {
     if (toggle2Value) {
+      console.log("dboption",toggle2Value);
     setToggle3Options(dbOption[toggle2Value]);
     setToggle3Value(null);
     }

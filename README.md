@@ -17,6 +17,7 @@
 - npm install react-icons --save
 - npm install xlsx 
 - npm install --save chart.js react-chartjs-2 
+- npm install gsap
 
 ## Ref
 - GoJS-React: https://gojs.net/latest/learn/index.html

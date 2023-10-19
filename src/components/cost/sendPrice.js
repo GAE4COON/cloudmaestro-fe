@@ -9,7 +9,7 @@ export function ec2Price(priceElement) {
     let billingOption = priceElement["billingOption"]
     return new Promise((resolve, reject) => {
       axios({
-        url: '/api/v1/pricing-api/ec2',
+        url: '/api/v1/pricing-api2/ec2',
         method: 'post',
         data: {
           "platform": platform,

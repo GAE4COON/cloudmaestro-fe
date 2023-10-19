@@ -4,7 +4,7 @@ import { ReactDiagram } from "gojs-react";
 import styled from "styled-components";
 
 import useGoJS from "./useGoJS";
-import SelectEc2Toggle from "../components/cost/SelectEc2Toggle";
+import SelectEc22Toggle from "../components/cost/SelectEc22Toggle";
 import SelectRdsToggle from "../components/cost/SelectRdsToggle";
 import SelectS3Toggle from "../components/cost/SelectS3Toggle";
 import { useMediaQuery } from "react-responsive";
@@ -129,7 +129,7 @@ function Draw() {
               {showToggle &&
                 showSelectToggle.value &&
                 showSelectToggle.key.includes("EC2") && (
-                  <SelectEc2Toggle
+                  <SelectEc22Toggle
                     diagram={diagram}
                     uniquekey={showSelectToggle.key}
                     finalToggleValue={finalToggleValue}
