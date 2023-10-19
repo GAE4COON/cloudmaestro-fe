@@ -62,15 +62,6 @@
   border-top: 1px solid gray;
 }
 
-.toggle-component {
-  position: absolute;
-  width : 70%;
-  top: 0;
-  left: 25%;
-  z-index: 10; /* 높은 z-index */
-  margin : 0 auto;
-}
-
 
 .button-container {
   opacity: 1;

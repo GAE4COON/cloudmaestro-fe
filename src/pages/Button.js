@@ -2,7 +2,6 @@ import React, { useCallback, useState, useEffect } from "react";
 
 import * as go from "gojs";
 import "../styles/Button.css"; // contains .diagram-component CSS
-import SelectToggle from "../../src/components/cost/SelectEc2Toggle";
 import InputAWS from "./InputAWS";
 import { json, useNavigate } from "react-router-dom";
 import { rehostRequest } from "../apis/file";

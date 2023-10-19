@@ -1,43 +1,57 @@
 .ec2 {
-  display: flex;
-  flex-direction: column; 
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  width: 80%;
-  margin: 0 auto; /* centers the element horizontally */
-  border-radius: 4px;
-  padding: 10px 0; /* added equal padding to the top and bottom */
-
+  display: flex;               
+  flex-direction: column;      /* 자식 요소들을 수직으로 나열합니다 */
+  align-items: center;         /* 수직 정렬의 경우 align-items를 사용하여 중앙에 위치시킵니다 */
 }
 
 .toggle-component {
-  height:30px;
-  display:flex;
-  justify-content: space-between;
-  padding: 0.25rem;
-  font-size: 10px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-  background-color: #ffffff;
-  margin: 0 5px; /* added left and right margin for space between selects */
-  cursor: pointer; /* indicates an interactive UI element */
-
-}
-
-select {
-  width: 100%;
-  padding: 0.25rem;
-  font-size: 10px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-  margin: 0 2px; /* added left and right margin for space between selects */
-  cursor: pointer;/* indicates an interactive UI element */
+  display: flex;
+  align-items: center;
+  position: absolute;
+  padding: 3px 0 3px 5px;
+  background-color: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;  
+  width: 40%;
+  margin-top: 4px;
+  padding-top: 2px;
+  padding-right: 8px;
+  z-index:10;
 }
 
 .price {
-  margin-top: 7px; /* adds some space above the price */
-  margin-left: 5px; 
-  font-size: 12px; /* slightly bigger text for better readability */
-  font-weight: bold; /* makes the price stand out */
+  background-color: #fff;
+  margin-left: 20px;
+  font-size: 15px;
+  font-weight: bold;
+  color: #5a842d;
+}
+
+.toggle-wrapper label {
+  font-size: 10px;
+}
+
+select {
+  outline: none;
+  width: 100%;
+  padding: 3px;
+  border-radius: 5px;
+  border: 1px solid #ffffff;
+  margin: 3px;
+  font-size: 10px;
+  font-weight: bold;
+  background-color: #ffffff;
+  transition: border-color 0.3s ease;
+  color: #333;
+}
+
+.custom-select option:hover, 
+.custom-select option:focus {
+  background-color: #d0d0d0;
+}
+
+/* .element에 대한 스타일이 필요하다면 아래와 같이 추가 */
+.element {
+  /* 필요한 스타일을 여기에 추가하세요 */
+  margin-top: 10px;  /* 예: .toggle-component와의 간격을 조정하려면 margin-top을 사용하세요 */
 }

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../../styles/SelectToggle.css";
 import axios from 'axios';
 
+
 const baseOptions = [
   "linux",
   "windows"
@@ -12,38 +13,8 @@ const onTypeOptions = [
 ];
  
 
-// function rdsPrice(priceElement) {           //여기서 bad request가 뜬다
-//   console.log("price까지는 오는 거니??",priceElement);
-//   let dbengine=priceElement["engine"];
-//   let dbinstance=[priceElement["instancetype"]];
-//   let dbsize=[priceElement["size"]];
-//   let dbinstanceType=dbinstance+"."+dbsize;
-
-//   console.log("dbengine: "+dbengine);
-//   return new Promise((resolve, reject) => {
-//     axios({
-//       url: '/api/v1/pricing-api/rds',
-//       method: 'post',
-//       data: {
-//         "dbEngine": dbengine,
-//         "instanceType": dbinstanceType,
-//       },
-//       baseURL: 'http://localhost:8080',
-//     })
-//     .then(function (response) {
-//       // 가정: response에 원하는 데이터가 있음
-//       console.log("response",response.data[0].priceUSD);
-//       resolve(response.data[0].priceUSD);
-//     })
-//     .catch(function (error) {
-//       console.error("못갔어용:", error);
-//       reject(error);
-//     });
-//   });
-// }
-
 function fetchEngineData(platform, instanceType, setData, setLoading, setError) {
-  console.log("db에 접근 엔진:", platform);
+  console.log("ec2에 접근 엔진:", platform);
 
   return new Promise((resolve, reject) => {
     setLoading(true);
@@ -84,12 +55,15 @@ const SelectEc22Toggle = ({ diagram, uniquekey, finalToggleValue, setFinalToggle
   const [toggle3Options, setToggle3Options] = useState([]);
   const [price ,setPrice] = useState(null);
   const [select, setSelect] = useState(["Platform", "Instance Type","Size"]);
+  const [element, setElement] = useState(null);
 
   const [ec2Option, setEc2Option] = useState(null);
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [data, setData] = useState(null);
+
+  let label = ["Platform", "Instance Type","Size"];
 
   //삭제시 다이어그램에 있는 노드 데이터 삭제
   const handleDeletKey = (uniqueKey) => {
@@ -135,7 +109,7 @@ const SelectEc22Toggle = ({ diagram, uniquekey, finalToggleValue, setFinalToggle
     //toggle2 즉 size를 set해준다
   useEffect(() => {
     if (toggle2Value) {
-      console.log("instanceType",toggle2Value);
+      //console.log("instanceType",toggle2Value);
     setToggle3Options(ec2Option["details"][toggle2Value]);
     setToggle3Value(null);
     }
@@ -159,11 +133,13 @@ const SelectEc22Toggle = ({ diagram, uniquekey, finalToggleValue, setFinalToggle
           }
           console.log("이까지 오니");
           const updatedEntry = {...prev[uniqueKey]};
-          updatedEntry.cost = ec2Option["insertEC2EntityDetails"][price][4];
+          updatedEntry.cost = ec2Option["insertEC2EntityDetails"][price][4].split(' ')[0];
           return { ...prev, [uniqueKey]: updatedEntry};
         });
         //setPrice(calculatedPrice); //여기서 값이 잘 안들어 가는듯??
-        setPrice(ec2Option["insertEC2EntityDetails"][price][4]);
+        setPrice(ec2Option["insertEC2EntityDetails"][price][4].split(' ')[0]);
+        setElement(ec2Option["insertEC2EntityDetails"][price]);
+        
 
       }
      
@@ -178,10 +154,9 @@ const SelectEc22Toggle = ({ diagram, uniquekey, finalToggleValue, setFinalToggle
     setToggle3Value(null);
   },[uniquekey]);
   
-  
 
-
-  useEffect(() => {          //이미 유니크키가 세팅이 완료된경우일듯
+//이미 유니크키가 세팅이 완료된경우일듯
+  useEffect(() => {          
     if (
         finalToggleValue[uniqueKey] &&
         Object.keys(finalToggleValue[uniqueKey]).length === 4  
@@ -221,9 +196,9 @@ const SelectEc22Toggle = ({ diagram, uniquekey, finalToggleValue, setFinalToggle
         updatedEntry.cost = "Loading";
         return { ...prev, [uniqueKey]: updatedEntry };
       });
-      console.log("1번 성공저장");
+      //console.log("1번 성공저장");
     } else if (index === 1) {
-      console.log("전");
+      //console.log("전");
       setToggle2Value(newValue);
       setFinalToggleValue(prev => {
         const updatedEntry = {...prev[uniqueKey]};
@@ -233,9 +208,9 @@ const SelectEc22Toggle = ({ diagram, uniquekey, finalToggleValue, setFinalToggle
         return { ...prev, [uniqueKey]: updatedEntry };
       });
       setToggle3Value(null);
-      console.log("2번째 성공 저장");
+      //onsole.log("2번째 성공 저장");
     } else if (index === 2) {
-      console.log("세번째까지 오네엽")
+      //console.log("세번째까지 오네엽")
       setToggle3Value(newValue);
       setFinalToggleValue(prev => {
         const updatedEntry = {...prev[uniqueKey]};
@@ -249,26 +224,40 @@ const SelectEc22Toggle = ({ diagram, uniquekey, finalToggleValue, setFinalToggle
 
   console.log("FinalToggle",finalToggleValue);
 
-  const renderToggle = (index, Select, value, options) => {
+  const renderToggle = (index, label, Select, value, options) => {
     return (
-      <select
-        value={value || ""}
-        onChange={(e) => handleChange(index, e)}
-      >
-        <option value="" disabled>{Select}</option>
-      {options.map((option, idx) => (
-        <option key={idx}>
-          {option}
-        </option>
-      ))}
-    </select>
-      );
-    };
+      <div className="toggle-wrapper">
+        <label>{label}</label>
+        <select
+            className="custom-select"
+            value={value || ""}
+            onChange={(e) => handleChange(index, e)}
+        >
+            <option value="" disabled>{Select}</option>
+            {options.map((option, idx) => (
+                <option key={idx}>
+                    {option}
+                </option>
+            ))}
+        </select>
+      </div>
+    );
+};
+
+
 
   const Item = ({price}) =>{
-
     if(!price || price.length < 1) {
       return null;
+    }
+    if (price.length ==  5) {
+      console.log("price", price);
+      // JSX로 표시하려면 다음과 같이 수정할 수 있습니다.
+      return (
+        <div>
+          {price[0]} {price[1]} {price[2]} {price[3]} {price[4]}
+        </div>
+      );
     }
     
     return (
@@ -276,20 +265,25 @@ const SelectEc22Toggle = ({ diagram, uniquekey, finalToggleValue, setFinalToggle
         {price}
       </div>
     );
-    
   }
+
+
   return (
     <div className ="ec2">
-      <div className="toggle-component">
-        {renderToggle(0, select[0], toggle1Value, baseOptions)}
-        {renderToggle(1, select[1], toggle2Value, toggle2Options)}
-        {renderToggle(2, select[2], toggle3Value, toggle3Options)}
-        
+        <div className="toggle-component">
+          
+            
+            {renderToggle(0, label[0], select[0], toggle1Value, baseOptions)}
+            {renderToggle(1,  label[1], select[1], toggle2Value, toggle2Options)}
+            {renderToggle(2, label[2], select[2], toggle3Value, toggle3Options)}
+            
+            {/* Price */}
+            <div className="price">
+              <Item price={price} />
+            </div>
+  -
 
-        <div className="price">
-          <Item price={price} />
         </div>
-      </div>
       
     </div>
   );
