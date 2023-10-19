@@ -31,7 +31,7 @@ export const nodeDataArrayPalette = [
     type: "Network_icon",
   },
   {
-    key: "ips",
+    key: "IPS",
     figure: "Rectangle",
     source: "/img/Network_icon/ips.png",
     type: "Network_icon",

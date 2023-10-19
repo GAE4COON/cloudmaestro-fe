@@ -19,3 +19,6 @@ export const summaryFile = (file) =>
 
 export const rehostRequest = (data) =>
   api.post("/api/v1/file-api/network", data);
+
+export const alertCheck = (data) =>
+  api.post("/api/v1/alert-api/alert-check", data);

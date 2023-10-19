@@ -11,6 +11,7 @@ import { useMediaQuery } from "react-responsive";
 import { nodeDataArrayPalette } from "../db/Node";
 
 import { useLocation, useNavigate } from "react-router-dom";
+import { Alert } from "antd";
 
 // 페이지
 // import useReadJSON from "./useReadJSON";
@@ -118,6 +119,18 @@ function Draw() {
               setFinalToggleValue={setFinalToggleValue}
             />
           </div>
+          <div className="alert-container">
+            <Alert message="Success Tips" type="success" showIcon closable />
+            <Alert
+              message="Informational Notes"
+              type="info"
+              showIcon
+              closable
+            />
+            <Alert message="Warning" type="warning" showIcon closable />
+            <Alert message="Error" type="error" showIcon closable />
+          </div>
+
           <div className="workspace">
             <div className="palette">
               <Palette
