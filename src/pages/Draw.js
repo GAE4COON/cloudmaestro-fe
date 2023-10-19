@@ -7,6 +7,7 @@ import useGoJS from "./useGoJS";
 import SelectEc2Toggle from "../components/cost/SelectEc2Toggle";
 import SelectRdsToggle from "../components/cost/SelectRdsToggle";
 import SelectS3Toggle from "../components/cost/SelectS3Toggle";
+import SelectWafToggle from "../components/cost/SelectWafToggle";
 import { useMediaQuery } from "react-responsive";
 import { nodeDataArrayPalette } from "../db/Node";
 
@@ -153,6 +154,17 @@ function Draw() {
                 showSelectToggle.value &&
                 showSelectToggle.key.includes("Simple Storage Service") && (
                   <SelectS3Toggle
+                    diagram={diagram}
+                    uniquekey={showSelectToggle.key}
+                    finalToggleValue={finalToggleValue}
+                    setFinalToggleValue={setFinalToggleValue}
+                    readOnly
+                  />
+                )}
+                {showToggle &&
+                showSelectToggle.value &&
+                showSelectToggle.key.includes("WAF") && (
+                  <SelectWafToggle
                     diagram={diagram}
                     uniquekey={showSelectToggle.key}
                     finalToggleValue={finalToggleValue}
