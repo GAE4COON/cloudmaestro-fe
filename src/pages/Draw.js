@@ -62,7 +62,7 @@ function Draw() {
     if (
       DiagramCheck &&
       DiagramCheck.result &&
-      DiagramCheck.result.status === "success"
+      DiagramCheck.result.status === "fail"
     ) {
       setAlertMessage(DiagramCheck.result.message);
     }
