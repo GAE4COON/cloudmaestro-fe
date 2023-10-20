@@ -32,7 +32,7 @@ const SeclectS3Toggle = ({diagram, uniquekey, finalToggleValue, setFinalToggleVa
     }
 
     useEffect(() => {           //여기 문제인 듯 함
-        console.log("final: ",finalToggleValue);
+        //console.log("final: ",finalToggleValue);
         if ( finalToggleValue[uniquekey]) {
             setText(finalToggleValue[uniquekey].storage);
             setS3Cost(finalToggleValue[uniquekey].cost);

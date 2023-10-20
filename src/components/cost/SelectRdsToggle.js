@@ -17,13 +17,13 @@ const onTypeOptions = [
  
 
 function rdsPrice(priceElement) {           //여기서 bad request가 뜬다
-  console.log("price까지는 오는 거니??",priceElement);
+  //console.log("price까지는 오는 거니??",priceElement);
   let dbengine=priceElement["engine"];
   let dbinstance=[priceElement["instancetype"]];
   let dbsize=[priceElement["size"]];
   let dbinstanceType=dbinstance+"."+dbsize;
 
-  console.log("dbengine: "+dbengine);
+  //console.log("dbengine: "+dbengine);
   return new Promise((resolve, reject) => {
     axios({
       url: '/api/v1/pricing-api/rds',
@@ -36,7 +36,7 @@ function rdsPrice(priceElement) {           //여기서 bad request가 뜬다
     })
     .then(function (response) {
       // 가정: response에 원하는 데이터가 있음
-      console.log("response",response.data[0].priceUSD);
+      //console.log("response",response.data[0].priceUSD);
       resolve(response.data[0].priceUSD);
     })
     .catch(function (error) {
@@ -48,7 +48,7 @@ function rdsPrice(priceElement) {           //여기서 bad request가 뜬다
 
 
 function fetchEngineData(dbengine, instanceType, setData, setLoading, setError){  //여기도 문제가 있는 듯 함
-  console.log("db에 접근 엔진:",dbengine);
+  //console.log("db에 접근 엔진:",dbengine);
   return new Promise((resolve, reject) => {setLoading(true);
     axios({
       url: '/api/v1/db-api/rds',
@@ -61,7 +61,7 @@ function fetchEngineData(dbengine, instanceType, setData, setLoading, setError){
     })
     .then(function (response) {
       setData(response.data);
-      console.log(response.data);
+      //console.log(response.data);
       
       const transformData = (data) => {
         const { instanceType, instanceSize } = data;
@@ -156,9 +156,9 @@ const SelectRdsToggle = ({ diagram, uniquekey, finalToggleValue, setFinalToggleV
     if (toggle1Value) {
       async function fetchOptions() {
         try {
-          console.log("엔진",toggle1Value);
+          //console.log("엔진",toggle1Value);
           const options = await fetchEngineData(toggle1Value, null, setData, setLoading, setError);
-          console.log("options",options);
+          //console.log("options",options);
           setToggle2Options(Object.keys(options));
           setDbOption(options);
           setToggle2Value(null);
@@ -198,7 +198,7 @@ const SelectRdsToggle = ({ diagram, uniquekey, finalToggleValue, setFinalToggleV
         finalToggleValue[uniqueKey] &&
         Object.keys(finalToggleValue[uniqueKey]).length === 4  
       ) {
-        console.log("setselect 전 finaltoggle입니당",Object.values(finalToggleValue[uniqueKey]["engine"]));
+        //console.log("setselect 전 finaltoggle입니당",Object.values(finalToggleValue[uniqueKey]["engine"]));
         setSelect([
           Object.values(finalToggleValue[uniqueKey]["engine"]),
           Object.values(finalToggleValue[uniqueKey]["instancetype"]),
@@ -214,7 +214,7 @@ const SelectRdsToggle = ({ diagram, uniquekey, finalToggleValue, setFinalToggleV
   }, [finalToggleValue, uniqueKey]);
 
   useEffect(() => {
-    console.log("hello", finalToggleValue[uniqueKey]);
+    //console.log("hello", finalToggleValue[uniqueKey]);
       const fetchPrice = async () => {
           if (finalToggleValue[uniqueKey] 
             && Object.keys(finalToggleValue[uniqueKey]).length == 4
@@ -222,16 +222,16 @@ const SelectRdsToggle = ({ diagram, uniquekey, finalToggleValue, setFinalToggleV
             && (Object.values(finalToggleValue[uniqueKey]["cost"]).includes("L"))
            ) {
               try {
-                console.log(finalToggleValue[uniqueKey], "가격인데...?? 이까지 오나??" ); // 이 부분 추가
+                //console.log(finalToggleValue[uniqueKey], "가격인데...?? 이까지 오나??" ); // 이 부분 추가
 
                 const calculatedPrice = await rdsPrice(finalToggleValue[uniqueKey]);
-                console.log("calcul", calculatedPrice);
+                //console.log("calcul", calculatedPrice);
 
                 setFinalToggleValue(prev => {
                   if (!prev[uniqueKey] ) {
                     return prev; // 이전 상태를 반환하거나 초기 상태를 설정할 수 있습니다.
                   }
-                  console.log("이까지 오니");
+                  //console.log("이까지 오니");
                   // const updated = [...prev[uniqueKey]];
                   // updated[3] = calculatedPrice;
                   // return { ...prev, [uniqueKey]: updated };
@@ -255,7 +255,7 @@ const SelectRdsToggle = ({ diagram, uniquekey, finalToggleValue, setFinalToggleV
             && finalToggleValue[uniqueKey]
             && Object.keys(finalToggleValue[uniqueKey]).length === 4
           ) {
-            console.log("setselect 전 finaltoggle입니당",finalToggleValue[uniqueKey]);
+            //console.log("setselect 전 finaltoggle입니당",finalToggleValue[uniqueKey]);
             setSelect([                 
               Object.values(finalToggleValue[uniqueKey]["engine"]),
               Object.values(finalToggleValue[uniqueKey]["instancetype"]),
@@ -297,9 +297,9 @@ const SelectRdsToggle = ({ diagram, uniquekey, finalToggleValue, setFinalToggleV
         //updated[3] ="Loading";
         //return { ...prev, [uniqueKey]: updated };
       });
-      console.log("1번 성공저장");
+      //console.log("1번 성공저장");
     } else if (index === 1) {
-      console.log("전");
+      //console.log("전");
       setToggle2Value(newValue);
       setFinalToggleValue(prev => {
         // const updated = [...prev[uniqueKey]];
@@ -314,16 +314,16 @@ const SelectRdsToggle = ({ diagram, uniquekey, finalToggleValue, setFinalToggleV
         return { ...prev, [uniqueKey]: updatedEntry };
       });
       setToggle3Value(null);
-      console.log("2번째 성공 저장");
+      //console.log("2번째 성공 저장");
     } else if (index === 2) {
-      console.log("세번째까지 오네엽")
+      //console.log("세번째까지 오네엽")
       setToggle3Value(newValue);
       setToggle4Options(onTypeOptions);
       setFinalToggleValue(prev => {
         // const updated = [...prev[uniqueKey]];
         // updated[index] = newValue;
         // updated[3] ="Loading";
-        // console.log("Updated finalToggleValue:", updated); // 이 부분 추가
+        // //console.log("Updated finalToggleValue:", updated); // 이 부분 추가
         // return { ...prev, [uniqueKey]: updated };
         const updatedEntry = {...prev[uniqueKey]};
         updatedEntry.size = newValue;
@@ -334,7 +334,7 @@ const SelectRdsToggle = ({ diagram, uniquekey, finalToggleValue, setFinalToggleV
   };
 
 
-  console.log("FinalToggle",finalToggleValue);
+  //console.log("FinalToggle",finalToggleValue);
 
   const renderToggle = (index, Select, value, options) => {
     return (

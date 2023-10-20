@@ -12,6 +12,7 @@ import { useMediaQuery } from "react-responsive";
 import { nodeDataArrayPalette } from "../db/Node";
 
 import { useLocation, useNavigate } from "react-router-dom";
+import { Alert } from "antd";
 
 // 페이지
 // import useReadJSON from "./useReadJSON";
@@ -20,13 +21,12 @@ import Palette from "../components/Palette";
 import "../styles/Draw.css";
 import { useFileUpload } from "../components/useFileInput";
 import { summaryFile } from "../apis/file";
-import { Navigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 function Draw() {
   const navigate = useNavigate();
   const { data } = useFileUpload();
-  console.log("draw data ", data);
+  //console.log("draw data ", data);
 
   const isDesktopOrLaptop = useMediaQuery({ query: "(min-width: 700px)" });
   const paletteClassName = isDesktopOrLaptop
@@ -39,21 +39,34 @@ function Draw() {
   const [finalToggleValue, setFinalToggleValue] = useState({});
   const [selectedNodeData, setSelectedNodeData] = useState(null); // <-- 상태 변수를 추가합니다.
   const [showToggle, setShowToggle] = useState(true);
+  const [alertMessage, setAlertMessage] = useState(null);
 
-  const { initDiagram, diagram, showSelectToggle, clickedNodeKey } = useGoJS(
-    setSelectedNodeData,
-    setShowToggle,
-    showToggle
-  );
+  const {
+    initDiagram,
+    diagram,
+    showSelectToggle,
+    clickedNodeKey,
+    DiagramCheck,
+  } = useGoJS(setSelectedNodeData, setShowToggle, showToggle);
 
-  console.log("show", showSelectToggle.value);
+  //console.log("show", showSelectToggle.value);
 
   // Go to Draw page 완료
 
   const location = useLocation();
   const file = location.state ? location.state.file : null;
   const from = location.from;
-  // console.log(file);
+  // //console.log(file);
+
+  useEffect(() => {
+    if (
+      DiagramCheck &&
+      DiagramCheck.result &&
+      DiagramCheck.result.status === "success"
+    ) {
+      setAlertMessage(DiagramCheck.result.message);
+    }
+  }, [DiagramCheck]);
 
   useEffect(() => {
     if (file && diagram) {
@@ -81,10 +94,10 @@ function Draw() {
       try {
         // FormData를 서버에 전송
         const response = await summaryFile(formData);
-        console.log(response.data);
+        //console.log(response.data);
         navigate("/summary", { state: { file: response.data } });
       } catch (error) {
-        console.log("error", error);
+        //console.log("error", error);
       }
     }
   };
@@ -119,6 +132,17 @@ function Draw() {
               setFinalToggleValue={setFinalToggleValue}
             />
           </div>
+          <div className="alert-container">
+            {/* <Alert message="Success Tips" type="success" showIcon closable />
+            <Alert
+              message="Informational Notes"
+              type="info"
+              showIcon
+              closable
+            />
+            <Alert message="Warning" type="warning" showIcon closable /> */}
+          </div>
+
           <div className="workspace">
             <div className="palette">
               <Palette
@@ -127,6 +151,15 @@ function Draw() {
               />
             </div>
             <div className="diagram">
+              {alertMessage && (
+                <StyleAlert
+                  message={alertMessage}
+                  type="error"
+                  showIcon
+                  closable
+                  onClose={() => setAlertMessage(null)}
+                />
+              )}
               {showToggle &&
                 showSelectToggle.value &&
                 showSelectToggle.key.includes("EC2") && (
@@ -161,7 +194,7 @@ function Draw() {
                     readOnly
                   />
                 )}
-                {showToggle &&
+              {showToggle &&
                 showSelectToggle.value &&
                 showSelectToggle.key.includes("AWS_WAF") && (
                   <SelectWafToggle
@@ -175,6 +208,7 @@ function Draw() {
               {clickedNodeKey && (
                 <div className="clicked_key">{clickedNodeKey}</div>
               )}
+
               <StyledDiagram>
                 <ReactDiagram
                   initDiagram={initDiagram}
@@ -204,4 +238,13 @@ const StyledDiagram = styled.div`
   width: 100%;
   height: 100%; // 원하는 높이로 설정
   border: 1px solid black;
+`;
+
+const StyleAlert = styled(Alert)`
+  position: absolute;
+  width: 20%;
+  font-size: 12px;
+  z-index: 100;
+  left: 78%;
+  top: 20%;
 `;

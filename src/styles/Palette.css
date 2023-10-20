@@ -100,22 +100,22 @@ input[type="radio"]:checked ~ .tab-content {
 
 /* Miscellaneous styles */
 .search-container{
+  padding-top: 10px;
+  padding-bottom:10px;
   width: 100%;
   text-align: left;
 
-  font-size: 8px;
+  /* font-size: 80px; */
   height: 3vh;
   display: flex;
 }
 
 .filtered-nodes-container {
-
   font-size: 7px;
 }
 
 .filtered-nodes-container {
   font-size: 7px;
-
   width: 100%;
   padding: 10px;
   max-height: 50vh;
@@ -137,7 +137,7 @@ input[type="text"] {
   outline: none;
   border: 1px solid #ccc;
   padding: 10px;
-  width: 250px;
+  width:100%;
   border-radius: 5px;
   font-size: 14px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);

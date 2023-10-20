@@ -14,7 +14,6 @@ import MyDesign from "./pages/MyDesign";
 import InputNet from "./pages/InputNetwork";
 import InputAWS from "./pages/InputAWS";
 
-import Back from "./pages/Backend/BackEnd";
 import Summary from "./pages/Summary";
 
 
@@ -29,9 +28,6 @@ function App() {
               <Route exact path="/" element={<Home />} />
 
               <Route exact path="/home" element={<Home />} />
-
-              <Route path="/ec2" element={<Back/>}/>
-
 
               <Route path="/about" element={<Introduce />} />
               <Route path="/about/example" element={<Example />} />
