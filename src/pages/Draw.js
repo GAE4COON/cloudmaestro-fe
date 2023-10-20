@@ -163,7 +163,7 @@ function Draw() {
                 )}
                 {showToggle &&
                 showSelectToggle.value &&
-                showSelectToggle.key.includes("WAF") && (
+                showSelectToggle.key.includes("AWS_WAF") && (
                   <SelectWafToggle
                     diagram={diagram}
                     uniquekey={showSelectToggle.key}
