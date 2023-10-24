@@ -154,7 +154,7 @@ function Draw() {
               />
             </div>
             <div className="diagram">
-              <Space direction="vertical" style={{ width: "100%" }}>
+              <StyleSpace direction="vertical">
                 {alertMessage && (
                   <StyleAlert
                     message={alertMessage}
@@ -175,7 +175,7 @@ function Draw() {
                     // }
                   />
                 )}
-              </Space>
+              </StyleSpace>
               {showToggle &&
                 showSelectToggle.value &&
                 showSelectToggle.key.includes("EC2") && (
@@ -256,11 +256,15 @@ const StyledDiagram = styled.div`
   border: 1px solid black;
 `;
 
-const StyleAlert = styled(Alert)`
+const StyleSpace = styled(Space)`
   position: absolute;
   width: 20%;
-  font-size: 12px;
   z-index: 100;
   left: 78%;
   top: 20%;
+`;
+
+const StyleAlert = styled(Alert)`
+  position: relative;
+  width: 100%;
 `;
