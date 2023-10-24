@@ -328,7 +328,7 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
       $(
         go.Panel,
         "Horizontal",
-        { alignment: go.Spot.Top, alignmentFocus: go.Spot.Bottom },
+        { alignment: new go.Spot(1, 1), alignmentFocus: new go.Spot(1, 0) },
         $(
           go.Panel,
           "Spot",
@@ -346,7 +346,7 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
             },
           },
           $(go.Shape, "Circle", {
-            fill: "blue",
+            fill: "rgba(82,96,208,0.7)",
             stroke: null,
             width: 20,
             height: 20,
