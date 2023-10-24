@@ -65,7 +65,7 @@ const SeclectS3Toggle = ({diagram, uniquekey, finalToggleValue, setFinalToggleVa
             value={text}
             placeholder="Storage(GB)"
             />
-            <div><p>$ {s3Cost} /Hour</p></div> 
+            <div><p>${s3Cost}/Hour</p></div> 
         </div>
     )
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../../styles/SelectToggle.css";
 import axios from 'axios';
+import { searchDb, searchPrice } from "../../apis/price.js";
 
 const baseOptions = [
     "PostgreSQL",
@@ -22,21 +23,14 @@ function rdsPrice(priceElement) {           //여기서 bad request가 뜬다
   let dbinstance=[priceElement["instancetype"]];
   let dbsize=[priceElement["size"]];
   let dbinstanceType=dbinstance+"."+dbsize;
-
+  const dbData={
+    "dbEngine": dbengine,
+    "instanceType": dbinstanceType, 
+  };
   //console.log("dbengine: "+dbengine);
   return new Promise((resolve, reject) => {
-    axios({
-      url: '/api/v1/pricing-api/rds',
-      method: 'post',
-      data: {
-        "dbEngine": dbengine,
-        "instanceType": dbinstanceType,
-      },
-      baseURL: 'http://localhost:8080',
-    })
+    searchPrice(dbData)
     .then(function (response) {
-      // 가정: response에 원하는 데이터가 있음
-      //console.log("response",response.data[0].priceUSD);
       resolve(response.data[0].priceUSD);
     })
     .catch(function (error) {
@@ -49,19 +43,13 @@ function rdsPrice(priceElement) {           //여기서 bad request가 뜬다
 
 function fetchEngineData(dbengine, instanceType, setData, setLoading, setError){  //여기도 문제가 있는 듯 함
   //console.log("db에 접근 엔진:",dbengine);
+  const dbData={
+    "engine": dbengine, 
+  };
   return new Promise((resolve, reject) => {setLoading(true);
-    axios({
-      url: '/api/v1/db-api/rds',
-      method: 'post',
-      data: {
-        "engine": dbengine,
-        // "instanceType":"hello"
-      },
-      baseURL: 'http://localhost:8080',
-    })
+    searchDb(dbData)                    //api로 변경
     .then(function (response) {
       setData(response.data);
-      //console.log(response.data);
       
       const transformData = (data) => {
         const { instanceType, instanceSize } = data;
@@ -77,33 +65,14 @@ function fetchEngineData(dbengine, instanceType, setData, setLoading, setError){
         return resultMap;
     };
 
-    if(dbengine == "PostgreSQL") {
-        const transformedData=transformData(response.data);
-        resolve(transformedData);
-    }
-    
-    if(dbengine == "MySQL") {
-        const transformedData=transformData(response.data);
-        resolve(transformedData);
+
+    const transformedData = transformData(response.data);
+    if (["PostgreSQL", "MySQL", "SQLServer", "AuroraPostgresMySQL", "MariaDB", "Oracle"].includes(dbengine)) {
+      resolve(transformedData);
     }
 
-    if (dbengine == "SQLServer") {
-        const transformedData=transformData(response.data);
-        resolve(transformedData);    }
-
-    if (dbengine == "AuroraPostgresMySQL") {
-        const transformedData=transformData(response.data);
-        resolve(transformedData);    }
-    
-    if (dbengine == "MariaDB") {
-        const transformedData=transformData(response.data);
-        resolve(transformedData);    }
-    
-    if (dbengine == "Oracle") {
-        const transformedData=transformData(response.data);
-        resolve(transformedData);    }
-        setLoading(false);
     })
+
     .catch(function (error) {
       console.error("Error occurred:", error);
       setError(error);

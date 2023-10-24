@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import '../../styles/SelectWafToggle.css';
+import { Input } from 'antd';
+import styled from "styled-components";
 
 const SelectWafToggle = ({diagram, uniquekey, finalToggleValue, setFinalToggleValue}) => {
     const [text1, setText1] = useState("");
@@ -95,23 +97,29 @@ const SelectWafToggle = ({diagram, uniquekey, finalToggleValue, setFinalToggleVa
     }
 
     return (
-        <div className="select-s3-toggle">
-            <input 
+        <div className="select-waf-toggle">
+            <Input 
                 type="text"
                 onChange={onChange1}
                 value={text1}
                 placeholder="Rule"
             />
-            <input 
+            <Input 
                 type="text"
                 onChange={onChange2}
                 value={text2}
                 placeholder="Request"
             />
-            <div><p>$ {wafCost} /Mo</p></div>
+            <div><p>${wafCost}/Mo</p></div>
         </div>
     )
 
 };
 
 export default SelectWafToggle;
+
+const StyledInput = styled(Input)`
+  &&::placeholder {
+    background-image: none;
+  }
+`;

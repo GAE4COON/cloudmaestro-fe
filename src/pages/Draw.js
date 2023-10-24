@@ -4,7 +4,7 @@ import { ReactDiagram } from "gojs-react";
 import styled from "styled-components";
 
 import useGoJS from "./useGoJS";
-import SelectEc2Toggle from "../components/cost/SelectEc2Toggle";
+import SelectEc2Toggle from "../components/cost/SelectEc22Toggle";
 import SelectRdsToggle from "../components/cost/SelectRdsToggle";
 import SelectS3Toggle from "../components/cost/SelectS3Toggle";
 import SelectWafToggle from "../components/cost/SelectWafToggle";
@@ -178,7 +178,8 @@ function Draw() {
               </StyleSpace>
               {showToggle &&
                 showSelectToggle.value &&
-                showSelectToggle.key.includes("EC2") && (
+                showSelectToggle.key.includes("EC2") && 
+                  ! (showSelectToggle.key.includes(" ") ) &&(
                   <SelectEc2Toggle
                     diagram={diagram}
                     uniquekey={showSelectToggle.key}
@@ -212,7 +213,7 @@ function Draw() {
                 )}
               {showToggle &&
                 showSelectToggle.value &&
-                showSelectToggle.key.includes("WAF") && (
+                showSelectToggle.key.includes("AWS_WAF") && (
                   <SelectWafToggle
                     diagram={diagram}
                     uniquekey={showSelectToggle.key}
