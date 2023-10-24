@@ -12,7 +12,7 @@ import { useMediaQuery } from "react-responsive";
 import { nodeDataArrayPalette } from "../db/Node";
 
 import { useLocation, useNavigate } from "react-router-dom";
-import { Alert } from "antd";
+import { Alert, Space } from "antd";
 
 // 페이지
 // import useReadJSON from "./useReadJSON";
@@ -40,6 +40,10 @@ function Draw() {
   const [selectedNodeData, setSelectedNodeData] = useState(null); // <-- 상태 변수를 추가합니다.
   const [showToggle, setShowToggle] = useState(true);
   const [alertMessage, setAlertMessage] = useState(null);
+  const [NodeGuideLine, setNodeGuideLine] = useState({
+    key: null,
+    message: null,
+  });
 
   const {
     initDiagram,
@@ -47,6 +51,7 @@ function Draw() {
     showSelectToggle,
     clickedNodeKey,
     DiagramCheck,
+    NodeGuide,
   } = useGoJS(setSelectedNodeData, setShowToggle, showToggle);
 
   //console.log("show", showSelectToggle.value);
@@ -57,6 +62,14 @@ function Draw() {
   const file = location.state ? location.state.file : null;
   const from = location.from;
   // //console.log(file);
+
+  useEffect(() => {
+    if (NodeGuide) {
+      setNodeGuideLine({ key: NodeGuide, message: "이거는 뭐 해야돼요" });
+    } else {
+      setNodeGuideLine({ key: null, message: null });
+    }
+  }, [NodeGuide]);
 
   useEffect(() => {
     if (
@@ -132,16 +145,6 @@ function Draw() {
               setFinalToggleValue={setFinalToggleValue}
             />
           </div>
-          <div className="alert-container">
-            {/* <Alert message="Success Tips" type="success" showIcon closable />
-            <Alert
-              message="Informational Notes"
-              type="info"
-              showIcon
-              closable
-            />
-            <Alert message="Warning" type="warning" showIcon closable /> */}
-          </div>
 
           <div className="workspace">
             <div className="palette">
@@ -151,15 +154,28 @@ function Draw() {
               />
             </div>
             <div className="diagram">
-              {alertMessage && (
-                <StyleAlert
-                  message={alertMessage}
-                  type="error"
-                  showIcon
-                  closable
-                  onClose={() => setAlertMessage(null)}
-                />
-              )}
+              <Space direction="vertical" style={{ width: "100%" }}>
+                {alertMessage && (
+                  <StyleAlert
+                    message={alertMessage}
+                    type="error"
+                    showIcon
+                    closable
+                    onClose={() => setAlertMessage(null)}
+                  />
+                )}
+                {NodeGuideLine && NodeGuideLine.key && (
+                  <StyleAlert
+                    message={NodeGuideLine.key}
+                    description={NodeGuideLine.message}
+                    type="info"
+                    // closable
+                    // onClose={() =>
+                    //   setNodeGuideLine({ key: null, message: null })
+                    // }
+                  />
+                )}
+              </Space>
               {showToggle &&
                 showSelectToggle.value &&
                 showSelectToggle.key.includes("EC2") && (
