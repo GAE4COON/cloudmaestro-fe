@@ -57,9 +57,12 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
               if (response && response.data) {
                 console.log("API Response:", response.data);
                 setDiagramCheck(response.data);
-                // if (response.data.result.status === "fail") {
-                //   diagram.undoManager.undo();
-                // }
+                if (response.data.result.status === "fail") {
+                  console.log(
+                    "링크 취소해도 되는 부분.. 주석처리만 하니까 안 올라가서 우선 콘솔로그라도 띄움"
+                  );
+                  //   diagram.undoManager.undo();
+                }
               }
             } catch (error) {
               // Handle API error here
@@ -154,15 +157,15 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
         ),
         $(
           go.TextBlock,
-        {
-          font: "bold 12pt sans-serif",
-          alignment: go.Spot.TopLeft,
-          portId: "",
-          cursor: "pointer",
-          fromLinkable: true,
-          toLinkable: true,
-        },
-        new go.Binding("text", "key")
+          {
+            font: "bold 12pt sans-serif",
+            alignment: go.Spot.TopLeft,
+            portId: "",
+            cursor: "pointer",
+            fromLinkable: true,
+            toLinkable: true,
+          },
+          new go.Binding("text", "key")
         ),
 
         // modify or delete -> if unnecessary
