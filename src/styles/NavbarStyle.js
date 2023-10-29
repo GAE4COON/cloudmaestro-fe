@@ -6,9 +6,9 @@ export const HamburgerContainer = styled.div`
   justify-content: flex-end;
   flex: 1;
 
-  // @media screen and (min-width: 769px) {
-  //   display: none;
-  // }
+  @media screen and (min-width: 769px) {
+    display: none;
+  }
 `;
 
 export const Hamburger = styled.div`
@@ -24,9 +24,9 @@ export const Hamburger = styled.div`
     background: #333;
   }
 
-  // @media screen and (max-width: 768px) {
-  //   display: flex;
-  // }
+  @media screen and (max-width: 768px) {
+    display: flex;
+  }
 `;
 const fadeIn = keyframes`
   from {
@@ -102,20 +102,20 @@ export const NavMenuLeft = styled.div`
   text-align: center;
   transition: all 0.3s ease-in-out; // Add this line for transition effect
 
-  // @media screen and (max-width: 768px) {
-  //   display: flex; // Show the menu all the time but slide it in and out
-  //   flex-direction: column;
-  //   width: 50%;
-  //   height: 200px;
-  //   text-align: center;
-  //   position: fixed;
+  @media screen and (max-width: 768px) {
+    display: flex; // Show the menu all the time but slide it in and out
+    flex-direction: column;
+    width: 50%;
+    height: 200px;
+    text-align: center;
+    position: fixed;
 
-  //   right: ${({ $isOpen }) => ($isOpen ? "0" : "-50%")}; // Notice the change here
-  //   visibility: ${({ $isOpen }) => ($isOpen ? "visible" : "hidden")}; // And here
-  //   top: 40px;
-  //   background: #fff;
-  //   z-index: 1;
-  // }
+    right: ${({ $isOpen }) => ($isOpen ? "0" : "-50%")}; // Notice the change here
+    visibility: ${({ $isOpen }) => ($isOpen ? "visible" : "hidden")}; // And here
+    top: 40px;
+    background: #fff;
+    z-index: 1;
+  }
 `;
 
 export const NavMenuRight = styled.div`
@@ -125,17 +125,17 @@ export const NavMenuRight = styled.div`
   justify-content: flex-end;
   margin-right: 50px;
 
-  // @media screen and (max-width: 768px) {
-  //   display: ${({ $isOpen }) => ($isOpen ? "flex" : "none")}; // Notice the change here
-  //   flex-direction: column;
-  //   width: 100%;
-  //   text-align: center;
-  //   position: absolute;
-  //   top: 40px;
-  //   left: 0;
-  //   background: #9ab7c1;
-  //   z-index: 1;
-  // }
+  @media screen and (max-width: 768px) {
+    display: ${({ $isOpen }) => ($isOpen ? "flex" : "none")}; // Notice the change here
+    flex-direction: column;
+    width: 100%;
+    text-align: center;
+    position: absolute;
+    top: 40px;
+    left: 0;
+    background: #9ab7c1;
+    z-index: 1;
+  }
 `;
 
 
@@ -192,21 +192,21 @@ export const NavLink = styled(Link)`
     display: flex;
   }
 
-  // @media screen and (max-width: 768px) {
-  //   justify-content: center; // 내용 중앙 정렬
-  //   width: 100%; // 가로 길이 설정
-  //   padding: 0 0rem;
+  @media screen and (max-width: 768px) {
+    justify-content: center; // 내용 중앙 정렬
+    width: 100%; // 가로 길이 설정
+    padding: 0 0rem;
 
-  //   &:hover {
-  //     background: #dddddd;
-  //   }
-  // }
+    &:hover {
+      background: #dddddd;
+    }
+  }
 `;
 
 export const SpecialNavLink = styled(NavLink)`
-  // @media screen and (min-width: 769px) {
-  //   display: none;
-  // }
+  @media screen and (min-width: 769px) {
+    display: none;
+  }
 `;
 
 export const NavBtn = styled.nav`
@@ -214,9 +214,9 @@ export const NavBtn = styled.nav`
   align-items: center;
   margin-right: 10px;
 
-  // @media screen and (max-width: 768px) {
-  //   display: none;
-  // }
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
 `;
 
 export const NavBtnLink = styled(Link)`

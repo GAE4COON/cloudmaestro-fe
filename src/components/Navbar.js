@@ -4,8 +4,6 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { useLocation } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import jwtDecode from "jwt-decode";
-import { Menu, Dropdown, Button, Avatar, Layout } from "antd";
-
 
 import {
     NavContainer,
@@ -137,12 +135,28 @@ const Navbar = () => {
                         )}
                     </div>
 
+
+                    {!user && (
+                        <SpecialNavLink
+                            className="special-nav-link"
+                            onClick={closeMenu}
+                            to="/sign-up"
+                        >
+                            Login Page
+                        </SpecialNavLink>
+                    )}
                     {user && (
                         <SpecialNavLink className="special-nav-link" onClick={logoutNclose}>
                             SignOut
                         </SpecialNavLink>
                     )}
                 </NavMenuLeft>
+
+                <HamburgerContainer>
+                    <Hamburger onClick={() => setIsOpen(!isOpen)}>
+                        <GiHamburgerMenu size={50} color="#3b6c7d" />
+                    </Hamburger>
+                </HamburgerContainer>
 
                 <NavMenuRight $isOpen={isOpen}>
                     {user ? (

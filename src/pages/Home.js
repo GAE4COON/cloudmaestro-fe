@@ -28,7 +28,7 @@ function Home() {
   // }, [cookies]);
 
   const handleAutoDraw = () => {
-    navigate("/home/autodraw");
+    navigate("/home/auto");
   };
 
   const handleJustDraw = () => {

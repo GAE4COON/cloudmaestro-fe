@@ -4,7 +4,6 @@ import Home from "./pages/Home";
 import Draw from "./pages/Draw";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
-import Navbar2 from "./components/Navbar2";
 
 import Signup from "./pages/SignUp";
 import Signin from "./pages/SignIn";
@@ -13,7 +12,7 @@ import Introduce from "./pages/Introduce";
 import Example from "./pages/Example";
 import MyDesign from "./pages/MyDesign";
 
-import InputNet from "./pages/InputNetwork";
+import AutoDraw from "./pages/AutoDraw";
 import InputAWS from "./pages/InputAWS";
 
 import Summary from "./pages/Summary";
@@ -25,7 +24,6 @@ function App() {
       <AuthProvider>
         <BrowserRouter>
           <Navbar />
-          {/* <Navbar2 /> */}
 
           <div className="main-content">
             <Routes>
@@ -41,7 +39,7 @@ function App() {
               <Route path="/sign-up" element={<Signup />} />
               <Route path="/sign-in" element={<Signin />} />
 
-              <Route path="/draw/auto" element={<InputNet />} />
+              <Route path="/home/auto" element={<AutoDraw />} />
               <Route path="/input/aws" element={<InputAWS />} />
 
               <Route path="/mypage/design" element={<MyDesign />} />
