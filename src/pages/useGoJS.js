@@ -57,6 +57,9 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
               if (response && response.data) {
                 console.log("API Response:", response.data);
                 setDiagramCheck(response.data);
+                // if (response.data.result.status === "fail") {
+                //   diagram.undoManager.undo();
+                // }
               }
             } catch (error) {
               // Handle API error here
