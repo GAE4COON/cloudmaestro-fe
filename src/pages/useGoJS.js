@@ -152,6 +152,18 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
           }),
           new go.Binding("text", "key")
         ),
+        $(
+          go.TextBlock,
+        {
+          font: "bold 12pt sans-serif",
+          alignment: go.Spot.TopLeft,
+          portId: "",
+          cursor: "pointer",
+          fromLinkable: true,
+          toLinkable: true,
+        },
+        new go.Binding("text", "key")
+        ),
 
         // modify or delete -> if unnecessary
         new go.Binding("fromLinkable", "key", function (k) {
