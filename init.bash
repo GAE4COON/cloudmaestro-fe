@@ -14,3 +14,5 @@ npm install react-table --save
 npm i antd
 npm i react-cookie
 npm install gsap
+npm install crypto-js
+npm install -D @types/crypto-js

@@ -9,6 +9,7 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
   const [clickedNodeKey, setClickedNodeKey] = useState();
   const [showSelectToggle, setShowSelectToggle] = useState({ value: false });
   const [DiagramCheck, setDiagramCheck] = useState(null);
+  const [NodeGuide, setNodeGuide] = useState(null);
 
   useEffect(() => {
     //console.log("Updated clickedNodeKey:", clickedNodeKey);
@@ -310,7 +311,6 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
         relinkableFrom: true,
         relinkableTo: true,
       },
-
       // for link shape
       $(go.Shape, { strokeWidth: 2, stroke: "#000", name: "LinkShape" }),
       // for arrowhead 여기서 standaer
@@ -326,6 +326,50 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
         stroke: null,
         name: "FromArrow",
       })
+    );
+
+    diagram.nodeTemplate.selectionAdornmentTemplate = $(
+      go.Adornment,
+      "Spot",
+      $(
+        go.Panel,
+        "Auto",
+        $(go.Shape, { fill: null, stroke: "dodgerblue", strokeWidth: 2 }),
+        $(go.Placeholder)
+      ),
+      $(
+        go.Panel,
+        "Horizontal",
+        { alignment: new go.Spot(1, 1), alignmentFocus: new go.Spot(1, 0) },
+        $(
+          go.Panel,
+          "Spot",
+          {
+            width: 20,
+            height: 20,
+            mouseEnter: function (e, panel) {
+              const node = panel.part.adornedPart;
+              if (node instanceof go.Node) {
+                setNodeGuide(node.data.key);
+              }
+            },
+            mouseLeave: function (e, panel) {
+              setNodeGuide(null);
+            },
+          },
+          $(go.Shape, "Circle", {
+            fill: "rgba(82,96,208,0.7)",
+            stroke: null,
+            width: 20,
+            height: 20,
+          }),
+          $(go.TextBlock, "?", {
+            font: "bold 10pt sans-serif",
+            stroke: "white",
+            verticalAlignment: go.Spot.Center,
+          })
+        )
+      )
     );
 
     diagram.addDiagramListener("ObjectSingleClicked", function (e) {
@@ -378,6 +422,7 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
     showSelectToggle,
     clickedNodeKey,
     DiagramCheck,
+    NodeGuide,
   };
 };
 
