@@ -17,14 +17,37 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
-    - name: Set up JDK 11
-      uses: actions/setup-java@v2
-      with:
-        java-version: '11'
-        distribution: 'temurin'
-        
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
+    - name: Check Node v # Node v 확인
+        run: node -v
+    - name: Install Dependencies # 의존 파일 설치
+        run: yarn install --frozen-lockfile
+    - name: Build # React Build
+        run: yarn build
+        env:
+          CI: ""
+
+    - name: zip create
+        # zip 파일을 만듭니다(파일명은 자유, 대신 아래 workflow에 적을 파일명과 동일하게 맞춰주세요).
+        run: zip -qq -r ./build-fe.zip .
+        shell: bash
+
+    - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
     
-    - name: Build with Gradle
-      run: ./gradlew clean build
+    - name: Upload to S3 # Upload build file to S3
+            env:
+              AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY_ID }}
+              AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
+            run: |
+              aws s3 cp --region ap-northeast-2 ./build-fe.zip s3://cloudmaestro-front/build-fe.zip
+
+    - name: Deploy # Deploy to EC2
+          run: aws deploy create-deployment
+            --application-name Cloudmaestro-front
+            --deployment-config-name CodeDeployDefault.AllAtOnce
+            --deployment-group-name Cloudmaestro-front
+            --s3-location bucket=cloudmaestro-front,key=build-fe.zip,bundleType=zip
