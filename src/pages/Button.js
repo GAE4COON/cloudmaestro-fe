@@ -71,8 +71,14 @@ const Button = ({
     }
   };
 
+  let rehostCount=0;
+
   const handleLoad = async () => {
     try {
+      if (rehostCount >= 1) {
+        alert('!!!!!!!!!!Cloud를 Rehost 할 수 없습니다!!!!!!!!!');
+        return;
+      }
       ////console.log("modelmodel",JSON.stringify(diagram.model));
 
       const jsonString = diagram.model.toJson();
@@ -83,6 +89,7 @@ const Button = ({
       const Jdata = response.data.result;
 
       diagram.model = go.Model.fromJson(Jdata);
+      rehostCount++;
     } catch (error) {
       console.error("rehost error: ", error);
     }
