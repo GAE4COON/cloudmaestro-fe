@@ -1,15 +1,18 @@
 import React, { useState, useCallback, useEffect } from "react";
 import * as go from "gojs";
 import { ReactDiagram } from "gojs-react";
+import styled from "styled-components";
 
 import useGoJS from "./useGoJS";
-import SelectEc2Toggle from "../components/cost/SelectEc2Toggle";
+import SelectEc2Toggle from "../components/cost/SelectEc22Toggle";
 import SelectRdsToggle from "../components/cost/SelectRdsToggle";
 import SelectS3Toggle from "../components/cost/SelectS3Toggle";
+import SelectWafToggle from "../components/cost/SelectWafToggle";
 import { useMediaQuery } from "react-responsive";
 import { nodeDataArrayPalette } from "../db/Node";
 
 import { useLocation, useNavigate } from "react-router-dom";
+import { Alert, Space } from "antd";
 
 // 페이지
 // import useReadJSON from "./useReadJSON";
@@ -18,14 +21,12 @@ import Palette from "../components/Palette";
 import "../styles/Draw.css";
 import { useFileUpload } from "../components/useFileInput";
 import { summaryFile } from "../apis/file";
-import { Navigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 function Draw() {
-
   const navigate = useNavigate();
   const { data } = useFileUpload();
-  console.log("draw data ", data);
+  //console.log("draw data ", data);
 
   const isDesktopOrLaptop = useMediaQuery({ query: "(min-width: 700px)" });
   const paletteClassName = isDesktopOrLaptop
@@ -38,18 +39,47 @@ function Draw() {
   const [finalToggleValue, setFinalToggleValue] = useState({});
   const [selectedNodeData, setSelectedNodeData] = useState(null); // <-- 상태 변수를 추가합니다.
   const [showToggle, setShowToggle] = useState(true);
+  const [alertMessage, setAlertMessage] = useState(null);
+  const [NodeGuideLine, setNodeGuideLine] = useState({
+    key: null,
+    message: null,
+  });
 
-  const { initDiagram, diagram, showSelectToggle, clickedNodeKey } =
-    useGoJS(setSelectedNodeData, setShowToggle, showToggle);
+  const {
+    initDiagram,
+    diagram,
+    showSelectToggle,
+    clickedNodeKey,
+    DiagramCheck,
+    NodeGuide,
+  } = useGoJS(setSelectedNodeData, setShowToggle, showToggle);
 
-  console.log("show", showSelectToggle.value)
+  //console.log("show", showSelectToggle.value);
 
   // Go to Draw page 완료
 
   const location = useLocation();
   const file = location.state ? location.state.file : null;
   const from = location.from;
-  // console.log(file);
+  // //console.log(file);
+
+  useEffect(() => {
+    if (NodeGuide) {
+      setNodeGuideLine({ key: NodeGuide, message: "이거는 뭐 해야돼요" });
+    } else {
+      setNodeGuideLine({ key: null, message: null });
+    }
+  }, [NodeGuide]);
+
+  useEffect(() => {
+    if (
+      DiagramCheck &&
+      DiagramCheck.result &&
+      DiagramCheck.result.status === "fail"
+    ) {
+      setAlertMessage(DiagramCheck.result.message);
+    }
+  }, [DiagramCheck]);
 
   useEffect(() => {
     if (file && diagram) {
@@ -57,34 +87,34 @@ function Draw() {
     }
   }, [file, diagram]);
 
-  
   const summaryRequest = async () => {
     if (diagram) {
       let jsonData = diagram.model.toJson();
       jsonData = JSON.parse(jsonData);
       jsonData.cost = finalToggleValue; // ec2도 해야할 듯
-  
+
       const formData = new FormData(); // FormData 객체 생성
-  
+
       // JSON 데이터를 문자열로 변환하여 FormData에 추가
       formData.append("jsonData", JSON.stringify(jsonData));
-  
+
       // 파일 데이터를 FormData에 추가
-      const fileData = new Blob([JSON.stringify(jsonData)], { type: "application/json" });
+      const fileData = new Blob([JSON.stringify(jsonData)], {
+        type: "application/json",
+      });
       formData.append("file", fileData, "diagram.json");
-  
+
       try {
         // FormData를 서버에 전송
         const response = await summaryFile(formData);
-        console.log(response.data);
-        navigate('/summary', { state: { file: response.data } });
+        //console.log(response.data);
+        navigate("/summary", { state: { file: response.data } });
       } catch (error) {
-        console.log("error", error);
+        //console.log("error", error);
       }
     }
   };
-  
-  
+
   const handleNodeSelect = useCallback(
     (label) => {
       if (diagram) {
@@ -107,23 +137,50 @@ function Draw() {
       <div className="Draw">
         <div className="container">
           <div className="button-container">
-          <Button diagram={diagram} showToggle={showToggle} setShowToggle={setShowToggle} finalToggleValue={finalToggleValue} setFinalToggleValue={setFinalToggleValue} />
+            <Button
+              diagram={diagram}
+              showToggle={showToggle}
+              setShowToggle={setShowToggle}
+              finalToggleValue={finalToggleValue}
+              setFinalToggleValue={setFinalToggleValue}
+            />
           </div>
-          <div className="createspace">
-          
-            <div className="workspace">
-             
-              <div className="palette">
 
-                <Palette
-                  nodeDataArray={nodeDataArrayPalette}
-                  divClassName={paletteClassName}
-                />
-
-              </div>
-                  <div className="diagram">
-                  { showToggle && showSelectToggle.value && showSelectToggle.key.includes('EC2') && (
-                    <SelectEc2Toggle
+          <div className="workspace">
+            <div className="palette">
+              <Palette
+                nodeDataArray={nodeDataArrayPalette}
+                divClassName={paletteClassName}
+              />
+            </div>
+            <div className="diagram">
+              <StyleSpace direction="vertical">
+                {alertMessage && (
+                  <StyleAlert
+                    message={alertMessage}
+                    type="error"
+                    showIcon
+                    closable
+                    onClose={() => setAlertMessage(null)}
+                  />
+                )}
+                {NodeGuideLine && NodeGuideLine.key && (
+                  <StyleAlert
+                    message={NodeGuideLine.key}
+                    description={NodeGuideLine.message}
+                    type="info"
+                    // closable
+                    // onClose={() =>
+                    //   setNodeGuideLine({ key: null, message: null })
+                    // }
+                  />
+                )}
+              </StyleSpace>
+              {showToggle &&
+                showSelectToggle.value &&
+                showSelectToggle.key.includes("EC2") && 
+                  ! (showSelectToggle.key.includes(" ") ) &&(
+                  <SelectEc2Toggle
                     diagram={diagram}
                     uniquekey={showSelectToggle.key}
                     finalToggleValue={finalToggleValue}
@@ -131,9 +188,11 @@ function Draw() {
                     onToggleSelect={handleNodeSelect}
                     readOnly
                   />
-                  )}
-                  { showToggle && showSelectToggle.value && showSelectToggle.key.includes("RDS") && (
-                    <SelectRdsToggle
+                )}
+              {showToggle &&
+                showSelectToggle.value &&
+                showSelectToggle.key.includes("RDS") && (
+                  <SelectRdsToggle
                     diagram={diagram}
                     uniquekey={showSelectToggle.key}
                     finalToggleValue={finalToggleValue}
@@ -141,43 +200,49 @@ function Draw() {
                     readOnly
                   />
                 )}
-                { showToggle && showSelectToggle.value && showSelectToggle.key.includes("Simple Storage Service") && (
+              {showToggle &&
+                showSelectToggle.value &&
+                showSelectToggle.key.includes("Simple Storage Service") && (
                   <SelectS3Toggle
-                  diagram={diagram}
-                  uniquekey={showSelectToggle.key}
-                  finalToggleValue={finalToggleValue}
-                  setFinalToggleValue={setFinalToggleValue}
-                  readOnly
+                    diagram={diagram}
+                    uniquekey={showSelectToggle.key}
+                    finalToggleValue={finalToggleValue}
+                    setFinalToggleValue={setFinalToggleValue}
+                    readOnly
                   />
                 )}
-                {clickedNodeKey &&
-                  <div className="clicked_key">
-                    {clickedNodeKey}
-                  </div>
-                }
-
-                  <ReactDiagram
-                    initDiagram={initDiagram}
-                    divClassName={diagramClassName}
+              {showToggle &&
+                showSelectToggle.value &&
+                showSelectToggle.key.includes("AWS_WAF") && (
+                  <SelectWafToggle
+                    diagram={diagram}
+                    uniquekey={showSelectToggle.key}
+                    finalToggleValue={finalToggleValue}
+                    setFinalToggleValue={setFinalToggleValue}
+                    readOnly
                   />
-              </div>
+                )}
+              {clickedNodeKey && (
+                <div className="clicked_key">{clickedNodeKey}</div>
+              )}
 
+              <StyledDiagram>
+                <ReactDiagram
+                  initDiagram={initDiagram}
+                  divClassName={diagramClassName}
+                />
+              </StyledDiagram>
             </div>
-
           </div>
         </div>
 
-        {from==="inputNet"&&
-        <Link to={'/input/aws'}
-          state={{ file: diagram.model.toJson() }}>
-          Submit
-        </Link>
-        }
+        {from === "inputNet" && (
+          <Link to={"/input/aws"} state={{ file: diagram.model.toJson() }}>
+            Submit
+          </Link>
+        )}
 
-        <button onClick={summaryRequest}>
-          Go to summary
-        </button>
-
+        <button onClick={summaryRequest}>Go to summary</button>
       </div>
     </div>
   );
@@ -185,3 +250,22 @@ function Draw() {
 
 export default Draw;
 
+const StyledDiagram = styled.div`
+  float: left;
+  width: 100%;
+  height: 100%; // 원하는 높이로 설정
+  border: 1px solid black;
+`;
+
+const StyleSpace = styled(Space)`
+  position: absolute;
+  width: 20%;
+  z-index: 100;
+  left: 78%;
+  top: 20%;
+`;
+
+const StyleAlert = styled(Alert)`
+  position: relative;
+  width: 100%;
+`;

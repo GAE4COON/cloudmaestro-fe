@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import Draw from "./pages/Draw";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
+
 import Signup from "./pages/SignUp";
 import Signin from "./pages/SignIn";
 import { AuthProvider } from "./utils/auth/authContext";
@@ -11,11 +12,12 @@ import Introduce from "./pages/Introduce";
 import Example from "./pages/Example";
 import MyDesign from "./pages/MyDesign";
 
-import InputNet from "./pages/InputNetwork";
+import AutoDraw from "./pages/AutoDraw";
 import InputAWS from "./pages/InputAWS";
 
-import Back from "./pages/Backend/BackEnd";
 import Summary from "./pages/Summary";
+
+import MyPage from "./pages/MyPage";
 
 
 function App() {
@@ -24,14 +26,12 @@ function App() {
       <AuthProvider>
         <BrowserRouter>
           <Navbar />
+
           <div className="main-content">
             <Routes>
               <Route exact path="/" element={<Home />} />
 
               <Route exact path="/home" element={<Home />} />
-
-              <Route path="/ec2" element={<Back/>}/>
-
 
               <Route path="/about" element={<Introduce />} />
               <Route path="/about/example" element={<Example />} />
@@ -41,12 +41,17 @@ function App() {
               <Route path="/sign-up" element={<Signup />} />
               <Route path="/sign-in" element={<Signin />} />
 
-              <Route path="/home/autodraw" element={<InputNet />} />
+              <Route path="/home/auto" element={<AutoDraw />} />
               <Route path="/input/aws" element={<InputAWS />} />
 
+              <Route path="/mypage" element={<MyPage />} />
+
+              <Route path="/mypage" element={<MyPage />} />
               <Route path="/mypage/design" element={<MyDesign />} />
 
               <Route path="/summary" element={<Summary />} />
+
+
 
 
             </Routes>

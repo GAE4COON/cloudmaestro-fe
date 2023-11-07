@@ -2,14 +2,17 @@ import React, { useState, useEffect } from "react";
 import * as go from "gojs";
 import "../styles/App.css"; // contains .diagram-component CSS
 import handleChangedSelection from "./toggle/toggle";
+import { alertCheck } from "../apis/file";
 
 const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
   const [diagram, setDiagram] = useState(null);
   const [clickedNodeKey, setClickedNodeKey] = useState();
   const [showSelectToggle, setShowSelectToggle] = useState({ value: false });
+  const [DiagramCheck, setDiagramCheck] = useState(null);
+  const [NodeGuide, setNodeGuide] = useState(null);
 
   useEffect(() => {
-    console.log("Updated clickedNodeKey:", clickedNodeKey);
+    //console.log("Updated clickedNodeKey:", clickedNodeKey);
   }, [clickedNodeKey]);
 
   function highlightGroup(e, grp, show) {
@@ -42,6 +45,35 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
       "resizingTool.isGridSnapEnabled": true,
       "commandHandler.archetypeGroupData": { text: "Group", isGroup: true },
       "contextMenuTool.isEnabled": true,
+      ModelChanged: async (e) => {
+        // 오직 트랜잭션 완료 시에만 로그 출력
+        if (e.isTransactionFinished) {
+          const jsonString = e.model.toIncrementalJson(e);
+          const data = JSON.parse(jsonString); // JSON 문자열을 JavaScript 객체로 변환
+          if (data.insertedLinkKeys) {
+            console.log("insertedLinkKeys", data.modifiedLinkData);
+            try {
+              const response = await alertCheck(data.modifiedLinkData[0]);
+              if (response && response.data) {
+                console.log("API Response:", response.data);
+                setDiagramCheck(response.data);
+                if (response.data.result.status === "fail") {
+                  console.log(
+                    "링크 취소해도 되는 부분.. 주석처리만 하니까 안 올라가서 우선 콘솔로그라도 띄움"
+                  );
+                  //   diagram.undoManager.undo();
+                }
+              }
+            } catch (error) {
+              // Handle API error here
+              console.error("API Error:", error);
+            }
+          }
+          // if (data.insertedNodeKeys) {
+          //   console.log("insertedLinkKeys", data.insertedLinkKeys);
+          // }
+        }
+      },
       model: new go.GraphLinksModel({
         linkKeyProperty: "key",
       }),
@@ -81,7 +113,9 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
         return key === -7 ? "BottomLayer" : "";
       }),
 
-      new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
+      new go.Binding("location", "loc", go.Point.parse).makeTwoWay(
+        go.Point.stringify
+      ),
 
       //마진에 포트 추가해서 링크가 동작되게 만든다
       $(go.Shape, {
@@ -121,6 +155,18 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
           }),
           new go.Binding("text", "key")
         ),
+        $(
+          go.TextBlock,
+          {
+            font: "bold 12pt sans-serif",
+            alignment: go.Spot.TopLeft,
+            portId: "",
+            cursor: "pointer",
+            fromLinkable: true,
+            toLinkable: true,
+          },
+          new go.Binding("text", "key")
+        ),
 
         // modify or delete -> if unnecessary
         new go.Binding("fromLinkable", "key", function (k) {
@@ -154,21 +200,26 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
         },
         new go.Binding("text", "key")
       ),
-      $(go.Panel, "Auto",
-        $(go.Shape,
+
+      $(
+        go.Panel,
+        "Auto",
+        $(
+          go.Shape,
           "Rectangle",
           {
             margin: 10,
             fill: "transparent",
             stroke: "rgb(128,128,128)",
-            strokeWidth: 3
+            strokeWidth: 3,
           },
           new go.Binding("stroke")
         ),
-        $(go.Placeholder, { padding: 30 }),
+        // new go.Binding("fill", "stroke")),
+        $(go.Placeholder, { padding: 30 })
       )
+      // $(go.Placeholder, { padding: 30 })
     );
-    
     diagram.linkTemplate = $(
       go.Link,
       {
@@ -194,7 +245,7 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
               click: (e, obj) => {
                 const link = obj.part.adornedPart;
                 link.findObject("LinkShape").strokeDashArray = null;
-                console.log("실선 선택", link.data);
+                //console.log("실선 선택", link.data);
               },
             }
           ),
@@ -213,7 +264,7 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
               click: (e, obj) => {
                 const link = obj.part.adornedPart;
                 link.findObject("LinkShape").strokeDashArray = [10, 10];
-                console.log("점선 선택", link.data);
+                //console.log("점선 선택", link.data);
               },
             }
           ),
@@ -233,7 +284,7 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
                 const link = obj.part.adornedPart;
                 link.findObject("FromArrow").visible = true;
                 link.findObject("FromArrow").fromArrow = "Backward";
-                console.log("backward로 했음다", link.data);
+                //console.log("backward로 했음다", link.data);
               },
             }
           ),
@@ -253,7 +304,7 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
                 const link = obj.part.adornedPart;
                 //link.findObject("FromArrow").fromArrow="Standard";
                 link.findObject("FromArrow").visible = false;
-                console.log("원래대로 돌아갔음", link.data);
+                //console.log("원래대로 돌아갔음", link.data);
               },
             }
           )
@@ -265,7 +316,6 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
         relinkableFrom: true,
         relinkableTo: true,
       },
-
       // for link shape
       $(go.Shape, { strokeWidth: 2, stroke: "#000", name: "LinkShape" }),
       // for arrowhead 여기서 standaer
@@ -283,14 +333,58 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
       })
     );
 
+    diagram.nodeTemplate.selectionAdornmentTemplate = $(
+      go.Adornment,
+      "Spot",
+      $(
+        go.Panel,
+        "Auto",
+        $(go.Shape, { fill: null, stroke: "dodgerblue", strokeWidth: 2 }),
+        $(go.Placeholder)
+      ),
+      $(
+        go.Panel,
+        "Horizontal",
+        { alignment: new go.Spot(1, 1), alignmentFocus: new go.Spot(1, 0) },
+        $(
+          go.Panel,
+          "Spot",
+          {
+            width: 20,
+            height: 20,
+            mouseEnter: function (e, panel) {
+              const node = panel.part.adornedPart;
+              if (node instanceof go.Node) {
+                setNodeGuide(node.data.key);
+              }
+            },
+            mouseLeave: function (e, panel) {
+              setNodeGuide(null);
+            },
+          },
+          $(go.Shape, "Circle", {
+            fill: "rgba(82,96,208,0.7)",
+            stroke: null,
+            width: 20,
+            height: 20,
+          }),
+          $(go.TextBlock, "?", {
+            font: "bold 10pt sans-serif",
+            stroke: "white",
+            verticalAlignment: go.Spot.Center,
+          })
+        )
+      )
+    );
+
     diagram.addDiagramListener("ObjectSingleClicked", function (e) {
       const part = e.subject.part;
       if (part instanceof go.Link) {
-        console.log("링크가 클릭되었네요");
+        //console.log("링크가 클릭되었네요");
       } else if (part instanceof go.Node) {
-        console.log("나는 node 입니다", part.data);
+        //console.log("나는 node 입니다", part.data);
         const key = part.data.key;
-        console.log("나는 key 입니다", key);
+        //console.log("나는 key 입니다", key);
         if (key) {
           if (handleChangedSelection(key)) {
             setShowSelectToggle({ value: true, key: key });
@@ -300,14 +394,14 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
     });
 
     diagram.addDiagramListener("ExternalObjectsDropped", (e) => {
-      console.log("from palette\n");
+      //console.log("from palette\n");
       setShowToggle(true);
     });
 
     diagram.addDiagramListener("SelectionMoved", (e) => {
       e.subject.each(function (part) {
         if (part instanceof go.Node) {
-          console.log("move to: " + part.location.toString());
+          //console.log("move to: " + part.location.toString());
         }
       });
     });
@@ -316,7 +410,7 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
       const selectedNode = e.diagram.selection.first();
       if (selectedNode instanceof go.Node) {
         const key = selectedNode.data.key;
-        console.log("나는 key 입니다", key);
+        //console.log("나는 key 입니다", key);
       } else {
         setShowSelectToggle({ value: false }); // 추가된 로직
       }
@@ -327,7 +421,14 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
     return diagram;
   };
 
-  return { initDiagram, diagram, showSelectToggle, clickedNodeKey };
+  return {
+    initDiagram,
+    diagram,
+    showSelectToggle,
+    clickedNodeKey,
+    DiagramCheck,
+    NodeGuide,
+  };
 };
 
 export default useGoJS;

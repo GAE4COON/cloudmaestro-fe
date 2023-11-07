@@ -4,6 +4,8 @@ import jwt_decode from "jwt-decode";
 import { useAuth } from "../utils/auth/authContext";
 import { useNavigate } from "react-router-dom";
 import { idCheck, emailCheck, codeCheck, join } from "../apis/auth.js";
+import { Link } from 'react-router-dom';
+
 import "../styles/signup.css";
 
 function Signup() {
@@ -234,11 +236,11 @@ function Signup() {
   };
 
   async function handleCallbackResponse(response) {
-    console.log(response.credential);
+    //console.log(response.credential);
     try {
       var userObject = jwt_decode(response.credential);
       setUser(userObject);
-      console.log(userObject);
+      //console.log(userObject);
 
       setTimeout(() => {
         navigate("/sign-in");
@@ -254,20 +256,6 @@ function Signup() {
     }
   }
 
-  useEffect(() => {
-    google.accounts.id.initialize({
-      client_id:
-        "930334345436-48kqha501bfk7c6snk5k2vlai4r1231n.apps.googleusercontent.com",
-      callback: handleCallbackResponse,
-    });
-
-    google.accounts.id.renderButton(document.getElementById("signInDiv"), {
-      theme: "outline",
-      size: "large",
-      text: "signIn",
-      shape: "rectangular",
-    });
-  }, []);
 
   return (
     <div className="sign-up-form">
@@ -391,19 +379,19 @@ function Signup() {
         }
         style={
           idStatus !== "available" ||
-          !emailVerified ||
-          id === "" ||
-          password !== passwordConfirm ||
-          password === "" ||
-          email === "" ||
-          phone === "" ||
-          name === "" ||
-          belong === "" ||
-          belongError !== "" ||
-          nameError !== "" ||
-          passwordError !== "" ||
-          emailError !== "" ||
-          idError !== ""
+            !emailVerified ||
+            id === "" ||
+            password !== passwordConfirm ||
+            password === "" ||
+            email === "" ||
+            phone === "" ||
+            name === "" ||
+            belong === "" ||
+            belongError !== "" ||
+            nameError !== "" ||
+            passwordError !== "" ||
+            emailError !== "" ||
+            idError !== ""
             ? { backgroundColor: "#ccc", cursor: "not-allowed" }
             : {}
         }
@@ -412,30 +400,11 @@ function Signup() {
       </button>
 
       <p>
-        아이디가 있는 경우 <a href="/login">로그인해주세요</a>. 가입 후 아이디
-        변경은 불가합니다. 가입을 하면 <a href="/terms">이용약관</a>,{" "}
-        <a href="/privacy">개인정보취급 방침</a> 및 개인정보3자제공에 동의하게
+        아이디가 있는 경우 <Link to="/sign-in">로그인해주세요</Link>. 가입 후 아이디
+        변경은 불가합니다. 가입을 하면 <Link to="/terms">이용약관</Link>,{" "}
+        <Link to="/privacy">개인정보취급 방침</Link> 및 개인정보3자제공에 동의하게
         됩니다.
       </p>
-      {user ? (
-        <div>
-          <img
-            src={user.picture}
-            alt={user.name}
-            style={{
-              borderRadius: "50%",
-              width: "50px",
-              height: "50px",
-            }}
-          />
-          <h3>{user.name}</h3>
-        </div>
-      ) : null}
-      <div
-        id="signInDiv"
-        className="googleDiv"
-        style={{ visibility: user ? "hidden" : "visible" }}
-      ></div>
     </div>
   );
 }

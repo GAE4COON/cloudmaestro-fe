@@ -1,0 +1,45 @@
+.select-waf-toggle {
+    position: absolute;  
+    right: 25%; 
+    padding: 0px 20px;
+    z-index: 15;
+    width: 300px;
+    height: 50px;
+    display: flex;         /* Flexbox를 사용합니다. */
+    align-items: center;   /* 수직 중앙 정렬을 위해 사용합니다. */
+    border: none; /* 테두리 제거 */
+    background-color: #ffffff;
+    border-bottom: 2px solid #000000; /* 밑줄 추가 */
+    border-radius: 5px;
+    border-radius: 0; /* 밑줄을 깔끔하게 만들기 위해 반경을 0으로 설정 */
+}
+
+.select-waf-toggle input{
+    display: flex;   
+    position: relative;
+    opacity: 1; 
+    font-size: 1.2em;
+    padding: 8px 12px;
+    border: 2px solid #000000; 
+    border-radius: 5px;
+    width: 80px;     /*이걸로 박스 크기 조절해야함*/
+    height: 30px;
+    right: 15px;
+    background-color: #ffffff;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    margin: 0;       
+    box-sizing: border-box; 
+}
+
+.select-waf-toggle input:focus {
+
+    border-color: #0077ff; 
+    box-shadow: 0 0 10px rgba(0, 119, 255, 0.3);
+}
+
+.select-waf-toggle p{
+    position: relative;
+    display: flex;
+    width: 60px;
+    font-size: 12px;
+}

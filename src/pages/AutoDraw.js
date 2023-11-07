@@ -1,16 +1,13 @@
-import React, { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom'; // 변경된 부분
+import React from 'react';
 import "../styles/inputNetwork.css"
 import { Link } from "react-router-dom"
-import axios from 'axios';
-import { useEffect } from 'react';
 import { useFileUpload, useFileDownload } from '../components/useFileInput'; // 위에서 작성한 훅들을 해당 경로로 임포트
 
-const App = () => {
+const AutoDraw = () => {
   const {
-      selectedFile,
-      handleInputFIleUpload,
-      uploadFileFormat
+    selectedFile,
+    handleInputFIleUpload,
+    uploadFileFormat
   } = useFileUpload();
 
   const downloadExcel = useFileDownload("/assets/template/templateExcel.xlsx", "templateExcel.xlsx");
@@ -102,12 +99,9 @@ const App = () => {
       </div>
 
       <button className="submit-button" onClick={handleInputFIleUpload}>
-        {/* <Link to={'/draw/network'}
-                    state={{ selectedFile }}> */}
         Submit
-        {/* </Link> */}
       </button>
     </div>
   );
 };
-export default App;
+export default AutoDraw;

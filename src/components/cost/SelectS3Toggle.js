@@ -5,6 +5,20 @@ const SeclectS3Toggle = ({diagram, uniquekey, finalToggleValue, setFinalToggleVa
     const [text, setText] = useState("");
     const [s3Cost, setS3Cost] = useState("");
 
+    const handleDeletKey = (uniqueKey) => {
+        setFinalToggleValue((prev) => {
+          const newState = {...prev};
+          delete newState[uniqueKey];
+          return newState;
+        });
+      }
+    
+      diagram.addDiagramListener("SelectionDeleting", function (e) {
+          e.subject.each(function (part) {
+            handleDeletKey(part.key);
+          });
+      });
+    
     const calculateCost = (gb) => {
         let cost = 0;
         if (gb <= 50000) {
@@ -17,10 +31,11 @@ const SeclectS3Toggle = ({diagram, uniquekey, finalToggleValue, setFinalToggleVa
         return Math.trunc(cost * 100) / 100;
     }
 
-    useEffect(() => {
-        if ( finalToggleValue && finalToggleValue[uniquekey]) {
-            setText(finalToggleValue[uniquekey].text || "");
-            setS3Cost(finalToggleValue[uniquekey].cost || 0);
+    useEffect(() => {           //여기 문제인 듯 함
+        //console.log("final: ",finalToggleValue);
+        if ( finalToggleValue[uniquekey]) {
+            setText(finalToggleValue[uniquekey].storage);
+            setS3Cost(finalToggleValue[uniquekey].cost);
         } else {
             setText("");
             setS3Cost(0);
@@ -48,9 +63,9 @@ const SeclectS3Toggle = ({diagram, uniquekey, finalToggleValue, setFinalToggleVa
             type="text"
             onChange={onChange}
             value={text}
-            placeholder="Storage (GB)"
+            placeholder="Storage(GB)"
             />
-            <div><p>$ {s3Cost} /Hour</p></div> 
+            <div><p>${s3Cost}/Hour</p></div> 
         </div>
     )
 

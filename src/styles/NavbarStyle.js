@@ -87,6 +87,12 @@ export const NavStyled = styled.nav`
   z-index: 999;
   position: relative;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  font-family: "Pretendard-Regular";
+  @font-face {
+    font-family: "Pretendard-Regular";
+    font-weight: normal;
+    src: url("../assets/font/Pretendard-Regular.otf") format("truetype");
+  }
 `;
 
 export const NavMenuLeft = styled.div`
@@ -104,8 +110,8 @@ export const NavMenuLeft = styled.div`
     text-align: center;
     position: fixed;
 
-    right: ${({ isOpen }) => (isOpen ? "0" : "-50%")};
-    visibility: ${({ isOpen }) => (isOpen ? "visible" : "hidden")};
+    right: ${({ $isOpen }) => ($isOpen ? "0" : "-50%")}; // Notice the change here
+    visibility: ${({ $isOpen }) => ($isOpen ? "visible" : "hidden")}; // And here
     top: 40px;
     background: #fff;
     z-index: 1;
@@ -120,7 +126,7 @@ export const NavMenuRight = styled.div`
   margin-right: 50px;
 
   @media screen and (max-width: 768px) {
-    display: ${({ isOpen }) => (isOpen ? "flex" : "none")};
+    display: ${({ $isOpen }) => ($isOpen ? "flex" : "none")}; // Notice the change here
     flex-direction: column;
     width: 100%;
     text-align: center;
@@ -131,6 +137,7 @@ export const NavMenuRight = styled.div`
     z-index: 1;
   }
 `;
+
 
 export const NavLinkLogo = styled(Link)`
   display: flex;
@@ -225,6 +232,7 @@ export const NavBtnLink = styled(Link)`
   text-decoration: none;
   // margin-left: 5px;
   align-items: center;
+  font-size: 16px;
 
   &:hover {
     transition: all 0.2s ease-in-out;
