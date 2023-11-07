@@ -17,6 +17,8 @@ import InputAWS from "./pages/InputAWS";
 
 import Summary from "./pages/Summary";
 
+import MyPage from "./pages/MyPage";
+
 
 function App() {
   return (
@@ -42,9 +44,14 @@ function App() {
               <Route path="/home/auto" element={<AutoDraw />} />
               <Route path="/input/aws" element={<InputAWS />} />
 
+              <Route path="/mypage" element={<MyPage />} />
+
+              <Route path="/mypage" element={<MyPage />} />
               <Route path="/mypage/design" element={<MyDesign />} />
 
               <Route path="/summary" element={<Summary />} />
+
+
 
 
             </Routes>
