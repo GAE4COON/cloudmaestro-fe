@@ -6,19 +6,7 @@ body {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
+  font-family: "Noto Sans KR", sans-serif !important;
 
-@font-face {
-  font-family: "Pretendard-Regular";
-  font-weight: normal;
-  src: url("../assets/font/Pretendard-Regular.otf") format("truetype");
-}
-
-@font-face {
-  font-family: "GmarketSansMedium";
-  font-weight: normal;
-  src: url("../assets/font/GmarketSansMedium.otf") format("truetype");
 }
 

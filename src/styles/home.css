@@ -86,12 +86,7 @@
   }
 }
 
-@font-face {
-  font-family: "Pretendard-ExtraBold";
-  font-weight: normal;
-  src: url("../assets/font/Pretendard-ExtraBold.otf") format("truetype");
-}
 
 h1 {
-  font-family: "Pretendard-ExtraBold";
+  font-family: "Noto Sans KR", sans-serif !important;
 }
