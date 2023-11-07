@@ -1944,6 +1944,54 @@ export const nodeDataArrayPalette = [
     type: "Networking-Content-Delivery",
   },
   {
+    text: "InternetGateway",
+    key: "InternetGateway",
+    figure: "Rectangle",
+    source:
+      "/img/AWS_icon/Arch_Networking-Content-Delivery/Arch_Amazon-VPC_Internet-Gateway_48.svg",
+    type: "Networking-Content-Delivery",
+  },
+  {
+    text: "VpcPeering",
+    key: "VpcPeering",
+    figure: "Rectangle",
+    source:
+      "/img/AWS_icon/Arch_Networking-Content-Delivery/Arch_Amazon-VPC_Peering-Connection_48.svg",
+    type: "Networking-Content-Delivery",
+  },
+  {
+    text: "RouteTable",
+    key: "RouteTable",
+    figure: "Rectangle",
+    source:
+      "/img/AWS_icon/Arch_Networking-Content-Delivery/Arch_Amazon-Route-53_Route-Table_48.svg",
+    type: "Networking-Content-Delivery",
+  },
+  {
+    text: "VpnConnection",
+    key: "VpnConnection",
+    figure: "Rectangle",
+    source:
+      "/img/AWS_icon/Arch_Networking-Content-Delivery/Arch_Amazon-VPC_VPN-Connection_48.svg",
+    type: "Networking-Content-Delivery",
+  },
+  {
+    text: "NatGateway",
+    key: "NatGateway",
+    figure: "Rectangle",
+    source:
+      "/img/AWS_icon/Arch_Networking-Content-Delivery/Arch_Amazon-VPC_NAT-Gateway_48.svg",
+    type: "Networking-Content-Delivery",
+  },
+  {
+    text: "NACL",
+    key: "NACL",
+    figure: "Rectangle",
+    source:
+      "/img/AWS_icon/Arch_Networking-Content-Delivery/Arch_Amazon-VPC_Network-Access-Control-List_48.svg",
+    type: "Networking-Content-Delivery",
+  },
+  {
     text: "Route 53",
     key: "Route 53",
     figure: "Rectangle",
@@ -2289,6 +2337,13 @@ export const nodeDataArrayPalette = [
     key: "EFS",
     figure: "Rectangle",
     source: "/img/AWS_icon/Arch_Storage/Arch_Amazon-EFS_48.svg",
+    type: "Storage",
+  },
+  {
+    text: "S3",
+    key: "S3",
+    figure: "Rectangle",
+    source: "/img/AWS_icon/Arch_Storage/Res_Amazon-Simple-Storage-Service_S3-Standard_48.svg",
     type: "Storage",
   },
   {
