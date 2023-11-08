@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import React, { useState, useCallback, useEffect } from "react";
 import "./styles/App.css";
 import Home from "./pages/Home";
 import Draw from "./pages/Draw";
@@ -16,15 +17,17 @@ import AutoDraw from "./pages/AutoDraw";
 import InputAWS from "./pages/InputAWS";
 
 import Summary from "./pages/Summary";
+import SidebarController from './components/SidebarController';
 
 
 function App() {
   return (
     <div className="App">
+      
       <AuthProvider>
         <BrowserRouter>
+        <SidebarController /> 
           <Navbar />
-
           <div className="main-content">
             <Routes>
               <Route exact path="/" element={<Home />} />

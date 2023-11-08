@@ -1,0 +1,34 @@
+.sidebar {
+    z-index: 5;
+    padding: 12px;
+    border-radius: 15px 0 0 15px;
+    background-color: rgb(168, 197, 255);
+    height: 80%;
+    width: 27%;
+    top: 50px;
+    position: fixed;
+    transition: 0.5s ease;
+  }
+  
+  .sidebar.closed {
+    right: -25%;
+  }
+  
+  .sidebar.open {
+    right: 0;
+  }
+  
+  .icon {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    cursor: pointer;
+  }
+  
+  .exit-menu {
+    position: absolute;
+    bottom: 26px;
+    left: 40%;
+    font-size: 0.8rem;
+  }
+  
