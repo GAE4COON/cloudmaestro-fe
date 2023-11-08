@@ -19,6 +19,7 @@ import Summary from "./pages/Summary";
 
 import MyPage from "./components/MyPageSideBar";
 import MyCloud from "./pages/MyCloud";
+import Security from "./pages/Security";
 
 
 function App() {
@@ -46,6 +47,7 @@ function App() {
               <Route path="/input/aws" element={<InputAWS />} />
 
               <Route path="/mypage" element={<MyPage />} />
+              <Route path="/mypage/security" element={<Security />} />
               <Route path="/mypage/cloud" element={<MyCloud/>} />
 
               <Route path="/mypage/design" element={<MyDesign />} />
