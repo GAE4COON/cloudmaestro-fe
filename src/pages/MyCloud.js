@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import {DownOutlined} from '@ant-design/icons'
 
 import { Space, Dropdown, Button } from "antd";
-import "../styles/MyPageMain.css";
+import "../styles/MyCloud.css";
 import styled from "styled-components";
 
 const items = [
