@@ -65,7 +65,7 @@ function Draw() {
 
   useEffect(() => {
     if (NodeGuide) {
-      setNodeGuideLine({ key: NodeGuide, message: "이거는 뭐 해야돼요" });
+      setNodeGuideLine({ key: NodeGuide, message: "추가 예정" });
     } else {
       setNodeGuideLine({ key: null, message: null });
     }
@@ -178,8 +178,8 @@ function Draw() {
               </StyleSpace>
               {showToggle &&
                 showSelectToggle.value &&
-                showSelectToggle.key.includes("EC2") && 
-                  ! (showSelectToggle.key.includes(" ") ) &&(
+                showSelectToggle.key.includes("EC2") &&
+                !showSelectToggle.key.includes(" ") && (
                   <SelectEc2Toggle
                     diagram={diagram}
                     uniquekey={showSelectToggle.key}
