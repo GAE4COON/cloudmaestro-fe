@@ -1,0 +1,42 @@
+
+.flex-container {
+    display: flex;
+    /* justify-content: start; */
+    /* align-items: center; */
+}
+
+.cloud_instance{
+    width:26%;
+    padding:10px;
+    /* margin-top: 10px; */
+    border: 1px solid gray;
+    margin-left: 10px;
+    margin: 10px;
+    border-radius: 5px;
+    /* background-color: rgb(255, 222, 222); */
+    /* box-shadow: 1px 1px 1px 1px rgb(235, 235, 235); */
+}
+
+.img_test_01{
+    width: 100%;
+}
+
+.button_container{
+    /* background-color:blueviolet; */
+    align-items: end;
+    display: flex;
+    flex-direction: column;
+}
+.main-container{
+    padding-top: 50px;
+    /* background-color: blue; */
+    width: 80%;
+
+    /* margin-top:50px; */
+    /* background-color: yellow; */
+
+}
+.cloud_instance_row{
+    display: flex;
+    width: 100%;
+}
