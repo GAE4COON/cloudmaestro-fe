@@ -183,16 +183,15 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
       "Auto",
       "Vertical",
       {
+        // layout: $(go.GridLayout, { alignment: go.GridLayout.Position }),
         mouseDragEnter: (e, grp, prev) => highlightGroup(e, grp, true),
         mouseDragLeave: (e, grp, next) => highlightGroup(e, grp, false),
         mouseDrop: finishDrop,
         ungroupable: true,
       },
-
-      $(
-        go.TextBlock,
+      $(go.TextBlock,
         {
-          font: "bold 12pt sans-serif",
+          font: "10pt sans-serif",
           alignment: go.Spot.TopLeft,
           portId: "",
           cursor: "pointer",

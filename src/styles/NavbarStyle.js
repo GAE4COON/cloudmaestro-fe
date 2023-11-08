@@ -87,12 +87,8 @@ export const NavStyled = styled.nav`
   z-index: 999;
   position: relative;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  font-family: "Pretendard-Regular";
-  @font-face {
-    font-family: "Pretendard-Regular";
-    font-weight: normal;
-    src: url("../assets/font/Pretendard-Regular.otf") format("truetype");
-  }
+  font-family: "Noto Sans KR", sans-serif !important;
+
 `;
 
 export const NavMenuLeft = styled.div`

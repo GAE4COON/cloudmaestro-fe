@@ -1,70 +1,106 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { useState, useEffect } from "react";
 
-const SidebarContainer = styled.div`
-    width: 250px;
-    height: 100vh;
-    background-color: #EDF3FF;
-    border-right: 1px solid #e6e6e6;
-    padding: 20px;
-    box-sizing: border-box;
-`;
+import { useLocation } from "react-router-dom";
 
-const SidebarItem = styled.div`
-    padding: 10px;
-    cursor: pointer;
-    border-radius: 5px;
-    text-align:left;
-    color: #525252;
+import {  Menu } from "antd";
+import "../styles/MyPage.css";
+import styled from "styled-components";
+import { Link } from 'react-router-dom';
 
-    &:hover {
-        font-weight: 700;
-    }
-`;
+const menu = [
+  {
+    label: '도식화 히스토리',
+    key: '1',
+    children: [
+        {
+            label: (
+              <Link to="/mypage/network" >네트워크 도식화</Link>
+              ),
+            key: '12',
+        },
+        {
+          label: (
+            <Link to="/mypage/cloud" >클라우드 도식화</Link>
+            ),
+          key: '13',
+      },
+      ]
+    },
+    {
+      label: '회원 정보',
+      key: '2',
+      children: [
+          {
+              label: (
+                <Link to="/mypage/user" >회원 정보 수정</Link>
+                ),
+              key: '22',
+          },
+          {
+            label: (
+              <Link to="/mypage/setting" >설정</Link>
+              ),
+            key: '23',
+        },
+        ]
+      }
+];
 
-const SidebarTitle = styled.div`
-    padding-top:40px;
-    color: #525252;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-    border-bottom: 1px solid #B7B7B7;
-    text-align:left;
-    padding-bottom:10px;
-`
+const MyPageSideBar = () => {
+    const [current, setCurrent] = useState([]);
+    const location = useLocation(); // 현재 경로를 얻기 위해 useLocation 훅 사용
 
-const Title = styled.div`
-    padding-top:40px;
-    color: #525252;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-    text-align:center;
-    padding-bottom:20px;
-`
-
-const Sidebar = () => {
+    useEffect(() => {
+      // 메뉴 항목과 location.pathname을 비교하여 현재 선택된 키를 설정합니다.
+      let currentKey;
+      menu.forEach((item) => {
+          // 상위 메뉴 항목에 대한 검사
+          if (item.children) {
+              const match = item.children.find(
+                  (child) => child.label.props.to === location.pathname
+              );
+              if (match) {
+                  currentKey = match.key;
+              }
+          }
+      });
+      setCurrent(currentKey);
+  }, [location, menu]);
+    const onClick = (e) => {
+        console.log('click ', e.key);
+        setCurrent(e.key);
+    };
     return (
-        <div>
-        <Title>My Page</Title>
-        <SidebarContainer>
-            <SidebarTitle>도식화 히스토리</SidebarTitle>
-            <SidebarItem>네트워크 도식화</SidebarItem>
-            <SidebarItem>클라우드 도식화</SidebarItem>
-
-            <SidebarTitle>보안</SidebarTitle>
-            <SidebarItem>보안 가이드라인</SidebarItem>
-            <SidebarItem>ISO 체크리스트</SidebarItem>
-
-            <SidebarTitle>회원 정보</SidebarTitle>
-            <SidebarItem>회원 정보 수정</SidebarItem>
-            <SidebarItem>설정</SidebarItem>
-
-        </SidebarContainer>
+      <div className="container">
+        <div className="menu-container">
+          <div className="menu-title">
+          <Link to="/mypage">
+            My Page
+          </Link>
+          </div>
+        <StyledMenu
+          defaultOpenKeys={['1', '2']}
+          selectedKeys={current ? [current] : []} // 선택된 키를 배열로 설정
+          mode={"inline"}
+          items={menu}
+          onClick={onClick}
+        />
         </div>
+      </div>
     );
-}
+  };
+export default MyPageSideBar;
 
-export default Sidebar;
+const StyledMenu = styled(Menu)`
+  text-align: left;
+  background: #EDF3FF;
+  border-radius: 10px;
+  margin-top: 10px;
+
+.ant-menu-submenu-title {
+  color: #333; // 글자 색상 변경
+  font-weight: bold; // 글자 두께 변경
+  font-size: 18px;
+  font-family: "Noto Sans KR", sans-serif !important;
+}
+`

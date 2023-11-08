@@ -157,7 +157,7 @@ table tbody tr.disabled_row:hover {
     border: 1px solid #BABABA;
     border-radius: 7px;
 
-    font-family: 'Inter';
+    font-family: "Noto Sans KR", sans-serif !important;
     font-style: normal;
     font-weight: 700;
     line-height: 30px;

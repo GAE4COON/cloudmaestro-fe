@@ -1,0 +1,38 @@
+{
+  "class": "GraphLinksModel",
+  "linkKeyProperty": "key",
+  "nodeDataArray": [
+    {
+      "key": "firewall",
+      "source": "/img/Network_icon/firewall.svg",
+      "type": "Network_icon",
+      "group": -5
+    },
+    {
+      "key": "intrusion-detection",
+      "source": "/img/Network_icon/intrusion-detection.svg",
+      "type": "Network_icon",
+      "group": -5
+    },
+    {
+      "key": "storage",
+      "source": "/img/Network_icon/storage.svg",
+      "type": "Network_icon",
+      "group": -5
+    },
+    {
+      "key": "server",
+      "source": "/img/Network_icon/server.svg",
+      "type": "Network_icon",
+      "group": -5
+    },
+    {
+      "text": "Group",
+      "isGroup": true,
+      "key": -5
+    }
+  ],
+  "linkDataArray": [
+    
+  ]
+}
