@@ -294,7 +294,24 @@ const Palette = memo(({ divClassName }) => {
                   }
                 />
               </div>
-
+              {/* <div className="tab">
+                <input
+                  type="radio"
+                  id="rd6"
+                  name="rd"
+                  onClick={() => setSelectedTab("Networking-Content-Delivery")}
+                />
+                <label className="tab-label" htmlFor="rd6">
+                Networking-Content-Delivery
+                </label>
+                <div
+                  className="tab-content"
+                  ref={(el) =>
+                    (paletteDivs.current["Networking-Content-Delivery"] = el)
+                  }
+                />
+              </div> */}
+{/* 
               <div className="tab">
                 <input
                   type="radio"
@@ -309,7 +326,7 @@ const Palette = memo(({ divClassName }) => {
                   className="tab-content"
                   ref={(el) => (paletteDivs.current["Compute"] = el)}
                 />
-              </div>
+              </div> */}
 
               <div className="tab">
                 <input

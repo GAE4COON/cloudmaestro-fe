@@ -2,7 +2,7 @@
 
 .app-container {
     min-height: 580px;
-    font-family: 'Arial', sans-serif;
+    font-family: "Noto Sans KR", sans-serif !important;
     padding-top: 50px;
     width: 100%;
     background-color: #EDF3FF;

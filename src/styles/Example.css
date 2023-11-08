@@ -22,7 +22,7 @@ a {
   font-size: 40px; 
   margin:10px;
   border-bottom: 2px solid white;  /* 밑줄 추가 */
-  font-family:"Roboto";
+  font-family: "Noto Sans KR", sans-serif !important;
 }
 
 /* Main Page */

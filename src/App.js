@@ -15,6 +15,10 @@ import MyDesign from "./pages/MyDesign";
 import AutoDraw from "./pages/AutoDraw";
 import InputAWS from "./pages/InputAWS";
 import Summary from "./pages/Summary";
+
+import MyPage from "./components/MyPageSideBar";
+import MyCloud from "./pages/MyCloud";
+
 import MYResource from "./pages/Myresource";
 
 function App() {
@@ -41,10 +45,15 @@ function App() {
               <Route path="/home/auto" element={<AutoDraw />} />
               <Route path="/input/aws" element={<InputAWS />} />
 
+              <Route path="/mypage" element={<MyPage />} />
+              <Route path="/mypage/cloud" element={<MyCloud/>} />
+
               <Route path="/mypage/design" element={<MyDesign />} />
               <Route path="/mypage/resource" element={<MYResource />} />
 
               <Route path="/summary" element={<Summary />} />
+
+
             </Routes>
           </div>
           <Footer />
