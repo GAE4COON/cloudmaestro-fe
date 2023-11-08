@@ -81,6 +81,7 @@ const Button = ({
       }
       ////console.log("modelmodel",JSON.stringify(diagram.model));
 
+
       const jsonString = diagram.model.toJson();
       //console.log("jsonString", jsonString);
 

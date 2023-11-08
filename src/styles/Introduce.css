@@ -1,9 +1,4 @@
 /* Common styles and font face */
-@font-face {
-  font-family: "Pretendard-ExtraBold";
-  font-weight: normal;
-  src: url("../assets/font/Pretendard-ExtraBold.otf") format("truetype");
-}
 
 
 .logo-container {
@@ -46,7 +41,7 @@
 
 
 .logo-container .content > p {
-  font-family: "Pretendard-ExtraBold";
+  font-family: "Noto Sans KR", sans-serif !important;
   text-align: center;
   font-size: 30px;
   color: #333;
