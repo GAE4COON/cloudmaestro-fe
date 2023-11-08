@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+
+import { useLocation } from "react-router-dom";
 
 import {  Menu } from "antd";
 import "../styles/MyPage.css";
 import styled from "styled-components";
 import { Link } from 'react-router-dom';
-
 
 const menu = [
   {
@@ -37,7 +38,7 @@ const menu = [
           },
           {
             label: (
-              <Link to="/myypage/setting" >설정</Link>
+              <Link to="/mypage/setting" >설정</Link>
               ),
             key: '23',
         },
@@ -47,51 +48,59 @@ const menu = [
 
 const MyPageSideBar = () => {
     const [current, setCurrent] = useState([]);
+    const location = useLocation(); // 현재 경로를 얻기 위해 useLocation 훅 사용
 
-  const onClick = (e) => {
-    console.log('click ', e.key);
-    setCurrent(e.key);
-  };
-
+    useEffect(() => {
+      // 메뉴 항목과 location.pathname을 비교하여 현재 선택된 키를 설정합니다.
+      let currentKey;
+      menu.forEach((item) => {
+          // 상위 메뉴 항목에 대한 검사
+          if (item.children) {
+              const match = item.children.find(
+                  (child) => child.label.props.to === location.pathname
+              );
+              if (match) {
+                  currentKey = match.key;
+              }
+          }
+      });
+      setCurrent(currentKey);
+  }, [location, menu]);
+    const onClick = (e) => {
+        console.log('click ', e.key);
+        setCurrent(e.key);
+    };
     return (
       <div className="container">
         <div className="menu-container">
+          <div className="menu-title">
           <Link to="/mypage">
-          My Page
+            My Page
           </Link>
+          </div>
         <StyledMenu
           defaultOpenKeys={['1', '2']}
+          selectedKeys={current ? [current] : []} // 선택된 키를 배열로 설정
           mode={"inline"}
           items={menu}
           onClick={onClick}
-        >
-        </StyledMenu>
+        />
         </div>
       </div>
     );
   };
 export default MyPageSideBar;
 
-
-
 const StyledMenu = styled(Menu)`
-
-
-text-align: left;
-background: #EDF3FF;
-border-radius: 10px;
-margin-top: 10px;
-
+  text-align: left;
+  background: #EDF3FF;
+  border-radius: 10px;
+  margin-top: 10px;
 
 .ant-menu-submenu-title {
   color: #333; // 글자 색상 변경
   font-weight: bold; // 글자 두께 변경
   font-size: 18px;
-  
-    font-family: "Noto Sans KR", sans-serif !important;
-  
-
-
-
+  font-family: "Noto Sans KR", sans-serif !important;
 }
 `
