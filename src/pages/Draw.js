@@ -12,11 +12,12 @@ import { useMediaQuery } from "react-responsive";
 import { nodeDataArrayPalette } from "../db/Node";
 
 import { useLocation, useNavigate } from "react-router-dom";
-import { Alert, Space } from "antd";
+import { Alert, Space, Layout, Menu } from "antd";
 
 // 페이지
 // import useReadJSON from "./useReadJSON";
 import Button from "./Button.js";
+import Sidebar from '../components/Sidebar';
 import Palette from "../components/Palette";
 import "../styles/Draw.css";
 import { useFileUpload } from "../components/useFileInput";
@@ -275,7 +276,7 @@ const StyleAlert = styled(Alert)`
 `;
 
 const ButtonContainer = styled.div`
-  background-color:yellow;
+  // background-color:yellow;
   display: flex;
 `
 
