@@ -4,45 +4,37 @@ import { useLocation } from "react-router-dom";
 
 import { Menu } from "antd";
 import styled from "styled-components";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 const menu = [
   {
-    label: '도식화 히스토리',
-    key: '1',
+    label: "도식화 히스토리",
+    key: "1",
     children: [
       {
-        label: (
-          <Link to="/mypage/network" >네트워크 도식화</Link>
-        ),
-        key: '12',
+        label: <Link to="/mypage/network">네트워크 도식화</Link>,
+        key: "12",
       },
       {
-        label: (
-          <Link to="/mypage/cloud" >클라우드 도식화</Link>
-        ),
-        key: '13',
+        label: <Link to="/mypage/cloud">클라우드 도식화</Link>,
+        key: "13",
       },
-    ]
+    ],
   },
   {
-    label: '회원 정보',
-    key: '2',
+    label: "회원 정보",
+    key: "2",
     children: [
       {
-        label: (
-          <Link to="/mypage/user" >회원 정보 수정</Link>
-        ),
-        key: '22',
+        label: <Link to="/mypage/user">회원 정보 수정</Link>,
+        key: "22",
       },
       {
-        label: (
-          <Link to="/mypage/setting" >설정</Link>
-        ),
-        key: '23',
+        label: <Link to="/mypage/setting">설정</Link>,
+        key: "23",
       },
-    ]
-  }
+    ],
+  },
 ];
 
 const MyPageSideBar = () => {
@@ -66,18 +58,16 @@ const MyPageSideBar = () => {
     setCurrent(currentKey);
   }, [location, menu]);
   const onClick = (e) => {
-    console.log('click ', e.key);
+    console.log("click ", e.key);
     setCurrent(e.key);
   };
   return (
     <StyledSideMenu>
       <StyledSideMenuTitle>
-        <Link to="/mypage">
-          My Page
-        </Link>
+        <Link to="/mypage">My Page</Link>
       </StyledSideMenuTitle>
       <StyledMenu
-        defaultOpenKeys={['1', '2']}
+        defaultOpenKeys={["1", "2"]}
         selectedKeys={current ? [current] : []} // 선택된 키를 배열로 설정
         mode={"inline"}
         items={menu}
@@ -89,20 +79,20 @@ const MyPageSideBar = () => {
 export default MyPageSideBar;
 
 const StyledSideMenu = styled.div`
-  padding-top:50px;
+  padding-top: 50px;
   width: 256px;
-  flex:1;
-`
+  flex: 1;
+`;
 
 const StyledSideMenuTitle = styled.div`
   font-family: "Noto Sans KR", sans-serif !important;
   font-weight: 500;
   font-size: 20px;
-`
+`;
 
 const StyledMenu = styled(Menu)`
   text-align: left;
-  background: #EDF3FF;
+  background: #edf3ff;
   border-radius: 10px;
   margin-top: 10px;
 
@@ -112,4 +102,4 @@ const StyledMenu = styled(Menu)`
     font-size: 18px;
     font-family: "Noto Sans KR", sans-serif !important;
   }
-`
+`;
