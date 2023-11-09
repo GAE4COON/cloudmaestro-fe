@@ -3,8 +3,9 @@
 .tab-content {
   width: 100%;
   height: 200px;
-  background: white;
   max-height: 0;
+  border: 1px solid #dee8ff;
+  background-color: #f2f6ff;
   
 }
 
@@ -13,8 +14,7 @@ input[type="radio"]:checked ~ .tab-content {
 }
 
 /* Scrollable styles for tabs and overflow content */
-.scrollable-tabs-container,
-.tab-content > div[style*="overflow: auto;"] {
+/* .tab-content > div[style*="overflow: auto;"] {
   ::-webkit-scrollbar {
     width: 10px;
   }
@@ -32,4 +32,4 @@ input[type="radio"]:checked ~ .tab-content {
     box-shadow: inset 0px 0px 5px white;
   }
 }
-
+ */
