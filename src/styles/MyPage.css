@@ -1,7 +1,13 @@
 .container{
     padding-top:50px;
+    display: flex;
+    justify-content: space-between;
+    
 }
 
+.content{
+    flex:3;
+}
 .flex-container {
     display: flex;
     justify-content: start;
