@@ -181,7 +181,7 @@ const Palette = memo(({ divClassName }) => {
             <FilteredNodesContainer>
               {filteredNodes.map((node) => (
                 <div key={node.key}>
-                  {node.type}: {formatKey(node.key)}
+                  - {node.type}: {formatKey(node.key)}
                 </div>
               ))}
             </FilteredNodesContainer>
@@ -250,18 +250,17 @@ const Tab = styled.div`
   border-radius: 5px;
 
   color: rgba(0, 0, 0, 0.65);
+  
   &:hover {
     color: #bfd3ff;
   }
 `;
-
 
 // Hidden radio input for accessibility
  const RadioInput = styled.input.attrs({ type: 'radio' })`
   position: absolute;
   opacity: 0;
   border-radius: 5px;
-
   z-index: -1;
 `;
 
@@ -269,15 +268,19 @@ const Tab = styled.div`
 const TabLabel = styled.label`
   border-radius: 5px;
   box-shadow: 0 2px 8px #f0f1f2;
-margin-bottom:5px;
+  margin-bottom:5px;
 
-  padding: 12px 16px;
+  padding: 12px 16px; 
   display: flex;
   align-items: center;
-  font-size: 14px;
+  font-size: 15px;
+  font-weight: 500;
+  font-family: "Noto Sans KR", sans-serif !important;
+
   color: rgba(0, 0, 0, 0.65);
-  background: #dee8ff;
-  border: none;
+
+  background: #fff;
+  border: 1px solid #dee8ff;
   cursor: pointer;
   &:hover {
     color: #40a9ff;
@@ -292,11 +295,11 @@ margin-bottom:5px;
 
 // Styled component for the scrollable container
 const ScrollableTabsContainer = styled.div`
-
   max-height: 80vh;
   overflow-y: auto;
+  overflow-x: hidden; /* Add this line to hide horizontal scrollbar */
   &::-webkit-scrollbar {
-    width: 5px;
+    width: 7px;
   }
   &::-webkit-scrollbar-thumb {
     background-color: #d9d9d9;
@@ -309,17 +312,20 @@ const ScrollableTabsContainer = styled.div`
 
 // Styled component for the search container
 const SearchContainer = styled.div`
+margin-bottom: 10px;
   padding: 10px;
+  
   display: flex;
   align-items: center;
   background-color: #fff;
-  box-shadow: 0 2px 8px #f0f1f2;
+  /* box-shadow: 0 2px 8px #f0f1f2; */
 `;
 
 
 // Styled component for the input
 const SearchInput = styled.input.attrs({ type: 'text' })`
   outline: none;
+  
   border: 1px solid #d9d9d9;
   padding: 6.5px 11px;
   width: 100%;
@@ -337,13 +343,14 @@ const SearchInput = styled.input.attrs({ type: 'text' })`
 
 // Styled component for nodes container with filtered results
 const FilteredNodesContainer = styled.div`
-  font-size: 14px;
+  font-size: 12px;
   padding: 8px 16px;
-  width: 100%;
   max-height: 30vh;
   overflow-y: auto;
+  overflow-x: hidden; /* Add this line to hide horizontal scrollbar */
   background-color: #fff;
   border: 1px solid #e8e8e8;
   border-radius: 2px;
+  text-align: left;
 `;
 

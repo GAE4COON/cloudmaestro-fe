@@ -4,6 +4,8 @@ import * as go from "gojs";
 import "../styles/Button.css"; // contains .diagram-component CSS
 import { json, useNavigate } from "react-router-dom";
 import { rehostRequest } from "../apis/file";
+import {BsUpload,BsDownload,  BsEraser, BsSave, } from "react-icons/bs"
+import {BiSave} from "react-icons/bi"
 
 const Button = ({
   diagram,
@@ -138,7 +140,7 @@ const Button = ({
     <div>
       <div className="button-container">
         <div className="button-row">
-          <button onClick={handleClick}>Upload File</button>
+          <button onClick={handleClick}><BsUpload/></button>
           <input
             type="file"
             ref={hiddenFileInput}
@@ -148,13 +150,13 @@ const Button = ({
         </div>
 
         <div className="button-row">
-          <button onClick={handleReset}>clear</button>
+          <button onClick={handleReset}><BsEraser/></button>
         </div>
         <div className="button-row">
-          <button onClick={handleSave}>save</button>
+          <button onClick={handleSave}><BsDownload/></button>
         </div>
         <div className="button-row">
-          <button onClick={localSaveImage}>Save as Image</button>
+          <button onClick={localSaveImage}><BiSave/></button>
         </div>
         <div className="button-row">
           <button onClick={handleLoad}>Rehost</button>

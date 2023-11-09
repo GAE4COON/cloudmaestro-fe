@@ -33,9 +33,7 @@ function Draw() {
   const paletteClassName = isDesktopOrLaptop
     ? "palette-component"
     : "palette-component-small";
-  const diagramClassName = isDesktopOrLaptop
-    ? "diagram-component"
-    : "diagram-component-small";
+  const diagramClassName = "diagram-component"
 
   const [finalToggleValue, setFinalToggleValue] = useState({});
   const [selectedNodeData, setSelectedNodeData] = useState(null); // <-- 상태 변수를 추가합니다.
@@ -137,24 +135,27 @@ function Draw() {
     <div>
       <div className="Draw">
         <div className="container">
-          <div className="button-container">
-            <Button
-              diagram={diagram}
-              showToggle={showToggle}
-              setShowToggle={setShowToggle}
-              finalToggleValue={finalToggleValue}
-              setFinalToggleValue={setFinalToggleValue}
-            />
-          </div>
+
 
           <div className="workspace">
             <div className="palette">
+
               <Palette
                 nodeDataArray={nodeDataArrayPalette}
                 divClassName={paletteClassName}
               />
             </div>
-            <div className="diagram">
+
+            <DiagramContainer>
+              <div className="button-container">
+                <Button
+                  diagram={diagram}
+                  showToggle={showToggle}
+                  setShowToggle={setShowToggle}
+                  finalToggleValue={finalToggleValue}
+                  setFinalToggleValue={setFinalToggleValue}
+                />
+              </div>
               <StyleSpace direction="vertical">
                 {alertMessage && (
                   <StyleAlert
@@ -170,10 +171,10 @@ function Draw() {
                     message={NodeGuideLine.key}
                     description={NodeGuideLine.message}
                     type="info"
-                    // closable
-                    // onClose={() =>
-                    //   setNodeGuideLine({ key: null, message: null })
-                    // }
+                  // closable
+                  // onClose={() =>
+                  //   setNodeGuideLine({ key: null, message: null })
+                  // }
                   />
                 )}
               </StyleSpace>
@@ -232,9 +233,16 @@ function Draw() {
                   initDiagram={initDiagram}
                   divClassName={diagramClassName}
                 />
+                <ButtonContainer>
+                  <StyledButton onClick={summaryRequest}>Go to summary</StyledButton>
+                  <StyledButton onClick={null}>Save as Cloud</StyledButton>
+                </ButtonContainer>
               </StyledDiagram>
-            </div>
+
+            </DiagramContainer>
+
           </div>
+
         </div>
 
         {from === "inputNet" && (
@@ -245,10 +253,7 @@ function Draw() {
 
 
       </div>
-      <ButtonContainer>
-          <StyledButton onClick={summaryRequest}>Go to summary</StyledButton>
-          <StyledButton onClick={null}>Done</StyledButton>
-        </ButtonContainer>
+
     </div>
   );
 }
@@ -256,10 +261,9 @@ function Draw() {
 export default Draw;
 
 const StyledDiagram = styled.div`
-  float: left;
+  /* float: left; */
   width: 100%;
   height: 100%; // 원하는 높이로 설정
-  border: 1px solid black;
 `;
 
 const StyleSpace = styled(Space)`
@@ -278,6 +282,7 @@ const StyleAlert = styled(Alert)`
 const ButtonContainer = styled.div`
   // background-color:yellow;
   display: flex;
+  justify-content: center;
 `
 
 const StyledButton = styled.div`
@@ -299,4 +304,10 @@ align-items: center;
 text-align: center;
 
 color: #809CDA;
+`
+const DiagramContainer = styled.div`
+  position: relative;
+  display: inline;
+  width: 75%;
+  height: 75%;
 `
