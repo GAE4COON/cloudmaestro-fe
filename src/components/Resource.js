@@ -5,7 +5,7 @@ import "../styles/myresource.css";
 import { Collapse, theme } from "antd";
 import { CaretRightOutlined } from "@ant-design/icons";
 
-function Resource({ title_img, title, tags, guide }) {
+function Resource({ title_img, title, tags, guide1, guide2, guide3, guide4 }) {
   const text = `
   A dog is a type of domesticated animal.
   Known for its loyalty and faithfulness,
@@ -15,25 +15,25 @@ function Resource({ title_img, title, tags, guide }) {
     {
       key: "1",
       label: "역할",
-      children: <p>{guide[2]}</p>,
+      children: <p>{guide1}</p>,
       style: panelStyle,
     },
     {
       key: "2",
       label: "동작 방식",
-      children: <p>{guide[3]}</p>,
+      children: <p>{guide2}</p>,
       style: panelStyle,
     },
     {
       key: "3",
       label: "온프레미스 매칭",
-      children: <p>{guide[4]}</p>,
+      children: <p>{guide3}</p>,
       style: panelStyle,
     },
     {
       key: "4",
       label: "관리방법(보안 고려사항)",
-      children: <p>{guide[5]}</p>,
+      children: <p>{guide4}</p>,
       style: panelStyle,
     },
   ];
@@ -60,12 +60,6 @@ function Resource({ title_img, title, tags, guide }) {
         </RightSide>
       </ResourceTitleContainer>
       <hr />
-      <div>
-        AWS 공식 Doc : <a href={guide[0]}>바로가기 링크</a>
-      </div>
-      <div>
-        시작하기 자습서 : <a href={guide[1]}>바로가기 링크</a>
-      </div>
       <Collapse
         bordered={false}
         defaultActiveKey={["1"]}
@@ -77,10 +71,6 @@ function Resource({ title_img, title, tags, guide }) {
         }}
         items={getItems(panelStyle)}
       />
-      <div>
-        더 자세하게 알고싶다면? (기능, 요금, 리소스 등) :
-        <a href={guide[6]}>바로가기 링크</a>
-      </div>
     </ResourceContain>
   );
 }

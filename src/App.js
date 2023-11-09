@@ -46,14 +46,12 @@ function App() {
               <Route path="/input/aws" element={<InputAWS />} />
 
               <Route path="/mypage" element={<MyPage />} />
-              <Route path="/mypage/cloud" element={<MyCloud/>} />
+              <Route path="/mypage/cloud" element={<MyCloud />} />
 
               <Route path="/mypage/design" element={<MyDesign />} />
-              <Route path="/mypage/resource" element={<MYResource />} />
+              <Route path="/mypage/cloud/resource" element={<MYResource />} />
 
               <Route path="/summary" element={<Summary />} />
-
-
             </Routes>
           </div>
           <Footer />

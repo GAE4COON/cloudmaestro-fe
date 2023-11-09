@@ -4,38 +4,42 @@ import Sidebar from "../components/MyPageSideBar";
 import styled from "styled-components";
 import "../styles/myresource.css";
 import Resource from "../components/Resource";
+import { ResourceGuide } from "../apis/resource";
 
 function MYResource() {
-  const resourceItems = [
-    {
-      title_img:
-        "/img/AWS_icon/Arch_Management-Governance/Arch_AWS-CloudTrail_48.svg",
-      title: "CloudTrail",
-      tags: ["로그", "보안"],
-      guide: [
-        "https://docs.aws.amazon.com/athena/latest/ug/what-is.html",
-        "https://aws.amazon.com/ko/athena/getting-started/",
-        "눈누난나 CloudTrail 아이씨 몰라...1",
-        "눈누난나 CloudTrail 아이씨 몰라...2",
-        "눈누난나 CloudTrail 아이씨 몰라...3",
-        "눈누난나 CloudTrail 아이씨 몰라...4",
-        "https://aws.amazon.com/ko/athena/?nc=sn&loc=1",
-      ],
-    },
-    {
-      title_img:
-        "/img/AWS_icon/Arch_Security-Identity-Compliance/Arch_Amazon-GuardDuty_48.svg",
-      title: "GuardDuty",
-      tags: ["로그", "보안"], // 'Tag' 대신 'tags'로 이름을 통일해야 합니다.
-      guide: [
-        "바로가기",
-        "눈누난나 GuardDuty 아이씨 몰라...1",
-        "눈누난나 GuardDuty 아이씨 몰라...2",
-        "눈누난나 GuardDuty 아이씨 몰라...3",
-        "눈누난나 GuardDuty 아이씨 몰라...4",
-      ],
-    },
-  ];
+  const [resource, setResource] = useState(null);
+  const handleResource = async () => {
+    const ResourceData = {
+      title: "Athena",
+    };
+
+    try {
+      const res = await ResourceGuide(ResourceData);
+      setResource(res.data.result);
+      console.log("응답 성공 :", res.data.result);
+    } catch (error) {
+      console.log("응답 실패 :", error.res);
+    }
+  };
+
+  let resourceItems = [];
+  if (Array.isArray(resource)) {
+    resourceItems = resource.map((item) => ({
+      imgPath: item.imgPath || "default-path", // Provide a default value if undefined
+      title: item.title || "Default Title",
+      tag: item.tag || [], // Ensure this is always an array
+      guide1: item.guide1 || "Default Guide1",
+      guide2: item.guide2 || "Default Guide2",
+      guide3: item.guide3 || "Default Guide3",
+      guide4: item.guide4 || "Default Guide4",
+    }));
+  } else {
+    console.error("Resource is not an array:", resource);
+  }
+
+  useEffect(() => {
+    handleResource();
+  }, []);
 
   return (
     <MypageContainer>
@@ -49,10 +53,13 @@ function MYResource() {
           ) => (
             <Resource
               key={index}
-              title_img={item.title_img}
+              title_img={item.imgPath}
               title={item.title}
-              tags={item.tags} // 수정된 프로퍼티 이름
-              guide={item.guide}
+              tags={item.tag} // 수정된 프로퍼티 이름
+              guide1={item.guide1}
+              guide2={item.guide2}
+              guide3={item.guide3}
+              guide4={item.guide4}
             />
           )
         )}
