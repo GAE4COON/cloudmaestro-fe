@@ -242,8 +242,12 @@ function Draw() {
           </Link>
         )}
 
-        <button onClick={summaryRequest}>Go to summary</button>
+
       </div>
+      <ButtonContainer>
+          <StyledButton onClick={summaryRequest}>Go to summary</StyledButton>
+          <StyledButton onClick={null}>Done</StyledButton>
+        </ButtonContainer>
     </div>
   );
 }
@@ -269,3 +273,29 @@ const StyleAlert = styled(Alert)`
   position: relative;
   width: 100%;
 `;
+
+const ButtonContainer = styled.div`
+  background-color:yellow;
+  display: flex;
+`
+
+const StyledButton = styled.div`
+margin-top: 10px;
+box-sizing: border-box;
+width: 200px;
+padding:5px;
+
+background: #FFFFFF;
+border: 1px solid #BABABA;
+border-radius: 7px;
+
+font-family: "Noto Sans KR", sans-serif !important;
+font-style: normal;
+font-weight: 700;
+
+line-height: 30px;
+align-items: center;
+text-align: center;
+
+color: #809CDA;
+`

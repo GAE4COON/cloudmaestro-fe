@@ -2,7 +2,7 @@ import SideBar from "../components/MyPageSideBar";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-import {DownOutlined} from '@ant-design/icons'
+import { DownOutlined } from '@ant-design/icons'
 
 import { Space, Dropdown, Button } from "antd";
 import "../styles/MyCloud.css";
@@ -29,13 +29,10 @@ const items = [
 
 const MyCloud = () => {
     const [cloudInstances, setCloudInstances] = useState([
-        { title:"도식화1", key: 1, imgSrc: '/assets/img/Cloud-architecture.png' },
-        { title:"도식화2", key: 2, imgSrc: '/assets/img/Cloud-architecture.png' },
-        { title:"도식화3",  key: 2, imgSrc: '/assets/img/Cloud-architecture.png' },
-
-        {title:"도식화4",  key: 2, imgSrc: '/assets/img/Cloud-architecture.png' },
-
-
+        { title: "도식화1", key: 1, imgSrc: '/assets/img/Cloud-architecture.png' },
+        { title: "도식화2", key: 2, imgSrc: '/assets/img/Cloud-architecture.png' },
+        { title: "도식화3", key: 2, imgSrc: '/assets/img/Cloud-architecture.png' },
+        { title: "도식화4", key: 2, imgSrc: '/assets/img/Cloud-architecture.png' },
     ]);
     // This function splits the cloudInstances array into chunks of 3
     const getRows = (instances) => {
@@ -62,23 +59,23 @@ const MyCloud = () => {
                         <div key={idx} className="cloud_instance_row">
                             {row.map((instance) => (
                                 <div key={instance.key} className="cloud_instance">
-                                    <img className="img_test_01" alt="test_01" src={instance.imgSrc} />
+                                    <img className="diagram_img" alt="diagram_img" src={instance.imgSrc} />
                                     <StyledInstanceTitle>
-                                    {instance.title}
+                                        {instance.title}
                                     </StyledInstanceTitle>
-                                    
+
                                     <div className="button_container">
-                                        <StyledButton style={{backgroundColor:"#5280DD"}}>
+                                        <StyledButton style={{ backgroundColor: "#5280DD" }}>
                                             <div>
                                                 Total Cost
-                                            </div> 
-                                            </StyledButton>
+                                            </div>
+                                        </StyledButton>
 
                                         <Dropdown menu={{ items }} placement="bottomLeft">
-                                            <StyledButton style={{backgroundColor:"#FD754A"}}>
-                                                Guide 
-                                                <DownOutlined style={{marginTop: "5px"}}/>
-                                                </StyledButton>
+                                            <StyledButton style={{ backgroundColor: "#FD754A" }}>
+                                                Guide
+                                                <DownOutlined style={{ marginTop: "5px" }} />
+                                            </StyledButton>
                                         </Dropdown>
                                     </div>
                                 </div>

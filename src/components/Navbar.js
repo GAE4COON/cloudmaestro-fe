@@ -109,6 +109,7 @@ const Navbar = () => {
                     >
                         Draw
                     </NavLink>
+                    
 
                     <div
                         onClick={closeMenu}
@@ -135,6 +136,9 @@ const Navbar = () => {
                         )}
                     </div>
 
+                    <NavLink onClick={closeMenu} to="/mypage">
+                            My Page
+                        </NavLink>
 
                     {!user && (
                         <SpecialNavLink
