@@ -22,14 +22,16 @@ import MyPage from "./components/MyPageSideBar";
 import MyCloud from "./pages/MyCloud";
 
 import MYResource from "./pages/Myresource";
+import { DataProvider } from './components/DataContext';
 
 function App() {
   return (
     <div className="App">
       
       <AuthProvider>
+      <DataProvider>
         <BrowserRouter>
-        <SidebarController /> 
+        <SidebarController />
           <Navbar />
           <div className="main-content">
             <Routes>
@@ -59,6 +61,7 @@ function App() {
           </div>
           <Footer />
         </BrowserRouter>
+        </DataProvider>
       </AuthProvider>
     </div>
   );
