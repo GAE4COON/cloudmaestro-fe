@@ -276,7 +276,7 @@ const StyleAlert = styled(Alert)`
 `;
 
 const ButtonContainer = styled.div`
-  background-color:yellow;
+  // background-color:yellow;
   display: flex;
 `
 
