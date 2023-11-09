@@ -9,7 +9,7 @@ import ManageHuman from '../components/security/ManageHuman';
 import sidebarMenu from '../components/MyPageSideBar'; // 'menu'를 'sidebarMenu'로 변경
 
 
-function Security(){
+function MySecurity(){
     const [isManage, setIsManage] = useState(false);
 
     let keyword;
@@ -24,10 +24,13 @@ function Security(){
 
         <MypageContainer>
             <MyPageSideBar />
-            <ResourceContainer>
-                <Title> 보안 가이드 라인 </Title>
-                {isManage && <ManageHuman />}
-            </ResourceContainer>
+            <SecurityContainer>
+            <Title> 보안 가이드 라인 </Title>
+              <ResourceContainer>
+              
+                  {isManage && <ManageHuman />}
+              </ResourceContainer>
+            </SecurityContainer>
       </MypageContainer>
   
         
@@ -38,7 +41,7 @@ function Security(){
     );
 
 }
-export default Security;
+export default MySecurity;
 
 
 const StyledMenu = styled(Menu)`
@@ -57,6 +60,8 @@ const StyledMenu = styled(Menu)`
 
 const MypageContainer = styled.div`
   display: flex;
+  font-family: "Noto Sans KR", sans-serif !important;
+
 `;
 
 const ResourceContainer = styled.div`
@@ -64,12 +69,26 @@ const ResourceContainer = styled.div`
   width: 100%;
   height: 100%;
   justify-content: center;
+  overflow-x: auto;
+  height: auto;
+  max-height:70vh;
 `;
+
+
+const SecurityContainer = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  height: auto;
+
+`;
+
 
 const Title = styled.div`
   padding-top: 40px;
   color: #525252;
-  font-size: 20px;
+  font-size: 30px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
