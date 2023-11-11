@@ -105,23 +105,25 @@ const Button = ({
   };
 
   const onFileChange = (e) => {
-    //handleReset();
     if (e.target.files[0] && e.target.files[0].name.includes("json")) {
       let file = e.target.files[0];
       let fileReader = new FileReader();
       fileReader.readAsText(file);
-      fileReader.onload = () => {
+      fileReader.onload = async() => {
         //console.log("json", fileReader.result);
 
-        let filejson = JSON.parse(fileReader.result);
-        if (filejson.hasOwnProperty("cost")) {
-          setFinalToggleVal(filejson["cost"]);
-        }
-        if (fileReader.result && diagram) {
-          diagram.model = go.Model.fromJson(fileReader.result);
-          //console.log(JSON.stringify(diagram.model));
-          setShowToggle(true);
-        }
+      let filejson = JSON.parse(fileReader.result);
+      if (filejson.hasOwnProperty("cost")) {
+        setFinalToggleVal(filejson["cost"]);
+      }
+      if (fileReader.result && diagram) {
+        diagram.model = go.Model.fromJson(fileReader.result);
+        //console.log(JSON.stringify(diagram.model));
+        const response1 = await sidebarResource(diagram.model.nodeDataArray);
+        setData(response1.data); // set the data in context
+        setShowToggle(true);
+        setClickedLoaded(false);
+      }
       };
     } else if (e.target.files[0] && !e.target.files[0].name.includes("json")) {
       alert("Json형식의 파일을 넣어주세요.");
@@ -134,8 +136,10 @@ const Button = ({
       diagram.startTransaction("Cleared diagram");
       setFinalToggleValue({});
       //console.log("final from reset2", finalToggleVal);
-      diagram.model.nodeDataArray = [];
-      diagram.model.linkDataArray = [];
+      //diagram.model.groupDataArray = [];
+      //diagram.model.nodeDataArray = [];
+      //diagram.model.linkDataArray = [];
+      diagram.clear();
       diagram.commitTransaction("Cleared diagram");
     }
     const response1 = await sidebarResource(diagram.model.nodeDataArray);
