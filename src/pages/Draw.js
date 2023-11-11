@@ -13,6 +13,8 @@ import { nodeDataArrayPalette } from "../db/Node";
 
 import { useLocation, useNavigate } from "react-router-dom";
 import { Alert, Space, Layout, Menu } from "antd";
+import { sidebarResource } from "../apis/sidebar"
+import { useData } from '../components/DataContext';
 
 // 페이지
 // import useReadJSON from "./useReadJSON";
@@ -28,7 +30,6 @@ function Draw() {
   const navigate = useNavigate();
   const { data } = useFileUpload();
   //console.log("draw data ", data);
-
   const isDesktopOrLaptop = useMediaQuery({ query: "(min-width: 700px)" });
   const paletteClassName = isDesktopOrLaptop
     ? "palette-component"
@@ -39,6 +40,7 @@ function Draw() {
   const [selectedNodeData, setSelectedNodeData] = useState(null); // <-- 상태 변수를 추가합니다.
   const [showToggle, setShowToggle] = useState(true);
   const [alertMessage, setAlertMessage] = useState(null);
+  const { setData } = useData();
   const [NodeGuideLine, setNodeGuideLine] = useState({
     key: null,
     message: null,
@@ -61,6 +63,13 @@ function Draw() {
   const file = location.state ? location.state.file : null;
   const from = location.from;
   // //console.log(file);
+
+  useEffect(() => {
+    if (diagram) {
+      diagram.clear();  //다른 로케이션으로 가면 다이어그램을 없앤다
+    }
+    setData(null);
+  }, [location]);
 
   useEffect(() => {
     if (NodeGuide) {
