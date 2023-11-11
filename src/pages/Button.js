@@ -92,7 +92,7 @@ const Button = ({
       //   return;
       // }
       if (clickedLoaded) {
-        alert("!!!!!!!!!!클라우드 아키텍처는 Rehost 하지 못합니다!!!!!!!!!!")
+        alert("!!!!!!!!!클라우드 아키텍처는 Rehost 하지 못합니다!!!!!!!!!")
         return;
       }
       
