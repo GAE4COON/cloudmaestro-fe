@@ -96,11 +96,7 @@ const Button = ({
         alert("!!!!!!!!!!클라우드 아키텍처는 Rehost 하지 못합니다!!!!!!!!!!")
         return;
       }
-      ////console.log("modelmodel",JSON.stringify(diagram.model));
-
       
-      // types 배열 출력
-      console.log("Types:", types);
 
       const response = await rehostRequest(jsonString);
       //console.log("response", response.data.result);
