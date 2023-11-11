@@ -224,9 +224,6 @@ function Draw() {
                     readOnly
                   />
                 )}
-              {clickedNodeKey && (
-                <div className="clicked_key">{clickedNodeKey}</div>
-              )}
 
               <StyledDiagram>
                 <ReactDiagram
