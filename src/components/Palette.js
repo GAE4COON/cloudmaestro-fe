@@ -14,6 +14,7 @@ function formatKey(key) {
 }
 
 const tabs = [
+  "Network_icon",
   "Analytics",
   "App-Integration",
   "Blockchain",
