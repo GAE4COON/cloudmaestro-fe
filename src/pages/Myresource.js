@@ -9,9 +9,7 @@ import { ResourceGuide } from "../apis/resource";
 function MYResource() {
   const [resource, setResource] = useState(null);
   const handleResource = async () => {
-    const ResourceData = {
-      title: "Athena",
-    };
+    const ResourceData = { title: ["Athena", "OpenSearch"] };
 
     try {
       const res = await ResourceGuide(ResourceData);
