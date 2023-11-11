@@ -81,15 +81,26 @@ const Button = ({
 
   const handleLoad = async () => {
     try {
+
+      const jsonString = diagram.model.toJson();
+      const diagramObject = JSON.parse(jsonString);
+      const types = diagramObject.nodeDataArray.map(node => node.type);
+      const otherTypes = types.filter(type => type !== "Network_icon");
+      const containsOtherTypes = otherTypes.length > 0;
+
+      if(containsOtherTypes){
+        alert("!!!!!!!!!!클라우드 아키텍처가 포함되어있으면 Rehost 하지 못합니다!!!!!!!!!!")
+        return;
+      }
       if (clickedLoaded) {
         alert("!!!!!!!!!!클라우드 아키텍처는 Rehost 하지 못합니다!!!!!!!!!!")
         return;
       }
       ////console.log("modelmodel",JSON.stringify(diagram.model));
 
-
-      const jsonString = diagram.model.toJson();
-      //console.log("jsonString", jsonString);
+      
+      // types 배열 출력
+      console.log("Types:", types);
 
       const response = await rehostRequest(jsonString);
       //console.log("response", response.data.result);
