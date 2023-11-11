@@ -18,9 +18,9 @@ import Summary from "./pages/Summary";
 
 import MyPage from "./components/MyPageSideBar";
 import MyCloud from "./pages/MyCloud";
-import MySecurity from "./pages/MySecurity";
 
 import MYResource from "./pages/Myresource";
+import MySecurity from "./pages/MySecurity";
 import MyPageSideBar from "./components/MyPageSideBar";
 
 function App() {

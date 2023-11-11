@@ -7,7 +7,7 @@ import ManageHuman from '../components/security/ManageHuman';
 
 // sidebarMenu는 메뉴 항목을 정의한 배열이어야 합니다.
 import sidebarMenu from '../components/MyPageSideBar'; // 'menu'를 'sidebarMenu'로 변경
-
+import { PDFViewer } from '@react-pdf/renderer';
 
 function MySecurity(){
     const [isManage, setIsManage] = useState(false);
@@ -26,10 +26,12 @@ function MySecurity(){
             <MyPageSideBar />
             <SecurityContainer>
             <Title> 보안 가이드 라인 </Title>
-              <ResourceContainer>
-              
-                  {isManage && <ManageHuman />}
-              </ResourceContainer>
+   
+                <ResourceContainer>
+            
+                    {isManage && <ManageHuman />}
+                </ResourceContainer>
+  
             </SecurityContainer>
       </MypageContainer>
   
@@ -64,20 +66,54 @@ const MypageContainer = styled.div`
 
 `;
 
+
 const ResourceContainer = styled.div`
+
   position: relative;
-  width: 100%;
+  width: 80%;
   height: 100%;
   justify-content: center;
-  overflow-x: auto;
-  height: auto;
   max-height:70vh;
+
+  position: relative;
+  padding-left : 40px; 
+  padding-right: 50px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 효과 추가 */
+  border-radius: 8px; /* 모서리 둥글게 처리 */
+  background: #FFFFFF; /* 배경색 설정 */
+  justify-content: center;
+  margin :auto;
+  height: auto;
+
+  overflow-x:auto;
+
+  scrollbar-color: darkgrey;
+  scrollbar-width: thin;
+  
+  &::-webkit-scrollbar {
+    width: 7px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background-color: #e4e4e4;
+    border-radius: 100px;
+
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    border-radius: 100px;
+    background-image: linear-gradient(180deg, #d0368a 0%, #708ad4 99%);
+    box-shadow: inset 2px 2px 5px 0 rgba(#fff, 0.5);
+
+  }
+  
+
 `;
 
 
 const SecurityContainer = styled.div`
   position: relative;
-  width: 100%;
+  width: 80%;
   height: 100%;
   justify-content: center;
   height: auto;

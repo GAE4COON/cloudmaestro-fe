@@ -291,9 +291,6 @@ const column2 = [
     },
   ];
   
-
-
-
   const dataSource5 = [
     {
       title: '서비스 가용성 및 성능 (ISO27002 12.1.3)',
@@ -788,19 +785,10 @@ const ResourceContainer = styled.div`
   display: flex; /* Flexbox 모델 적용 */
   flex-direction: column; /* 자식 요소들을 세로로 정렬 */
 
-  position: relative;
-  width: 80%;
-  margin :  auto;
-  padding : 20px; 
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 효과 추가 */
-  border-radius: 8px; /* 모서리 둥글게 처리 */
-  background: #FFFFFF; /* 배경색 설정 */
-  justify-content: center;
-  overflow-x: auto;
-  height: auto;
- 
 
+ 
 `;
+
 
 const Overview = styled.div`
   position: relative; /* 가상 요소의 위치 기준점 설정 */
