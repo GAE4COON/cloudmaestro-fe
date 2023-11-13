@@ -121,7 +121,21 @@ export const nodeDataArrayPalette = [
     type: "Analytics",
   },
   {
+    text: "Lake_Formation_Data_Lake",
+    key: "Lake_Formation_Data_Lake",
+    figure: "Rectangle",
+    source: "/img/AWS_icon/Arch_Analytics/Lake_Formation_data_lake.svg",
+    type: "Analytics",
+  },
+  {
     text: "DataZone",
+    key: "DataZone",
+    figure: "Rectangle",
+    source: "/img/AWS_icon/Arch_Analytics/Arch_Amazon-DataZone_48.svg",
+    type: "Analytics",
+  },
+  {
+    text: "La",
     key: "DataZone",
     figure: "Rectangle",
     source: "/img/AWS_icon/Arch_Analytics/Arch_Amazon-DataZone_48.svg",
@@ -1952,6 +1966,14 @@ export const nodeDataArrayPalette = [
     type: "Networking-Content-Delivery",
   },
   {
+    text: "Application Load Balancer",
+    key: "Application Load Balancer",
+    figure: "Rectangle",
+    source:
+      "/img/AWS_icon/Arch_Networking-Content-Delivery/Res_Elastic-Load-Balancing_Application-Load-Balancer_48.svg",
+    type: "Networking-Content-Delivery",
+  },
+  {
     text: "VpcPeering",
     key: "VpcPeering",
     figure: "Rectangle",
@@ -2612,8 +2634,16 @@ export const nodeDataArrayPalette = [
   {
     isGroup: true,
     stroke: "rgb(150,150,150)",
-    text: "Secrvice",
-    key: "Secrvice",
+    text: "Service",
+    key: "Service",
+    // source: "/img/AWS_icon/AWS_Groups/VPC.svg",
+    type: "AWS_Groups",
+  },
+  {
+    isGroup: true,
+    stroke: "rgb(150,150,150)",
+    text: "AWS Step Function Workflow",
+    key: "AWS Step Function Workflow",
     // source: "/img/AWS_icon/AWS_Groups/VPC.svg",
     type: "AWS_Groups",
   },

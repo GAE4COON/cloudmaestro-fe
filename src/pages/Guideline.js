@@ -104,8 +104,8 @@ transition: all 0.3s ease 0s; /* 호버 효과를 위한 전환 */
 
 const MypageContainer = styled.div`
   display: flex;
-  font-family: "Noto Sans KR", sans-serif !important;s
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 효과 추가 */
+  font-family: "Noto Sans KR", sans-serif !important;
+  // box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 효과 추가 */
   border-radius: 8px; /* 모서리 둥글게 처리 */
   background: #FFFFFF; /* 배경색 설정 */
 
