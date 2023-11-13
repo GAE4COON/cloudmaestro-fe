@@ -8,7 +8,7 @@ import {BsUpload,BsDownload,  BsEraser, BsSave, } from "react-icons/bs"
 import {BiSave} from "react-icons/bi"
 import { sidebarResource } from "../apis/sidebar"
 import { useData } from '../components/DataContext';
-import ToOptimize from '../components/Requirement';
+
 
 const Button = ({
   diagram,
