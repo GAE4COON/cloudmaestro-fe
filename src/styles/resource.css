@@ -28,8 +28,12 @@
     flex-direction: column;
 }
 .main-container{
-    margin-top: 30px;
+    margin-top: 50px;
     width: 80%;
+
+    /* margin-top:50px; */
+    /* background-color: yellow; */
+
 }
 .cloud_instance_row{
     display: flex;
