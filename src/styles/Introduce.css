@@ -1,6 +1,4 @@
 /* Common styles and font face */
-
-
 .logo-container {
   height: 100vh;
 
@@ -38,7 +36,6 @@
 .logo-container .content > img {
   width: 80%;
 }
-
 
 .logo-container .content > p {
   font-family: "Noto Sans KR", sans-serif !important;
@@ -83,4 +80,8 @@
 .content-block > p {
   margin: 0;
   padding: 10px;
+}
+
+.about-container{
+  font-family: "Noto Sans KR", sans-serif !important;
 }

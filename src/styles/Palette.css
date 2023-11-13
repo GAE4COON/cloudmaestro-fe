@@ -1,82 +1,26 @@
-/* Basic styles */
-.tabs {
-  width: 100%;
-  background-color: whitesmoke;
-  border: solid 1px black;
-  overflow: hidden;
-}
 
+/* Styling for content within tabs */
 .tab-content {
   width: 100%;
   height: 200px;
-}
-
-.tab {
-  width: 100%;
-  position: relative;
-}
-
-input[type="radio"] {
-  position: absolute;
-  opacity: 0;
-  z-index: -1;
-}
-
-
-.tab-label {
-  height: 2.5vh;
-  display: flex;
-  font-size: 2vh;
-  justify-content: space-between;
-  padding: 0.5em;
-  background: #829fdf;
-  border: solid 1px white;
-  cursor: pointer;
-  /* color: #fff; */
-}
-
-.tab-label:hover {
-  background: #bfd3ff;
-}
-
-.tab-label::after {
-
-  content: "❯";
-  width: 1em;
-  height: 1em;
-  text-align: center;
-  transition: all 0.35s;
-}
-
-input[type="radio"]:checked + .tab-label {
-  background-color: #bfd3ff;
-}
-
-input[type="radio"]:not(:checked) + .tab-label,
-.tab-close:hover {
-  /* background: #79acff;
-   */
-   color: white;
-  }
-
-.tab-content {
   max-height: 0;
-  background: white;
+  border: 1px solid #dee8ff;
+  background-color: #f2f6ff;
+  
 }
 
 input[type="radio"]:checked ~ .tab-content {
-  max-height: 100vh;
+  max-height: 90vh;
 }
 
-/* Scrollable styles */
-.scrollable-tabs-container,
-.tab-content > div[style*="overflow: auto;"] {
+/* Scrollable styles for tabs and overflow content */
+/* .tab-content > div[style*="overflow: auto;"] {
   ::-webkit-scrollbar {
     width: 10px;
   }
 
   ::-webkit-scrollbar-thumb {
-    background-color: #959595;
+    background-color: #d4d4d4;
     border-radius: 10px;
     background-clip: padding-box;
     border: 2px solid transparent;
@@ -88,77 +32,4 @@ input[type="radio"]:checked ~ .tab-content {
     box-shadow: inset 0px 0px 5px white;
   }
 }
-
-.scrollable-tabs-container {
-  max-height: 87vh;
-  width: 100%;
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-
-
-
-/* Miscellaneous styles */
-.search-container{
-  padding-top: 10px;
-  padding-bottom:10px;
-  width: 100%;
-  text-align: left;
-
-  /* font-size: 80px; */
-  height: 3vh;
-  display: flex;
-}
-
-.filtered-nodes-container {
-  font-size: 7px;
-}
-
-.filtered-nodes-container {
-  font-size: 7px;
-  width: 100%;
-  padding: 10px;
-  max-height: 50vh;
-  overflow-y: auto;
-  overflow-x: hidden;
-  background-color: #e9f0f6;
-}
-
-.tab-close {
-  display: flex;
-  justify-content: flex-end;
-  padding: 1em;
-  cursor: pointer;
-  color: white;
-
-}
-
-input[type="text"] {
-  outline: none;
-  border: 1px solid #ccc;
-  padding: 10px;
-  width:100%;
-  border-radius: 5px;
-  font-size: 14px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.3s, border-color 0.3s;
-
-}
-
-/* 입력 중일 때의 스타일 */
-input[type="text"]:focus {
-  border-color: #0078d4;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-
-input[type="text"]::placeholder {
-  color: #888;
-  font-weight: normal;
-  text-indent: 20px;
-  background-image: url('/public/assets/img/search.png'); 
-  background-repeat: no-repeat;
-  background-position: right center;
-  background-size: 16px 16px;
-
-}
+ */

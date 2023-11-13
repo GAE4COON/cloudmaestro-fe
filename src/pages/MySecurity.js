@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu } from 'antd';
 import styled from 'styled-components';
 import MyPageSideBar from '../components/MyPageSideBar';
 import ManageHuman from '../components/security/ManageHuman';
+import { PDFDownloadLink } from '@react-pdf/renderer'; // react-to-pdf의 PDFDownloadLink 가져오기
 
-// sidebarMenu는 메뉴 항목을 정의한 배열이어야 합니다.
-import sidebarMenu from '../components/MyPageSideBar'; // 'menu'를 'sidebarMenu'로 변경
-import { PDFViewer } from '@react-pdf/renderer';
+//import { PDFViewer } from '@react-pdf/renderer';
+
 
 function MySecurity(){
     const [isManage, setIsManage] = useState(false);
@@ -18,7 +18,7 @@ function MySecurity(){
         setIsManage(keyword === "Manage");
     })
 
-   
+    const componentRef = useRef(); // 페이지 전체를 인쇄하기 위한 ref
 
     return (
 
@@ -28,8 +28,19 @@ function MySecurity(){
             <Title> 보안 가이드 라인 </Title>
    
                 <ResourceContainer>
-            
-                    {isManage && <ManageHuman />}
+                  <PDFDownloadLink
+                    document={
+                      <div ref={componentRef}>
+                        {/* 페이지 전체 내용을 포함하는 div */}
+                        <ManageHuman />
+                      </div>
+                    }
+                    fileName="somename.pdf"
+                  >
+                    {({ blob, url, loading, error }) =>
+                      loading ? 'Loading document...' : 'Download now!'
+                    }
+                  </PDFDownloadLink>
                 </ResourceContainer>
   
             </SecurityContainer>
@@ -60,17 +71,17 @@ const StyledMenu = styled(Menu)`
 }
 `
 
+
 const MypageContainer = styled.div`
   display: flex;
   font-family: "Noto Sans KR", sans-serif !important;
 
 `;
 
-
 const ResourceContainer = styled.div`
 
   position: relative;
-  width: 80%;
+  width:80%;
   height: 100%;
   justify-content: center;
   max-height:70vh;
@@ -99,12 +110,10 @@ const ResourceContainer = styled.div`
     border-radius: 100px;
 
   }
-  
   &::-webkit-scrollbar-thumb {
     border-radius: 100px;
-    background-image: linear-gradient(180deg, #d0368a 0%, #708ad4 99%);
-    box-shadow: inset 2px 2px 5px 0 rgba(#fff, 0.5);
-
+    background: #0000FF; /* 단색 배경 */
+    box-shadow: inset 2px 2px 5px 0 rgba(255, 255, 255, 0.5);
   }
   
 
@@ -113,7 +122,7 @@ const ResourceContainer = styled.div`
 
 const SecurityContainer = styled.div`
   position: relative;
-  width: 80%;
+  width: 76%;
   height: 100%;
   justify-content: center;
   height: auto;

@@ -1,39 +1,56 @@
 import "../styles/Palette.css";
 import React, { memo, useEffect, useRef, useState } from "react";
 import * as go from "gojs";
-
-// import { nodeDataArrayPalette } from "../db/NodeAWS";
 import { nodeDataArrayPalette } from "../db/Node";
+import styled from 'styled-components';
+
 
 function formatKey(key) {
-  key = String(key);
-
-  // _를 공백으로 대체합니다.
-  let words = key.replace(/_/g, " ").split(" ");
-
-  // 각 단어의 첫 글자를 대문자로 바꿉니다.
-  let result = words
+  return String(key)
+    .replace(/_/g, " ")
+    .split(" ")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
-
-  return result;
 }
 
-function computeStroke(data) {
-  if (data.source) {
-    return "transparent";
-  }
-  return data.stroke || "grey";
-}
+const tabs = [
+  "Analytics",
+  "App-Integration",
+  "Blockchain",
+  "Business-Applications",
+  "Cloud-Financial-Management",
+  "Compute",
+  "Containers",
+  "Customer-Enablement",
+  "Database",
+  "Developer-Tools",
+  "End-User-Computing",
+  "Front-End-Web-Mobile",
+  "Games",
+  "General-Icons",
+  "Internet-of-Things",
+  "Machine-Learning",
+  "Management-Governance",
+  "Media-Services",
+  "Migration-Transfer",
+  "Networking-Content-Delivery",
+  "Quantum-Technologies",
+  "Robotics",
+  "Satellite",
+  "Security-Identity-Compliance",
+  "Storage",
+  "AWS_Groups"
+  // Add more tabs here
+];
 
 const Palette = memo(({ divClassName }) => {
-  // const [setNodeDataArray] = useState([]);
   const [nodeDataArray, setNodeDataArray] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedTab, setSelectedTab] = useState([]);
-  const [filteredNodes, setFilteredNodes] = useState([]);
 
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedTab, setSelectedTab] = useState("Storage");
+  const [filteredNodes, setFilteredNodes] = useState([]);
   const paletteDivs = useRef({});
+
 
   useEffect(() => {
     const $ = go.GraphObject.make;
@@ -120,12 +137,13 @@ const Palette = memo(({ divClassName }) => {
       )
     );
 
-    let dataToUse = nodeDataArrayPalette.filter(
-      (item) => item.type === selectedTab
-    );
     if (paletteDivs.current[selectedTab]) {
       myPalette.div = paletteDivs.current[selectedTab];
     }
+
+    let dataToUse = nodeDataArrayPalette.filter(
+      (item) => item.type === selectedTab
+    );
 
     let dataToSearch = nodeDataArrayPalette;
     if (searchTerm) {
@@ -135,8 +153,7 @@ const Palette = memo(({ divClassName }) => {
           .includes(searchTerm.toLowerCase());
       });
       setFilteredNodes(dataToSearch);
-
-      myPalette.model.nodeDataArray = dataToSearch; // 팔레트에 검색된 노드들을 설정
+      myPalette.model.nodeDataArray = dataToSearch;
     } else {
       setFilteredNodes([]);
       myPalette.model.nodeDataArray = dataToUse;
@@ -145,526 +162,195 @@ const Palette = memo(({ divClassName }) => {
     return () => {
       myPalette.div = null;
     };
-  }, [nodeDataArray, selectedTab, searchTerm]);
+  }, [selectedTab, searchTerm]);
 
   return (
     <div className={divClassName}>
       <div id="allSampleContent">
-        <div className="search-container">
-          <input
+        <SearchContainer>
+          <SearchInput
             type="text"
             placeholder="Search..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-        </div>
+        </SearchContainer>
 
         {filteredNodes.length > 0 && (
           <div>
-            <div className="filtered-nodes-container">
+            <FilteredNodesContainer>
               {filteredNodes.map((node) => (
                 <div key={node.key}>
-                  {node.type}: {formatKey(node.key)}
+                  - {node.type}: {formatKey(node.key)}
                 </div>
               ))}
-            </div>
+            </FilteredNodesContainer>
 
-            <div className="scrollable-tabs-container">
-              <div className="tabs">
-                <div className="tab">
-                  <input
+            <ScrollableTabsContainer>
+              <Tabs>
+                <Tab>
+                  <RadioInput
                     type="radio"
-                    id="rd99"
+                    id="rd_select"
                     name="rd"
                     onClick={() => setSelectedTab("Search")}
                   />
-                  <label className="tab-label" htmlFor="rd99">
+                  <TabLabel htmlFor="rd_select">
                     Search
-                  </label>
-                  <div
-                    className="tab-content"
+                  </TabLabel>
+                  <div className="tab-content"
                     ref={(el) => (paletteDivs.current["Search"] = el)}
                   />
-                </div>
-              </div>
-            </div>
+                </Tab>
+              </Tabs>
+            </ScrollableTabsContainer>
           </div>
         )}
-
-        {filteredNodes.length == 0 && (
-          <div className="scrollable-tabs-container">
-            <div className="tabs">
-              {/* Network node */}
-              <div className="tab">
-                <input
-                  type="radio"
-                  id="rd27"
-                  name="rd"
-                  onClick={() => setSelectedTab("Network_icon")}
-                />
-
-                <label className="tab-label" htmlFor="rd27">
-                  Network
-                </label>
-                <div
-                  className="tab-content"
-                  ref={(el) => (paletteDivs.current["Network_icon"] = el)}
-                />
-              </div>
-              <div className="tab">
-                <input
-                  type="radio"
-                  id="rd1"
-                  name="rd"
-                  onClick={() => setSelectedTab("Analytics")}
-                />
-                <label className="tab-label" htmlFor="rd1">
-                  Analytics
-                </label>
-                <div
-                  className="tab-content"
-                  ref={(el) => (paletteDivs.current["Analytics"] = el)}
-                />
-              </div>
-
-              <div className="tab">
-                <input
-                  type="radio"
-                  id="rd2"
-                  name="rd"
-                  onClick={() => setSelectedTab("App-Integration")}
-                />
-                <label className="tab-label" htmlFor="rd2">
-                  App Integration
-                </label>
-                <div
-                  className="tab-content"
-                  ref={(el) => (paletteDivs.current["App-Integration"] = el)}
-                />
-              </div>
-
-              <div className="tab">
-                <input
-                  type="radio"
-                  id="rd3"
-                  name="rd"
-                  onClick={() => setSelectedTab("Blockchain")}
-                />
-                <label className="tab-label" htmlFor="rd3">
-                  Blockchain
-                </label>
-                <div
-                  className="tab-content"
-                  ref={(el) => (paletteDivs.current["Blockchain"] = el)}
-                />
-              </div>
-
-              <div className="tab">
-                <input
-                  type="radio"
-                  id="rd4"
-                  name="rd"
-                  onClick={() => setSelectedTab("Business-Applications")}
-                />
-                <label className="tab-label" htmlFor="rd4">
-                  Business Applications
-                </label>
-                <div
-                  className="tab-content"
-                  ref={(el) =>
-                    (paletteDivs.current["Business-Applications"] = el)
-                  }
-                />
-              </div>
-
-              <div className="tab">
-                <input
-                  type="radio"
-                  id="rd5"
-                  name="rd"
-                  onClick={() => setSelectedTab("Cloud-Financial-Management")}
-                />
-                <label className="tab-label" htmlFor="rd5">
-                  Cloud Financial Management
-                </label>
-                <div
-                  className="tab-content"
-                  ref={(el) =>
-                    (paletteDivs.current["Cloud-Financial-Management"] = el)
-                  }
-                />
-              </div>
-              {/* <div className="tab">
-                <input
-                  type="radio"
-                  id="rd6"
-                  name="rd"
-                  onClick={() => setSelectedTab("Networking-Content-Delivery")}
-                />
-                <label className="tab-label" htmlFor="rd6">
-                Networking-Content-Delivery
-                </label>
-                <div
-                  className="tab-content"
-                  ref={(el) =>
-                    (paletteDivs.current["Networking-Content-Delivery"] = el)
-                  }
-                />
-              </div> */}
-{/* 
-              <div className="tab">
-                <input
-                  type="radio"
-                  id="rd6"
-                  name="rd"
-                  onClick={() => setSelectedTab("Compute")}
-                />
-                <label className="tab-label" htmlFor="rd6">
-                  Compute
-                </label>
-                <div
-                  className="tab-content"
-                  ref={(el) => (paletteDivs.current["Compute"] = el)}
-                />
-              </div> */}
-
-              <div className="tab">
-                <input
-                  type="radio"
-                  id="rd7"
-                  name="rd"
-                  onClick={() => setSelectedTab("Containers")}
-                />
-                <label className="tab-label" htmlFor="rd7">
-                  Containers
-                </label>
-                <div
-                  className="tab-content"
-                  ref={(el) => (paletteDivs.current["Containers"] = el)}
-                />
-              </div>
-
-              <div className="tab">
-                <input
-                  type="radio"
-                  id="rd8"
-                  name="rd"
-                  onClick={() => setSelectedTab("Customer-Enablement")}
-                />
-                <label className="tab-label" htmlFor="rd8">
-                  Customer Enablement
-                </label>
-                <div
-                  className="tab-content"
-                  ref={(el) =>
-                    (paletteDivs.current["Customer-Enablement"] = el)
-                  }
-                />
-              </div>
-
-              <div className="tab">
-                <input
-                  type="radio"
-                  id="rd9"
-                  name="rd"
-                  onClick={() => setSelectedTab("Database")}
-                />
-                <label className="tab-label" htmlFor="rd9">
-                  Database
-                </label>
-                <div
-                  className="tab-content"
-                  ref={(el) => (paletteDivs.current["Database"] = el)}
-                />
-              </div>
-
-              <div className="tab">
-                <input
-                  type="radio"
-                  id="rd10"
-                  name="rd"
-                  onClick={() => setSelectedTab("Developer-Tools")}
-                />
-                <label className="tab-label" htmlFor="rd10">
-                  Developer Tools
-                </label>
-                <div
-                  className="tab-content"
-                  ref={(el) => (paletteDivs.current["Developer-Tools"] = el)}
-                />
-              </div>
-
-              <div className="tab">
-                <input
-                  type="radio"
-                  id="rd11"
-                  name="rd"
-                  onClick={() => setSelectedTab("End-User-Computing")}
-                />
-                <label className="tab-label" htmlFor="rd11">
-                  End User Computing
-                </label>
-                <div
-                  className="tab-content"
-                  ref={(el) => (paletteDivs.current["End-User-Computing"] = el)}
-                />
-              </div>
-
-              <div className="tab">
-                <input
-                  type="radio"
-                  id="rd12"
-                  name="rd"
-                  onClick={() => setSelectedTab("Front-End-Web-Mobile")}
-                />
-                <label className="tab-label" htmlFor="rd12">
-                  Front End Web Mobile
-                </label>
-                <div
-                  className="tab-content"
-                  ref={(el) =>
-                    (paletteDivs.current["Front-End-Web-Mobile"] = el)
-                  }
-                />
-              </div>
-
-              <div className="tab">
-                <input
-                  type="radio"
-                  id="rd13"
-                  name="rd"
-                  onClick={() => setSelectedTab("Games")}
-                />
-                <label className="tab-label" htmlFor="rd13">
-                  Games
-                </label>
-                <div
-                  className="tab-content"
-                  ref={(el) => (paletteDivs.current["Games"] = el)}
-                />
-              </div>
-
-              <div className="tab">
-                <input
-                  type="radio"
-                  id="rd14"
-                  name="rd"
-                  onClick={() => setSelectedTab("General-Icons")}
-                />
-                <label className="tab-label" htmlFor="rd14">
-                  General Icons
-                </label>
-                <div
-                  className="tab-content"
-                  ref={(el) => (paletteDivs.current["General-Icons"] = el)}
-                />
-              </div>
-
-              <div className="tab">
-                <input
-                  type="radio"
-                  id="rd15"
-                  name="rd"
-                  onClick={() => setSelectedTab("Internet-of-Things")}
-                />
-                <label className="tab-label" htmlFor="rd15">
-                  Internet of Things
-                </label>
-                <div
-                  className="tab-content"
-                  ref={(el) => (paletteDivs.current["Internet-of-Things"] = el)}
-                />
-              </div>
-
-              <div className="tab">
-                <input
-                  type="radio"
-                  id="rd16"
-                  name="rd"
-                  onClick={() => setSelectedTab("Machine-Learning")}
-                />
-                <label className="tab-label" htmlFor="rd16">
-                  Machine Learning
-                </label>
-                <div
-                  className="tab-content"
-                  ref={(el) => (paletteDivs.current["Machine-Learning"] = el)}
-                />
-              </div>
-
-              <div className="tab">
-                <input
-                  type="radio"
-                  id="rd17"
-                  name="rd"
-                  onClick={() => setSelectedTab("Management-Governance")}
-                />
-                <label className="tab-label" htmlFor="rd17">
-                  Management Governance
-                </label>
-                <div
-                  className="tab-content"
-                  ref={(el) =>
-                    (paletteDivs.current["Management-Governance"] = el)
-                  }
-                />
-              </div>
-
-              <div className="tab">
-                <input
-                  type="radio"
-                  id="rd18"
-                  name="rd"
-                  onClick={() => setSelectedTab("Media-Services")}
-                />
-                <label className="tab-label" htmlFor="rd18">
-                  Media Services
-                </label>
-                <div
-                  className="tab-content"
-                  ref={(el) => (paletteDivs.current["Media-Services"] = el)}
-                />
-              </div>
-
-              <div className="tab">
-                <input
-                  type="radio"
-                  id="rd19"
-                  name="rd"
-                  onClick={() => setSelectedTab("Migration-Transfer")}
-                />
-                <label className="tab-label" htmlFor="rd19">
-                  Migration Transfer
-                </label>
-                <div
-                  className="tab-content"
-                  ref={(el) => (paletteDivs.current["Migration-Transfer"] = el)}
-                />
-              </div>
-
-              <div className="tab">
-                <input
-                  type="radio"
-                  id="rd20"
-                  name="rd"
-                  onClick={() => setSelectedTab("Networking-Content-Delivery")}
-                />
-                <label className="tab-label" htmlFor="rd20">
-                  Networking Content Delivery
-                </label>
-                <div
-                  className="tab-content"
-                  ref={(el) =>
-                    (paletteDivs.current["Networking-Content-Delivery"] = el)
-                  }
-                />
-              </div>
-
-              <div className="tab">
-                <input
-                  type="radio"
-                  id="rd21"
-                  name="rd"
-                  onClick={() => setSelectedTab("Quantum-Technologies")}
-                />
-                <label className="tab-label" htmlFor="rd21">
-                  Quantum Technologies
-                </label>
-                <div
-                  className="tab-content"
-                  ref={(el) =>
-                    (paletteDivs.current["Quantum-Technologies"] = el)
-                  }
-                />
-              </div>
-
-              <div className="tab">
-                <input
-                  type="radio"
-                  id="rd22"
-                  name="rd"
-                  onClick={() => setSelectedTab("Robotics")}
-                />
-                <label className="tab-label" htmlFor="rd22">
-                  Robotics
-                </label>
-                <div
-                  className="tab-content"
-                  ref={(el) => (paletteDivs.current["Robotics"] = el)}
-                />
-              </div>
-
-              <div className="tab">
-                <input
-                  type="radio"
-                  id="rd23"
-                  name="rd"
-                  onClick={() => setSelectedTab("Satellite")}
-                />
-                <label className="tab-label" htmlFor="rd23">
-                  Satellite
-                </label>
-                <div
-                  className="tab-content"
-                  ref={(el) => (paletteDivs.current["Satellite"] = el)}
-                />
-              </div>
-
-              <div className="tab">
-                <input
-                  type="radio"
-                  id="rd24"
-                  name="rd"
-                  onClick={() => setSelectedTab("Security-Identity-Compliance")}
-                />
-                <label className="tab-label" htmlFor="rd24">
-                  Security Identity Compliance
-                </label>
-                <div
-                  className="tab-content"
-                  ref={(el) =>
-                    (paletteDivs.current["Security-Identity-Compliance"] = el)
-                  }
-                />
-              </div>
-
-              <div className="tab">
-                <input
-                  type="radio"
-                  id="rd25"
-                  name="rd"
-                  onClick={() => setSelectedTab("Storage")}
-                />
-                <label className="tab-label" htmlFor="rd25">
-                  Storage
-                </label>
-                <div
-                  className="tab-content"
-                  ref={(el) => (paletteDivs.current["Storage"] = el)}
-                />
-              </div>
-
-              <div className="tab">
-                <input
-                  type="radio"
-                  id="rd26"
-                  name="rd"
-                  onClick={() => setSelectedTab("AWS_Groups")}
-                />
-                <label className="tab-label" htmlFor="rd26">
-                  Group
-                </label>
-                <div
-                  className="tab-content"
-                  ref={(el) => (paletteDivs.current["AWS_Groups"] = el)}
-                />
-              </div>
-            </div>
-          </div>
+        {filteredNodes.length === 0 && (
+          <ScrollableTabsContainer>
+          {tabs.map((tab) => (
+           <Tab key={tab}>
+           <RadioInput
+             type="radio"
+             id={`rd_${tab}`}
+             name="rd"
+             onClick={() => setSelectedTab(tab)}
+           />
+           <TabLabel htmlFor={`rd_${tab}`}>
+             {formatKey(tab)}
+           </TabLabel>
+           <div className="tab-content"
+             ref={(el) => (paletteDivs.current[tab] = el)}
+           />
+         </Tab>
+          ))}
+          </ScrollableTabsContainer>
         )}
       </div>
+      
     </div>
+    
   );
 });
 
 export default Palette;
+
+// Styled component for the tabs container
+const Tabs = styled.div`
+  width: 100%;
+  border-radius: 5px;
+
+  overflow: hidden;
+`;
+
+// Styled component for the tab itself
+const Tab = styled.div`
+  width: 100%;
+  position: relative;
+  border-radius: 5px;
+
+  color: rgba(0, 0, 0, 0.65);
+  
+  &:hover {
+    color: #bfd3ff;
+  }
+`;
+
+// Hidden radio input for accessibility
+ const RadioInput = styled.input.attrs({ type: 'radio' })`
+  position: absolute;
+  opacity: 0;
+  border-radius: 5px;
+  z-index: -1;
+`;
+
+// Styled component for the tab label
+const TabLabel = styled.label`
+  border-radius: 5px;
+  box-shadow: 0 2px 8px #f0f1f2;
+  margin-bottom:5px;
+
+  padding: 12px 16px; 
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+  font-weight: 500;
+  font-family: "Noto Sans KR", sans-serif !important;
+
+  color: rgba(0, 0, 0, 0.65);
+
+  background: #fff;
+  border: 1px solid #dee8ff;
+  cursor: pointer;
+  &:hover {
+    color: #40a9ff;
+    background: #e6f7ff;
+  }
+  &[aria-selected="true"] {
+    color: #1890ff;
+    font-weight: 500;
+    border-bottom: 2px solid #1890ff;
+  }
+`;
+
+// Styled component for the scrollable container
+const ScrollableTabsContainer = styled.div`
+  max-height: 80vh;
+  overflow-y: auto;
+  overflow-x: hidden; /* Add this line to hide horizontal scrollbar */
+  &::-webkit-scrollbar {
+    width: 7px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #d9d9d9;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: #fafafa;
+  }
+`;
+
+
+// Styled component for the search container
+const SearchContainer = styled.div`
+margin-bottom: 10px;
+  padding: 10px;
+  
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  /* box-shadow: 0 2px 8px #f0f1f2; */
+`;
+
+
+// Styled component for the input
+const SearchInput = styled.input.attrs({ type: 'text' })`
+  outline: none;
+  
+  border: 1px solid #d9d9d9;
+  padding: 6.5px 11px;
+  width: 100%;
+  border-radius: 2px;
+  font-size: 14px;
+  transition: all 0.3s;
+  &:hover {
+    border-color: #40a9ff;
+  }
+  &:focus {
+    border-color: #40a9ff;
+    box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+  }
+`;
+
+// Styled component for nodes container with filtered results
+const FilteredNodesContainer = styled.div`
+  font-size: 12px;
+  padding: 8px 16px;
+  max-height: 30vh;
+  overflow-y: auto;
+  overflow-x: hidden; /* Add this line to hide horizontal scrollbar */
+  background-color: #fff;
+  border: 1px solid #e8e8e8;
+  border-radius: 2px;
+  text-align: left;
+`;
+

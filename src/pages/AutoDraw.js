@@ -1,6 +1,7 @@
 import React from 'react';
 import "../styles/inputNetwork.css"
 import { Link } from "react-router-dom"
+import styled from 'styled-components';
 import { useFileUpload, useFileDownload } from '../components/useFileInput'; // 위에서 작성한 훅들을 해당 경로로 임포트
 
 const AutoDraw = () => {
@@ -98,10 +99,32 @@ const AutoDraw = () => {
         />
       </div>
 
-      <button className="submit-button" onClick={handleInputFIleUpload}>
+      <StyledButton>
         Submit
-      </button>
+      </StyledButton>
     </div>
   );
 };
 export default AutoDraw;
+
+const StyledButton = styled.div`
+    margin-top: 10px;
+    box-sizing: border-box;
+    position: relative;
+    width: 100px;
+    padding:5px;
+
+    background: #FFFFFF;
+    border: 1px solid #BABABA;
+    border-radius: 7px;
+
+    font-family: "Noto Sans KR", sans-serif !important;
+    font-style: normal;
+    font-weight: 700;
+    
+    line-height: 30px;
+    align-items: center;
+    text-align: center;
+
+    color: #809CDA;
+`

@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import React, { useState, useCallback, useEffect } from "react";
 import "./styles/App.css";
 import Home from "./pages/Home";
 import Draw from "./pages/Draw";
@@ -15,6 +16,7 @@ import MyDesign from "./pages/MyDesign";
 import AutoDraw from "./pages/AutoDraw";
 import InputAWS from "./pages/InputAWS";
 import Summary from "./pages/Summary";
+import SidebarController from './components/SidebarController';
 
 import MyPage from "./components/MyPageSideBar";
 import MyCloud from "./pages/MyCloud";
@@ -22,14 +24,18 @@ import MyCloud from "./pages/MyCloud";
 import MYResource from "./pages/Myresource";
 import MySecurity from "./pages/MySecurity";
 import MyPageSideBar from "./components/MyPageSideBar";
+import { DataProvider } from './components/DataContext';
+
 
 function App() {
   return (
     <div className="App">
+      
       <AuthProvider>
+      <DataProvider>
         <BrowserRouter>
+        <SidebarController />
           <Navbar />
-
           <div className="main-content">
             <Routes>
               <Route exact path="/" element={<Home />} />
@@ -59,6 +65,7 @@ function App() {
           </div>
           <Footer />
         </BrowserRouter>
+        </DataProvider>
       </AuthProvider>
     </div>
   );

@@ -3,6 +3,8 @@ import * as go from "gojs";
 import "../styles/App.css"; // contains .diagram-component CSS
 import handleChangedSelection from "./toggle/toggle";
 import { alertCheck } from "../apis/file";
+import { sidebarResource } from "../apis/sidebar"
+import { useData } from '../components/DataContext';
 
 const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
   const [diagram, setDiagram] = useState(null);
@@ -10,6 +12,7 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
   const [showSelectToggle, setShowSelectToggle] = useState({ value: false });
   const [DiagramCheck, setDiagramCheck] = useState(null);
   const [NodeGuide, setNodeGuide] = useState(null);
+  const { setData } = useData();
 
   useEffect(() => {
     //console.log("Updated clickedNodeKey:", clickedNodeKey);
@@ -406,7 +409,7 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
       });
     });
 
-    diagram.addDiagramListener("ChangedSelection", (e) => {
+    diagram.addDiagramListener("ChangedSelection", async(e) => {
       const selectedNode = e.diagram.selection.first();
       if (selectedNode instanceof go.Node) {
         const key = selectedNode.data.key;
@@ -414,10 +417,12 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
       } else {
         setShowSelectToggle({ value: false }); // 추가된 로직
       }
+      const response = await sidebarResource(diagram.model.nodeDataArray);
+      setData(response.data); // set the data in context
     });
 
     setDiagram(diagram);
-
+    
     return diagram;
   };
 

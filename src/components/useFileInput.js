@@ -9,31 +9,11 @@ export const useFileUpload = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const navigate = useNavigate();
 
-  const secretKey = 'dbd79e29c652e7133c3a813076606c09505b482246ce622bdab5f46be8a0c62a';
-
-  // function encryptFileContent(base64String, secretKey) {
-  //   const encrypted = CryptoJS.AES.encrypt(base64String, secretKey);
-  //   return encrypted.toString();
-  // }
-
-  // function decryptData(encryptedContent, secretKey) {
-  //   const decryptedBytes = CryptoJS.AES.decrypt(encryptedContent, secretKey);
-  //   const decryptedText = CryptoJS.enc.Utf8.stringify(decryptedBytes);
-  //   return decryptedText;
-  // }
-
- 
-
   const handleInputFIleUpload = async () => {
     if (selectedFile) {
 
       const fd = new FormData();
-
-      const encrypted = await encrypt(selectedFile);// 암호화 함수를 사용하여 파일 내용 암호화
-      // console.log("encrypted "+encrypted);
-
-      const blob = decrypt(encrypted);  // 여기서의 decryptData 함수는 이전에 제공한 복호화 함수입니다.
-      fd.append('file', blob);
+      fd.append('file', selectedFile);
 
       try {
         const response = await fileUpload(fd);

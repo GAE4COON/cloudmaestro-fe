@@ -12,11 +12,12 @@ import { useMediaQuery } from "react-responsive";
 import { nodeDataArrayPalette } from "../db/Node";
 
 import { useLocation, useNavigate } from "react-router-dom";
-import { Alert, Space } from "antd";
+import { Alert, Space, Layout, Menu } from "antd";
 
 // 페이지
 // import useReadJSON from "./useReadJSON";
 import Button from "./Button.js";
+import Sidebar from '../components/Sidebar';
 import Palette from "../components/Palette";
 import "../styles/Draw.css";
 import { useFileUpload } from "../components/useFileInput";
@@ -32,9 +33,7 @@ function Draw() {
   const paletteClassName = isDesktopOrLaptop
     ? "palette-component"
     : "palette-component-small";
-  const diagramClassName = isDesktopOrLaptop
-    ? "diagram-component"
-    : "diagram-component-small";
+  const diagramClassName = "diagram-component"
 
   const [finalToggleValue, setFinalToggleValue] = useState({});
   const [selectedNodeData, setSelectedNodeData] = useState(null); // <-- 상태 변수를 추가합니다.
@@ -136,24 +135,27 @@ function Draw() {
     <div>
       <div className="Draw">
         <div className="container">
-          <div className="button-container">
-            <Button
-              diagram={diagram}
-              showToggle={showToggle}
-              setShowToggle={setShowToggle}
-              finalToggleValue={finalToggleValue}
-              setFinalToggleValue={setFinalToggleValue}
-            />
-          </div>
+
 
           <div className="workspace">
             <div className="palette">
+
               <Palette
                 nodeDataArray={nodeDataArrayPalette}
                 divClassName={paletteClassName}
               />
             </div>
-            <div className="diagram">
+
+            <DiagramContainer>
+              <div className="button-container">
+                <Button
+                  diagram={diagram}
+                  showToggle={showToggle}
+                  setShowToggle={setShowToggle}
+                  finalToggleValue={finalToggleValue}
+                  setFinalToggleValue={setFinalToggleValue}
+                />
+              </div>
               <StyleSpace direction="vertical">
                 {alertMessage && (
                   <StyleAlert
@@ -169,10 +171,10 @@ function Draw() {
                     message={NodeGuideLine.key}
                     description={NodeGuideLine.message}
                     type="info"
-                    // closable
-                    // onClose={() =>
-                    //   setNodeGuideLine({ key: null, message: null })
-                    // }
+                  // closable
+                  // onClose={() =>
+                  //   setNodeGuideLine({ key: null, message: null })
+                  // }
                   />
                 )}
               </StyleSpace>
@@ -231,9 +233,16 @@ function Draw() {
                   initDiagram={initDiagram}
                   divClassName={diagramClassName}
                 />
+                <ButtonContainer>
+                  <StyledButton onClick={summaryRequest}>Go to summary</StyledButton>
+                  <StyledButton onClick={null}>Save as Cloud</StyledButton>
+                </ButtonContainer>
               </StyledDiagram>
-            </div>
+
+            </DiagramContainer>
+
           </div>
+
         </div>
 
         {from === "inputNet" && (
@@ -242,8 +251,9 @@ function Draw() {
           </Link>
         )}
 
-        <button onClick={summaryRequest}>Go to summary</button>
+
       </div>
+
     </div>
   );
 }
@@ -251,10 +261,9 @@ function Draw() {
 export default Draw;
 
 const StyledDiagram = styled.div`
-  float: left;
+  /* float: left; */
   width: 100%;
   height: 100%; // 원하는 높이로 설정
-  border: 1px solid black;
 `;
 
 const StyleSpace = styled(Space)`
@@ -269,3 +278,36 @@ const StyleAlert = styled(Alert)`
   position: relative;
   width: 100%;
 `;
+
+const ButtonContainer = styled.div`
+  // background-color:yellow;
+  display: flex;
+  justify-content: center;
+`
+
+const StyledButton = styled.div`
+margin-top: 10px;
+box-sizing: border-box;
+width: 200px;
+padding:5px;
+
+background: #FFFFFF;
+border: 1px solid #BABABA;
+border-radius: 7px;
+
+font-family: "Noto Sans KR", sans-serif !important;
+font-style: normal;
+font-weight: 700;
+
+line-height: 30px;
+align-items: center;
+text-align: center;
+
+color: #809CDA;
+`
+const DiagramContainer = styled.div`
+  position: relative;
+  display: inline;
+  width: 75%;
+  height: 75%;
+`

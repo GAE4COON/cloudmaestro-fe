@@ -37,20 +37,14 @@
   display: flex;
   align-items: stretch;  
   width: 100%; /* Optional: 부모 요소의 너비를 100%로 설정 */
-  height: 90vh; /*  Optional: 뷰포트 높이를 기준으로 높이 설정 */
+  height: 800px;
+  /* height: 90vh;  Optional: 뷰포트 높이를 기준으로 높이 설정 */
 }
 
 
 .palette {
   float: left;
   width: 25%;
-  height: 100%;
-}
-
-.diagram {
-  position: relative;
-  display: inline;
-  width: 75%;
   height: 100%;
 }
 
@@ -81,7 +75,6 @@
    background-image:
      linear-gradient(to right, rgb(231, 231, 231) .5px, transparent .5px),
      linear-gradient(to bottom, rgb(231, 231, 231)  .5px, transparent .5px);
-
 }
 
 .diagram-component-small{

@@ -1,9 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Table } from 'antd';
+import { Page, Text, View, Document, StyleSheet, PDFDownloadLink } from '@react-pdf/renderer';
+
 
 
 function ManageHuman(){
+
 
     let summary = ' 본 보안 가이드라인은 유통기업의 정보보호를 강화하기 위한 목적으로 작성되었다. ISO/IEC 27001:2022을 기반으로 하며, 27002의 통제조건을 포함하고 있다.\n 추가로, 클라우드 서비스 환경에서의 보안과 개인정보 보호를 위해 27017과 27018 표준을 통합하였다.기업의 정보보호 조직 구성부터 자산 관리, 인적 및 물리적 보안, 통신 및 운영 관리에 이르기까지 다양한 보안 영역에 대한 지침을 제공한다. 클라우드 환경에서의 보안 특성을 고려하여, 클라우드 서비스 선택부터 보안 조치까지의 가이드를 포함하고 있다.특히, 클라우드 마이그레이션의 전 과정을 위한 단기, 중기, 장기 보안 전략을 포괄적으로 작성하여, 마이그레이션의 각 단계에서 보안 요구사항을 세밀하게 고려하도록 하였다.또한, 잠재적 위험에 대응하고 시스템을 복구하기 위한 프로세스도 강조하였다. 이 가이드라인을 통해 CWL 기업은 정보보호를 체계적으로 접근하고, 지속적인 보안 강화 활동을 추진할 수 있다.';
     let summary2 = ` 본 조직 보안 섹션은 유통기업의 정보보호 정책 수립을 위한 핵심 요소들에 중점을 둔다. 조직 내에서의 보안 역할과 책임에 대한 명확한 정의, 권한 관리를 통한 접근 제어, 공급망 내에서의 정보보호 전략, 보안 사건에 대한 체계적인 증거 관리, 클라우드 환경에 적합한 보안 지침, 법률 및 표준에 대한 컴플라이언스 확보, 그리고 보안 사고 대응 방안이 포함된다. 이를 통해 조직은 정보보호에 관한 정책을 체계적으로 구성하고 실행할 수 있는 기반을 마련할 수 있다.`;
@@ -683,92 +686,94 @@ const column2 = [
       
     return (
         <div>
-            <ResourceContainer>
-                <Overview> MyCompany_cloud 아키텍처 보안 가이드라인 </Overview>
-                <Title>1. 개요</Title>
-                <Summary> { summary}</Summary>
+            <div id="divToPrint">
+              <ResourceContainer>
+                  <Overview> MyCompany_cloud 아키텍처 보안 가이드라인 </Overview>
+                  <Title>1. 개요</Title>
+                  <Summary> { summary}</Summary>
 
-                <Title>2. 조직 보안</Title>
-                <Summary>{ summary2 }</Summary>
+                  <Title>2. 조직 보안</Title>
+                  <Summary>{ summary2 }</Summary>
 
-                <SemmiTitle>A. 보안 역할과 책임</SemmiTitle>
-                <SemmiSummary>{ summary }</SemmiSummary> {/* 여기를 수정했습니다 */}
+                  <SemmiTitle>A. 보안 역할과 책임</SemmiTitle>
+                  <SemmiSummary>{ summary }</SemmiSummary> {/* 여기를 수정했습니다 */}
 
-                <TableContainer> 
-                    <StyledTable dataSource={dataSource} columns={columns} pagination={false} />
-                </TableContainer>
+                  <TableContainer> 
+                      <StyledTable dataSource={dataSource} columns={columns} pagination={false} />
+                  </TableContainer>
 
-                <TableContainer> 
-                    <StyledTable dataSource={dataSource2} columns={column2} pagination={false} />
-                </TableContainer>
+                  <TableContainer> 
+                      <StyledTable dataSource={dataSource2} columns={column2} pagination={false} />
+                  </TableContainer>
 
-                
-                <SemmiTitle>B. 정보 관리</SemmiTitle>
-                <SemmiSummary>{ summary3 }</SemmiSummary> {/* 여기를 수정했습니다 */}
+                  
+                  <SemmiTitle>B. 정보 관리</SemmiTitle>
+                  <SemmiSummary>{ summary3 }</SemmiSummary> {/* 여기를 수정했습니다 */}
 
-                <TableContainer> 
-                    <StyledTable dataSource={dataSource3} columns={columns3} pagination={false} />
-                </TableContainer>
-
-
-                <SemmiTitle>C. 공급망 관리</SemmiTitle>
-                <SemmiSummary>{ summary4 }</SemmiSummary> {/* 여기를 수정했습니다 */}
-
-                <TableContainer> 
-                    <StyledTable dataSource={dataSource4} columns={columns4} pagination={false} />
-                </TableContainer>
+                  <TableContainer> 
+                      <StyledTable dataSource={dataSource3} columns={columns3} pagination={false} />
+                  </TableContainer>
 
 
-                <TableContainer> 
-                    <StyledTable dataSource={dataSource5} columns={columns4} pagination={false} />
-                </TableContainer>
+                  <SemmiTitle>C. 공급망 관리</SemmiTitle>
+                  <SemmiSummary>{ summary4 }</SemmiSummary> {/* 여기를 수정했습니다 */}
 
-                <SemmiTitle>D. 사고 관리</SemmiTitle>
-                <SemmiSummary>{ summary5 }</SemmiSummary> {/* 여기를 수정했습니다 */}
-
-                <SemmiTitle>사고 관리 프로세스</SemmiTitle>
-                <TableContainer> 
-                    <StyledTable dataSource={dataSource6} columns={columns6} pagination={false} />
-                </TableContainer>
-
-                <SemmiTitle>기업과 협력 업체 간의 보안 정보 공유 및 협력 프로토콜 구축: 추가 고려사항</SemmiTitle>
-                <TableContainer> 
-                    <StyledTable dataSource={dataSource7} columns={columns7} pagination={false} />
-                </TableContainer>
+                  <TableContainer> 
+                      <StyledTable dataSource={dataSource4} columns={columns4} pagination={false} />
+                  </TableContainer>
 
 
-                <SemmiTitle>E. 클라우드 지침</SemmiTitle>
-                <SemmiSummary>{ summary6 }</SemmiSummary> {/* 여기를 수정했습니다 */}
+                  <TableContainer> 
+                      <StyledTable dataSource={dataSource5} columns={columns4} pagination={false} />
+                  </TableContainer>
 
-                <SemmiTitle>클라우드 환경에 대한 추가 보안 조치</SemmiTitle>
-                <TableContainer> 
-                    <StyledTable dataSource={dataSource8} columns={columns8} pagination={false} />
-                </TableContainer>
+                  <SemmiTitle>D. 사고 관리</SemmiTitle>
+                  <SemmiSummary>{ summary5 }</SemmiSummary> {/* 여기를 수정했습니다 */}
 
-                <Title>3. 인적 보안 </Title>
-                <Summary>{ summary7 }</Summary>
+                  <SemmiTitle>사고 관리 프로세스</SemmiTitle>
+                  <TableContainer> 
+                      <StyledTable dataSource={dataSource6} columns={columns6} pagination={false} />
+                  </TableContainer>
 
-                <SemmiTitle>인력 고용 시 고려사항</SemmiTitle>
-
-                <TableContainer> 
-                    <StyledTable dataSource={dataSource9} columns={columns9} pagination={false} />
-                </TableContainer>
-
-                <Title>4. 물리 보안 </Title>
-                <Summary>{ summary8 }</Summary>
-                <SemmiTitle>물리보안 이행지침</SemmiTitle>
-                <TableContainer> 
-                    <StyledTable dataSource={dataSource10} columns={columns10} pagination={false} />
-                </TableContainer>
-
-                <Title>5. 기술 보안 </Title>
-                <Summary>{ summary9 }</Summary>
-                <TableContainer> 
-                    <StyledTable dataSource={dataSource11} columns={columns11} pagination={false} />
-                </TableContainer>
+                  <SemmiTitle>기업과 협력 업체 간의 보안 정보 공유 및 협력 프로토콜 구축: 추가 고려사항</SemmiTitle>
+                  <TableContainer> 
+                      <StyledTable dataSource={dataSource7} columns={columns7} pagination={false} />
+                  </TableContainer>
 
 
-            </ResourceContainer>
+                  <SemmiTitle>E. 클라우드 지침</SemmiTitle>
+                  <SemmiSummary>{ summary6 }</SemmiSummary> {/* 여기를 수정했습니다 */}
+
+                  <SemmiTitle>클라우드 환경에 대한 추가 보안 조치</SemmiTitle>
+                  <TableContainer> 
+                      <StyledTable dataSource={dataSource8} columns={columns8} pagination={false} />
+                  </TableContainer>
+
+                  <Title>3. 인적 보안 </Title>
+                  <Summary>{ summary7 }</Summary>
+
+                  <SemmiTitle>인력 고용 시 고려사항</SemmiTitle>
+
+                  <TableContainer> 
+                      <StyledTable dataSource={dataSource9} columns={columns9} pagination={false} />
+                  </TableContainer>
+
+                  <Title>4. 물리 보안 </Title>
+                  <Summary>{ summary8 }</Summary>
+                  <SemmiTitle>물리보안 이행지침</SemmiTitle>
+                  <TableContainer> 
+                      <StyledTable dataSource={dataSource10} columns={columns10} pagination={false} />
+                  </TableContainer>
+
+                  <Title>5. 기술 보안 </Title>
+                  <Summary>{ summary9 }</Summary>
+                  <TableContainer> 
+                      <StyledTable dataSource={dataSource11} columns={columns11} pagination={false} />
+                  </TableContainer>
+
+
+              </ResourceContainer>
+            </div>
         </div>
     );
 }
