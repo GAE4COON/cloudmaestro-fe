@@ -1943,54 +1943,7 @@ export const nodeDataArrayPalette = [
       "/img/AWS_icon/Arch_Networking-Content-Delivery/Arch_Amazon-CloudFront_48.svg",
     type: "Networking-Content-Delivery",
   },
-  {
-    text: "InternetGateway",
-    key: "InternetGateway",
-    figure: "Rectangle",
-    source:
-      "/img/AWS_icon/Arch_Networking-Content-Delivery/Arch_Amazon-VPC_Internet-Gateway_48.svg",
-    type: "Networking-Content-Delivery",
-  },
-  {
-    text: "VpcPeering",
-    key: "VpcPeering",
-    figure: "Rectangle",
-    source:
-      "/img/AWS_icon/Arch_Networking-Content-Delivery/Arch_Amazon-VPC_Peering-Connection_48.svg",
-    type: "Networking-Content-Delivery",
-  },
-  {
-    text: "RouteTable",
-    key: "RouteTable",
-    figure: "Rectangle",
-    source:
-      "/img/AWS_icon/Arch_Networking-Content-Delivery/Arch_Amazon-Route-53_Route-Table_48.svg",
-    type: "Networking-Content-Delivery",
-  },
-  {
-    text: "VpnConnection",
-    key: "VpnConnection",
-    figure: "Rectangle",
-    source:
-      "/img/AWS_icon/Arch_Networking-Content-Delivery/Arch_Amazon-VPC_VPN-Connection_48.svg",
-    type: "Networking-Content-Delivery",
-  },
-  {
-    text: "NatGateway",
-    key: "NatGateway",
-    figure: "Rectangle",
-    source:
-      "/img/AWS_icon/Arch_Networking-Content-Delivery/Arch_Amazon-VPC_NAT-Gateway_48.svg",
-    type: "Networking-Content-Delivery",
-  },
-  {
-    text: "NACL",
-    key: "NACL",
-    figure: "Rectangle",
-    source:
-      "/img/AWS_icon/Arch_Networking-Content-Delivery/Arch_Amazon-VPC_Network-Access-Control-List_48.svg",
-    type: "Networking-Content-Delivery",
-  },
+
   {
     text: "Route 53",
     key: "Route 53",
@@ -2337,13 +2290,6 @@ export const nodeDataArrayPalette = [
     key: "EFS",
     figure: "Rectangle",
     source: "/img/AWS_icon/Arch_Storage/Arch_Amazon-EFS_48.svg",
-    type: "Storage",
-  },
-  {
-    text: "S3",
-    key: "S3",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Arch_Storage/Res_Amazon-Simple-Storage-Service_S3-Standard_48.svg",
     type: "Storage",
   },
   {
@@ -2813,97 +2759,97 @@ export const nodeDataArrayPalette = [
     key: "API Gateway Endpoint",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Application-Integration/Res_Amazon-API-Gateway_Endpoint_48.svg",
-    type: "Application-Integration"
+    type: "App-Integration",
 },
 {
     key: "EventBridge Event",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Application-Integration/Res_Amazon-EventBridge-Event_48.svg",
-    type: "Application-Integration"
+    type: "App-Integration",
 },
 {
     key: "EventBridge Custom Event Bus",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Application-Integration/Res_Amazon-EventBridge_Custom-Event-Bus_48.svg",
-    type: "Application-Integration"
+    type: "App-Integration",
 },
 {
     key: "EventBridge Default Event Bus",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Application-Integration/Res_Amazon-EventBridge_Default-Event-Bus_48.svg",
-    type: "Application-Integration"
+    type: "App-Integration",
 },
 {
     key: "EventBridge Pipes",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Application-Integration/Res_Amazon-EventBridge_Pipes_48.svg",
-    type: "Application-Integration"
+    type: "App-Integration",
 },
 {
     key: "EventBridge Rule",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Application-Integration/Res_Amazon-EventBridge_Rule_48.svg",
-    type: "Application-Integration"
+    type: "App-Integration",
 },
 {
     key: "EventBridge Saas Partner Event",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Application-Integration/Res_Amazon-EventBridge_Saas-Partner-Event_48.svg",
-    type: "Application-Integration"
+    type: "App-Integration",
 },
 {
     key: "EventBridge Scheduler",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Application-Integration/Res_Amazon-EventBridge_Scheduler_48.svg",
-    type: "Application-Integration"
+    type: "App-Integration",
 },
 {
     key: "EventBridge Schema Registry",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Application-Integration/Res_Amazon-EventBridge_Schema-Registry_48.svg",
-    type: "Application-Integration"
+    type: "App-Integration",
 },
 {
     key: "EventBridge Schema",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Application-Integration/Res_Amazon-EventBridge_Schema_48.svg",
-    type: "Application-Integration"
+    type: "App-Integration",
 },
 {
     key: "MQ Broker",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Application-Integration/Res_Amazon-MQ_Broker_48.svg",
-    type: "Application-Integration"
+    type: "App-Integration",
 },
 {
     key: "Simple Notification Service Email Notification",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Application-Integration/Res_Amazon-Simple-Notification-Service_Email-Notification_48.svg",
-    type: "Application-Integration"
+    type: "App-Integration",
 },
 {
     key: "Simple Notification Service HTTP Notification",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Application-Integration/Res_Amazon-Simple-Notification-Service_HTTP-Notification_48.svg",
-    type: "Application-Integration"
+    type: "App-Integration",
 },
 {
     key: "Simple Notification Service Topic",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Application-Integration/Res_Amazon-Simple-Notification-Service_Topic_48.svg",
-    type: "Application-Integration"
+    type: "App-Integration",
 },
 {
     key: "Simple Queue Service Message",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Application-Integration/Res_Amazon-Simple-Queue-Service_Message_48.svg",
-    type: "Application-Integration"
+    type: "App-Integration",
 },
 {
     key: "Simple Queue Service Queue",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Application-Integration/Res_Amazon-Simple-Queue-Service_Queue_48.svg",
-    type: "Application-Integration"
+    type: "App-Integration",
 },
 {
     key: "Managed Blockchain Blockchain",
@@ -2924,82 +2870,556 @@ export const nodeDataArrayPalette = [
     type: "Business-Applications"
 },
 {
-    key: "EC2 AMI",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Resource_icon/Res_Compute/Res_Amazon-EC2_AMI_48.svg",
-    type: "Compute"
+  key: "A1",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/A1.svg",
+  type: "Compute"
 },
 {
-    key: "EC2 Auto Scaling",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Resource_icon/Res_Compute/Res_Amazon-EC2_Auto-Scaling_48.svg",
-    type: "Compute"
+  key: "C3",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/C3.svg",
+  type: "Compute"
 },
 {
-    key: "EC2  Microservice Extractor for .NET",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Resource_icon/Res_Compute/Res_Amazon-EC2_AWS-Microservice-Extractor-for-.NET_48.svg",
-    type: "Compute"
+  key: "C4",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/C4.svg",
+  type: "Compute"
 },
 {
-    key: "EC2 DB Instance",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Resource_icon/Res_Compute/Res_Amazon-EC2_DB-Instance_48.svg",
-    type: "Compute"
+  key: "C5",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/C5.svg",
+  type: "Compute"
 },
 {
-    key: "EC2 Elastic IP Address",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Resource_icon/Res_Compute/Res_Amazon-EC2_Elastic-IP-Address_48.svg",
-    type: "Compute"
+  key: "C6i",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/C6i.svg",
+  type: "Compute"
 },
 {
-    key: "EC2 Instance with CloudWatch",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Resource_icon/Res_Compute/Res_Amazon-EC2_Instance-with-CloudWatch_48.svg",
-    type: "Compute"
+  key: "C6in",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/C6in.svg",
+  type: "Compute"
 },
 {
-    key: "EC2 Instances",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Resource_icon/Res_Compute/Res_Amazon-EC2_Instances_48.svg",
-    type: "Compute"
+  key: "C7g",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/C7g.svg",
+  type: "Compute"
 },
 {
-    key: "EC2 Instance",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Resource_icon/Res_Compute/Res_Amazon-EC2_Instance_48.svg",
-    type: "Compute"
+  key: "C7gn",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/C7gn.svg",
+  type: "Compute"
 },
 {
-    key: "EC2 Rescue",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Resource_icon/Res_Compute/Res_Amazon-EC2_Rescue_48.svg",
-    type: "Compute"
+  key: "Cloudwatch instance",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/Cloudwatch instance.svg",
+  type: "Compute"
 },
 {
-    key: "EC2 Spot Instance",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Resource_icon/Res_Compute/Res_Amazon-EC2_Spot-Instance_48.svg",
-    type: "Compute"
+  key: "D2",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/D2.svg",
+  type: "Compute"
 },
 {
-    key: "Elastic Beanstalk Application",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Resource_icon/Res_Compute/Res_AWS-Elastic-Beanstalk_Application_48.svg",
-    type: "Compute"
+  key: "D3",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/D3.svg",
+  type: "Compute"
 },
 {
-    key: "Elastic Beanstalk Deployment",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Resource_icon/Res_Compute/Res_AWS-Elastic-Beanstalk_Deployment_48.svg",
-    type: "Compute"
+  key: "D3en",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/D3en.svg",
+  type: "Compute"
 },
 {
-    key: "Lambda Lambda Function",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Resource_icon/Res_Compute/Res_AWS-Lambda_Lambda-Function_48.svg",
-    type: "Compute"
+  key: "DB instance",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/DB instance.svg",
+  type: "Compute"
+},
+{
+  key: "F1",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/F1.svg",
+  type: "Compute"
+},
+{
+  key: "G3",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/G3.svg",
+  type: "Compute"
+},
+{
+  key: "G4ad",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/G4ad.svg",
+  type: "Compute"
+},
+{
+  key: "G4dn",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/G4dn.svg",
+  type: "Compute"
+},
+{
+  key: "G5",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/G5.svg",
+  type: "Compute"
+},
+{
+  key: "G5g",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/G5g.svg",
+  type: "Compute"
+},
+{
+  key: "H1",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/H1.svg",
+  type: "Compute"
+},
+{
+  key: "Habana Gaudi",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/Habana Gaudi.svg",
+  type: "Compute"
+},
+{
+  key: "HMI",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/HMI.svg",
+  type: "Compute"
+},
+{
+  key: "Hpc6a",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/Hpc6a.svg",
+  type: "Compute"
+},
+{
+  key: "Hpc6id",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/Hpc6id.svg",
+  type: "Compute"
+},
+{
+  key: "I2",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/I2.svg",
+  type: "Compute"
+},
+{
+  key: "I3",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/I3.svg",
+  type: "Compute"
+},
+{
+  key: "I3en",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/I3en.svg",
+  type: "Compute"
+},
+{
+  key: "I4i",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/I4i.svg",
+  type: "Compute"
+},
+{
+  key: "Im4gn",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/Im4gn.svg",
+  type: "Compute"
+},
+{
+  key: "M1Mac",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/M1Mac.svg",
+  type: "Compute"
+},
+{
+  key: "M4",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/M4.svg",
+  type: "Compute"
+},
+{
+  key: "M5",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/M5.svg",
+  type: "Compute"
+},
+{
+  key: "M5a",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/M5a.svg",
+  type: "Compute"
+},
+{
+  key: "M5d",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/M5d.svg",
+  type: "Compute"
+},
+{
+  key: "M5dn",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/M5dn.svg",
+  type: "Compute"
+},
+{
+  key: "M5n",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/M5n.svg",
+  type: "Compute"
+},
+{
+  key: "M5zn",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/M5zn.svg",
+  type: "Compute"
+},
+{
+  key: "M6a",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/M6a.svg",
+  type: "Compute"
+},
+{
+  key: "M6g",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/M6g.svg",
+  type: "Compute"
+},
+{
+  key: "M6gd",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/M6gd.svg",
+  type: "Compute"
+},
+{
+  key: "M6i",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/M6i.svg",
+  type: "Compute"
+},
+{
+  key: "M6idn",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/M6idn.svg",
+  type: "Compute"
+},
+{
+  key: "M6in",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/M6in.svg",
+  type: "Compute"
+},
+{
+  key: "Mac",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/Mac.svg",
+  type: "Compute"
+},
+{
+  key: "P2",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/P2.svg",
+  type: "Compute"
+},
+{
+  key: "P3",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/P3.svg",
+  type: "Compute"
+},
+{
+  key: "P3dn",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/P3dn.svg",
+  type: "Compute"
+},
+{
+  key: "P4",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/P4.svg",
+  type: "Compute"
+},
+{
+  key: "P4d",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/P4d.svg",
+  type: "Compute"
+},
+{
+  key: "P4de",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/P4de.svg",
+  type: "Compute"
+},
+{
+  key: "R4",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/R4.svg",
+  type: "Compute"
+},
+{
+  key: "R5",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/R5.svg",
+  type: "Compute"
+},
+{
+  key: "R5a",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/R5a.svg",
+  type: "Compute"
+},
+{
+  key: "R5ad",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/R5ad.svg",
+  type: "Compute"
+},
+{
+  key: "R5b",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/R5b.svg",
+  type: "Compute"
+},
+{
+  key: "R5d",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/R5d.svg",
+  type: "Compute"
+},
+{
+  key: "R5gd",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/R5gd.svg",
+  type: "Compute"
+},
+{
+  key: "R5n",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/R5n.svg",
+  type: "Compute"
+},
+{
+  key: "R6a",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/R6a.svg",
+  type: "Compute"
+},
+{
+  key: "R6g",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/R6g.svg",
+  type: "Compute"
+},
+{
+  key: "R6i",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/R6i.svg",
+  type: "Compute"
+},
+{
+  key: "R6idn",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/R6idn.svg",
+  type: "Compute"
+},
+{
+  key: "R6in",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/R6in.svg",
+  type: "Compute"
+},
+{
+  key: "R7iz",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/R7iz.svg",
+  type: "Compute"
+},
+{
+  key: "Rdn",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/Rdn.svg",
+  type: "Compute"
+},
+{
+  key: "EC2 AMI",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/Res_Amazon-EC2_AMI_48.svg",
+  type: "Compute"
+},
+{
+  key: "EC2 Auto Scaling",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/Res_Amazon-EC2_Auto-Scaling_48.svg",
+  type: "Compute"
+},
+{
+  key: "EC2  Microservice Extractor for .NET",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/Res_Amazon-EC2_AWS-Microservice-Extractor-for-.NET_48.svg",
+  type: "Compute"
+},
+{
+  key: "EC2 DB Instance",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/Res_Amazon-EC2_DB-Instance_48.svg",
+  type: "Compute"
+},
+{
+  key: "EC2 Elastic IP Address",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/Res_Amazon-EC2_Elastic-IP-Address_48.svg",
+  type: "Compute"
+},
+{
+  key: "EC2 Instance with CloudWatch",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/Res_Amazon-EC2_Instance-with-CloudWatch_48.svg",
+  type: "Compute"
+},
+{
+  key: "EC2 Instances",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/Res_Amazon-EC2_Instances_48.svg",
+  type: "Compute"
+},
+{
+  key: "EC2 Instance",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/Res_Amazon-EC2_Instance_48.svg",
+  type: "Compute"
+},
+{
+  key: "EC2 Rescue",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/Res_Amazon-EC2_Rescue_48.svg",
+  type: "Compute"
+},
+{
+  key: "EC2 Spot Instance",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/Res_Amazon-EC2_Spot-Instance_48.svg",
+  type: "Compute"
+},
+{
+  key: "Elastic Beanstalk Application",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/Res_AWS-Elastic-Beanstalk_Application_48.svg",
+  type: "Compute"
+},
+{
+  key: "Elastic Beanstalk Deployment",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/Res_AWS-Elastic-Beanstalk_Deployment_48.svg",
+  type: "Compute"
+},
+{
+  key: "Lambda Lambda Function",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/Res_AWS-Lambda_Lambda-Function_48.svg",
+  type: "Compute"
+},
+{
+  key: "spot instance",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/spot instance.svg",
+  type: "Compute"
+},
+{
+  key: "T2",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/T2.svg",
+  type: "Compute"
+},
+{
+  key: "T3",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/T3.svg",
+  type: "Compute"
+},
+{
+  key: "T3a",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/T3a.svg",
+  type: "Compute"
+},
+{
+  key: "T4g",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/T4g.svg",
+  type: "Compute"
+},
+{
+  key: "Trainium",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/Trainium.svg",
+  type: "Compute"
+},
+{
+  key: "VT1",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/VT1.svg",
+  type: "Compute"
+},
+{
+  key: "X1",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/X1.svg",
+  type: "Compute"
+},
+{
+  key: "X1e",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/X1e.svg",
+  type: "Compute"
+},
+{
+  key: "X2gd",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/X2gd.svg",
+  type: "Compute"
+},
+{
+  key: "X2idn",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/X2idn.svg",
+  type: "Compute"
+},
+{
+  key: "X2iedn",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/X2iedn.svg",
+  type: "Compute"
+},
+{
+  key: "X2iezn",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/X2iezn.svg",
+  type: "Compute"
+},
+{
+  key: "Z1d",
+  figure: "Rectangle",
+  source: "/img/AWS_icon/Resource_icon/Res_Compute/Z1d.svg",
+  type: "Compute"
 },
 {
     key: "Elastic Container Registry Image",
@@ -3349,1049 +3769,768 @@ export const nodeDataArrayPalette = [
     source: "/img/AWS_icon/Resource_icon/Res_Front-End-Web-Mobile/Res_AWS-Amplify_AWS-Amplify-Studio_48.svg",
     type: "Front-End-Web-Mobile"
 },
+
 {
-    key: "Res Alert  Dark",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Dark/Res_Alert_48_Dark.svg",
-    type: "48_Dark"
-},
-{
-    key: "Res Authenticated User  Dark",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Dark/Res_Authenticated-User_48_Dark.svg",
-    type: "48_Dark"
-},
-{
-    key: "Management Console  Dark",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Dark/Res_AWS-Management-Console_48_Dark.svg",
-    type: "48_Dark"
-},
-{
-    key: "Res Camera  Dark",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Dark/Res_Camera_48_Dark.svg",
-    type: "48_Dark"
-},
-{
-    key: "Res Chat  Dark",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Dark/Res_Chat_48_Dark.svg",
-    type: "48_Dark"
-},
-{
-    key: "Res Client  Dark",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Dark/Res_Client_48_Dark.svg",
-    type: "48_Dark"
-},
-{
-    key: "Res Cold Storage  Dark",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Dark/Res_Cold-Storage_48_Dark.svg",
-    type: "48_Dark"
-},
-{
-    key: "Res Credentials  Dark",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Dark/Res_Credentials_48_Dark.svg",
-    type: "48_Dark"
-},
-{
-    key: "Res Data Stream  Dark",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Dark/Res_Data-Stream_48_Dark.svg",
-    type: "48_Dark"
-},
-{
-    key: "Res Data Table  Dark",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Dark/Res_Data-Table_48_Dark.svg",
-    type: "48_Dark"
-},
-{
-    key: "Res Database  Dark",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Dark/Res_Database_48_Dark.svg",
-    type: "48_Dark"
-},
-{
-    key: "Res Disk  Dark",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Dark/Res_Disk_48_Dark.svg",
-    type: "48_Dark"
-},
-{
-    key: "Res Documents  Dark",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Dark/Res_Documents_48_Dark.svg",
-    type: "48_Dark"
-},
-{
-    key: "Res Document  Dark",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Dark/Res_Document_48_Dark.svg",
-    type: "48_Dark"
-},
-{
-    key: "Res Email  Dark",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Dark/Res_Email_48_Dark.svg",
-    type: "48_Dark"
-},
-{
-    key: "Res Firewall  Dark",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Dark/Res_Firewall_48_Dark.svg",
-    type: "48_Dark"
-},
-{
-    key: "Res Folders  Dark",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Dark/Res_Folders_48_Dark.svg",
-    type: "48_Dark"
-},
-{
-    key: "Res Folder  Dark",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Dark/Res_Folder_48_Dark.svg",
-    type: "48_Dark"
-},
-{
-    key: "Res Forums  Dark",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Dark/Res_Forums_48_Dark.svg",
-    type: "48_Dark"
-},
-{
-    key: "Res Gear  Dark",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Dark/Res_Gear_48_Dark.svg",
-    type: "48_Dark"
-},
-{
-    key: "Res Generic Application  Dark",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Dark/Res_Generic-Application_48_Dark.svg",
-    type: "48_Dark"
-},
-{
-    key: "Res Git Repository  Dark",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Dark/Res_Git-Repository_48_Dark.svg",
-    type: "48_Dark"
-},
-{
-    key: "Res Globe  Dark",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Dark/Res_Globe_48_Dark.svg",
-    type: "48_Dark"
-},
-{
-    key: "Res Internet alt1  Dark",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Dark/Res_Internet-alt1_48_Dark.svg",
-    type: "48_Dark"
-},
-{
-    key: "Res Internet alt2  Dark",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Dark/Res_Internet-alt2_48_Dark.svg",
-    type: "48_Dark"
-},
-{
-    key: "Res Internet  Dark",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Dark/Res_Internet_48_Dark.svg",
-    type: "48_Dark"
-},
-{
-    key: "Res JSON Script  Dark",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Dark/Res_JSON-Script_48_Dark.svg",
-    type: "48_Dark"
-},
-{
-    key: "Res Logs  Dark",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Dark/Res_Logs_48_Dark.svg",
-    type: "48_Dark"
-},
-{
-    key: "Res Magnifying Glass  Dark",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Dark/Res_Magnifying-Glass_48_Dark.svg",
-    type: "48_Dark"
-},
-{
-    key: "Res Metrics  Dark",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Dark/Res_Metrics_48_Dark.svg",
-    type: "48_Dark"
-},
-{
-    key: "Res Mobile client  Dark",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Dark/Res_Mobile-client_48_Dark.svg",
-    type: "48_Dark"
-},
-{
-    key: "Res Multimedia  Dark",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Dark/Res_Multimedia_48_Dark.svg",
-    type: "48_Dark"
-},
-{
-    key: "Res Office building  Dark",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Dark/Res_Office-building_48_Dark.svg",
-    type: "48_Dark"
-},
-{
-    key: "Res Programming Language  Dark",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Dark/Res_Programming-Language_48_Dark.svg",
-    type: "48_Dark"
-},
-{
-    key: "Res Question  Dark",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Dark/Res_Question_48_Dark.svg",
-    type: "48_Dark"
-},
-{
-    key: "Res Recover  Dark",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Dark/Res_Recover_48_Dark.svg",
-    type: "48_Dark"
-},
-{
-    key: "Res SAML token  Dark",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Dark/Res_SAML-token_48_Dark.svg",
-    type: "48_Dark"
-},
-{
-    key: "Res SDK  Dark",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Dark/Res_SDK_48_Dark.svg",
-    type: "48_Dark"
-},
-{
-    key: "Res Servers  Dark",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Dark/Res_Servers_48_Dark.svg",
-    type: "48_Dark"
-},
-{
-    key: "Res Server  Dark",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Dark/Res_Server_48_Dark.svg",
-    type: "48_Dark"
-},
-{
-    key: "Res Shield  Dark",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Dark/Res_Shield_48_Dark.svg",
-    type: "48_Dark"
-},
-{
-    key: "Res Source Code  Dark",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Dark/Res_Source-Code_48_Dark.svg",
-    type: "48_Dark"
-},
-{
-    key: "Res SSL padlock  Dark",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Dark/Res_SSL-padlock_48_Dark.svg",
-    type: "48_Dark"
-},
-{
-    key: "Res Tape storage  Dark",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Dark/Res_Tape-storage_48_Dark.svg",
-    type: "48_Dark"
-},
-{
-    key: "Res Toolkit  Dark",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Dark/Res_Toolkit_48_Dark.svg",
-    type: "48_Dark"
-},
-{
-    key: "Res Users  Dark",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Dark/Res_Users_48_Dark.svg",
-    type: "48_Dark"
-},
-{
-    key: "Res User  Dark",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Dark/Res_User_48_Dark.svg",
-    type: "48_Dark"
-},
-{
-    key: "Res Alert  Light",
+    key: "Alert",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Light/Res_Alert_48_Light.svg",
-    type: "48_Light"
+    type: "General-Icons",
 },
 {
-    key: "Res Authenticated User  Light",
+    key: "Authenticated User",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Light/Res_Authenticated-User_48_Light.svg",
-    type: "48_Light"
+    type: "General-Icons",
 },
 {
-    key: "Management Console  Light",
+    key: "Management Console",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Light/Res_AWS-Management-Console_48_Light.svg",
-    type: "48_Light"
+    type: "General-Icons",
 },
 {
-    key: "Res Camera  Light",
+    key: "Camera",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Light/Res_Camera_48_Light.svg",
-    type: "48_Light"
+    type: "General-Icons",
 },
 {
-    key: "Res Chat  Light",
+    key: "Chat",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Light/Res_Chat_48_Light.svg",
-    type: "48_Light"
+    type: "General-Icons",
 },
 {
-    key: "Res Client  Light",
+    key: "Client",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Light/Res_Client_48_Light.svg",
-    type: "48_Light"
+    type: "General-Icons",
 },
 {
-    key: "Res Cold Storage  Light",
+    key: "Cold Storage",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Light/Res_Cold-Storage_48_Light.svg",
-    type: "48_Light"
+    type: "General-Icons",
 },
 {
-    key: "Res Credentials  Light",
+    key: "Credentials",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Light/Res_Credentials_48_Light.svg",
-    type: "48_Light"
+    type: "General-Icons",
 },
 {
-    key: "Res Data Stream  Light",
+    key: "Data Stream",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Light/Res_Data-Stream_48_Light.svg",
-    type: "48_Light"
+    type: "General-Icons",
 },
 {
-    key: "Res Data Table  Light",
+    key: "Data Table",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Light/Res_Data-Table_48_Light.svg",
-    type: "48_Light"
+    type: "General-Icons",
 },
 {
-    key: "Res Database  Light",
+    key: "Database",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Light/Res_Database_48_Light.svg",
-    type: "48_Light"
+    type: "General-Icons",
 },
 {
-    key: "Res Disk  Light",
+    key: "Disk",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Light/Res_Disk_48_Light.svg",
-    type: "48_Light"
+    type: "General-Icons",
 },
 {
-    key: "Res Documents  Light",
+    key: "Documents",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Light/Res_Documents_48_Light.svg",
-    type: "48_Light"
+    type: "General-Icons",
 },
 {
-    key: "Res Document  Light",
+    key: "Document",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Light/Res_Document_48_Light.svg",
-    type: "48_Light"
+    type: "General-Icons",
 },
 {
-    key: "Res Email  Light",
+    key: "Email",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Light/Res_Email_48_Light.svg",
-    type: "48_Light"
+    type: "General-Icons",
 },
 {
-    key: "Res Firewall  Light",
+    key: "Firewall",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Light/Res_Firewall_48_Light.svg",
-    type: "48_Light"
+    type: "General-Icons",
 },
 {
-    key: "Res Folders  Light",
+    key: "Folders",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Light/Res_Folders_48_Light.svg",
-    type: "48_Light"
+    type: "General-Icons",
 },
 {
-    key: "Res Folder  Light",
+    key: "Folder",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Light/Res_Folder_48_Light.svg",
-    type: "48_Light"
+    type: "General-Icons",
 },
 {
-    key: "Res Forums  Light",
+    key: "Forums",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Light/Res_Forums_48_Light.svg",
-    type: "48_Light"
+    type: "General-Icons",
 },
 {
-    key: "Res Gear  Light",
+    key: "Gear",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Light/Res_Gear_48_Light.svg",
-    type: "48_Light"
+    type: "General-Icons",
 },
 {
-    key: "Res Generic Application  Light",
+    key: "Generic Application",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Light/Res_Generic-Application_48_Light.svg",
-    type: "48_Light"
+    type: "General-Icons",
 },
 {
-    key: "Res Git Repository  Light",
+    key: "Git Repository",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Light/Res_Git-Repository_48_Light.svg",
-    type: "48_Light"
+    type: "General-Icons",
 },
 {
-    key: "Res Globe  Light",
+    key: "Globe",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Light/Res_Globe_48_Light.svg",
-    type: "48_Light"
+    type: "General-Icons",
 },
 {
-    key: "Res Internet alt1  Light",
+    key: "Internet alt1",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Light/Res_Internet-alt1_48_Light.svg",
-    type: "48_Light"
+    type: "General-Icons",
 },
 {
-    key: "Res Internet alt2  Light",
+    key: "Internet alt2",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Light/Res_Internet-alt2_48_Light.svg",
-    type: "48_Light"
+    type: "General-Icons",
 },
 {
-    key: "Res Internet  Light",
+    key: "Internet",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Light/Res_Internet_48_Light.svg",
-    type: "48_Light"
+    type: "General-Icons",
 },
 {
-    key: "Res JSON Script  Light",
+    key: "JSON Script",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Light/Res_JSON-Script_48_Light.svg",
-    type: "48_Light"
+    type: "General-Icons",
 },
 {
-    key: "Res Logs  Light",
+    key: "Logs",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Light/Res_Logs_48_Light.svg",
-    type: "48_Light"
+    type: "General-Icons",
 },
 {
-    key: "Res Magnifying Glass  Light",
+    key: "Magnifying Glass",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Light/Res_Magnifying-Glass_48_Light.svg",
-    type: "48_Light"
+    type: "General-Icons",
 },
 {
-    key: "Res Metrics  Light",
+    key: "Metrics",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Light/Res_Metrics_48_Light.svg",
-    type: "48_Light"
+    type: "General-Icons",
 },
 {
-    key: "Res Mobile client  Light",
+    key: "Mobile client",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Light/Res_Mobile-client_48_Light.svg",
-    type: "48_Light"
+    type: "General-Icons",
 },
 {
-    key: "Res Multimedia  Light",
+    key: "Multimedia",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Light/Res_Multimedia_48_Light.svg",
-    type: "48_Light"
+    type: "General-Icons",
 },
 {
-    key: "Res Office building  Light",
+    key: "Office building",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Light/Res_Office-building_48_Light.svg",
-    type: "48_Light"
+    type: "General-Icons",
 },
 {
-    key: "Res Programming Language  Light",
+    key: "Programming Language",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Light/Res_Programming-Language_48_Light.svg",
-    type: "48_Light"
+    type: "General-Icons",
 },
 {
-    key: "Res Question  Light",
+    key: "Question",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Light/Res_Question_48_Light.svg",
-    type: "48_Light"
+    type: "General-Icons",
 },
 {
-    key: "Res Recover  Light",
+    key: "Recover",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Light/Res_Recover_48_Light.svg",
-    type: "48_Light"
+    type: "General-Icons",
 },
 {
-    key: "Res SAML token  Light",
+    key: "SAML token",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Light/Res_SAML-token_48_Light.svg",
-    type: "48_Light"
+    type: "General-Icons",
 },
 {
-    key: "Res SDK  Light",
+    key: "SDK",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Light/Res_SDK_48_Light.svg",
-    type: "48_Light"
+    type: "General-Icons",
 },
 {
-    key: "Res Servers  Light",
+    key: "Servers",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Light/Res_Servers_48_Light.svg",
-    type: "48_Light"
+    type: "General-Icons",
 },
 {
-    key: "Res Server  Light",
+    key: "Server",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Light/Res_Server_48_Light.svg",
-    type: "48_Light"
+    type: "General-Icons",
 },
 {
-    key: "Res Shield  Light",
+    key: "Shield",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Light/Res_Shield_48_Light.svg",
-    type: "48_Light"
+    type: "General-Icons",
 },
 {
-    key: "Res Source Code  Light",
+    key: "Source Code",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Light/Res_Source-Code_48_Light.svg",
-    type: "48_Light"
+    type: "General-Icons",
 },
 {
-    key: "Res SSL padlock  Light",
+    key: "SSL padlock",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Light/Res_SSL-padlock_48_Light.svg",
-    type: "48_Light"
+    type: "General-Icons",
 },
 {
-    key: "Res Tape storage  Light",
+    key: "Tape storage",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Light/Res_Tape-storage_48_Light.svg",
-    type: "48_Light"
+    type: "General-Icons",
 },
 {
-    key: "Res Toolkit  Light",
+    key: "Toolkit",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Light/Res_Toolkit_48_Light.svg",
-    type: "48_Light"
+    type: "General-Icons",
 },
 {
-    key: "Res Users  Light",
+    key: "Users",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Light/Res_Users_48_Light.svg",
-    type: "48_Light"
+    type: "General-Icons",
 },
 {
-    key: "Res User  Light",
+    key: "User",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Light/Res_User_48_Light.svg",
-    type: "48_Light"
+    type: "General-Icons",
 },
 {
     key: "IoT Analytics Channel",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT-Analytics_Channel_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Analytics Data Store",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT-Analytics_Data-Store_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Analytics Dataset",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT-Analytics_Dataset_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Analytics Notebook",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT-Analytics_Notebook_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Analytics Pipeline",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT-Analytics_Pipeline_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Core Device Advisor",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT-Core_Device-Advisor_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Core Device Location",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT-Core_Device-Location_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Device Defender IoT Device Jobs",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT-Device-Defender_IoT-Device-Jobs_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Device Management Fleet Hub",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT-Device-Management_Fleet-Hub_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Device Tester",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT-Device-Tester_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Greengrass Artifact",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT-Greengrass_Artifact_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Greengrass Component Machine Learning",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT-Greengrass_Component-Machine-Learning_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Greengrass Component Nucleus",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT-Greengrass_Component-Nucleus_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Greengrass Component Private",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT-Greengrass_Component-Private_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Greengrass Component Public",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT-Greengrass_Component-Public_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Greengrass Component",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT-Greengrass_Component_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Greengrass Connector",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT-Greengrass_Connector_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Greengrass Interprocess Communication",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT-Greengrass_Interprocess-Communication_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Greengrass Protocol",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT-Greengrass_Protocol_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Greengrass Recipe",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT-Greengrass_Recipe_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Greengrass Stream Manager",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT-Greengrass_Stream-Manager_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Hardware Board",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT-Hardware-Board_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Rule",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT-Rule_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT SiteWise Asset Hierarchy",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT-SiteWise_Asset-Hierarchy_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT SiteWise Asset Model",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT-SiteWise_Asset-Model_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT SiteWise Asset Properties",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT-SiteWise_Asset-Properties_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT SiteWise Asset",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT-SiteWise_Asset_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT SiteWise Data Streams",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT-SiteWise_Data-Streams_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Action",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT_Action_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Actuator",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT_Actuator_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Alexa Enabled Device",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT_Alexa_Enabled-Device_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Alexa Skill",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT_Alexa_Skill_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Alexa Voice Service",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT_Alexa_Voice-Service_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Certificate",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT_Certificate_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Desired State",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT_Desired-State_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Device Gateway",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT_Device-Gateway_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Echo",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT_Echo_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Fire TV Stick",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT_Fire-TV_Stick_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Fire TV",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT_Fire_TV_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT HTTP2 Protocol",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT_HTTP2-Protocol_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT HTTP Protocol",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT_HTTP_Protocol_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Lambda Function",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT_Lambda_Function_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT LoRaWAN Protocol",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT_LoRaWAN-Protocol_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT MQTT Protocol",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT_MQTT_Protocol_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Over Air Update",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT_Over-Air-Update_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Policy",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT_Policy_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Reported State",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT_Reported-State_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Sailboat",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT_Sailboat_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Sensor",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT_Sensor_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Servo",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT_Servo_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Shadow",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT_Shadow_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Simulator",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT_Simulator_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Thing Bank",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT_Thing_Bank_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Thing Bicycle",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT_Thing_Bicycle_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Thing Camera",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT_Thing_Camera_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Thing Cart",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT_Thing_Cart_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Thing Car",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT_Thing_Car_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Thing Coffee Pot",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT_Thing_Coffee-Pot_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Thing Door Lock",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT_Thing_Door-Lock_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Thing Factory",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT_Thing_Factory_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Thing FreeRTOS Device",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT_Thing_FreeRTOS-Device_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Thing Generic",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT_Thing_Generic_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Thing House",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT_Thing_House_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Thing Humidity Sensor",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT_Thing_Humidity-Sensor_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Thing Industrial PC",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT_Thing_Industrial-PC_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Thing Lightbulb",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT_Thing_Lightbulb_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Thing Medical Emergency",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT_Thing_Medical-Emergency_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Thing PLC",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT_Thing_PLC_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Thing Police Emergency",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT_Thing_Police-Emergency_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Thing Relay",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT_Thing_Relay_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Thing Stacklight",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT_Thing_Stacklight_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Thing Temperature Humidity Sensor",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT_Thing_Temperature-Humidity-Sensor_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Thing Temperature Sensor",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT_Thing_Temperature-Sensor_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Thing Temperature Vibration Sensor",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT_Thing_Temperature-Vibration-Sensor_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Thing Thermostat",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT_Thing_Thermostat_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Thing Travel",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT_Thing_Travel_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Thing Utility",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT_Thing_Utility_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Thing Vibration Sensor",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT_Thing_Vibration-Sensor_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Thing Windfarm",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT_Thing_Windfarm_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "IoT Topic",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_IoT/Res_AWS-IoT_Topic_48.svg",
-    type: "IoT"
+    type: "Internet-of-Things",
 },
 {
     key: "DevOps Guru Insights",
@@ -5114,25 +5253,25 @@ export const nodeDataArrayPalette = [
     type: "Networking-Content-Delivery"
 },
 {
-    key: "Res Elastic Load Balancing Application Load Balancer",
+    key: "Elastic Load Balancing Application Load Balancer",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Networking-Content-Delivery/Res_Elastic-Load-Balancing_Application-Load-Balancer_48.svg",
     type: "Networking-Content-Delivery"
 },
 {
-    key: "Res Elastic Load Balancing Classic Load Balancer",
+    key: "Elastic Load Balancing Classic Load Balancer",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Networking-Content-Delivery/Res_Elastic-Load-Balancing_Classic-Load-Balancer_48.svg",
     type: "Networking-Content-Delivery"
 },
 {
-    key: "Res Elastic Load Balancing Gateway Load Balancer",
+    key: "Elastic Load Balancing Gateway Load Balancer",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Networking-Content-Delivery/Res_Elastic-Load-Balancing_Gateway-Load-Balancer_48.svg",
     type: "Networking-Content-Delivery"
 },
 {
-    key: "Res Elastic Load Balancing Network Load Balancer",
+    key: "Elastic Load Balancing Network Load Balancer",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Networking-Content-Delivery/Res_Elastic-Load-Balancing_Network-Load-Balancer_48.svg",
     type: "Networking-Content-Delivery"
