@@ -1,11 +1,12 @@
 import React, { useRef, useEffect } from 'react';
-import { FiX, FiMenu } from 'react-icons/fi'; // X 아이콘, 사이드바 닫기 버튼으로 사용
+import { FiX, FiMenu } from 'react-icons/fi';
 import "../styles/Sidebar.css";
 import { useData } from './DataContext';
+import { nodeDataArrayPalette } from '../db/Node'; // nodeDataArrayPalette 가져오기
 
 function Sidebar({ isOpen, setIsOpen }) {
   const outside = useRef();
-  const { data } = useData(); // access the data from context
+  const { data } = useData();
 
   useEffect(() => {
     function handleMouseMove(event) {
@@ -25,24 +26,36 @@ function Sidebar({ isOpen, setIsOpen }) {
   return (
     <div id="sidebar" ref={outside} className={`sidebar ${isOpen ? 'open' : 'closed'}`}>
       {isOpen ? (
-        <FiX size={24} onClick={() => setIsOpen(false)} className="icon" />
+        <>
+          <FiX size={24} onClick={() => setIsOpen(false)} className="icon" />
+          <div className="sidebar-content">
+            {data && data.length > 0 && (
+              <div className="sidebar-title">
+                <h2>서비스</h2>
+              </div>
+            )}
+            {data && data.length > 0 ? (
+              data.map((item, index) => {
+                const node = nodeDataArrayPalette.find(node => node.text === item);
+                const source = node ? node.source : '';
+                console.log(source);
+                return (
+                  <div key={index} className="sidebar-item">
+                    {source && <img src={source} alt={item} />}
+                    <h3>{item}</h3>
+                  </div>
+                );
+              })
+            ) : (
+              <p>사용하는 서비스가 없습니다.</p>
+            )}
+          </div>
+        </>
       ) : (
         <FiMenu size={24} onClick={() => setIsOpen(true)} className="icon" />
       )}
-       <div className="sidebar-content">
-        {data && data.length > 0 ? (
-          data.map((item, index) => (
-            <div key={index} className="sidebar-item">
-              <h3>{item}</h3>
-            </div>
-          ))
-        ) : (
-          <p>사용하는 서비스가 없습니다.</p>
-        )}
-      </div>
     </div>
   );
-  
 }
 
 export default Sidebar;
