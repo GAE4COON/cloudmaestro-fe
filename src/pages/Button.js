@@ -9,6 +9,7 @@ import {BiSave} from "react-icons/bi"
 import { sidebarResource } from "../apis/sidebar"
 import { useData } from '../components/DataContext';
 
+
 const Button = ({
   diagram,
   setShowToggle,
@@ -23,6 +24,10 @@ const Button = ({
   const [finalToggleVal, setFinalToggleVal] = useState({});
   const [clickedLoaded, setClickedLoaded] = useState(false);
   const { setData } = useData();
+  const [isRehost, setIsRehost] = useState(false);
+
+  
+
   
   useEffect(() => {
     setFinalToggleValue(finalToggleVal);
@@ -96,7 +101,6 @@ const Button = ({
         return;
       }
       
-
       const response = await rehostRequest(jsonString);
       //console.log("response", response.data.result);
       const Jdata = response.data.result;
@@ -104,11 +108,20 @@ const Button = ({
       const response1 = await sidebarResource(diagram.model.nodeDataArray);
       setData(response1.data); // set the data in context
       setClickedLoaded(true);
+      setIsRehost(true);
 
     } catch (error) {
       console.error("rehost error: ", error);
     }
   };
+
+  const ToOptimize = () => {
+    <div className="home-content">
+      <div className="img-container">
+        hello
+      </div>
+    </div>
+  }
 
   const onFileChange = (e) => {
     if (e.target.files[0] && e.target.files[0].name.includes("json")) {
@@ -177,7 +190,17 @@ const Button = ({
           <button onClick={localSaveImage}><BiSave/></button>
         </div>
         <div className="button-row">
-          <button onClick={handleLoad}>Rehost</button>
+          {
+            !isRehost && (
+              <button onClick={handleLoad}>Rehost</button>
+            )
+          }
+           {
+            isRehost && (
+              <button onClick={ToOptimize}>Optimize</button>
+            )
+          }
+          
         </div>
       </div>
     </div>

@@ -15,4 +15,8 @@ api.post("/api/v1/db-api/rds",dbData);
 
 export const searchPrice = (dbData) =>
 api.post("/api/v1/pricing-api/rds",dbData);
+
+
+export const searchEc2 = (dbData) =>
+api.post("/api/v1/pricing-api/ec2",dbData)
   
