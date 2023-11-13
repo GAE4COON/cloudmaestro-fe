@@ -5,6 +5,13 @@ import "../styles/myresource.css";
 import { Collapse, theme } from "antd";
 import { CaretRightOutlined } from "@ant-design/icons";
 
+const tagColors = {
+  DB: "#809CDA",
+  분석: "#11DD32",
+  컴퓨팅: "#F9A825",
+  컨테이너: "#6666FF",
+};
+
 function Resource({ title_img, title, tags, guide1, guide2, guide3, guide4 }) {
   const text = `
   A dog is a type of domesticated animal.
@@ -55,7 +62,12 @@ function Resource({ title_img, title, tags, guide1, guide2, guide3, guide4 }) {
         </LeftSide>
         <RightSide>
           {tags.map((tag, index) => (
-            <Tag key={index}>#{tag}</Tag> // key를 index로 주고 tag 내용을 표시합니다.
+            <Tag
+              key={index}
+              style={{ backgroundColor: tagColors[tag] || "#fbb1d5" }}
+            >
+              #{tag}
+            </Tag> // key를 index로 주고 tag 내용을 표시합니다.
           ))}
         </RightSide>
       </ResourceTitleContainer>
@@ -111,15 +123,17 @@ const RightSide = styled.div`
 `;
 
 const Tag = styled.div`
-  width: 40px;
+  width: auto;
   height: 20px;
   font-size: 10px;
   position: relative;
   justify-content: center;
   align-items: center;
-  background-color: #fbb1d5;
   border-radius: 5px;
   margin: 10px;
+  padding: 5px;
+  color: white;
+  font-weight: 500;
 `;
 
 export default Resource;

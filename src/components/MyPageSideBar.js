@@ -6,7 +6,7 @@ import { Menu } from "antd";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-const menu = [
+export const menu = [
   {
     label: "도식화 히스토리",
     key: "1",

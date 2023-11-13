@@ -16,7 +16,9 @@
 - npm install axios
 - npm install react-icons --save
 - npm install xlsx 
-- npm install --save chart.js react-chartjs-2 
+- npm install --save chart.js
+- react-chartjs-2 
+- npm install antd
 
 ## Ref
 - GoJS-React: https://gojs.net/latest/learn/index.html
