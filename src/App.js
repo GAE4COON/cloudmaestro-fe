@@ -23,7 +23,7 @@ import MyCloud from "./pages/MyCloud";
 import MyNetwork from "./pages/MyNetwork";
 
 
-import MySecurity from "./pages/Mysecurity";
+import MySecurity from "./pages/MySecurity2";
 import MYResource from "./pages/Myresource";
 import { DataProvider } from './components/DataContext';
 
