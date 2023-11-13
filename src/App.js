@@ -21,12 +21,9 @@ import SidebarController from './components/SidebarController';
 import MyPage from "./components/MyPageSideBar";
 import MyCloud from "./pages/MyCloud";
 import MyNetwork from "./pages/MyNetwork";
-
-
-import MySecurity from "./pages/MySecurity2";
 import MYResource from "./pages/Myresource";
 import { DataProvider } from './components/DataContext';
-
+import MySecurity from "./pages/Guideline";
 
 function App() {
   return (
