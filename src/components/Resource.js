@@ -10,6 +10,14 @@ const tagColors = {
   분석: "#11DD32",
   컴퓨팅: "#F9A825",
   컨테이너: "#6666FF",
+  스토리지: "#6666FF",
+  "네트워킹 및 콘텐츠전송": "#ED7100",
+  "Management Governance": "#D32F2F",
+  "App Integration": "#F89D76",
+  "데이터 보호": "#6666FF",
+  "탐지 및 대응": "#3A3838",
+  "애플리케이션 보호": "#2DF2FF",
+  "네트워크 보호": "#FF2DDD",
 };
 
 function Resource({ title_img, title, tags, guide1, guide2, guide3, guide4 }) {
@@ -48,7 +56,7 @@ function Resource({ title_img, title, tags, guide1, guide2, guide3, guide4 }) {
   const { token } = theme.useToken();
   const panelStyle = {
     marginBottom: 24,
-    background: token.colorFillAlter,
+    background: "#fff",
     borderRadius: token.borderRadiusLG,
     border: "none",
   };

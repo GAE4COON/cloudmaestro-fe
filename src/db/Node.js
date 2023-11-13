@@ -2343,7 +2343,8 @@ export const nodeDataArrayPalette = [
     text: "S3",
     key: "S3",
     figure: "Rectangle",
-    source: "/img/AWS_icon/Arch_Storage/Res_Amazon-Simple-Storage-Service_S3-Standard_48.svg",
+    source:
+      "/img/AWS_icon/Arch_Storage/Res_Amazon-Simple-Storage-Service_S3-Standard_48.svg",
     type: "Storage",
   },
   {
