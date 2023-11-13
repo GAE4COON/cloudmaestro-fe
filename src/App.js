@@ -22,8 +22,11 @@ import MyPage from "./components/MyPageSideBar";
 import MyCloud from "./pages/MyCloud";
 import MyNetwork from "./pages/MyNetwork";
 
+
+import MySecurity from "./pages/Mysecurity";
 import MYResource from "./pages/Myresource";
 import { DataProvider } from './components/DataContext';
+
 
 function App() {
   return (
@@ -52,6 +55,8 @@ function App() {
               <Route path="/input/aws" element={<InputAWS />} />
 
               <Route path="/mypage" element={<MyPage />} />
+              <Route path="/mypage/cloud/security" element={<MySecurity />} />
+      
               <Route path="/mypage/cloud" element={<MyCloud />} />
               <Route path="/mypage/network" element={<MyNetwork />} />
 
