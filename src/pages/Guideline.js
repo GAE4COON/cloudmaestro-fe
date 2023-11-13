@@ -81,31 +81,30 @@ const StyledMenu = styled(Menu)`
 `
 const Button = styled.div`
 
-color: black; /* 버튼 텍스트 색상 */
+  color: black; /* 버튼 텍스트 색상 */
 
-width:13%;
-float:right;
-margin-right:50px;
-margin-bottom:20px;
+  width:13%;
+  float:right;
+  margin-right:50px;
+  margin-bottom:20px;
 
-padding: 1px 2px; /* 상하, 좌우 패딩 */
-border: none; /* 테두리 없음 */
-border-radius: 3px; /* 테두리 둥글기 */
-cursor: pointer; /* 마우스 오버시 커서 변경 */
-font-size: 13px; /* 텍스트 크기 */
-transition: all 0.3s ease 0s; /* 호버 효과를 위한 전환 */
+  padding: 1px 2px; /* 상하, 좌우 패딩 */
+  border: none; /* 테두리 없음 */
+  border-radius: 3px; /* 테두리 둥글기 */
+  cursor: pointer; /* 마우스 오버시 커서 변경 */
+  font-size: 13px; /* 텍스트 크기 */
+  transition: all 0.3s ease 0s; /* 호버 효과를 위한 전환 */
 
-&:hover{
-  color:#1A66CC;
-}
+  &:hover{
+    color:#1A66CC;
+  }
 
 `
 
 
 const MypageContainer = styled.div`
   display: flex;
-  font-family: "Noto Sans KR", sans-serif !important;s
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 효과 추가 */
+  font-family: "Noto Sans KR", sans-serif !important;
   border-radius: 8px; /* 모서리 둥글게 처리 */
   background: #FFFFFF; /* 배경색 설정 */
 
@@ -164,6 +163,7 @@ const SecurityContainer = styled.div`
 
 
 const Title = styled.div`
+
   padding-top: 40px;
   color: #525252;
   font-size: 30px;
