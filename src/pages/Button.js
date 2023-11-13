@@ -81,11 +81,10 @@ const Button = ({
 
   const handleLoad = async () => {
     try {
-
       const jsonString = diagram.model.toJson();
       const diagramObject = JSON.parse(jsonString);
       const types = diagramObject.nodeDataArray.map(node => node.type);
-      const otherTypes = types.filter(type => type !== "Network_icon");
+      const otherTypes = types.filter(type => type !== "Network_icon" && type !== "group" );
       const containsOtherTypes = otherTypes.length > 0;
 
       if(containsOtherTypes){
@@ -93,7 +92,7 @@ const Button = ({
         return;
       }
       if (clickedLoaded) {
-        alert("!!!!!!!!!!클라우드 아키텍처는 Rehost 하지 못합니다!!!!!!!!!!")
+        alert("!!!!!!!!!클라우드 아키텍처는 Rehost 하지 못합니다!!!!!!!!!")
         return;
       }
       
