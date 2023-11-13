@@ -46,7 +46,7 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
     const diagram = $(go.Diagram, {
       "undoManager.isEnabled": true,
       "resizingTool.isGridSnapEnabled": true,
-      "commandHandler.archetypeGroupData": { text: "Group", isGroup: true },
+      "commandHandler.archetypeGroupData": { text: "Group", type: "group", isGroup: true },
       "contextMenuTool.isEnabled": true,
       ModelChanged: async (e) => {
         // 오직 트랜잭션 완료 시에만 로그 출력
@@ -413,7 +413,8 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
       const selectedNode = e.diagram.selection.first();
       if (selectedNode instanceof go.Node) {
         const key = selectedNode.data.key;
-        //console.log("나는 key 입니다", key);
+        const type = selectedNode.data.type;
+        console.log("나는 type 입니다", type);
       } else {
         setShowSelectToggle({ value: false }); // 추가된 로직
       }

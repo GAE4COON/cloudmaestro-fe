@@ -8,15 +8,17 @@ function Sidebar({ isOpen, setIsOpen }) {
   const { data } = useData(); // access the data from context
 
   useEffect(() => {
-    function handleClickOutside(event) {
-      if (outside.current && !outside.current.contains(event.target)) {
+    function handleMouseMove(event) {
+      if (outside.current && outside.current.contains(event.target)) {
+        setIsOpen(true);
+      } else {
         setIsOpen(false);
       }
     }
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('mousemove', handleMouseMove);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('mousemove', handleMouseMove);
     };
   }, [setIsOpen]);
 
@@ -31,15 +33,13 @@ function Sidebar({ isOpen, setIsOpen }) {
         {data && data.length > 0 ? (
           data.map((item, index) => (
             <div key={index} className="sidebar-item">
-              {/* 각 아이템 렌더링. 이것은 일반적인 예시입니다; 실제 데이터 구조에 맞게 조정해야 합니다. */}
               <h3>{item}</h3>
             </div>
           ))
         ) : (
-          <p>사용 가능한 데이터가 없습니다.</p>
+          <p>사용하는 서비스가 없습니다.</p>
         )}
       </div>
-      <span className="exit-menu">Resource GuideLine</span>
     </div>
   );
   
