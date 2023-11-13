@@ -2,33 +2,36 @@
     z-index: 5;
     padding: 12px;
     border-radius: 15px 0 0 15px;
-    background-color: rgb(205, 222, 255);
+    background-color: rgb(231, 236, 248);
     height: 80%;
-    width: 27%;
+    width: 17%;
     top: 50px;
     position: fixed;
     transition: 0.5s ease;
+    overflow-y: auto;
   }
-  
-  .sidebar.closed {
-    right: -25%;
-  }
-  
-  .sidebar.open {
-    right: 0;
-  }
-  
-  .icon {
-    position: absolute;
-    top: 12px;
-    left: 12px;
-    cursor: pointer;
-  }
-  
-  .exit-menu {
-    position: absolute;
-    bottom: 26px;
-    left: 40%;
-    font-size: 0.8rem;
-  }
+
+.sidebar-item {
+  text-align: left; /* 텍스트를 왼쪽 정렬 */
+  padding-left: 10px; /* 왼쪽 여백 추가 */
+}
+
+.sidebar-item:first-child {
+  margin-top: 40px; /* 첫 번째 아이템의 상단에 여백 추가 */
+}
+
+.sidebar.closed {
+  right: -15%;
+}
+
+.sidebar.open {
+  right: 0; 
+}
+
+.icon {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  cursor: pointer;
+}
   
