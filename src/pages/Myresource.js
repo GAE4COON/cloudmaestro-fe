@@ -5,40 +5,72 @@ import styled from "styled-components";
 import "../styles/myresource.css";
 import Resource from "../components/Resource";
 import { ResourceGuide } from "../apis/resource";
-import "../styles/MyCloud.css";
+import "../styles/resource.css";
 
 function MYResource() {
+  const [searchTerm, setSearchTerm] = useState("");
   const [resource, setResource] = useState(null);
-  const handleResource = async () => {
-    const ResourceData = { title: ["Athena", "OpenSearch"] };
+  const [filteredResource, setFilteredResource] = useState([]);
+  const [resourceItems, setResourceItems] = useState([]);
 
-    try {
-      const res = await ResourceGuide(ResourceData);
-      setResource(res.data.result);
-      console.log("응답 성공 :", res.data.result);
-    } catch (error) {
-      console.log("응답 실패 :", error.res);
+  useEffect(() => {
+    if (resource) {
+      const filtered = resource.filter((item) =>
+        item.title.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setFilteredResource(filtered);
+      console.log("필터된 리소스 :", filtered);
     }
-  };
+  }, [searchTerm, resource]);
 
-  let resourceItems = [];
-  if (Array.isArray(resource)) {
-    resourceItems = resource.map((item) => ({
-      imgPath: item.imgPath || "default-path", // Provide a default value if undefined
+  useEffect(() => {
+    const handleResource = async () => {
+      const ResourceData = {
+        title: [
+          "Athena",
+          "Redshift",
+          "VPC",
+          "Aurora",
+          "Elastic Kubernetes Service",
+        ],
+      };
+
+      try {
+        const res = await ResourceGuide(ResourceData);
+        setResource(res.data.result);
+        console.log("응답 성공 :", res.data.result);
+      } catch (error) {
+        console.error("응답 실패 :", error.res);
+      }
+    };
+
+    handleResource();
+  }, []);
+
+  useEffect(() => {
+    if (resource) {
+      const filtered = resource.filter((item) =>
+        item.title.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setFilteredResource(filtered);
+    }
+  }, [searchTerm, resource]);
+
+  // 필터링된 리소스를 기반으로 resourceItems 상태 업데이트
+  useEffect(() => {
+    const newResourceItems = (
+      Array.isArray(filteredResource) ? filteredResource : resource
+    ).map((item) => ({
+      imgPath: item.imgPath || "default-path",
       title: item.title || "Default Title",
-      tag: item.tag || [], // Ensure this is always an array
+      tag: item.tag || [],
       guide1: item.guide1 || "Default Guide1",
       guide2: item.guide2 || "Default Guide2",
       guide3: item.guide3 || "Default Guide3",
       guide4: item.guide4 || "Default Guide4",
     }));
-  } else {
-    console.error("Resource is not an array:", resource);
-  }
-
-  useEffect(() => {
-    handleResource();
-  }, []);
+    setResourceItems(newResourceItems);
+  }, [filteredResource, resource]);
 
   return (
     <div className="mypage-container">
@@ -46,7 +78,17 @@ function MYResource() {
         <div className="menu-container"></div>
         <Sidebar />
         <div className="main-container">
-          <StyledSideMenuTitle>나의 리소스</StyledSideMenuTitle>
+          <StyledSideMenuTitle>
+            <div>나의 리소스</div>
+            <SearchContainer>
+              <SearchInput
+                type="text"
+                placeholder="Search..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </SearchContainer>
+          </StyledSideMenuTitle>
           {resourceItems.map(
             (
               item,
@@ -71,10 +113,48 @@ function MYResource() {
 }
 
 const StyledSideMenuTitle = styled.div`
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 40px;
   font-family: "Noto Sans KR", sans-serif !important;
   font-weight: 500;
   font-size: 20px;
   margin-top: 12px;
+  margin-bottom: 6px;
+  justify-content: space-between;
+  padding-right: 25px;
+  padding-left: 25px;
+  margin-left: 20px;
+`;
+
+const SearchContainer = styled.div`
+  position: relative;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  padding: 5px 10px;
+  /* box-shadow: 0 2px 8px #f0f1f2; */
+`;
+
+const SearchInput = styled.input.attrs({ type: "text" })`
+  outline: none;
+
+  border: 1px solid #d9d9d9;
+  width: 100%;
+  height: 32px;
+  radius: 2px;
+  border-radius: 2px;
+  font-size: 14px;
+  transition: all 0.3s;
+  &:hover {
+    border-color: #40a9ff;
+  }
+  &:focus {
+    border-color: #40a9ff;
+    box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+  }
 `;
 
 export default MYResource;
