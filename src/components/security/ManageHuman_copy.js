@@ -2,22 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import { Table } from 'antd';
 import { Page, Text, View, Document, StyleSheet, PDFDownloadLink } from '@react-pdf/renderer';
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
-
-
 
 
 
 function ManageHuman(){
-  const handleDownload = () => {
-    const link = document.createElement('a');
-    link.href = '/assets/pdf/managehuman.pdf';
-    link.download = '인적/물류 보안가이드라인.pdf';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
 
 
     let summary = ' 본 보안 가이드라인은 유통기업의 정보보호를 강화하기 위한 목적으로 작성되었다. ISO/IEC 27001:2022을 기반으로 하며, 27002의 통제조건을 포함하고 있다.\n 추가로, 클라우드 서비스 환경에서의 보안과 개인정보 보호를 위해 27017과 27018 표준을 통합하였다.기업의 정보보호 조직 구성부터 자산 관리, 인적 및 물리적 보안, 통신 및 운영 관리에 이르기까지 다양한 보안 영역에 대한 지침을 제공한다. 클라우드 환경에서의 보안 특성을 고려하여, 클라우드 서비스 선택부터 보안 조치까지의 가이드를 포함하고 있다.특히, 클라우드 마이그레이션의 전 과정을 위한 단기, 중기, 장기 보안 전략을 포괄적으로 작성하여, 마이그레이션의 각 단계에서 보안 요구사항을 세밀하게 고려하도록 하였다.또한, 잠재적 위험에 대응하고 시스템을 복구하기 위한 프로세스도 강조하였다. 이 가이드라인을 통해 CWL 기업은 정보보호를 체계적으로 접근하고, 지속적인 보안 강화 활동을 추진할 수 있다.';
@@ -695,11 +683,10 @@ const column2 = [
           }
         // ... 추가 데이터 항목들도 위와 같이 수정되어야 합니다.
       ]
-    
+      
     return (
         <div>
-             
-              <div id="divToPrint">
+            <div id="divToPrint">
               <ResourceContainer>
                   <Overview> MyCompany_cloud 아키텍처 보안 가이드라인 </Overview>
                   <Title>1. 개요</Title>
@@ -789,8 +776,7 @@ const column2 = [
             </div>
         </div>
     );
-  }
-
+}
 
 export default ManageHuman;
 
@@ -803,9 +789,10 @@ const ResourceContainer = styled.div`
 
   display: flex; /* Flexbox 모델 적용 */
   flex-direction: column; /* 자식 요소들을 세로로 정렬 */
+
+
+ 
 `;
-
-
 
 
 const Overview = styled.div`

@@ -20,10 +20,11 @@ import SidebarController from './components/SidebarController';
 
 import MyPage from "./components/MyPageSideBar";
 import MyCloud from "./pages/MyCloud";
+import MyNetwork from "./pages/MyNetwork";
 
+
+import MySecurity from "./pages/Mysecurity";
 import MYResource from "./pages/Myresource";
-import MySecurity from "./pages/MySecurity";
-import MyPageSideBar from "./components/MyPageSideBar";
 import { DataProvider } from './components/DataContext';
 
 
@@ -55,7 +56,9 @@ function App() {
 
               <Route path="/mypage" element={<MyPage />} />
               <Route path="/mypage/cloud/security" element={<MySecurity />} />
-              <Route path="/mypage/cloud" element={<MyCloud/>} />
+      
+              <Route path="/mypage/cloud" element={<MyCloud />} />
+              <Route path="/mypage/network" element={<MyNetwork />} />
 
               <Route path="/mypage/design" element={<MyDesign />} />
               <Route path="/mypage/cloud/resource" element={<MYResource />} />

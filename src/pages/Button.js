@@ -6,6 +6,8 @@ import { json, useNavigate } from "react-router-dom";
 import { rehostRequest } from "../apis/file";
 import {BsUpload,BsDownload,  BsEraser, BsSave, } from "react-icons/bs"
 import {BiSave} from "react-icons/bi"
+import { sidebarResource } from "../apis/sidebar"
+import { useData } from '../components/DataContext';
 
 const Button = ({
   diagram,
@@ -19,7 +21,9 @@ const Button = ({
   };
 
   const [finalToggleVal, setFinalToggleVal] = useState({});
-
+  const [clickedLoaded, setClickedLoaded] = useState(false);
+  const { setData } = useData();
+  
   useEffect(() => {
     setFinalToggleValue(finalToggleVal);
   }, [finalToggleVal]);
@@ -73,49 +77,60 @@ const Button = ({
     }
   };
 
-  let rehostCount=0;
+
 
   const handleLoad = async () => {
     try {
-      if (rehostCount >= 1) {
-        alert('!!!!!!!!!!Cloud를 Rehost 할 수 없습니다!!!!!!!!!');
-        return;
-      }
-      ////console.log("modelmodel",JSON.stringify(diagram.model));
-
 
       const jsonString = diagram.model.toJson();
-      //console.log("jsonString", jsonString);
+      const diagramObject = JSON.parse(jsonString);
+      const types = diagramObject.nodeDataArray.map(node => node.type);
+      const otherTypes = types.filter(type => type !== "Network_icon");
+      const containsOtherTypes = otherTypes.length > 0;
+
+      if(containsOtherTypes){
+        alert("!!!!!!!!!!클라우드 아키텍처가 포함되어있으면 Rehost 하지 못합니다!!!!!!!!!!")
+        return;
+      }
+      if (clickedLoaded) {
+        alert("!!!!!!!!!!클라우드 아키텍처는 Rehost 하지 못합니다!!!!!!!!!!")
+        return;
+      }
+      
 
       const response = await rehostRequest(jsonString);
       //console.log("response", response.data.result);
       const Jdata = response.data.result;
-
       diagram.model = go.Model.fromJson(Jdata);
-      rehostCount++;
+      const response1 = await sidebarResource(diagram.model.nodeDataArray);
+      setData(response1.data); // set the data in context
+      setClickedLoaded(true);
+
     } catch (error) {
       console.error("rehost error: ", error);
     }
   };
 
   const onFileChange = (e) => {
-    //handleReset();
     if (e.target.files[0] && e.target.files[0].name.includes("json")) {
       let file = e.target.files[0];
       let fileReader = new FileReader();
       fileReader.readAsText(file);
-      fileReader.onload = () => {
+      fileReader.onload = async() => {
         //console.log("json", fileReader.result);
 
-        let filejson = JSON.parse(fileReader.result);
-        if (filejson.hasOwnProperty("cost")) {
-          setFinalToggleVal(filejson["cost"]);
-        }
-        if (fileReader.result && diagram) {
-          diagram.model = go.Model.fromJson(fileReader.result);
-          //console.log(JSON.stringify(diagram.model));
-          setShowToggle(true);
-        }
+      let filejson = JSON.parse(fileReader.result);
+      if (filejson.hasOwnProperty("cost")) {
+        setFinalToggleVal(filejson["cost"]);
+      }
+      if (fileReader.result && diagram) {
+        diagram.model = go.Model.fromJson(fileReader.result);
+        //console.log(JSON.stringify(diagram.model));
+        const response1 = await sidebarResource(diagram.model.nodeDataArray);
+        setData(response1.data); // set the data in context
+        setShowToggle(true);
+        setClickedLoaded(false);
+      }
       };
     } else if (e.target.files[0] && !e.target.files[0].name.includes("json")) {
       alert("Json형식의 파일을 넣어주세요.");
@@ -123,19 +138,23 @@ const Button = ({
     e.target.value = null;
   };
 
-  const handleReset = () => {
+  const handleReset = async() => {
     if (diagram) {
       diagram.startTransaction("Cleared diagram");
       setFinalToggleValue({});
-      //console.log("final from reset2", finalToggleVal);
-      diagram.model.nodeDataArray = [];
-      diagram.model.linkDataArray = [];
+      //diagram.model.groupDataArray = [];
+      //diagram.model.nodeDataArray = [];
+      //diagram.model.linkDataArray = [];
+      diagram.clear();
       diagram.commitTransaction("Cleared diagram");
     }
-
+    const response1 = await sidebarResource(diagram.model.nodeDataArray);
+    setData(response1.data); // set the data in context
+    setClickedLoaded(false);
     setShowToggle(false); // toggle 숨김
   };
 
+ 
   return (
     <div>
       <div className="button-container">

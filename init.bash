@@ -16,4 +16,4 @@ npm i react-cookie
 npm install gsap
 npm install crypto-js
 npm install -D @types/crypto-js
-npm install @react-pdf/renderer --save
+npm install react-to-print
