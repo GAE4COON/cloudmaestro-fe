@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../../styles/SelectToggle.css";
 import axios from 'axios';
+import { searchEc2 } from "../../apis/price.js";
 
 
 const baseOptions = [
@@ -15,18 +16,14 @@ const onTypeOptions = [
 
 function fetchEngineData(platform, instanceType, setData, setLoading, setError) {
   console.log("ec2에 접근 엔진:", platform);
+  const dbData ={
+    "platform":platform
+  }
+
 
   return new Promise((resolve, reject) => {
     setLoading(true);
-    axios({
-      url: '/api/v1/pricing-api/ec2',
-      method: 'post',
-      data: {
-        "platform": platform,
-        // "instanceType":"hello"
-      },
-      baseURL: 'http://localhost:8080',
-    })
+    searchEc2(dbData)
     .then(function (response) {
       setData(response.data);
       console.log(response.data);
