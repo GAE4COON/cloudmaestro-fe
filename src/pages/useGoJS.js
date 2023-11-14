@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import * as go from "gojs";
 import "../styles/App.css"; // contains .diagram-component CSS
 import handleChangedSelection from "./toggle/toggle";
-import { alertCheck } from "../apis/file";
+import { alertCheck } from "../apis/fileAPI";
 import { sidebarResource } from "../apis/sidebar"
 import { useData } from '../components/DataContext';
 

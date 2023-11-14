@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Select } from 'antd';
 import { TreeSelect } from 'antd';
-import { Button, Divider, Flex, Radio } from 'antd';
+import { Button } from 'antd';
 import { PlusOutlined } from "@ant-design/icons";
+import { sendRequirement } from '../apis/requirementAPI';
 
-import { industrial, totalRequest, zoneRequest } from '../db/Requirement';
+import { industrial, globalRequest, zoneRequest } from '../db/Requirement';
 
 const { SHOW_PARENT } = TreeSelect;
 
@@ -122,51 +123,29 @@ const ScrollableContent = styled.div`
     overflow-y: auto; /* Enables vertical scrolling if content overflows */
 `;
 
-const StyledButton = styled.button`
-
-`
-
 const RequirementPopup = (props) => {
     const [industrialValue, setIndustrialValue] = useState();
-    const [totalReqValue, setTotalReqValue] = useState([]);
-    const [zoneReqValue, setZoneReqValue] = useState([]);
+    const [globalReqValue, setGlobalReqValue] = useState([]);
 
-    const[zoneName, setZoneName] = useState([]);
-    const[zoneFunc, setZoneFunc] = useState([]);
-    const[staticBackup, setStaticBackup] = useState([]);
-    const[dynamicBackup, setDynamicBackup] = useState([]);
-
-
-
-    const [value, setValue] = useState([null]);
-    const onTotalChange = (newValue) => {
+    const onGlobalChange = (newValue) => {
         console.log('onChange ', newValue);
-        setTotalReqValue(newValue);
+        setGlobalReqValue(newValue);
     };
 
-    const totalProps = {
-        treeData: totalRequest,
-        value: totalReqValue,
-        onChange: onTotalChange,
+    const globalProps = {
+        treeData: globalRequest,
+        value: globalReqValue,
+        onChange: onGlobalChange,
         treeCheckable: true,
         showCheckedStrategy: SHOW_PARENT,
         placeholder: 'Please select',
     };
 
-    // const zoneProps = {
-    //     treeData: zoneRequest,
-    //     value: zoneReqValue,
-    //     onChange: onZoneChange,
-    //     treeCheckable: true,
-    //     showCheckedStrategy: SHOW_PARENT,
-    //     placeholder: 'Please select',
-    // };
-
     const [zones, setZones] = useState([]);
 
     // Handler to add a new zone
     const addZone = () => {
-        setZones([...zones, { 
+        setZones([...zones, {
             id: Date.now(),
             zoneName: null,
             zoneFunc: null,
@@ -175,25 +154,25 @@ const RequirementPopup = (props) => {
             zoneReqValue: [],
         }]);
     };
-    
+
     // Zone 선택을 업데이트하는 함수
     const updateZone = (zoneId, key, value) => {
-        setZones(zones.map(zone => 
-            zone.id === zoneId ? {...zone, [key]: value} : zone
+        setZones(zones.map(zone =>
+            zone.id === zoneId ? { ...zone, [key]: value } : zone
         ));
     };
-    
+
     const removeZone = zoneId => {
         setZones(zones.filter(zone => zone.id !== zoneId));
     };
 
-    const handleOptimize = () => {
+    const handleOptimize = async () => {
         const requestData = {
             industrial: industrialValue,
-            totalRequirements: totalReqValue,
+            globalRequirements: globalReqValue,
             zones: zones.map(zone => ({
                 // Assuming you have state to track each zone's selections
-                name: zone.zoneName, 
+                name: zone.zoneName,
                 function: zone.zoneFunc,
                 staticBackup: zone.staticBackup,
                 dynamicBackup: zone.dynamicBackup,
@@ -202,19 +181,11 @@ const RequirementPopup = (props) => {
         };
 
         console.log("Optimize Data:", requestData); // For now, just log the data
-        // You can replace the above line with a function to send data to a server
+        const response = await sendRequirement(requestData);
+        console.log("Optimize response:", response); // For now, just log the data
     };
 
-    const handleIndustrialChange = (value) => {setIndustrialValue(value);};
-
-    const handleZoneNameChange = (value) => {setZoneName(value);};
-    
-    const handleZoneFuncChange = (value) => {setZoneFunc(value);};
-
-    const handleStaticBackupChange = (value) => {setStaticBackup(value);};
-
-    const handleDynamicBackupChange = (value) => {setDynamicBackup(value);};
-    
+    const handleIndustrialChange = (value) => { setIndustrialValue(value); };
 
     return (
         <Backdrop>
@@ -244,7 +215,7 @@ const RequirementPopup = (props) => {
                         <SelectTitle>
                             요구사항
                         </SelectTitle>
-                        <StyledTreeSelect {...totalProps} />
+                        <StyledTreeSelect {...globalProps} />
                     </SelectContainer>
 
                     <div className='망 모음'>
@@ -330,13 +301,13 @@ const RequirementPopup = (props) => {
                                         요구사항
                                     </SelectTitle>
                                     <StyledTreeSelect
-    treeData={zoneRequest}
-    value={zone.zoneReqValue}
-    onChange={(value) => updateZone(zone.id, 'zoneReqValue', value)}
-    treeCheckable={true}
-    showCheckedStrategy={SHOW_PARENT}
-    placeholder="Please select"
-/>
+                                        treeData={zoneRequest}
+                                        value={zone.zoneReqValue}
+                                        onChange={(value) => updateZone(zone.id, 'zoneReqValue', value)}
+                                        treeCheckable={true}
+                                        showCheckedStrategy={SHOW_PARENT}
+                                        placeholder="Please select"
+                                    />
                                 </SelectContainer>
 
                             </ZoneContainer>

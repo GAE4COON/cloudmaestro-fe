@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { fileUpload } from '../apis/file';
+import { fileUpload } from '../apis/fileAPI';
 import { encrypt, decrypt } from '../apis/crpytoAPI';
 import CryptoJS from 'crypto-js';
 
