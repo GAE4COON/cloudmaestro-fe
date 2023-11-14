@@ -13,13 +13,14 @@ import { nodeDataArrayPalette } from "../db/Node";
 
 import { useLocation, useNavigate } from "react-router-dom";
 import { Alert, Space, Layout, Menu } from "antd";
-import { sidebarResource } from "../apis/sidebar"
-import { useData } from '../components/DataContext';
+import { sidebarResource } from "../apis/sidebar";
+import { useData } from "../components/DataContext";
+import { DrawResourceGuide } from "../apis/resource";
 
 // 페이지
 // import useReadJSON from "./useReadJSON";
 import Button from "./Button.js";
-import Sidebar from '../components/Sidebar';
+import Sidebar from "../components/Sidebar";
 import Palette from "../components/Palette";
 import "../styles/Draw.css";
 import { useFileUpload } from "../components/useFileInput";
@@ -37,7 +38,7 @@ function Draw() {
   const paletteClassName = isDesktopOrLaptop
     ? "palette-component"
     : "palette-component-small";
-  const diagramClassName = "diagram-component"
+  const diagramClassName = "diagram-component";
 
   const [finalToggleValue, setFinalToggleValue] = useState({});
   const [selectedNodeData, setSelectedNodeData] = useState(null); // <-- 상태 변수를 추가합니다.
@@ -69,17 +70,35 @@ function Draw() {
 
   useEffect(() => {
     if (diagram) {
-      diagram.clear();  //다른 로케이션으로 가면 다이어그램을 없앤다
+      diagram.clear(); //다른 로케이션으로 가면 다이어그램을 없앤다
     }
     setData(null);
   }, [location]);
 
   useEffect(() => {
-    if (NodeGuide) {
-      setNodeGuideLine({ key: NodeGuide, message: "추가 예정" });
-    } else {
-      setNodeGuideLine({ key: null, message: null });
-    }
+    const fetchResourceGuide = async () => {
+      if (NodeGuide) {
+        try {
+          const ResourceData = { title: NodeGuide };
+          const response = await DrawResourceGuide(ResourceData);
+          console.log(response);
+          if (!response.data.result === "fail") {
+            setNodeGuideLine({ key: NodeGuide, message: response.data.result });
+          } else {
+            setNodeGuideLine({
+              key: NodeGuide,
+              message: "추후 추가 예정",
+            });
+          }
+        } catch (error) {
+          console.error("Error fetching resource guide:", error);
+        }
+      } else {
+        setNodeGuideLine({ key: null, message: null });
+      }
+    };
+
+    fetchResourceGuide();
   }, [NodeGuide]);
 
   useEffect(() => {
@@ -156,11 +175,8 @@ function Draw() {
     <div>
       <div className="Draw">
         <div className="container">
-
-
           <div className="workspace">
             <div className="palette">
-
               <Palette
                 nodeDataArray={nodeDataArrayPalette}
                 divClassName={paletteClassName}
@@ -192,10 +208,10 @@ function Draw() {
                     message={NodeGuideLine.key}
                     description={NodeGuideLine.message}
                     type="info"
-                  // closable
-                  // onClose={() =>
-                  //   setNodeGuideLine({ key: null, message: null })
-                  // }
+                    // closable
+                    // onClose={() =>
+                    //   setNodeGuideLine({ key: null, message: null })
+                    // }
                   />
                 )}
               </StyleSpace>
@@ -252,18 +268,18 @@ function Draw() {
                   divClassName={diagramClassName}
                 />
                 <ButtonContainer>
-                  <StyledButton onClick={summaryRequest}>Go to summary</StyledButton>
+                  <StyledButton onClick={summaryRequest}>
+                    Go to summary
+                  </StyledButton>
                   <StyledButton onClick={null}>Save as Cloud</StyledButton>
                   <StyledButton onClick={handlePopup}>Optimize</StyledButton>
 
                 </ButtonContainer>
               </StyledDiagram>
-
             </DiagramContainer>
             {ispopup ? <RequirementPopup handlePopup={handlePopup} /> : "" }
 
           </div>
-
         </div>
 
         {from === "inputNet" && (
@@ -271,10 +287,7 @@ function Draw() {
             Submit
           </Link>
         )}
-
-
       </div>
-
     </div>
   );
 }
@@ -304,7 +317,7 @@ const ButtonContainer = styled.div`
   // background-color:yellow;
   display: flex;
   justify-content: center;
-`
+`;
 
 const StyledButton = styled.div`
   margin-top: 10px;
@@ -319,7 +332,13 @@ const StyledButton = styled.div`
   font-family: "Noto Sans KR", sans-serif !important;
   font-style: normal;
   font-weight: 700;
+  font-family: "Noto Sans KR", sans-serif !important;
+  font-style: normal;
+  font-weight: 700;
 
+  line-height: 30px;
+  align-items: center;
+  text-align: center;
   line-height: 30px;
   align-items: center;
   text-align: center;
@@ -331,4 +350,4 @@ const DiagramContainer = styled.div`
   display: inline;
   width: 75%;
   height: 75%;
-`
+`;

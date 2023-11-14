@@ -117,12 +117,11 @@ const StyledSideMenuTitle = styled.div`
   position: relative;
   display: flex;
   width: 100%;
-  height: 40px;
+  height: 32px;
   font-family: "Noto Sans KR", sans-serif !important;
   font-weight: 500;
   font-size: 20px;
   margin-top: 12px;
-  margin-bottom: 6px;
   justify-content: space-between;
   padding-right: 25px;
   padding-left: 25px;
