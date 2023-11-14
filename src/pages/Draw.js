@@ -79,7 +79,14 @@ function Draw() {
           const ResourceData = { title: NodeGuide };
           const response = await DrawResourceGuide(ResourceData);
           console.log(response);
-          setNodeGuideLine({ key: NodeGuide, message: response.data.result });
+          if (!response.data.result === "fail") {
+            setNodeGuideLine({ key: NodeGuide, message: response.data.result });
+          } else {
+            setNodeGuideLine({
+              key: NodeGuide,
+              message: "추후 추가 예정",
+            });
+          }
         } catch (error) {
           console.error("Error fetching resource guide:", error);
         }
