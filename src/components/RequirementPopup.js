@@ -5,6 +5,8 @@ import { TreeSelect } from 'antd';
 import { Button, Divider, Flex, Radio } from 'antd';
 import { PlusOutlined } from "@ant-design/icons";
 
+import { industrial, totalRequest, zoneRequest } from '../db/Requirement';
+
 const { SHOW_PARENT } = TreeSelect;
 
 const Backdrop = styled.div`
@@ -98,18 +100,18 @@ const ZoneCloseButton = styled.span`
 const BackupContainer = styled.div`
     display: flex;
     align-items: center;
+    justify-content: space-between;
 `
 
 const BackupSelectTitle = styled.div`
-    width: 20%;
-    padding-right: 10px;
+    width: 10%;
     text-align:left;
 `
 
 const StyledBackupSelect = styled(Select)`
-    width: 150px;
+    width: 200px;
     text-align: left;
-    margin-right: 10px;
+    margin-right: 20px;
 `
 
 const ScrollableContent = styled.div`
@@ -125,91 +127,94 @@ const StyledButton = styled.button`
 `
 
 const RequirementPopup = (props) => {
+    const [industrialValue, setIndustrialValue] = useState();
+    const [totalReqValue, setTotalReqValue] = useState([]);
+    const [zoneReqValue, setZoneReqValue] = useState([]);
 
-    const industrial = [
-        // {
-        //   value: '1',
-        //   label: '선택안함',
-        // },
-        {
-            value: '2',
-            label: '금융',
-        },
-        {
-            value: '3',
-            label: '미디어',
-        },
-        {
-            value: '4',
-            label: '제조/유통',
-        },
-        {
-            value: '5',
-            label: '게임',
-        },
-    ];
+    const[zoneName, setZoneName] = useState([]);
+    const[zoneFunc, setZoneFunc] = useState([]);
+    const[staticBackup, setStaticBackup] = useState([]);
+    const[dynamicBackup, setDynamicBackup] = useState([]);
 
-    const treeData = [
-        {
-            title: 'Node1',
-            value: '0-0',
-            key: '0-0',
-            children: [
-                {
-                    title: 'Child Node1',
-                    value: '0-0-0',
-                    key: '0-0-0',
-                },
-            ],
-        },
-        {
-            title: 'Node2',
-            value: '0-1',
-            key: '0-1',
-            children: [
-                {
-                    title: 'Child Node3',
-                    value: '0-1-0',
-                    key: '0-1-0',
-                },
-                {
-                    title: 'Child Node4',
-                    value: '0-1-1',
-                    key: '0-1-1',
-                },
-                {
-                    title: 'Child Node5',
-                    value: '0-1-2',
-                    key: '0-1-2',
-                },
-            ],
-        },
-    ];
 
-    const [value, setValue] = useState(['0-0-0']);
-    const onChange = (newValue) => {
+
+    const [value, setValue] = useState([null]);
+    const onTotalChange = (newValue) => {
         console.log('onChange ', newValue);
-        setValue(newValue);
+        setTotalReqValue(newValue);
     };
-    const tProps = {
-        treeData,
-        value,
-        onChange,
+
+    const totalProps = {
+        treeData: totalRequest,
+        value: totalReqValue,
+        onChange: onTotalChange,
         treeCheckable: true,
         showCheckedStrategy: SHOW_PARENT,
         placeholder: 'Please select',
-
     };
+
+    // const zoneProps = {
+    //     treeData: zoneRequest,
+    //     value: zoneReqValue,
+    //     onChange: onZoneChange,
+    //     treeCheckable: true,
+    //     showCheckedStrategy: SHOW_PARENT,
+    //     placeholder: 'Please select',
+    // };
 
     const [zones, setZones] = useState([]);
 
     // Handler to add a new zone
     const addZone = () => {
-        setZones([...zones, { id: Date.now() }]); // Using current timestamp as a unique ID
+        setZones([...zones, { 
+            id: Date.now(),
+            zoneName: null,
+            zoneFunc: null,
+            staticBackup: null,
+            dynamicBackup: null,
+            zoneReqValue: [],
+        }]);
     };
+    
+    // Zone 선택을 업데이트하는 함수
+    const updateZone = (zoneId, key, value) => {
+        setZones(zones.map(zone => 
+            zone.id === zoneId ? {...zone, [key]: value} : zone
+        ));
+    };
+    
     const removeZone = zoneId => {
         setZones(zones.filter(zone => zone.id !== zoneId));
     };
+
+    const handleOptimize = () => {
+        const requestData = {
+            industrial: industrialValue,
+            totalRequirements: totalReqValue,
+            zones: zones.map(zone => ({
+                // Assuming you have state to track each zone's selections
+                name: zone.zoneName, 
+                function: zone.zoneFunc,
+                staticBackup: zone.staticBackup,
+                dynamicBackup: zone.dynamicBackup,
+                zoneRequirements: zone.zoneReqValue
+            }))
+        };
+
+        console.log("Optimize Data:", requestData); // For now, just log the data
+        // You can replace the above line with a function to send data to a server
+    };
+
+    const handleIndustrialChange = (value) => {setIndustrialValue(value);};
+
+    const handleZoneNameChange = (value) => {setZoneName(value);};
+    
+    const handleZoneFuncChange = (value) => {setZoneFunc(value);};
+
+    const handleStaticBackupChange = (value) => {setStaticBackup(value);};
+
+    const handleDynamicBackupChange = (value) => {setDynamicBackup(value);};
+    
 
     return (
         <Backdrop>
@@ -224,6 +229,7 @@ const RequirementPopup = (props) => {
                         </SelectTitle>
                         <StyledSelect
                             showSearch
+                            onChange={handleIndustrialChange}
                             placeholder="Select industrial"
                             optionFilterProp="children"
                             filterOption={(input, option) => (option?.label ?? '').includes(input)}
@@ -238,7 +244,7 @@ const RequirementPopup = (props) => {
                         <SelectTitle>
                             요구사항
                         </SelectTitle>
-                        <StyledTreeSelect {...tProps} />
+                        <StyledTreeSelect {...totalProps} />
                     </SelectContainer>
 
                     <div className='망 모음'>
@@ -252,6 +258,9 @@ const RequirementPopup = (props) => {
                                     </SelectTitle>
                                     <StyledSelect
                                         showSearch
+                                        // onChange={handleZoneNameChange}
+                                        onChange={(value) => updateZone(zone.id, 'zoneName', value)}
+
                                         placeholder="Select Zone"
                                         optionFilterProp="children"
                                         filterOption={(input, option) => (option?.label ?? '').includes(input)}
@@ -268,6 +277,8 @@ const RequirementPopup = (props) => {
                                     </SelectTitle>
                                     <StyledSelect
                                         showSearch
+                                        onChange={(value) => updateZone(zone.id, 'zoneFunc', value)}
+
                                         placeholder="Select Zone Function"
                                         optionFilterProp="children"
                                         filterOption={(input, option) => (option?.label ?? '').includes(input)}
@@ -288,7 +299,9 @@ const RequirementPopup = (props) => {
                                         </BackupSelectTitle>
                                         <StyledBackupSelect
                                             showSearch
-                                            placeholder="Select Zone Function"
+                                            onChange={(value) => updateZone(zone.id, 'staticBackup', value)}
+
+                                            placeholder="Static Backup"
                                             optionFilterProp="children"
                                             filterOption={(input, option) => (option?.label ?? '').includes(input)}
                                             filterSort={(optionA, optionB) =>
@@ -301,7 +314,8 @@ const RequirementPopup = (props) => {
                                         </BackupSelectTitle>
                                         <StyledBackupSelect
                                             showSearch
-                                            placeholder="Select Zone Function"
+                                            onChange={(value) => updateZone(zone.id, 'dynamicBackup', value)}
+                                            placeholder="Dynamic Backup"
                                             optionFilterProp="children"
                                             filterOption={(input, option) => (option?.label ?? '').includes(input)}
                                             filterSort={(optionA, optionB) =>
@@ -311,6 +325,20 @@ const RequirementPopup = (props) => {
                                         />
                                     </BackupContainer>
                                 </SelectContainer>
+                                <SelectContainer>
+                                    <SelectTitle>
+                                        요구사항
+                                    </SelectTitle>
+                                    <StyledTreeSelect
+    treeData={zoneRequest}
+    value={zone.zoneReqValue}
+    onChange={(value) => updateZone(zone.id, 'zoneReqValue', value)}
+    treeCheckable={true}
+    showCheckedStrategy={SHOW_PARENT}
+    placeholder="Please select"
+/>
+                                </SelectContainer>
+
                             </ZoneContainer>
                         ))}
 
@@ -321,7 +349,7 @@ const RequirementPopup = (props) => {
                             gap: "10px" // 버튼 사이의 간격
                         }}>
                             <Button type="primary" shape="circle" icon={<PlusOutlined />} size={"medium"} onClick={addZone} />
-                            <Button type="primary" shape="round" size={"medium"} onClick={addZone}>Optimize</Button>
+                            <Button type="primary" shape="round" size={"medium"} onClick={handleOptimize}>Optimize</Button>
                         </div>
 
                     </div>
