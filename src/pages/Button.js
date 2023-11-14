@@ -10,6 +10,7 @@ import { sidebarResource } from "../apis/sidebar"
 import { useData } from '../components/DataContext';
 
 
+
 const Button = ({
   diagram,
   setShowToggle,
@@ -166,7 +167,8 @@ const Button = ({
     setShowToggle(false); // toggle 숨김
   };
 
- 
+
+  
   return (
     <div>
       <div className="button-container">

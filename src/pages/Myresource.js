@@ -32,6 +32,7 @@ function MYResource() {
           "VPC",
           "Aurora",
           "Elastic Kubernetes Service",
+          "EC2"
         ],
       };
 

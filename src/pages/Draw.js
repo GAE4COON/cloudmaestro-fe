@@ -26,6 +26,9 @@ import { useFileUpload } from "../components/useFileInput";
 import { summaryFile } from "../apis/file";
 import { Link } from "react-router-dom";
 
+import RequirementPopup from '../components/RequirementPopup'
+
+
 function Draw() {
   const navigate = useNavigate();
   const { data } = useFileUpload();
@@ -140,6 +143,15 @@ function Draw() {
   );
   // useReadJSON(file,diagram);
 
+  //popup
+  const [ispopup, setIsPopup] = useState(false)
+
+  const handlePopup = () => {
+      return (
+          setIsPopup(!ispopup)
+      )
+  }
+
   return (
     <div>
       <div className="Draw">
@@ -242,10 +254,13 @@ function Draw() {
                 <ButtonContainer>
                   <StyledButton onClick={summaryRequest}>Go to summary</StyledButton>
                   <StyledButton onClick={null}>Save as Cloud</StyledButton>
+                  <StyledButton onClick={handlePopup}>Optimize</StyledButton>
+
                 </ButtonContainer>
               </StyledDiagram>
 
             </DiagramContainer>
+            {ispopup ? <RequirementPopup handlePopup={handlePopup} /> : "" }
 
           </div>
 
@@ -292,24 +307,24 @@ const ButtonContainer = styled.div`
 `
 
 const StyledButton = styled.div`
-margin-top: 10px;
-box-sizing: border-box;
-width: 200px;
-padding:5px;
+  margin-top: 10px;
+  box-sizing: border-box;
+  width: 200px;
+  padding:5px;
 
-background: #FFFFFF;
-border: 1px solid #BABABA;
-border-radius: 7px;
+  background: #FFFFFF;
+  border: 1px solid #BABABA;
+  border-radius: 7px;
 
-font-family: "Noto Sans KR", sans-serif !important;
-font-style: normal;
-font-weight: 700;
+  font-family: "Noto Sans KR", sans-serif !important;
+  font-style: normal;
+  font-weight: 700;
 
-line-height: 30px;
-align-items: center;
-text-align: center;
+  line-height: 30px;
+  align-items: center;
+  text-align: center;
 
-color: #809CDA;
+  color: #809CDA;
 `
 const DiagramContainer = styled.div`
   position: relative;
