@@ -3,7 +3,7 @@ import React, { useCallback, useState, useEffect } from "react";
 import * as go from "gojs";
 import "../styles/Button.css"; // contains .diagram-component CSS
 import { json, useNavigate } from "react-router-dom";
-import { rehostRequest } from "../apis/file";
+import { rehostRequest, requirementRequest } from "../apis/file";
 import {BsUpload,BsDownload,  BsEraser, BsSave, } from "react-icons/bs"
 import {BiSave} from "react-icons/bi"
 import { sidebarResource } from "../apis/sidebar"
@@ -166,6 +166,19 @@ const Button = ({
     setShowToggle(false); // toggle 숨김
   };
 
+  const requirement = async() => {
+    try{
+    const jsonString1 = diagram.model.toJson();
+    const response1 = await requirementRequest(jsonString1);
+    console.log("requirement:",response1);
+    const Jdata1 = response1.data.result;
+    diagram.model = go.Model.fromJson(Jdata1);
+    }
+    catch (error) {
+      console.error("requirement error: ", error);
+    }
+  }
+
  
   return (
     <div>
@@ -190,17 +203,20 @@ const Button = ({
           <button onClick={localSaveImage}><BiSave/></button>
         </div>
         <div className="button-row">
-          {
-            !isRehost && (
-              <button onClick={handleLoad}>Rehost</button>
-            )
-          }
-           {
-            isRehost && (
-              <button onClick={ToOptimize}>Optimize</button>
-            )
-          }
-          
+            {
+              !isRehost && (
+                <button onClick={handleLoad}>Rehost</button>
+              )
+            }
+            {
+              isRehost && (
+                <button onClick={ToOptimize}>Optimize</button>
+              )
+            }
+            
+        </div>
+        <div className="button-row">
+          <button onClick={requirement}>require</button>
         </div>
       </div>
     </div>
