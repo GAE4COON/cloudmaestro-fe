@@ -3,11 +3,12 @@ import React, { useCallback, useState, useEffect } from "react";
 import * as go from "gojs";
 import "../styles/Button.css"; // contains .diagram-component CSS
 import { json, useNavigate } from "react-router-dom";
-import { rehostRequest, requirementRequest } from "../apis/file";
+import { rehostRequest, requirementRequest } from "../apis/fileAPI";
 import {BsUpload,BsDownload,  BsEraser, BsSave, } from "react-icons/bs"
 import {BiSave} from "react-icons/bi"
 import { sidebarResource } from "../apis/sidebar"
 import { useData } from '../components/DataContext';
+
 
 
 const Button = ({
