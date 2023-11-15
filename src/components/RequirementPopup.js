@@ -5,6 +5,8 @@ import { TreeSelect } from 'antd';
 import { Button } from 'antd';
 import { PlusOutlined } from "@ant-design/icons";
 import { sendRequirement } from '../apis/requirementAPI';
+import * as go from "gojs";
+
 
 import { industrial, globalRequest, zoneRequest } from '../db/Requirement';
 
@@ -124,6 +126,8 @@ const ScrollableContent = styled.div`
 `;
 
 const RequirementPopup = (props) => {
+    let diagram = props.diagram;
+
     const [industrialValue, setIndustrialValue] = useState();
     const [globalReqValue, setGlobalReqValue] = useState([]);
 
@@ -168,21 +172,33 @@ const RequirementPopup = (props) => {
 
     const handleOptimize = async () => {
         const requestData = {
-            industrial: industrialValue,
-            globalRequirements: globalReqValue,
-            zones: zones.map(zone => ({
-                // Assuming you have state to track each zone's selections
-                name: zone.zoneName,
-                function: zone.zoneFunc,
-                staticBackup: zone.staticBackup,
-                dynamicBackup: zone.dynamicBackup,
-                zoneRequirements: zone.zoneReqValue
-            }))
+            requirementData: {
+                industrial: industrialValue,
+                globalRequirements: globalReqValue,
+                zones: zones.map(zone => ({
+                    name: zone.zoneName,
+                    function: zone.zoneFunc,
+                    staticBackup: zone.staticBackup,
+                    dynamicBackup: zone.dynamicBackup,
+                    zoneRequirements: zone.zoneReqValue
+                }))
+            },
+            diagramData: diagram.model.toJson() // 다이어그램 데이터를 추가
         };
 
-        console.log("Optimize Data:", requestData); // For now, just log the data
-        const response = await sendRequirement(requestData);
-        console.log("Optimize response:", response); // For now, just log the data
+        console.log("requestData", requestData); // 로그 출력
+        console.log(typeof(diagram.model.toJson()));
+
+
+        const response = await sendRequirement(requestData); // 하나의 함수를 사용하여 전체 데이터 전송
+        console.log("response", response.data.result);
+        const diagramData = response.data.result;
+        diagram.model = go.Model.fromJson(diagramData);
+
+        props.handlePopup();
+
+        console.log("response", response); // For now, just log the data
+
     };
 
     const handleIndustrialChange = (value) => { setIndustrialValue(value); };
