@@ -168,11 +168,21 @@ const Button = ({
 
   const requirement = async() => {
     try{
-    const jsonString1 = diagram.model.toJson();
-    const response1 = await requirementRequest(jsonString1);
-    console.log("requirement:",response1);
-    const Jdata1 = response1.data.result;
-    diagram.model = go.Model.fromJson(Jdata1);
+      const jsonString1 = diagram.model.toJson();
+      let jsonString2 = JSON.parse(jsonString1); // 'let'으로 변경
+
+      // 여기서 jsonString2를 result 키로 갖는 새 객체로 변환
+      jsonString2 = { result: jsonString2 };
+      const response1 = await requirementRequest(jsonString2);
+      console.log("requirement:",response1);
+      const Jdata1 = response1.data.result;
+      console.log("Jdata1", Jdata1);
+      diagram.model = go.Model.fromJson(Jdata1);
+      
+
+     
+      //console.log("response", response.data.result);
+      
     }
     catch (error) {
       console.error("requirement error: ", error);
