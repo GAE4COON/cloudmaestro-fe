@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { requestExample } from '../apis/file';
+import { requestExample } from '../apis/fileAPI';
 
 
 export const useExampleFile = () => {

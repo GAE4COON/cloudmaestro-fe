@@ -24,7 +24,7 @@ import Sidebar from "../components/Sidebar";
 import Palette from "../components/Palette";
 import "../styles/Draw.css";
 import { useFileUpload } from "../components/useFileInput";
-import { summaryFile } from "../apis/file";
+import { summaryFile } from "../apis/fileAPI.js";
 import { Link } from "react-router-dom";
 
 import RequirementPopup from '../components/RequirementPopup'
