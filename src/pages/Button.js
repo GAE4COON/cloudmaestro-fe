@@ -104,7 +104,9 @@ const Button = ({
       const response = await rehostRequest(jsonString);
       //console.log("response", response.data.result);
       const Jdata = response.data.result;
+      console.log("rehost:",Jdata)
       diagram.model = go.Model.fromJson(Jdata);
+      
       const response1 = await sidebarResource(diagram.model.nodeDataArray);
       setData(response1.data); // set the data in context
       setClickedLoaded(true);
@@ -170,8 +172,10 @@ const Button = ({
     try{
     const jsonString1 = diagram.model.toJson();
     const response1 = await requirementRequest(jsonString1);
-    console.log("requirement:",response1);
+  
+  
     const Jdata1 = response1.data.result;
+    console.log("requirement:",Jdata1);
     diagram.model = go.Model.fromJson(Jdata1);
     }
     catch (error) {
@@ -179,7 +183,6 @@ const Button = ({
     }
   }
 
- 
   return (
     <div>
       <div className="button-container">
