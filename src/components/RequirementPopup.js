@@ -128,6 +128,7 @@ const RequirementPopup = (props) => {
   const [ZoneData, setZoneData] = useState([]); //Zone select에서 쓰기 위한 데이터
   const [zoneValue, setZoneValue] = useState([]); //Zone에 대한 private, public subnet 정보 list
   const [zoneNode, setZoneNode] = useState([]); //Zone에 대한 private, public subnet node 정보 list
+  const [SelectZone, setSelectZone] = useState([]); //망 선택
   useEffect(() => {
     const diagramDataStr = diagram.model.toJson();
     const diagramData = JSON.parse(diagramDataStr);
@@ -157,7 +158,7 @@ const RequirementPopup = (props) => {
       const resultList = Array.from(result); // Set을 배열로 변환
       for (let i = 0; i < resultList.length; i++) {
         resultList[i] = {
-          value: i,
+          value: resultList[i],
           label: resultList[i],
         };
       }
@@ -171,12 +172,12 @@ const RequirementPopup = (props) => {
 
       for (let idx = 0; idx < resultList.length; idx++) {
         console.log(resultList[idx]);
-        backupgroupNode.push({ [resultList[idx].label]: [] });
-        backupNode.push({ [resultList[idx].label]: [] });
+        backupgroupNode[resultList[idx].label] = [];
+        backupNode[resultList[idx].label] = [];
 
         for (let i = 0; i < zonelist.length; i++) {
           if (zonelist[i].includes(resultList[idx].label)) {
-            backupgroupNode[idx][resultList[idx].label].push(zonelist[i]);
+            backupgroupNode[resultList[idx].label].push(zonelist[i]);
           }
         }
 
@@ -186,9 +187,7 @@ const RequirementPopup = (props) => {
         for (let i = 0; i < GroupData.length; i++) {
           if (typeof GroupData[i].group === "string") {
             if (GroupData[i].group.includes(resultList[idx].label)) {
-              backupgroupNode[idx][resultList[idx].label].push(
-                GroupData[i].key
-              );
+              backupgroupNode[resultList[idx].label].push(GroupData[i].key);
             }
           }
         }
@@ -198,24 +197,18 @@ const RequirementPopup = (props) => {
           let nodeData = diagramData.nodeDataArray[i];
           if (typeof nodeData.group === "string" && nodeData.isGroup === null) {
             if (
-              backupgroupNode[idx][resultList[idx].label].includes(
-                nodeData.group
-              )
+              backupgroupNode[resultList[idx].label].includes(nodeData.group)
             ) {
-              backupNode[idx][resultList[idx].label].push(nodeData.key);
+              backupNode[resultList[idx].label].push(nodeData.key);
             }
           }
         }
         console.log("backupNode: ", backupNode);
 
-        for (
-          let i = 0;
-          i < backupNode[idx][resultList[idx].label].length;
-          i++
-        ) {
-          backupNode[idx][resultList[idx].value][i] = {
-            value: backupNode[idx][resultList[idx].label][i],
-            label: backupNode[idx][resultList[idx].label][i],
+        for (let i = 0; i < backupNode[resultList[idx].label].length; i++) {
+          backupNode[resultList[idx].label][i] = {
+            value: backupNode[resultList[idx].label][i],
+            label: backupNode[resultList[idx].label][i],
           };
         }
 
@@ -298,6 +291,19 @@ const RequirementPopup = (props) => {
     setIndustrialValue(value);
   };
 
+  const handleChange = (value) => {
+    console.log(`selected ${value}`);
+    // const regex = /^([a-zA-Z]+)(\d+)$/;
+    // const matches = value.match(regex);
+
+    // if (matches) {
+    //   const textPart = matches[1];
+    //   const numberPart = parseInt(matches[2], 10);
+    //setSelectZone([textPart, numberPart]);
+    //console.log(`Text Part: ${textPart}, Number Part: ${numberPart}`);
+    setSelectZone(value);
+  };
+
   return (
     <Backdrop>
       <PopupBox>
@@ -341,7 +347,7 @@ const RequirementPopup = (props) => {
                   <StyledSelect
                     showSearch
                     // onChange={handleZoneNameChange}
-                    onChange={(value) => updateZone(zone.id, "zoneName", value)}
+                    onChange={handleChange}
                     placeholder="Select Zone"
                     optionFilterProp="children"
                     filterOption={(input, option) =>
@@ -395,7 +401,7 @@ const RequirementPopup = (props) => {
                           .toLowerCase()
                           .localeCompare((optionB?.label ?? "").toLowerCase())
                       }
-                      options={industrial}
+                      options={zoneNode[SelectZone]}
                     />
                     <BackupSelectTitle>일반</BackupSelectTitle>
                     <StyledBackupSelect
@@ -403,6 +409,7 @@ const RequirementPopup = (props) => {
                       onChange={(value) =>
                         updateZone(zone.id, "dynamicBackup", value)
                       }
+                      mode="tags"
                       placeholder="Dynamic Backup"
                       optionFilterProp="children"
                       filterOption={(input, option) =>
@@ -413,7 +420,7 @@ const RequirementPopup = (props) => {
                           .toLowerCase()
                           .localeCompare((optionB?.label ?? "").toLowerCase())
                       }
-                      options={industrial}
+                      options={zoneNode[SelectZone]}
                     />
                   </BackupContainer>
                 </SelectContainer>
