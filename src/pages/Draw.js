@@ -27,8 +27,7 @@ import { useFileUpload } from "../components/useFileInput";
 import { summaryFile } from "../apis/fileAPI.js";
 import { Link } from "react-router-dom";
 
-import RequirementPopup from '../components/RequirementPopup'
-
+import RequirementPopup from "../components/RequirementPopup";
 
 function Draw() {
   const navigate = useNavigate();
@@ -130,7 +129,7 @@ function Draw() {
 
       // 파일 데이터를 FormData에 추가
       const fileData = new Blob([JSON.stringify(jsonData)], {
-        type: "application/json",
+        type: "   ",
       });
       formData.append("file", fileData, "diagram.json");
 
@@ -163,13 +162,11 @@ function Draw() {
   // useReadJSON(file,diagram);
 
   //popup
-  const [ispopup, setIsPopup] = useState(false)
+  const [ispopup, setIsPopup] = useState(false);
 
   const handlePopup = () => {
-      return (
-          setIsPopup(!ispopup)
-      )
-  }
+    return setIsPopup(!ispopup);
+  };
 
   return (
     <div>
@@ -273,12 +270,14 @@ function Draw() {
                   </StyledButton>
                   <StyledButton onClick={null}>Save as Cloud</StyledButton>
                   <StyledButton onClick={handlePopup}>Optimize</StyledButton>
-
                 </ButtonContainer>
               </StyledDiagram>
             </DiagramContainer>
-            {ispopup ? <RequirementPopup handlePopup={handlePopup} /> : "" }
-
+            {ispopup ? (
+              <RequirementPopup diagram={diagram} handlePopup={handlePopup} />
+            ) : (
+              ""
+            )}
           </div>
         </div>
 
@@ -323,10 +322,10 @@ const StyledButton = styled.div`
   margin-top: 10px;
   box-sizing: border-box;
   width: 200px;
-  padding:5px;
+  padding: 5px;
 
-  background: #FFFFFF;
-  border: 1px solid #BABABA;
+  background: #ffffff;
+  border: 1px solid #bababa;
   border-radius: 7px;
 
   font-family: "Noto Sans KR", sans-serif !important;
@@ -343,8 +342,8 @@ const StyledButton = styled.div`
   align-items: center;
   text-align: center;
 
-  color: #809CDA;
-`
+  color: #809cda;
+`;
 const DiagramContainer = styled.div`
   position: relative;
   display: inline;
