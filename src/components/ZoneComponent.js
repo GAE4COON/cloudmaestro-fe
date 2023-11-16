@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Select, TreeSelect } from "antd";
+import { Select, TreeSelect, Checkbox } from "antd";
 
 import { industrial, globalRequest, zoneRequest } from "../db/Requirement";
+
+const plainOptions = ["중앙관리", "일반"];
 
 const { SHOW_PARENT } = TreeSelect;
 
@@ -11,8 +13,8 @@ function ZoneComponent({ diagram, zone, onDataChange }) {
   const [zoneValue, setZoneValue] = useState([]); //Zone에 대한 private, public subnet 정보 list
   const [zoneNode, setZoneNode] = useState([]); //Zone에 대한 private, public subnet node 정보 list
   const [SelectZone, setSelectZone] = useState([]); //망 선택
-  const [selectBackup1, setSelectBackup1] = useState([]);
-  const [selectBackup2, setSelectBackup2] = useState([]);
+  const [availableNode, setAvailableNode] = useState([]); //고가용성 선택
+  const [selectBackup, setSelectBackup] = useState([]);
   const [zones, setZones] = useState([]);
 
   useEffect(() => {
@@ -51,7 +53,7 @@ function ZoneComponent({ diagram, zone, onDataChange }) {
       setZoneData(resultList);
       setZoneValue(zonelist);
       console.log("Zone", resultList);
-      console.log("Zone subnet", zonelist);
+      // console.log("Zone subnet", zonelist);
 
       const backupNode = [];
       const backupgroupNode = [];
@@ -61,13 +63,13 @@ function ZoneComponent({ diagram, zone, onDataChange }) {
         backupgroupNode[resultList[idx].label] = [];
         backupNode[resultList[idx].label] = [];
 
-        for (let i = 0; i < zonelist.length; i++) {
-          if (zonelist[i].includes(resultList[idx].label)) {
-            backupgroupNode[resultList[idx].label].push(zonelist[i]);
-          }
-        }
+        // for (let i = 0; i < zonelist.length; i++) {
+        //   if (zonelist[i].includes(resultList[idx].label)) {
+        //     backupgroupNode[resultList[idx].label].push(zonelist[i]);
+        //   }
+        // }
 
-        console.log("test group", backupgroupNode);
+        // console.log("test group", backupgroupNode);
 
         //security 그룹 추출
         for (let i = 0; i < GroupData.length; i++) {
@@ -77,19 +79,53 @@ function ZoneComponent({ diagram, zone, onDataChange }) {
             }
           }
         }
-        console.log("backupgroupNode: ", backupgroupNode);
+        // console.log("backupgroupNode: ", backupgroupNode);
+
+        for (
+          let i = 0;
+          i < backupgroupNode[resultList[idx].label].length;
+          i++
+        ) {
+          backupgroupNode[resultList[idx].label][i] = {
+            value: backupgroupNode[resultList[idx].label][i],
+            label: backupgroupNode[resultList[idx].label][i],
+          };
+        }
+
+        const nodeSet = new Set();
 
         for (let i = 0; i < diagramData.nodeDataArray.length; i++) {
           let nodeData = diagramData.nodeDataArray[i];
-          if (typeof nodeData.group === "string" && nodeData.isGroup === null) {
+          if (nodeData.isGroup === null && nodeData.key.includes("EC2")) {
+            // console.log("우왕 EC2다", nodeData);
             if (
-              backupgroupNode[resultList[idx].label].includes(nodeData.group)
+              backupgroupNode[resultList[idx].label]
+                .map((item) => item.value)
+                .includes(nodeData.group)
             ) {
-              backupNode[resultList[idx].label].push(nodeData.key);
+              // 조건을 만족하는 경우 nodeSet에 nodeData.group 추가
+              nodeSet.add(nodeData.group);
             }
           }
         }
-        console.log("backupNode: ", backupNode);
+
+        // console.log("nodeSet: ", nodeSet);
+
+        const nodeSetList = Array.from(nodeSet);
+        backupNode[resultList[idx].label] = nodeSetList;
+        // console.log("backupNode: ", backupNode);
+
+        // for (let i = 0; i < diagramData.nodeDataArray.length; i++) {
+        //   let nodeData = diagramData.nodeDataArray[i];
+        //   if (typeof nodeData.group === "string" && nodeData.isGroup === null) {
+        //     if (
+        //       backupgroupNode[resultList[idx].label].includes(nodeData.group)
+        //     ) {
+        //       backupNode[resultList[idx].label].push(nodeData.key);
+        //     }
+        //   }
+        // }
+        // // console.log("backupNode: ", backupNode);
 
         for (let i = 0; i < backupNode[resultList[idx].label].length; i++) {
           backupNode[resultList[idx].label][i] = {
@@ -109,35 +145,23 @@ function ZoneComponent({ diagram, zone, onDataChange }) {
     const updateTossPopup = () => {
       onDataChange(zone.id, {
         SelectZone,
-        selectBackup1,
-        selectBackup2,
+        availableNode,
+        selectBackup,
         zones,
       });
     };
     updateTossPopup();
-  }, [selectBackup1, selectBackup2, SelectZone, zones]);
+  }, [availableNode, selectBackup, SelectZone, zones]);
+  //여기에 상위props로 보낼 것 다 넣어주세요.
 
   const handleChange = (value) => {
     console.log(`selected ${value}`);
-    // const regex = /^([a-zA-Z]+)(\d+)$/;
-    // const matches = value.match(regex);
-
-    // if (matches) {
-    //   const textPart = matches[1];
-    //   const numberPart = parseInt(matches[2], 10);
-    //setSelectZone([textPart, numberPart]);
-    //console.log(`Text Part: ${textPart}, Number Part: ${numberPart}`);
     setSelectZone(value);
   };
 
   const handleChange1 = (value) => {
     console.log(`selected ${value}`);
-    setSelectBackup1(value);
-  };
-
-  const handleChange2 = (value) => {
-    console.log(`selected ${value}`);
-    setSelectBackup2(value);
+    setAvailableNode(value);
   };
 
   const updateZone = (zoneId, key, value) => {
@@ -152,7 +176,10 @@ function ZoneComponent({ diagram, zone, onDataChange }) {
     setZones(zones.filter((zone) => zone.id !== zoneId));
   };
 
-  //여기에 상위props로 보낼 것 다 넣어주세요.
+  const onChange = (checkedValues) => {
+    console.log("checked = ", checkedValues);
+    setSelectBackup(checkedValues);
+  };
 
   return (
     <ZoneContainer key={zone.id}>
@@ -198,41 +225,32 @@ function ZoneComponent({ diagram, zone, onDataChange }) {
       </SelectContainer>
 
       <SelectContainer>
+        <SelectTitle>고가용성</SelectTitle>
+        <StyledBackupSelect
+          mode="tags"
+          showSearch
+          onChange={handleChange1}
+          placeholder="node select..."
+          optionFilterProp="children"
+          filterOption={(input, option) =>
+            (option?.label ?? "").includes(input)
+          }
+          filterSort={(optionA, optionB) =>
+            (optionA?.label ?? "")
+              .toLowerCase()
+              .localeCompare((optionB?.label ?? "").toLowerCase())
+          }
+          options={zoneNode[SelectZone]}
+        />
+      </SelectContainer>
+
+      <SelectContainer>
         <SelectTitle>백업</SelectTitle>
         <BackupContainer>
-          <BackupSelectTitle>중앙관리</BackupSelectTitle>
-          <StyledBackupSelect
-            mode="tags"
-            showSearch
-            onChange={handleChange1}
-            placeholder="Static Backup"
-            optionFilterProp="children"
-            filterOption={(input, option) =>
-              (option?.label ?? "").includes(input)
-            }
-            filterSort={(optionA, optionB) =>
-              (optionA?.label ?? "")
-                .toLowerCase()
-                .localeCompare((optionB?.label ?? "").toLowerCase())
-            }
-            options={zoneNode[SelectZone]}
-          />
-          <BackupSelectTitle>일반</BackupSelectTitle>
-          <StyledBackupSelect
-            showSearch
-            onChange={handleChange2}
-            mode="tags"
-            placeholder="Dynamic Backup"
-            optionFilterProp="children"
-            filterOption={(input, option) =>
-              (option?.label ?? "").includes(input)
-            }
-            filterSort={(optionA, optionB) =>
-              (optionA?.label ?? "")
-                .toLowerCase()
-                .localeCompare((optionB?.label ?? "").toLowerCase())
-            }
-            options={zoneNode[SelectZone]}
+          <Checkbox.Group
+            options={plainOptions}
+            defaultValue={["Apple"]}
+            onChange={onChange}
           />
         </BackupContainer>
       </SelectContainer>
@@ -269,19 +287,20 @@ const ZoneCloseButton = styled.span`
 
 const BackupContainer = styled.div`
   display: flex;
+  width: 100%;
   align-items: center;
   justify-content: space-between;
+  margin-left: 25px;
 `;
 
-const BackupSelectTitle = styled.div`
-  width: 10%;
-  text-align: left;
-`;
+// const BackupSelectTitle = styled.div`
+//   width: 10%;
+//   text-align: left;
+// `;
 
 const StyledBackupSelect = styled(Select)`
-  width: 200px;
+  width: 80%;
   text-align: left;
-  margin-right: 20px;
 `;
 
 const SelectContainer = styled.div`
