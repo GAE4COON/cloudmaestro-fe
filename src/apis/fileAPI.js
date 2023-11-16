@@ -24,4 +24,4 @@ export const alertCheck = (data) =>
   api.post("/api/v1/alert-api/alert-check", data);
 
   export const requirementRequest = (data) =>
-  api.post("/api/v1/naindae-api/available", data);
+  api.post("/api/v1/naindae-api/multiregion", data);
