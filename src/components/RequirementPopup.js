@@ -122,8 +122,8 @@ const RequirementPopup = (props) => {
         id: Date.now(),
         zoneName: null,
         zoneFunc: null,
-        staticBackup: null,
-        dynamicBackup: null,
+        availableNode: null,
+        backup: null,
         zoneReqValue: [],
       },
     ]);
@@ -139,8 +139,8 @@ const RequirementPopup = (props) => {
         zones: zones.map((zone) => ({
           name: zone.zoneName,
           function: zone.zoneFunc,
-          staticBackup: zone.staticBackup,
-          dynamicBackup: zone.dynamicBackup,
+          availableNode: zone.availableNode,
+          backup: zone.Backup,
           zoneRequirements: zone.zoneReqValue,
         })),
       },
@@ -168,8 +168,8 @@ const RequirementPopup = (props) => {
     const formattedUpdatedData = {
       zoneName: updatedData.SelectZone,
       zoneFunc: updatedData.zoneFunc, // 예: updatedData에 zoneFunc가 있다고 가정
-      staticBackup: updatedData.selectBackup1,
-      dynamicBackup: updatedData.selectBackup2,
+      availableNode: updatedData.availableNode,
+      backup: updatedData.selectBackup,
       zoneReqValue: updatedData.zoneReqValue, // 예: updatedData에 zoneReqValue가 있다고 가정
     };
 
