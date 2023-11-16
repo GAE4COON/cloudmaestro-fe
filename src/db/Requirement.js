@@ -4,19 +4,19 @@ export const industrial = [
     //   label: '선택안함',
     // },
     {
-        value: 'finance',
+        value: '금융',
         label: '금융',
     },
     {
-        value: 'media',
+        value: '미디어',
         label: '미디어',
     },
     {
-        value: 'manufacture',
+        value: '제조/유통',
         label: '제조/유통',
     },
     {
-        value: 'game',
+        value: '게임',
         label: '게임',
     },
 ];
@@ -149,7 +149,7 @@ export const zoneRequest = [
 
     {
         title: '보안',
-        value: 'zone_security',
+        value: '망별_보안',
         key: '망별_보안',
         children: [
             {
@@ -223,7 +223,7 @@ export const zoneRequest = [
     },
     {
         title: '로깅',
-        value: 'zone_logging',
+        value: '망별_로깅',
         key: '망별_로깅',
         children: [
             {
