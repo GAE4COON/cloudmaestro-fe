@@ -6,13 +6,15 @@ import { industrial, globalRequest, zoneRequest } from "../db/Requirement";
 
 const { SHOW_PARENT } = TreeSelect;
 
-function ZoneComponent({ diagram, zone }) {
+function ZoneComponent({ diagram, zone, onDataChange }) {
   const [ZoneData, setZoneData] = useState([]); //Zone select에서 쓰기 위한 데이터
   const [zoneValue, setZoneValue] = useState([]); //Zone에 대한 private, public subnet 정보 list
   const [zoneNode, setZoneNode] = useState([]); //Zone에 대한 private, public subnet node 정보 list
   const [SelectZone, setSelectZone] = useState([]); //망 선택
-  const [selectBackup, setSelectBackup] = useState([]);
+  const [selectBackup1, setSelectBackup1] = useState([]);
+  const [selectBackup2, setSelectBackup2] = useState([]);
   const [zones, setZones] = useState([]);
+
   useEffect(() => {
     const diagramDataStr = diagram.model.toJson();
     const diagramData = JSON.parse(diagramDataStr);
@@ -103,6 +105,18 @@ function ZoneComponent({ diagram, zone }) {
     }
   }, []);
 
+  useEffect(() => {
+    const updateTossPopup = () => {
+      onDataChange(zone.id, {
+        SelectZone,
+        selectBackup1,
+        selectBackup2,
+        zones,
+      });
+    };
+    updateTossPopup();
+  }, [selectBackup1, selectBackup2, SelectZone, zones]);
+
   const handleChange = (value) => {
     console.log(`selected ${value}`);
     // const regex = /^([a-zA-Z]+)(\d+)$/;
@@ -116,9 +130,14 @@ function ZoneComponent({ diagram, zone }) {
     setSelectZone(value);
   };
 
+  const handleChange1 = (value) => {
+    console.log(`selected ${value}`);
+    setSelectBackup1(value);
+  };
+
   const handleChange2 = (value) => {
     console.log(`selected ${value}`);
-    setSelectBackup(value);
+    setSelectBackup2(value);
   };
 
   const updateZone = (zoneId, key, value) => {
@@ -132,6 +151,8 @@ function ZoneComponent({ diagram, zone }) {
   const removeZone = (zoneId) => {
     setZones(zones.filter((zone) => zone.id !== zoneId));
   };
+
+  //여기에 상위props로 보낼 것 다 넣어주세요.
 
   return (
     <ZoneContainer key={zone.id}>
@@ -183,7 +204,7 @@ function ZoneComponent({ diagram, zone }) {
           <StyledBackupSelect
             mode="tags"
             showSearch
-            onChange={handleChange2}
+            onChange={handleChange1}
             placeholder="Static Backup"
             optionFilterProp="children"
             filterOption={(input, option) =>

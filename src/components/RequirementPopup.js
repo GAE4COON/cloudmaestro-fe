@@ -94,6 +94,7 @@ const RequirementPopup = (props) => {
   const [globalReqValue, setGlobalReqValue] = useState([]);
   const [savediagram, setSaveDiagram] = useState();
   const [zones, setZones] = useState([]);
+  const [ZoneData, setZoneData] = useState("");
 
   useEffect(() => {
     setSaveDiagram(diagram);
@@ -163,6 +164,26 @@ const RequirementPopup = (props) => {
     setIndustrialValue(value);
   };
 
+  const handleDataChange = (zoneId, updatedData) => {
+    const formattedUpdatedData = {
+      zoneName: updatedData.SelectZone,
+      zoneFunc: updatedData.zoneFunc, // 예: updatedData에 zoneFunc가 있다고 가정
+      staticBackup: updatedData.selectBackup1,
+      dynamicBackup: updatedData.selectBackup2,
+      zoneReqValue: updatedData.zoneReqValue, // 예: updatedData에 zoneReqValue가 있다고 가정
+    };
+
+    console.log("toss test: ", zoneId, formattedUpdatedData);
+
+    setZones(
+      zones.map((zone) =>
+        zone.id === zoneId ? { ...zone, ...formattedUpdatedData } : zone
+      )
+    );
+
+    console.log(zones);
+  };
+
   return (
     <Backdrop>
       <PopupBox>
@@ -196,7 +217,11 @@ const RequirementPopup = (props) => {
 
           <div className="망 모음">
             {zones.map((zone) => (
-              <ZoneComponent diagram={savediagram} zone={zone}></ZoneComponent>
+              <ZoneComponent
+                diagram={savediagram}
+                zone={zone}
+                onDataChange={handleDataChange}
+              ></ZoneComponent>
             ))}
 
             <div
