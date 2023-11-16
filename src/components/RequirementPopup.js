@@ -127,6 +127,8 @@ const RequirementPopup = (props) => {
   const [zoneValue, setZoneValue] = useState([]); //Zone에 대한 private, public subnet 정보 list
   const [zoneNode, setZoneNode] = useState([]); //Zone에 대한 private, public subnet node 정보 list
   const [SelectZone, setSelectZone] = useState([]); //망 선택
+
+  //깃허브 이상해 ㅠ
   useEffect(() => {
     const diagramDataStr = diagram.model.toJson();
     const diagramData = JSON.parse(diagramDataStr);
