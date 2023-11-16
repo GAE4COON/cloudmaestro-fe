@@ -1,22 +1,24 @@
 .sidebar {
-    z-index: 5;
-    padding: 12px;
-    border-radius: 15px 0 0 15px;
-    border: 1px solid #dee8ff;
-    background-color:#ffffff;
-    height: 85vh;
-    width: 17%;
-    top: 50px;
-    position: fixed;
-    transition: 0.5s ease;
-    overflow-y: auto;
-    margin-top: 2px;
-    font-family: "Noto Sans KR", sans-serif;
-    box-shadow: -12px 12px 8px #f0f1f2;
-  }
+  z-index: 5;
+  padding: 12px;
+  border-radius: 15px 0 0 15px;
+  border: 1px solid #dee8ff;
+  background-color:#ffffff;
+  height: 85vh;
+  width: 17%;
+  top: 50px;
+  position: fixed;
+  transition: 0.5s ease;
+  overflow-y: auto;
+  margin-top: 2px;
+  font-family: "Noto Sans KR", sans-serif;
+  box-shadow: -12px 12px 8px #f0f1f2;
+}
 
 .sidebar-title {
   margin-top: -25px;
+  font-size: 14px;
+  font-family: "Noto Sans KR", sans-serif !important;
 }
 
 .sidebar-item {
@@ -24,7 +26,11 @@
   align-items: center; /* 세로 중앙 정렬 */
   justify-content: space-around; /* 공간을 균등하게 나눔 */
   padding: 10px; /* 패딩 추가 */
-  height: 60px; /* 고정된 높이 설정 */
+
+  height: auto; /* 고정된 높이 설정 */
+  font-family: "Noto Sans KR", sans-serif !important;
+  font-size: 14px;
+
 }
 
 .sidebar-item img {

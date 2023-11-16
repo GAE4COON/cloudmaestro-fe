@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import * as go from "gojs";
 import "../styles/App.css"; // contains .diagram-component CSS
 import handleChangedSelection from "./toggle/toggle";
-import { alertCheck } from "../apis/file";
+import { alertCheck } from "../apis/fileAPI";
 import { sidebarResource } from "../apis/sidebar"
 import { useData } from '../components/DataContext';
 
@@ -212,16 +212,31 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
           "Rectangle",
           {
             margin: 10,
-            fill: "transparent",
+            fill: "transparent", // default fill
             stroke: "rgb(128,128,128)",
             strokeWidth: 3,
           },
-          new go.Binding("stroke")
+          new go.Binding("fill", "", function(data) {
+            if (data.key.toLowerCase().includes("public")||data.key.toLowerCase().includes("private")) {
+              // Parse the RGB color to get individual components
+              let rgb = data.stroke.match(/\d+/g);
+              if (rgb && rgb.length >= 3) {
+                // Construct an RGBA color with 0.4 opacity
+                return `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, 0.2)`;
+              }
+            }
+            return "transparent";
+          }),
+          new go.Binding("stroke", "", function(data) {
+            if (data.key.toLowerCase().includes("public")||data.key.toLowerCase().includes("private")) {
+              return "transparent";
+            }
+            return data.stroke;
+          }),
+
         ),
-        // new go.Binding("fill", "stroke")),
         $(go.Placeholder, { padding: 30 })
       )
-      // $(go.Placeholder, { padding: 30 })
     );
     diagram.linkTemplate = $(
       go.Link,

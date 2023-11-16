@@ -24,8 +24,10 @@ import Sidebar from "../components/Sidebar";
 import Palette from "../components/Palette";
 import "../styles/Draw.css";
 import { useFileUpload } from "../components/useFileInput";
-import { summaryFile } from "../apis/file";
+import { summaryFile } from "../apis/fileAPI.js";
 import { Link } from "react-router-dom";
+
+import RequirementPopup from "../components/RequirementPopup";
 
 function Draw() {
   const navigate = useNavigate();
@@ -79,7 +81,14 @@ function Draw() {
           const ResourceData = { title: NodeGuide };
           const response = await DrawResourceGuide(ResourceData);
           console.log(response);
-          setNodeGuideLine({ key: NodeGuide, message: response.data.result });
+          if (!response.data.result === "fail") {
+            setNodeGuideLine({ key: NodeGuide, message: response.data.result });
+          } else {
+            setNodeGuideLine({
+              key: NodeGuide,
+              message: "추후 추가 예정",
+            });
+          }
         } catch (error) {
           console.error("Error fetching resource guide:", error);
         }
@@ -120,7 +129,7 @@ function Draw() {
 
       // 파일 데이터를 FormData에 추가
       const fileData = new Blob([JSON.stringify(jsonData)], {
-        type: "application/json",
+        type: "   ",
       });
       formData.append("file", fileData, "diagram.json");
 
@@ -151,6 +160,13 @@ function Draw() {
     [diagram]
   );
   // useReadJSON(file,diagram);
+
+  //popup
+  const [ispopup, setIsPopup] = useState(false);
+
+  const handlePopup = () => {
+    return setIsPopup(!ispopup);
+  };
 
   return (
     <div>
@@ -253,9 +269,15 @@ function Draw() {
                     Go to summary
                   </StyledButton>
                   <StyledButton onClick={null}>Save as Cloud</StyledButton>
+                  <StyledButton onClick={handlePopup}>Optimize</StyledButton>
                 </ButtonContainer>
               </StyledDiagram>
             </DiagramContainer>
+            {ispopup ? (
+              <RequirementPopup diagram={diagram} handlePopup={handlePopup} />
+            ) : (
+              ""
+            )}
           </div>
         </div>
 
@@ -309,7 +331,13 @@ const StyledButton = styled.div`
   font-family: "Noto Sans KR", sans-serif !important;
   font-style: normal;
   font-weight: 700;
+  font-family: "Noto Sans KR", sans-serif !important;
+  font-style: normal;
+  font-weight: 700;
 
+  line-height: 30px;
+  align-items: center;
+  text-align: center;
   line-height: 30px;
   align-items: center;
   text-align: center;

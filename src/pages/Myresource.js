@@ -7,7 +7,7 @@ import Resource from "../components/Resource";
 import { ResourceGuide } from "../apis/resource";
 import "../styles/resource.css";
 
-function MYResource() {
+function MyResource() {
   const [searchTerm, setSearchTerm] = useState("");
   const [resource, setResource] = useState(null);
   const [filteredResource, setFilteredResource] = useState([]);
@@ -32,6 +32,7 @@ function MYResource() {
           "VPC",
           "Aurora",
           "Elastic Kubernetes Service",
+          "EC2",
         ],
       };
 
@@ -156,4 +157,4 @@ const SearchInput = styled.input.attrs({ type: "text" })`
   }
 `;
 
-export default MYResource;
+export default MyResource;

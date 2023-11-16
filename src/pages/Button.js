@@ -3,11 +3,13 @@ import React, { useCallback, useState, useEffect } from "react";
 import * as go from "gojs";
 import "../styles/Button.css"; // contains .diagram-component CSS
 import { json, useNavigate } from "react-router-dom";
-import { rehostRequest, requirementRequest } from "../apis/file";
+
+import { rehostRequest,requirementRequest} from "../apis/fileAPI";
 import {BsUpload,BsDownload,  BsEraser, BsSave, } from "react-icons/bs"
 import {BiSave} from "react-icons/bi"
 import { sidebarResource } from "../apis/sidebar"
 import { useData } from '../components/DataContext';
+
 
 
 const Button = ({
@@ -93,11 +95,11 @@ const Button = ({
       const containsOtherTypes = otherTypes.length > 0;
       
       if(containsOtherTypes){
-        alert("!!!!!!!!!!클라우드 아키텍처가 포함되어있으면 Rehost 하지 못합니다!!!!!!!!!!")
+        alert("클라우드 아키텍처가 포함되어있으면 Rehost 하지 못합니다.")
         return;
       }
       if (clickedLoaded) {
-        alert("!!!!!!!!!클라우드 아키텍처는 Rehost 하지 못합니다!!!!!!!!!")
+        alert("클라우드 아키텍처는 Rehost 하지 못합니다.")
         return;
       }
       
@@ -166,6 +168,7 @@ const Button = ({
     setShowToggle(false); // toggle 숨김
   };
 
+
   const requirement = async() => {
     try{
       const jsonString1 = diagram.model.toJson();
@@ -190,6 +193,7 @@ const Button = ({
   }
 
  
+
   return (
     <div>
       <div className="button-container">
