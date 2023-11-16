@@ -130,7 +130,7 @@ function Draw() {
 
       // 파일 데이터를 FormData에 추가
       const fileData = new Blob([JSON.stringify(jsonData)], {
-        type: "application/json",
+        type: "   ",
       });
       formData.append("file", fileData, "diagram.json");
 
@@ -277,8 +277,10 @@ function Draw() {
                 </ButtonContainer>
               </StyledDiagram>
             </DiagramContainer>
-            {ispopup ? <RequirementPopup handlePopup={handlePopup} /> : "" }
-
+            {ispopup ? 
+            <RequirementPopup 
+              diagram={diagram}
+              handlePopup={handlePopup} /> : "" }
           </div>
         </div>
 

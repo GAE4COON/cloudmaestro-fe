@@ -94,11 +94,11 @@ const Button = ({
       const containsOtherTypes = otherTypes.length > 0;
       
       if(containsOtherTypes){
-        alert("!!!!!!!!!!클라우드 아키텍처가 포함되어있으면 Rehost 하지 못합니다!!!!!!!!!!")
+        alert("클라우드 아키텍처가 포함되어있으면 Rehost 하지 못합니다.")
         return;
       }
       if (clickedLoaded) {
-        alert("!!!!!!!!!클라우드 아키텍처는 Rehost 하지 못합니다!!!!!!!!!")
+        alert("클라우드 아키텍처는 Rehost 하지 못합니다.")
         return;
       }
       
