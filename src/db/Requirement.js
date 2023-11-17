@@ -142,7 +142,56 @@ export const globalRequest = [
         ],
       },
     ],
-  },
+
+},
+{
+    title: '부하 분산',
+    value: '부하 분산',
+    key: '부하 분산',
+    children: [
+        {
+            title: '웹 트래픽 분산',
+            value: '웹 트래픽 분산',
+            key: '웹 트래픽 분산',
+            children: [
+                {
+                    title: 'DNS 서비스',
+                    value: 'DNS 서비스',
+                    key: 'DNS 서비스',
+                },
+            ],
+        },
+    ],
+},
+{
+    title: '이중화',
+    value: '이중화',
+    key: '이중화',
+    children: [
+        {
+            title: '다중 AW 배포 구성 및 관리',
+            value: '다중 AW 배포 구성 및 관리',
+            key: '다중 AW 배포 구성 및 관리',
+            children: [
+                {
+                    title: 'DNS 서버 이중화',
+                    value: 'DNS 서버 이중화',
+                    key: 'DNS 서버 이중화',
+                },
+                {
+                    title: '서버 이중화',
+                    value: '서버 이중화',
+                    key: '서버 이중화',
+                },
+                {
+                    title: '데이터베이스 분산',
+                    value: '데이터베이스 분산',
+                    key: '데이터베이스 분산',
+                },
+            ],
+        },
+    ],
+},
 ];
 
 export const zoneRequest = [

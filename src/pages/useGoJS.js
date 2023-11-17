@@ -409,7 +409,7 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
       } else if (part instanceof go.Node) {
         //console.log("나는 node 입니다", part.data);
         const key = part.data.key;
-        //console.log("나는 key 입니다", key);
+        console.log("나는 node data 입니다", part.data);
         if (key) {
           if (handleChangedSelection(key)) {
             setShowSelectToggle({ value: true, key: key });
@@ -434,6 +434,8 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
     diagram.addDiagramListener("ChangedSelection", async (e) => {
       const selectedNode = e.diagram.selection.first();
       if (selectedNode instanceof go.Node) {
+        const key = selectedNode.data.key;
+      } else {
         setShowSelectToggle({ value: false }); // 추가된 로직
       }
       const response = await sidebarResource(diagram.model.nodeDataArray);
