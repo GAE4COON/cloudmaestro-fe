@@ -67,7 +67,7 @@ const Button = ({
   const localSaveImage = () => {
     if (diagram) {
       const imgData = diagram.makeImageData({
-        scale: 1,
+        scale: 0.5,
         background: "white",
       });
       let fileName = prompt("파일명을 입력해주세요:", "diagram.png");

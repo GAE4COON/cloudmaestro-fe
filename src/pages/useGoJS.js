@@ -23,7 +23,7 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
     e.handled = true;
     if (show) {
       var tool = grp.diagram.toolManager.draggingTool;
-      var map = tool.draggedParts || tool.copiedParts;
+      var map = tool.draggedParts || tool.copiedParts; 
       if (grp.canAddMembers(map.toKeySet())) {
         grp.isHighlighted = true;
         return;
@@ -163,10 +163,7 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
           {
             font: "bold 12pt sans-serif",
             alignment: go.Spot.TopLeft,
-            portId: "",
             cursor: "pointer",
-            fromLinkable: true,
-            toLinkable: true,
           },
           new go.Binding("text", "key")
         ),
@@ -192,9 +189,11 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
         mouseDrop: finishDrop,
         ungroupable: true,
       },
+      new go.Binding("background", "isHighlighted", h => h ? "rgba(128,128,128,0.1)" : "transparent").ofObject(),
+
       $(go.TextBlock,
         {
-          font: "10pt sans-serif",
+          font: "11pt sans-serif",
           alignment: go.Spot.TopLeft,
           portId: "",
           cursor: "pointer",
@@ -241,6 +240,9 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
     diagram.linkTemplate = $(
       go.Link,
       {
+        routing: go.Link.AvoidsNodes,
+        curve: go.Link.JumpGap,
+        corner: 5,
         contextMenu: $(
           go.Adornment,
           "Table",
@@ -327,13 +329,7 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
             }
           )
         ),
-
-        routing: go.Link.Orthogonal,
-        corner: 5,
-        reshapable: true,
-        relinkableFrom: true,
-        relinkableTo: true,
-      },
+      },       
       // for link shape
       $(go.Shape, { strokeWidth: 2, stroke: "#000", name: "LinkShape" }),
       // for arrowhead 여기서 standaer
