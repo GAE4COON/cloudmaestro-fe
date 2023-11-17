@@ -14,7 +14,6 @@ import { nodeDataArrayPalette } from "../db/Node";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Alert, Space, Layout, Menu } from "antd";
 import { sidebarResource } from "../apis/sidebar";
-import { useData } from "../components/DataContext";
 import { DrawResourceGuide } from "../apis/resource";
 
 // 페이지
@@ -26,8 +25,8 @@ import "../styles/Draw.css";
 import { useFileUpload } from "../components/useFileInput";
 import { summaryFile } from "../apis/fileAPI.js";
 import { Link } from "react-router-dom";
-
 import RequirementPopup from "../components/RequirementPopup";
+import { DataContext, useData } from '../components/DataContext.js'; // DataContext의 경로를 수정하세요
 
 function Draw() {
   const navigate = useNavigate();
@@ -48,6 +47,8 @@ function Draw() {
     key: null,
     message: null,
   });
+
+  const { isSidebarOpen, setIsSidebarOpen } = useData();
 
   const {
     initDiagram,
@@ -165,6 +166,7 @@ function Draw() {
   const [ispopup, setIsPopup] = useState(false);
 
   const handlePopup = () => {
+    setIsSidebarOpen(!isSidebarOpen);
     return setIsPopup(!ispopup);
   };
 

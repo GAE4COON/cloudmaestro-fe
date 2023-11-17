@@ -4,9 +4,17 @@ const DataContext = createContext();
 
 export const DataProvider = ({ children }) => {
   const [data, setData] = useState(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true); // 새로운 state 추가
+
+  const contextValue = {
+    data,
+    setData,
+    isSidebarOpen,
+    setIsSidebarOpen,
+  };
 
   return (
-    <DataContext.Provider value={{ data, setData }}>
+    <DataContext.Provider value={contextValue}>
       {children}
     </DataContext.Provider>
   );
