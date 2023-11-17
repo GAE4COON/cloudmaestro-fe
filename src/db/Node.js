@@ -2566,8 +2566,16 @@ export const nodeDataArrayPalette = [
   {
     isGroup: true,
     stroke: "rgb(150,150,150)",
-    text: "Secrvice",
-    key: "Secrvice",
+    text: "Service",
+    key: "Service",
+    // source: "/img/AWS_icon/AWS_Groups/VPC.svg",
+    type: "AWS_Groups",
+  },
+  {
+    isGroup: true,
+    stroke: "rgb(150,100,150)",
+    text: "EC2Group",
+    key: "EC2Group",
     // source: "/img/AWS_icon/AWS_Groups/VPC.svg",
     type: "AWS_Groups",
   },

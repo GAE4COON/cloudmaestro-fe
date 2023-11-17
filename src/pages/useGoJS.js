@@ -398,7 +398,7 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
       } else if (part instanceof go.Node) {
         //console.log("나는 node 입니다", part.data);
         const key = part.data.key;
-        //console.log("나는 key 입니다", key);
+        console.log("나는 node data 입니다", part.data);
         if (key) {
           if (handleChangedSelection(key)) {
             setShowSelectToggle({ value: true, key: key });
@@ -424,8 +424,6 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
       const selectedNode = e.diagram.selection.first();
       if (selectedNode instanceof go.Node) {
         const key = selectedNode.data.key;
-        const type = selectedNode.data.type;
-        console.log("나는 type 입니다", type);
       } else {
         setShowSelectToggle({ value: false }); // 추가된 로직
       }

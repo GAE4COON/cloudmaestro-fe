@@ -3,7 +3,7 @@ import React, { useCallback, useState, useEffect } from "react";
 import * as go from "gojs";
 import "../styles/Button.css"; // contains .diagram-component CSS
 import { json, useNavigate } from "react-router-dom";
-import { rehostRequest } from "../apis/fileAPI";
+import { rehostRequest, requirementRequest } from "../apis/fileAPI";
 import {BsUpload,BsDownload,  BsEraser, BsSave, } from "react-icons/bs"
 import {BiSave} from "react-icons/bi"
 import { sidebarResource } from "../apis/sidebar"
@@ -105,7 +105,9 @@ const Button = ({
       const response = await rehostRequest(jsonString);
       //console.log("response", response.data.result);
       const Jdata = response.data.result;
+      console.log("rehost:",Jdata)
       diagram.model = go.Model.fromJson(Jdata);
+      
       const response1 = await sidebarResource(diagram.model.nodeDataArray);
       setData(response1.data); // set the data in context
       setClickedLoaded(true);
@@ -167,8 +169,21 @@ const Button = ({
     setShowToggle(false); // toggle 숨김
   };
 
-
+  const requirement = async() => {
+    try{
+    const jsonString1 = diagram.model.toJson();
+    const response1 = await requirementRequest(jsonString1);
   
+  
+    const Jdata1 = response1.data.result;
+    console.log("requirement:",Jdata1);
+    diagram.model = go.Model.fromJson(Jdata1);
+    }
+    catch (error) {
+      console.error("requirement error: ", error);
+    }
+  }
+
   return (
     <div>
       <div className="button-container">
@@ -192,17 +207,20 @@ const Button = ({
           <button onClick={localSaveImage}><BiSave/></button>
         </div>
         <div className="button-row">
-          {
-            !isRehost && (
-              <button onClick={handleLoad}>Rehost</button>
-            )
-          }
-           {
-            isRehost && (
-              <button onClick={ToOptimize}>Optimize</button>
-            )
-          }
-          
+            {
+              !isRehost && (
+                <button onClick={handleLoad}>Rehost</button>
+              )
+            }
+            {
+              isRehost && (
+                <button onClick={ToOptimize}>Optimize</button>
+              )
+            }
+            
+        </div>
+        <div className="button-row">
+          <button onClick={requirement}>require</button>
         </div>
       </div>
     </div>
