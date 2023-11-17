@@ -168,46 +168,42 @@ export const globalRequest = [
         key: '이중화',
         children: [
             {
-                title: '서버 이중화',
-                value: '서버 이중화',
-                key: '서버 이중화',
-                children: [
-                    {
-                        title: 'Multi-Region 배포',
-                        value: 'Multi-Region 배포',
-                        key: 'Multi-Region 배포',
-                    },
-                ],
-            },
-        ],
-        children: [
-            {
-                title: 'DNS 서버 이중화',
-                value: 'DNS 서버 이중화',
-                key: 'DNS 서버 이중화',
+                title: '다중 AW 배포 구성 및 관리',
+                value: '다중 AW 배포 구성 및 관리',
+                key: '다중 AW 배포 구성 및 관리',
                 children: [
                     {
                         title: 'DNS 서버 이중화',
                         value: 'DNS 서버 이중화',
                         key: 'DNS 서버 이중화',
                     },
-                ],
-            },
-        ],
-        children: [
-            {
-                title: '데이터 베이스 분산',
-                value: '데이터 베이스 분산',
-                key: '데이터 베이스 분산',
-                children: [
                     {
-                        title: 'S3 Multi-Region 배포',
-                        value: 'S3 Multi-Region 배포',
-                        key: 'S3 Multi-Region 배포',
+                        title: '서버 이중화',
+                        value: '서버 이중화',
+                        key: '서버 이중화',
+                    },
+                    {
+                        title: '데이터베이스 분산',
+                        value: '데이터베이스 분산',
+                        key: '데이터베이스 분산',
                     },
                 ],
             },
         ],
+        // children: [
+        //     {
+        //         title: '데이터 베이스 분산',
+        //         value: '데이터 베이스 분산',
+        //         key: '데이터 베이스 분산',
+        //         children: [
+        //             {
+        //                 title: 'S3 Multi-Region 배포',
+        //                 value: 'S3 Multi-Region 배포',
+        //                 key: 'S3 Multi-Region 배포',
+        //             },
+        //         ],
+        //     },
+        // ],
     },
 ];
 
