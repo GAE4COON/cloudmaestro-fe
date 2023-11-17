@@ -109,20 +109,17 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
         go.Point.stringify
       ),
       
-
-  
-
       //마진에 포트 추가해서 링크가 동작되게 만든다
       $(go.Shape, {
-        width: 70,
-        height: 70,
+        width: 80,
+        height: "auto",
         fill: "transparent",
-        stroke: null,
+        stroke: "transparent",
         portId: "",
         fromLinkable: true,
         toLinkable: true,
-        fromSpot: go.Spot.AllSides,
-        toSpot: go.Spot.AllSides,
+        fromSpot: go.Spot.NotBottomSide,
+        toSpot: go.Spot.NotBottomSide,
       }),
 
       $(
@@ -183,9 +180,10 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
         mouseDrop: finishDrop,
         ungroupable: true,
         resizable: true,
+        
       },
       new go.Binding("background", "isHighlighted", h => h ? "rgba(128,128,128,0.1)" : "transparent").ofObject(),
-      $(go.Panel, "Auto",
+      $(go.Panel,
       {
         padding: new go.Margin(4, 4, 4, 4), // Panel에 마진 추가
       },
@@ -196,11 +194,12 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
             font: "12pt noto-sans",
             stroke: "white",
             alignment: go.Spot.TopLeft,
-
-            portId: "",
             cursor: "pointer",
             fromLinkable: true,
+            fromSpot: go.Spot.NotBottomSide,
             toLinkable: true,
+            toSpot: go.Spot.NotBottomSide,
+            portId: "",
             editable: true,
           },
           new go.Binding("text", "key"),
@@ -210,8 +209,11 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
       $(
         go.Panel,
         "Auto",
+
         {
           stretch: go.GraphObject.Fill,
+          margin: new go.Margin(25,0,0,0), // Panel에 마진 추가
+
         },
         $(
           go.Shape,
@@ -220,7 +222,6 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
             fill: "transparent", // default fill
             stroke: "rgb(128,128,128)",
             strokeWidth: 3,
-
           },
           new go.Binding("fill", "", function (data) {
             if (data.key.toLowerCase().includes("public") || data.key.toLowerCase().includes("private")) {
