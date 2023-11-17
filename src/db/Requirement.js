@@ -190,20 +190,6 @@ export const globalRequest = [
                 ],
             },
         ],
-        // children: [
-        //     {
-        //         title: '데이터 베이스 분산',
-        //         value: '데이터 베이스 분산',
-        //         key: '데이터 베이스 분산',
-        //         children: [
-        //             {
-        //                 title: 'S3 Multi-Region 배포',
-        //                 value: 'S3 Multi-Region 배포',
-        //                 key: 'S3 Multi-Region 배포',
-        //             },
-        //         ],
-        //     },
-        // ],
     },
 ];
 
