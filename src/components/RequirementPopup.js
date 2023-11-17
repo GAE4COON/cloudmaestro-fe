@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Select } from "antd";
-import { TreeSelect } from "antd";
+import { TreeSelect, Checkbox } from "antd";
 import { Button } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { sendRequirement } from "../apis/requirementAPI";
 import * as go from "gojs";
 import ZoneComponent from "./ZoneComponent";
 
-import { industrial, globalRequest, zoneRequest } from "../db/Requirement";
+import {
+  backupOptions,
+  industrial,
+  globalRequest,
+  zoneRequest,
+} from "../db/Requirement";
 
 const { SHOW_PARENT } = TreeSelect;
 
@@ -88,6 +93,14 @@ const ScrollableContent = styled.div`
   overflow-y: auto; /* Enables vertical scrolling if content overflows */
 `;
 
+const BackupContainer = styled.div`
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  margin-left: 25px;
+`;
+
 const RequirementPopup = (props) => {
   let diagram = props.diagram;
   const [industrialValue, setIndustrialValue] = useState();
@@ -95,9 +108,47 @@ const RequirementPopup = (props) => {
   const [savediagram, setSaveDiagram] = useState();
   const [zones, setZones] = useState([]);
   const [ZoneData, setZoneData] = useState("");
+  const [selectBackup, setSelectBackup] = useState([]);
+  const [zoneCount, setZoneCount] = useState(0);
 
   useEffect(() => {
-    setSaveDiagram(diagram);
+    const diagramDataStr = props.diagram.model.toJson();
+    const diagramData = JSON.parse(diagramDataStr);
+    const GroupData = [];
+    try {
+      for (let i = 0; i < diagramData.nodeDataArray.length; i++) {
+        let nodeData = diagramData.nodeDataArray[i];
+        if (nodeData.isGroup === true) {
+          GroupData.push(nodeData);
+        }
+      }
+      console.log(GroupData);
+      const result = new Set();
+      const zonelist = [];
+      GroupData.forEach((item) => {
+        if (typeof item.key === "string") {
+          const match = item.key.match(
+            /^(.*?)\s*(Private subnet|Public subnet)/
+          );
+          if (match && match[1]) {
+            result.add(match[1].trim());
+            zonelist.push(item.key);
+          }
+        }
+      });
+
+      const resultList = Array.from(result); // Set을 배열로 변환
+      for (let i = 0; i < resultList.length; i++) {
+        resultList[i] = {
+          value: resultList[i],
+          label: resultList[i],
+        };
+      }
+      setZoneCount(resultList.length);
+      setSaveDiagram(props.diagram);
+    } catch (error) {
+      console.log(error);
+    }
   }, []);
 
   const onGlobalChange = (newValue) => {
@@ -136,6 +187,7 @@ const RequirementPopup = (props) => {
       requirementData: {
         industrial: industrialValue,
         globalRequirements: globalReqValue,
+        backup: selectBackup,
         zones: zones.map((zone) => ({
           name: zone.zoneName,
           function: zone.zoneFunc,
@@ -162,6 +214,11 @@ const RequirementPopup = (props) => {
 
   const handleIndustrialChange = (value) => {
     setIndustrialValue(value);
+  };
+
+  const onChange = (checkedValues) => {
+    console.log("checked = ", checkedValues);
+    setSelectBackup(checkedValues);
   };
 
   const handleDataChange = (zoneId, updatedData) => {
@@ -215,6 +272,13 @@ const RequirementPopup = (props) => {
             <StyledTreeSelect {...globalProps} />
           </SelectContainer>
 
+          <SelectContainer>
+            <SelectTitle>백업</SelectTitle>
+            <BackupContainer>
+              <Checkbox.Group options={backupOptions} onChange={onChange} />
+            </BackupContainer>
+          </SelectContainer>
+
           <div className="망 모음">
             {zones.map((zone) => (
               <ZoneComponent
@@ -238,6 +302,7 @@ const RequirementPopup = (props) => {
                 icon={<PlusOutlined />}
                 size={"medium"}
                 onClick={addZone}
+                disabled={zones.length >= zoneCount}
               />
               <Button
                 type="primary"

@@ -4,8 +4,6 @@ import { Select, TreeSelect, Checkbox } from "antd";
 
 import { industrial, globalRequest, zoneRequest } from "../db/Requirement";
 
-const plainOptions = ["중앙관리", "일반"];
-
 const { SHOW_PARENT } = TreeSelect;
 
 function ZoneComponent({ diagram, zone, onDataChange }) {
@@ -14,7 +12,7 @@ function ZoneComponent({ diagram, zone, onDataChange }) {
   const [zoneNode, setZoneNode] = useState([]); //Zone에 대한 private, public subnet node 정보 list
   const [SelectZone, setSelectZone] = useState([]); //망 선택
   const [availableNode, setAvailableNode] = useState([]); //고가용성 선택
-  const [selectBackup, setSelectBackup] = useState([]);
+
   const [zones, setZones] = useState([]);
 
   useEffect(() => {
@@ -146,12 +144,11 @@ function ZoneComponent({ diagram, zone, onDataChange }) {
       onDataChange(zone.id, {
         SelectZone,
         availableNode,
-        selectBackup,
         zones,
       });
     };
     updateTossPopup();
-  }, [availableNode, selectBackup, SelectZone, zones]);
+  }, [availableNode, SelectZone, zones]);
   //여기에 상위props로 보낼 것 다 넣어주세요.
 
   const handleChange = (value) => {
@@ -174,11 +171,6 @@ function ZoneComponent({ diagram, zone, onDataChange }) {
 
   const removeZone = (zoneId) => {
     setZones(zones.filter((zone) => zone.id !== zoneId));
-  };
-
-  const onChange = (checkedValues) => {
-    console.log("checked = ", checkedValues);
-    setSelectBackup(checkedValues);
   };
 
   return (
@@ -245,16 +237,6 @@ function ZoneComponent({ diagram, zone, onDataChange }) {
       </SelectContainer>
 
       <SelectContainer>
-        <SelectTitle>백업</SelectTitle>
-        <BackupContainer>
-          <Checkbox.Group
-            options={plainOptions}
-            defaultValue={["Apple"]}
-            onChange={onChange}
-          />
-        </BackupContainer>
-      </SelectContainer>
-      <SelectContainer>
         <SelectTitle>요구사항</SelectTitle>
         <StyledTreeSelect
           treeData={zoneRequest}
@@ -283,14 +265,6 @@ const ZoneCloseButton = styled.span`
   font-size: 15px;
   right: 10px;
   top: 10px;
-`;
-
-const BackupContainer = styled.div`
-  display: flex;
-  width: 100%;
-  align-items: center;
-  justify-content: space-between;
-  margin-left: 25px;
 `;
 
 // const BackupSelectTitle = styled.div`
