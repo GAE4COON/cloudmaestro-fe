@@ -8,9 +8,12 @@ import { sendRequirement } from "../apis/requirementAPI";
 import * as go from "gojs";
 import ZoneComponent from "./ZoneComponent";
 
-import { industrial, globalRequest, zoneRequest } from "../db/Requirement";
-
-const plainOptions = ["중앙관리", "일반"];
+import {
+  backupOptions,
+  industrial,
+  globalRequest,
+  zoneRequest,
+} from "../db/Requirement";
 
 const { SHOW_PARENT } = TreeSelect;
 
@@ -272,11 +275,7 @@ const RequirementPopup = (props) => {
           <SelectContainer>
             <SelectTitle>백업</SelectTitle>
             <BackupContainer>
-              <Checkbox.Group
-                options={plainOptions}
-                defaultValue={["Apple"]}
-                onChange={onChange}
-              />
+              <Checkbox.Group options={backupOptions} onChange={onChange} />
             </BackupContainer>
           </SelectContainer>
 
