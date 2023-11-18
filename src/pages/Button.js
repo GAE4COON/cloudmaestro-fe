@@ -112,7 +112,6 @@ const Button = ({
       setData(response1.data); // set the data in context
       setClickedLoaded(true);
       setIsRehost(true);
-
     } catch (error) {
       console.error("rehost error: ", error);
     }
