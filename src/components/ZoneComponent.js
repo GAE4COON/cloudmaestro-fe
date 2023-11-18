@@ -12,6 +12,8 @@ function ZoneComponent({ diagram, zone, onDataChange }) {
   const [zoneNode, setZoneNode] = useState([]); //Zone에 대한 private, public subnet node 정보 list
   const [SelectZone, setSelectZone] = useState([]); //망 선택
   const [availableNode, setAvailableNode] = useState([]); //고가용성 선택
+  const [zoneFunc, setSelectedZoneFunc] = useState(undefined); //망 기능 선택
+  const [zoneReqValue, setSelectedZoneReqValue] = useState(undefined); //요구사항 선택
 
   const [zones, setZones] = useState([]);
 
@@ -143,22 +145,41 @@ function ZoneComponent({ diagram, zone, onDataChange }) {
     const updateTossPopup = () => {
       onDataChange(zone.id, {
         SelectZone,
+        zoneFunc,
         availableNode,
+        zoneReqValue,
         zones,
       });
     };
     updateTossPopup();
-  }, [availableNode, SelectZone, zones]);
+  }, [availableNode, zoneFunc, zoneReqValue, SelectZone, zones]);
   //여기에 상위props로 보낼 것 다 넣어주세요.
+
+  const resetFields = () => {
+    setAvailableNode([]); // Resetting High Availability
+    setSelectedZoneFunc(undefined); // Resetting Selected Zone Function
+    setSelectedZoneReqValue(undefined); // Resetting Selected Zone Requirements
+  };
 
   const handleChange = (value) => {
     console.log(`selected ${value}`);
     setSelectZone(value);
+    resetFields();
   };
 
   const handleChange1 = (value) => {
     console.log(`selected ${value}`);
     setAvailableNode(value);
+  };
+
+  const handleZoneFuncChange = (value) => {
+    setSelectedZoneFunc(value);
+    // Additional logic if needed
+  };
+
+  const handleZoneReqValueChange = (value) => {
+    setSelectedZoneReqValue(value); // Corrected this line
+    // Additional logic if needed
   };
 
   const updateZone = (zoneId, key, value) => {
@@ -182,6 +203,7 @@ function ZoneComponent({ diagram, zone, onDataChange }) {
         <StyledSelect
           showSearch
           // onChange={handleZoneNameChange}
+          value={SelectZone}
           onChange={handleChange}
           placeholder="Select Zone"
           optionFilterProp="children"
@@ -201,7 +223,8 @@ function ZoneComponent({ diagram, zone, onDataChange }) {
         <SelectTitle>망 기능</SelectTitle>
         <StyledSelect
           showSearch
-          onChange={(value) => updateZone(zone.id, "zoneFunc", value)}
+          value={zoneFunc}
+          onChange={handleZoneFuncChange}
           placeholder="Select Zone Function"
           optionFilterProp="children"
           filterOption={(input, option) =>
@@ -221,6 +244,7 @@ function ZoneComponent({ diagram, zone, onDataChange }) {
         <StyledBackupSelect
           mode="tags"
           showSearch
+          value={availableNode}
           onChange={handleChange1}
           placeholder="node select..."
           optionFilterProp="children"
@@ -240,8 +264,8 @@ function ZoneComponent({ diagram, zone, onDataChange }) {
         <SelectTitle>요구사항</SelectTitle>
         <StyledTreeSelect
           treeData={zoneRequest}
-          value={zone.zoneReqValue}
-          onChange={(value) => updateZone(zone.id, "zoneReqValue", value)}
+          value={zoneReqValue}
+          onChange={handleZoneReqValueChange}
           treeCheckable={true}
           showCheckedStrategy={SHOW_PARENT}
           placeholder="Please select"
