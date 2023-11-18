@@ -143,6 +143,53 @@ export const globalRequest = [
             },
         ],
     },
+    {
+        title: '로깅',
+        value: '로깅',
+        key: '로깅',
+        children: [
+            {
+                title: '로그 수집 및 저장',
+                value: '로그 수집 및 저장',
+                key: '로그 수집 및 저장',
+                children: [
+                    {
+                        title: 'API 로그 수집',
+                        value: 'API 로그 수집',
+                        key: 'API 로그 수집',
+                    },
+                    {
+                        title: '리소스 및 애플리케이션 모니터링',
+                        value: '리소스 및 애플리케이션 모니터링',
+                        key: '리소스 및 애플리케이션 모니터링',
+                    },
+                ],
+            },
+            {
+                title: '분석 및 시각화',
+                value: '분석 및 시각화',
+                key: '분석 및 시각화',
+                children: [
+                    {
+                        title: '로그 수집/분석/시각화 통합 (OpenSearch)',
+                        value: '로그 수집/분석/시각화 통합 (OpenSearch)',
+                        key: '로그 수집/분석/시각화 통합 (OpenSearch)'
+                    },
+                    {
+                        title: '로그 분석 (SQL 쿼리)',
+                        value: '로그 분석 (SQL 쿼리)',
+                        key: '로그 분석 (SQL 쿼리)',
+                    },
+                    {
+                        title: '로그 시각화',
+                        value: '로그 시각화',
+                        key: '로그 시각화',
+                    },
+                ],
+            },
+        ],
+    }
+    
 ];
 
 export const zoneRequest = [
