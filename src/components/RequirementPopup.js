@@ -112,6 +112,10 @@ const RequirementPopup = (props) => {
   const [zoneCount, setZoneCount] = useState(0);
 
   useEffect(() => {
+    console.log("Updated Zones: ", zones);
+  }, [zones]);
+
+  useEffect(() => {
     const diagramDataStr = props.diagram.model.toJson();
     const diagramData = JSON.parse(diagramDataStr);
     const GroupData = [];
@@ -226,7 +230,6 @@ const RequirementPopup = (props) => {
       zoneName: updatedData.SelectZone,
       zoneFunc: updatedData.zoneFunc, // 예: updatedData에 zoneFunc가 있다고 가정
       availableNode: updatedData.availableNode,
-      backup: updatedData.selectBackup,
       zoneReqValue: updatedData.zoneReqValue, // 예: updatedData에 zoneReqValue가 있다고 가정
     };
 
@@ -237,8 +240,6 @@ const RequirementPopup = (props) => {
         zone.id === zoneId ? { ...zone, ...formattedUpdatedData } : zone
       )
     );
-
-    console.log(zones);
   };
 
   return (
