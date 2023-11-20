@@ -93,19 +93,22 @@ function ZoneComponent({ diagram, zone, onDataChange }) {
         }
 
         const nodeSet = new Set();
-
         for (let i = 0; i < diagramData.nodeDataArray.length; i++) {
           let nodeData = diagramData.nodeDataArray[i];
+          let backupValues = backupgroupNode[resultList[idx].label].map((item) => item.value);
+        
           if (nodeData.isGroup === null && nodeData.key.includes("EC2")) {
-            // console.log("우왕 EC2다", nodeData);
-            if (
-              backupgroupNode[resultList[idx].label]
-                .map((item) => item.value)
-                .includes(nodeData.group)
-            ) {
-              // 조건을 만족하는 경우 nodeSet에 nodeData.group 추가
+            console.log("Security Group 있는 Ec2" + nodeData);
+            if (backupValues.includes(nodeData.group)) {
               nodeSet.add(nodeData.group);
             }
+          }
+        
+          if (typeof nodeData.group === 'string' && !nodeData.group.includes("Security Group") && nodeData.key.includes("EC2")) {
+            console.log("Security Group 없는 " + nodeData);
+          
+              nodeSet.add(nodeData.key);
+            
           }
         }
 
