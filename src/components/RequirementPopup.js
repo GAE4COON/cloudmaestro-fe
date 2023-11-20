@@ -12,94 +12,25 @@ import {
   backupOptions,
   industrial,
   globalRequest,
-  zoneRequest,
+  industrial_BP_fin,
+  industrial_BP_media,
+  industrial_BP_game,
+  industrial_BP_same,
 } from "../db/Requirement";
 
 const { SHOW_PARENT } = TreeSelect;
 
-const Backdrop = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black backdrop */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-`;
+const industrialBPMapping = {
+  금융: industrial_BP_fin,
+  게임: industrial_BP_game,
+  미디어: industrial_BP_media,
+  공통: industrial_BP_same,
+};
 
-const PopupBox = styled.div`
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 800px; /* Adjust as needed */
-  z-index: 1000; /* Ensure this is less than PopupBoxHeader and CloseButton */
-  position: relative;
-`;
-
-const PopupBoxHeader = styled.div`
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  line-height: 40px;
-  text-align: left;
-  padding-left: 10px;
-  background: linear-gradient(105deg, #3064d6 0%, #ffffff 200%);
-  color: white;
-  height: 40px;
-  position: absolute; /* Changed to absolute */
-  width: 790px;
-  z-index: 1001; /* Higher than PopupBox */
-`;
-
-const CloseButton = styled.span`
-  cursor: pointer;
-  position: absolute; /* Changed to absolute */
-  z-index: 1002; /* Highest in the context */
-  top: 5px;
-  right: 10px;
-  font-size: 20px;
-  color: white;
-`;
-
-const SelectContainer = styled.div`
-  display: flex;
-  padding: 20px;
-  margin-left: 50px;
-  align-items: center;
-`;
-
-const SelectTitle = styled.div`
-  width: 20%;
-  text-align: left;
-`;
-
-const StyledSelect = styled(Select)`
-  width: 80%;
-  text-align: left;
-`;
-const StyledTreeSelect = styled(TreeSelect)`
-  width: 80%;
-  text-align: left;
-  //
-`;
-
-const ScrollableContent = styled.div`
-  margin-top: 40px; // Same height as the header
-  overflow-y: auto;
-  height: 100%; // Adjust as needed
-  max-height: 400px; /* Adjust this value as needed */
-  overflow-y: auto; /* Enables vertical scrolling if content overflows */
-`;
-
-const BackupContainer = styled.div`
-  display: flex;
-  width: 100%;
-  align-items: center;
-  justify-content: space-between;
-  margin-left: 25px;
-`;
+// 주어진 산업에 해당하는 비즈니스 프로세스 옵션 반환
+function getBPIndustry(industryValue) {
+  return industrialBPMapping[industryValue] || [];
+}
 
 const RequirementPopup = (props) => {
   let diagram = props.diagram;
@@ -110,6 +41,7 @@ const RequirementPopup = (props) => {
   const [selectBackup, setSelectBackup] = useState([]);
   const [zoneCount, setZoneCount] = useState(0);
   const [isOptimizeEnabled, setIsOptimizeEnabled] = useState(false);
+  const [industrial_BP, setIndustrial_BP] = useState([]); //요구사항 선택
 
   useEffect(() => {
     const isZoneSelected =
@@ -140,6 +72,17 @@ const RequirementPopup = (props) => {
       "\t\nzones: ",
       zones
     );
+
+    let industrialList = [];
+    if (industrial) {
+      industrialList = getBPIndustry(industrialValue).concat(
+        getBPIndustry("공통")
+      );
+    } else {
+      industrialList = getBPIndustry("공통");
+    }
+
+    setIndustrial_BP(industrialList);
   }, [zones, industrialValue, globalReqValue, selectBackup]);
 
   useEffect(() => {
@@ -310,6 +253,7 @@ const RequirementPopup = (props) => {
             {zones.map((zone) => (
               <ZoneComponent
                 diagram={savediagram}
+                industrial_BP={industrial_BP}
                 zone={zone}
                 onDataChange={handleDataChange}
               ></ZoneComponent>
@@ -347,5 +291,89 @@ const RequirementPopup = (props) => {
     </Backdrop>
   );
 };
+
+const Backdrop = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black backdrop */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+`;
+
+const PopupBox = styled.div`
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 800px; /* Adjust as needed */
+  z-index: 1000; /* Ensure this is less than PopupBoxHeader and CloseButton */
+  position: relative;
+`;
+
+const PopupBoxHeader = styled.div`
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  line-height: 40px;
+  text-align: left;
+  padding-left: 10px;
+  background: linear-gradient(105deg, #3064d6 0%, #ffffff 200%);
+  color: white;
+  height: 40px;
+  position: absolute; /* Changed to absolute */
+  width: 790px;
+  z-index: 1001; /* Higher than PopupBox */
+`;
+
+const CloseButton = styled.span`
+  cursor: pointer;
+  position: absolute; /* Changed to absolute */
+  z-index: 1002; /* Highest in the context */
+  top: 5px;
+  right: 10px;
+  font-size: 20px;
+  color: white;
+`;
+
+const SelectContainer = styled.div`
+  display: flex;
+  padding: 20px;
+  margin-left: 50px;
+  align-items: center;
+`;
+
+const SelectTitle = styled.div`
+  width: 20%;
+  text-align: left;
+`;
+
+const StyledSelect = styled(Select)`
+  width: 80%;
+  text-align: left;
+`;
+const StyledTreeSelect = styled(TreeSelect)`
+  width: 80%;
+  text-align: left;
+  //
+`;
+
+const ScrollableContent = styled.div`
+  margin-top: 40px; // Same height as the header
+  overflow-y: auto;
+  height: 100%; // Adjust as needed
+  max-height: 400px; /* Adjust this value as needed */
+  overflow-y: auto; /* Enables vertical scrolling if content overflows */
+`;
+
+const BackupContainer = styled.div`
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  margin-left: 25px;
+`;
 
 export default RequirementPopup;

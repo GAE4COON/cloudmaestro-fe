@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Select, TreeSelect, Checkbox } from "antd";
 
-import { industrial, globalRequest, zoneRequest } from "../db/Requirement";
+import { industrial, zoneRequest } from "../db/Requirement";
 
 const { SHOW_PARENT } = TreeSelect;
 
-function ZoneComponent({ diagram, zone, onDataChange }) {
+function ZoneComponent({ diagram, zone, industrial_BP, onDataChange }) {
   const [ZoneData, setZoneData] = useState([]); //Zone select에서 쓰기 위한 데이터
   const [zoneValue, setZoneValue] = useState([]); //Zone에 대한 private, public subnet 정보 list
   const [zoneNode, setZoneNode] = useState([]); //Zone에 대한 private, public subnet node 정보 list
@@ -235,7 +235,7 @@ function ZoneComponent({ diagram, zone, onDataChange }) {
               .toLowerCase()
               .localeCompare((optionB?.label ?? "").toLowerCase())
           }
-          options={industrial}
+          options={industrial_BP}
         />
       </SelectContainer>
 
