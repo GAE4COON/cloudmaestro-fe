@@ -103,13 +103,44 @@ const BackupContainer = styled.div`
 
 const RequirementPopup = (props) => {
   let diagram = props.diagram;
-  const [industrialValue, setIndustrialValue] = useState();
+  const [industrialValue, setIndustrialValue] = useState(null);
   const [globalReqValue, setGlobalReqValue] = useState([]);
   const [savediagram, setSaveDiagram] = useState();
   const [zones, setZones] = useState([]);
-  const [ZoneData, setZoneData] = useState("");
   const [selectBackup, setSelectBackup] = useState([]);
   const [zoneCount, setZoneCount] = useState(0);
+  const [isOptimizeEnabled, setIsOptimizeEnabled] = useState(false);
+
+  useEffect(() => {
+    const isZoneSelected =
+      industrialValue !== null ||
+      globalReqValue.length > 0 ||
+      selectBackup.length > 0;
+
+    const isZoneValid =
+      zones.length > 0 &&
+      zones.every(
+        (zone) =>
+          zone.zoneName &&
+          (zone.zoneFunc ||
+            zone.availableNode.length > 0 ||
+            zone.zoneReqValue.length > 0)
+      );
+
+    setIsOptimizeEnabled(isZoneSelected || isZoneValid);
+
+    console.log(
+      "Updated require: \n",
+      "industrialValue: ",
+      industrialValue,
+      "\t\nglobalReqValue: ",
+      globalReqValue,
+      "\t\nBackup: ",
+      selectBackup,
+      "\t\nzones: ",
+      zones
+    );
+  }, [zones, industrialValue, globalReqValue, selectBackup]);
 
   useEffect(() => {
     const diagramDataStr = props.diagram.model.toJson();
@@ -173,11 +204,11 @@ const RequirementPopup = (props) => {
         id: Date.now(),
         zoneName: null,
         zoneFunc: null,
-        availableNode: null,
-        backup: null,
+        availableNode: [],
         zoneReqValue: [],
       },
     ]);
+    setIsOptimizeEnabled(false);
   };
 
   // Zone 선택을 업데이트하는 함수
@@ -192,7 +223,6 @@ const RequirementPopup = (props) => {
           name: zone.zoneName,
           function: zone.zoneFunc,
           availableNode: zone.availableNode,
-          backup: zone.Backup,
           zoneRequirements: zone.zoneReqValue,
         })),
       },
@@ -226,7 +256,6 @@ const RequirementPopup = (props) => {
       zoneName: updatedData.SelectZone,
       zoneFunc: updatedData.zoneFunc, // 예: updatedData에 zoneFunc가 있다고 가정
       availableNode: updatedData.availableNode,
-      backup: updatedData.selectBackup,
       zoneReqValue: updatedData.zoneReqValue, // 예: updatedData에 zoneReqValue가 있다고 가정
     };
 
@@ -237,8 +266,6 @@ const RequirementPopup = (props) => {
         zone.id === zoneId ? { ...zone, ...formattedUpdatedData } : zone
       )
     );
-
-    console.log(zones);
   };
 
   return (
@@ -309,6 +336,7 @@ const RequirementPopup = (props) => {
                 shape="round"
                 size={"medium"}
                 onClick={handleOptimize}
+                disabled={!isOptimizeEnabled}
               >
                 Optimize
               </Button>
