@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import * as go from "gojs";
 import "../styles/App.css"; // contains .diagram-component CSS
 import handleChangedSelection from "./toggle/toggle";
@@ -6,7 +6,7 @@ import { alertCheck } from "../apis/fileAPI";
 import { sidebarResource } from "../apis/sidebar"
 import { useData } from '../components/DataContext';
 
-const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
+const useGoJS = (setShowToggle) => {
   const [diagram, setDiagram] = useState(null);
   const [clickedNodeKey, setClickedNodeKey] = useState();
   const [showSelectToggle, setShowSelectToggle] = useState({ value: false });
@@ -48,6 +48,16 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
       "resizingTool.isGridSnapEnabled": true,
       "commandHandler.archetypeGroupData": { text: "Group", type: "group", isGroup: true },
       "contextMenuTool.isEnabled": true,
+      grid: $(go.Panel, "Grid",
+        { gridCellSize: new go.Size(20, 20) }, // 여기서 칸의 크기를 설정
+        $(go.Shape, "LineH", { stroke: "lightgray", strokeWidth: 0.7 }),
+        $(go.Shape, "LineV", { stroke: "lightgray", strokeWidth: 0.7 })
+      ),
+      "draggingTool.isGridSnapEnabled": true,
+      "resizingTool.isGridSnapEnabled": true,
+      // layout: $(go.ForceDirectedLayout),
+
+      // 레이아웃 설정
       ModelChanged: async (e) => {
         // 오직 트랜잭션 완료 시에만 로그 출력
         if (e.isTransactionFinished) {
@@ -108,7 +118,7 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
       new go.Binding("location", "loc", go.Point.parse).makeTwoWay(
         go.Point.stringify
       ),
-      
+
       //마진에 포트 추가해서 링크가 동작되게 만든다
       $(go.Shape, {
         width: 80,
@@ -118,8 +128,8 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
         portId: "",
         fromLinkable: true,
         toLinkable: true,
-        fromSpot: go.Spot.NotBottomSide,
-        toSpot: go.Spot.NotBottomSide,
+        fromSpot: go.Spot.AllSides,
+        toSpot: go.Spot.AllSides,
       }),
 
       $(
@@ -180,14 +190,14 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
         mouseDrop: finishDrop,
         ungroupable: true,
         resizable: true,
-        
+
       },
       new go.Binding("background", "isHighlighted", h => h ? "rgba(128,128,128,0.1)" : "transparent").ofObject(),
       $(go.Panel,
-      {
-        padding: new go.Margin(4, 4, 4, 4), // Panel에 마진 추가
-      },
-      new go.Binding("background", "stroke"),
+        {
+          padding: new go.Margin(4, 4, 4, 4), // Panel에 마진 추가
+        },
+        new go.Binding("background", "stroke"),
 
         $(go.TextBlock,
           {
@@ -212,7 +222,7 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
 
         {
           stretch: go.GraphObject.Fill,
-          margin: new go.Margin(25,0,0,0), // Panel에 마진 추가
+          margin: new go.Margin(25, 0, 0, 0), // Panel에 마진 추가
 
         },
         $(
@@ -334,7 +344,7 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
               click: (e, obj) => {
                 const link = obj.part.adornedPart;
                 //link.findObject("FromArrow").fromArrow="Standard";
-                link.findObject("FromArrow").visible = false; 
+                link.findObject("FromArrow").visible = false;
                 //console.log("원래대로 돌아갔음", link.data);
               },
             }
