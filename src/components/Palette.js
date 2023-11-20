@@ -79,7 +79,7 @@ const Palette = memo(({ divClassName }) => {
           go.TextBlock,
           {
             alignment: go.Spot.BottomCenter,
-            font: "bold 10pt sans-serif",
+            font: "bold 10pt Noto Sans KR",
             width: 80, // 예를 들어, 최대 너비를 100픽셀로 설정
             overflow: go.TextBlock.WrapFit, // 너비를 초과하는 텍스트를 래핑
             textAlign: "center",
@@ -128,7 +128,7 @@ const Palette = memo(({ divClassName }) => {
           go.TextBlock,
           {
             alignment: go.Spot.BottomCenter,
-            font: "bold 10pt sans-serif",
+            font: "bold 10pt Noto Sans KR",
             width: 80,
             overflow: go.TextBlock.WrapFit,
             textAlign: "center",
