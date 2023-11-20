@@ -153,7 +153,7 @@ const useGoJS = (setShowToggle) => {
           go.TextBlock,
           {
             editable: true,
-            font: "bold 10pt noto-sans",
+            font: "10pt Noto Sans KR",
             alignment: go.Spot.TopLeft,
             cursor: "pointer",
             width: 100, // 예를 들어, 최대 너비를 100픽셀로 설정
@@ -201,7 +201,7 @@ const useGoJS = (setShowToggle) => {
 
         $(go.TextBlock,
           {
-            font: "12pt noto-sans",
+            font: "10pt Noto Sans KR",
             stroke: "white",
             alignment: go.Spot.TopLeft,
             cursor: "pointer",
@@ -279,7 +279,8 @@ const useGoJS = (setShowToggle) => {
               width: 40,
               height: 40,
             }),
-            $(go.TextBlock, "━", { font: "bold 14pt serif" }),
+            $(go.TextBlock, "━", {font: "10pt Noto Sans KR",
+          }),
             {
               row: 0,
               column: 0,
@@ -298,7 +299,7 @@ const useGoJS = (setShowToggle) => {
               width: 40,
               height: 40,
             }),
-            $(go.TextBlock, "┈", { font: "bold 14pt serif" }),
+            $(go.TextBlock, "┈", { font: "10pt Noto Sans KR", }),
             {
               row: 0,
               column: 1,
@@ -317,7 +318,7 @@ const useGoJS = (setShowToggle) => {
               width: 40,
               height: 40,
             }),
-            $(go.TextBlock, "↔", { font: "bold 14pt serif" }),
+            $(go.TextBlock, "↔", { font: "10pt Noto Sans KR", }),
             {
               row: 1,
               column: 0,
@@ -337,7 +338,7 @@ const useGoJS = (setShowToggle) => {
               width: 40,
               height: 40,
             }),
-            $(go.TextBlock, "→", { font: "bold 14pt serif" }),
+            $(go.TextBlock, "→", { font: "10pt Noto Sans KR", }),
             {
               row: 1,
               column: 1,
@@ -404,7 +405,7 @@ const useGoJS = (setShowToggle) => {
             height: 20,
           }),
           $(go.TextBlock, "?", {
-            font: "bold 10pt sans-serif",
+            font: "10pt Noto Sans KR",
             stroke: "white",
             verticalAlignment: go.Spot.Center,
           })
