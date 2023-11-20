@@ -26,7 +26,7 @@ import { useFileUpload } from "../components/useFileInput";
 import { summaryFile } from "../apis/fileAPI.js";
 import { Link } from "react-router-dom";
 import RequirementPopup from "../components/RequirementPopup";
-import { DataContext, useData } from '../components/DataContext.js'; // DataContext의 경로를 수정하세요
+import { DataContext, useData } from "../components/DataContext.js"; // DataContext의 경로를 수정하세요
 
 function Draw() {
   const navigate = useNavigate();
@@ -82,7 +82,7 @@ function Draw() {
           const ResourceData = { title: NodeGuide };
           const response = await DrawResourceGuide(ResourceData);
           console.log(response);
-          if (!response.data.result === "fail") {
+          if (response.data.result !== "fail") {
             setNodeGuideLine({ key: NodeGuide, message: response.data.result });
           } else {
             setNodeGuideLine({
