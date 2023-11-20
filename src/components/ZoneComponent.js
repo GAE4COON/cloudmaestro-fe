@@ -10,10 +10,10 @@ function ZoneComponent({ diagram, zone, onDataChange }) {
   const [ZoneData, setZoneData] = useState([]); //Zone select에서 쓰기 위한 데이터
   const [zoneValue, setZoneValue] = useState([]); //Zone에 대한 private, public subnet 정보 list
   const [zoneNode, setZoneNode] = useState([]); //Zone에 대한 private, public subnet node 정보 list
-  const [SelectZone, setSelectZone] = useState([]); //망 선택
+  const [SelectZone, setSelectZone] = useState(null); //망 선택
   const [availableNode, setAvailableNode] = useState([]); //고가용성 선택
-  const [zoneFunc, setSelectedZoneFunc] = useState(undefined); //망 기능 선택
-  const [zoneReqValue, setSelectedZoneReqValue] = useState(undefined); //요구사항 선택
+  const [zoneFunc, setSelectedZoneFunc] = useState(null); //망 기능 선택
+  const [zoneReqValue, setSelectedZoneReqValue] = useState([]); //요구사항 선택
 
   const [zones, setZones] = useState([]);
 
@@ -157,8 +157,8 @@ function ZoneComponent({ diagram, zone, onDataChange }) {
 
   const resetFields = () => {
     setAvailableNode([]); // Resetting High Availability
-    setSelectedZoneFunc(undefined); // Resetting Selected Zone Function
-    setSelectedZoneReqValue(undefined); // Resetting Selected Zone Requirements
+    setSelectedZoneFunc(null); // Resetting Selected Zone Function
+    setSelectedZoneReqValue([]); // Resetting Selected Zone Requirements
   };
 
   const handleChange = (value) => {
