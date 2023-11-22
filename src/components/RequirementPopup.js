@@ -343,6 +343,7 @@ const RequirementPopup = (props) => {
                 size={"medium"}
                 onClick={handleOptimize}
                 disabled={!isOptimizeEnabled}
+                style={{marginBottom: "20px"}}
               >
                 Optimize
               </Button>
