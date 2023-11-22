@@ -233,9 +233,15 @@ const Palette = memo(({ divClassName, diagram, diagramVersion }) => {
       myPalette.div = paletteDivs.current[selectedTab];
     }
 
-    let dataToUse = nodeDataArrayPalette.filter(
-      (item) => item.type === selectedTab
-    );
+    let dataToUse;
+
+    if (selectedTab === "Module") {
+      dataToUse = modulePaletteData;
+    } else {
+      dataToUse = nodeDataArrayPalette.filter(
+        (item) => item.type === selectedTab
+      );
+    }
 
     let dataToSearch = nodeDataArrayPalette;
     if (searchTerm) {
@@ -246,13 +252,6 @@ const Palette = memo(({ divClassName, diagram, diagramVersion }) => {
       });
       setFilteredNodes(dataToSearch);
       myPalette.model.nodeDataArray = dataToSearch;
-    } else {
-      setFilteredNodes([]);
-      myPalette.model.nodeDataArray = dataToUse;
-    }
-
-    if (modulePaletteData) {
-      myPalette.model.nodeDataArray = modulePaletteData;
     } else {
       setFilteredNodes([]);
       myPalette.model.nodeDataArray = dataToUse;
