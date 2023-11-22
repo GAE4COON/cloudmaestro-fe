@@ -43,12 +43,24 @@ function Draw() {
   const [showToggle, setShowToggle] = useState(true);
   const [alertMessage, setAlertMessage] = useState(null);
   const { setData } = useData();
+  const [mydiagram, setmyDiagram] = useState(null);
   const [NodeGuideLine, setNodeGuideLine] = useState({
     key: null,
     message: null,
   });
 
+  const [diagramVersion, setDiagramVersion] = useState(0);
+
   const { isSidebarOpen, setIsSidebarOpen } = useData();
+
+  useEffect(() => {
+    console.log("Updated diagram version:", diagramVersion);
+  }, [diagramVersion]); // Dependency on diagramVersion
+
+  const handleDiagramChange = useCallback((changedDiagram) => {
+    //console.log("다이어그램이 변경되었습니다:", changedDiagram.model.toJson());
+    setDiagramVersion((prevVersion) => prevVersion + 1);
+  });
 
   const {
     initDiagram,
@@ -57,11 +69,12 @@ function Draw() {
     clickedNodeKey,
     DiagramCheck,
     NodeGuide,
-  } = useGoJS(setSelectedNodeData, setShowToggle, showToggle);
-
-  //console.log("show", showSelectToggle.value);
-
-  // Go to Draw page 완료
+  } = useGoJS(
+    setSelectedNodeData,
+    setShowToggle,
+    showToggle,
+    handleDiagramChange
+  );
 
   const location = useLocation();
   const file = location.state ? location.state.file : null;
@@ -177,8 +190,9 @@ function Draw() {
           <div className="workspace">
             <div className="palette">
               <Palette
-                nodeDataArray={nodeDataArrayPalette}
                 divClassName={paletteClassName}
+                diagram={diagram}
+                diagramVersion={diagramVersion}
               />
             </div>
 

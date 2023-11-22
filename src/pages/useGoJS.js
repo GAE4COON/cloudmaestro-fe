@@ -3,10 +3,15 @@ import * as go from "gojs";
 import "../styles/App.css"; // contains .diagram-component CSS
 import handleChangedSelection from "./toggle/toggle";
 import { alertCheck } from "../apis/fileAPI";
-import { sidebarResource } from "../apis/sidebar"
-import { useData } from '../components/DataContext';
+import { sidebarResource } from "../apis/sidebar";
+import { useData } from "../components/DataContext";
 
-const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
+const useGoJS = (
+  setSelectedNodeData,
+  setShowToggle,
+  showToggle,
+  onDiagramChange
+) => {
   const [diagram, setDiagram] = useState(null);
   const [clickedNodeKey, setClickedNodeKey] = useState();
   const [showSelectToggle, setShowSelectToggle] = useState({ value: false });
@@ -46,7 +51,11 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
     const diagram = $(go.Diagram, {
       "undoManager.isEnabled": true,
       "resizingTool.isGridSnapEnabled": true,
-      "commandHandler.archetypeGroupData": { text: "Group", type: "group", isGroup: true },
+      "commandHandler.archetypeGroupData": {
+        text: "Group",
+        type: "group",
+        isGroup: true,
+      },
       "contextMenuTool.isEnabled": true,
       ModelChanged: async (e) => {
         // 오직 트랜잭션 완료 시에만 로그 출력
@@ -88,7 +97,6 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
       diagram.findLayer("Background")
     );
 
-
     // Define nodeTemplate (simplified, add other properties as needed)
     diagram.nodeTemplate = $(
       go.Node,
@@ -108,7 +116,7 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
       new go.Binding("location", "loc", go.Point.parse).makeTwoWay(
         go.Point.stringify
       ),
-      
+
       //마진에 포트 추가해서 링크가 동작되게 만든다
       $(go.Shape, {
         width: 80,
@@ -137,7 +145,7 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
           new go.Binding("source").makeTwoWay(),
           new go.Binding("desiredSize", "size", go.Size.parse).makeTwoWay(
             go.Size.stringify
-          ),
+          )
         ),
         $(
           go.TextBlock,
@@ -165,8 +173,8 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
           //     return node.text+"_"+diff;
           //   }
           // }),
-          new go.Binding("text", "key"),
-        ),
+          new go.Binding("text", "key")
+        )
       )
     );
 
@@ -180,16 +188,19 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
         mouseDrop: finishDrop,
         ungroupable: true,
         resizable: true,
-        
       },
-      new go.Binding("background", "isHighlighted", h => h ? "rgba(128,128,128,0.1)" : "transparent").ofObject(),
-      $(go.Panel,
-      {
-        padding: new go.Margin(4, 4, 4, 4), // Panel에 마진 추가
-      },
-      new go.Binding("background", "stroke"),
+      new go.Binding("background", "isHighlighted", (h) =>
+        h ? "rgba(128,128,128,0.1)" : "transparent"
+      ).ofObject(),
+      $(
+        go.Panel,
+        {
+          padding: new go.Margin(4, 4, 4, 4), // Panel에 마진 추가
+        },
+        new go.Binding("background", "stroke"),
 
-        $(go.TextBlock,
+        $(
+          go.TextBlock,
           {
             font: "12pt noto-sans",
             stroke: "white",
@@ -202,8 +213,8 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
             portId: "",
             editable: true,
           },
-          new go.Binding("text", "key"),
-        ),
+          new go.Binding("text", "key")
+        )
       ),
 
       $(
@@ -212,8 +223,7 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
 
         {
           stretch: go.GraphObject.Fill,
-          margin: new go.Margin(25,0,0,0), // Panel에 마진 추가
-
+          margin: new go.Margin(25, 0, 0, 0), // Panel에 마진 추가
         },
         $(
           go.Shape,
@@ -224,7 +234,10 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
             strokeWidth: 3,
           },
           new go.Binding("fill", "", function (data) {
-            if (data.key.toLowerCase().includes("public") || data.key.toLowerCase().includes("private")) {
+            if (
+              data.key.toLowerCase().includes("public") ||
+              data.key.toLowerCase().includes("private")
+            ) {
               // Parse the RGB color to get individual components
               let rgb = data.stroke.match(/\d+/g);
               if (rgb && rgb.length >= 3) {
@@ -235,17 +248,18 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
             return "transparent";
           }),
           new go.Binding("stroke", "", function (data) {
-            if (data.key.toLowerCase().includes("public") || data.key.toLowerCase().includes("private")) {
+            if (
+              data.key.toLowerCase().includes("public") ||
+              data.key.toLowerCase().includes("private")
+            ) {
               return "transparent";
             }
             return data.stroke;
-          }),
-
+          })
         ),
 
         $(go.Placeholder, { padding: 30 })
-
-      ),
+      )
     );
 
     diagram.linkTemplate = $(
@@ -334,7 +348,7 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
               click: (e, obj) => {
                 const link = obj.part.adornedPart;
                 //link.findObject("FromArrow").fromArrow="Standard";
-                link.findObject("FromArrow").visible = false; 
+                link.findObject("FromArrow").visible = false;
                 //console.log("원래대로 돌아갔음", link.data);
               },
             }
@@ -429,6 +443,12 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
           //console.log("move to: " + part.location.toString());
         }
       });
+    });
+
+    diagram.addModelChangedListener(function (e) {
+      if (e.isTransactionFinished) {
+        onDiagramChange(diagram);
+      }
     });
 
     diagram.addDiagramListener("ChangedSelection", async (e) => {

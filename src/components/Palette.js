@@ -2,8 +2,8 @@ import "../styles/Palette.css";
 import React, { memo, useEffect, useRef, useState } from "react";
 import * as go from "gojs";
 import { nodeDataArrayPalette } from "../db/Node";
-import styled from 'styled-components';
-
+import styled from "styled-components";
+import { SoundTwoTone } from "@ant-design/icons";
 
 function formatKey(key) {
   return String(key)
@@ -40,24 +40,115 @@ const tabs = [
   "Satellite",
   "Security-Identity-Compliance",
   "Storage",
-  "AWS_Groups"
+  "AWS_Groups",
   // Add more tabs here
 ];
 
-const Palette = memo(({ divClassName }) => {
+const Palette = memo(({ divClassName, diagram, diagramVersion }) => {
   const [nodeDataArray, setNodeDataArray] = useState([]);
-
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedTab, setSelectedTab] = useState("Storage");
   const [filteredNodes, setFilteredNodes] = useState([]);
   const paletteDivs = useRef({});
 
+  const [savediagram, setSaveDiagram] = useState(null);
+  const [filterModule, setFilterModule] = useState([]);
+  const [modulePaletteData, setModulePaletteData] = useState([]);
+  const [myPalette, setMyPalette] = useState([]);
+
+  useEffect(() => {
+    setSaveDiagram(diagram);
+    if (!savediagram) {
+      return;
+    }
+    console.log("diagram change:", savediagram.model.toJson());
+  }, [diagramVersion]); // diagramVersion을 의존성 배열에 추가
+
+  useEffect(() => {
+    const filteredData = nodeDataArrayPalette.filter((node) =>
+      filterModule.some((moduleNode) => moduleNode === node.source)
+    );
+
+    console.log("filteredData:", filteredData);
+    setModulePaletteData(filteredData);
+  }, [filterModule]);
+
+  useEffect(() => {
+    if (!savediagram) {
+      return;
+    }
+
+    const diagramDataStr = savediagram.model.toJson();
+    const diagramData = JSON.parse(diagramDataStr);
+    const GroupData = [];
+
+    try {
+      for (let i = 0; i < diagramData.nodeDataArray.length; i++) {
+        let nodeData = diagramData.nodeDataArray[i];
+        if (nodeData.isGroup === true) {
+          GroupData.push(nodeData);
+        }
+      }
+
+      const result = new Set();
+      GroupData.forEach((item) => {
+        if (typeof item.key === "string") {
+          const match = item.key.match(/Module(.*)$/);
+          if (match && match[1]) {
+            result.add(item.key);
+          }
+        }
+      });
+      let previousSize = 0;
+      let currentSize = result.size;
+
+      while (previousSize !== currentSize) {
+        previousSize = result.size; // 현재 result의 크기를 저장
+
+        for (let i = 0; i < GroupData.length; i++) {
+          if (typeof GroupData[i].group === "string") {
+            result.forEach((r) => {
+              if (GroupData[i].group.includes(r)) {
+                result.add(GroupData[i].key);
+              }
+            });
+          }
+        }
+
+        currentSize = result.size;
+        if (previousSize === currentSize) {
+          break;
+        }
+      }
+
+      const groupList = Array.from(result);
+      console.log("groupList:", groupList);
+
+      const nodeSet = new Set();
+
+      for (let i = 0; i < diagramData.nodeDataArray.length; i++) {
+        let nodeData = diagramData.nodeDataArray[i];
+        if (nodeData.isGroup === null) {
+          groupList.forEach((group) => {
+            if (nodeData.group && nodeData.group.includes(group)) {
+              nodeSet.add(nodeData);
+            }
+          });
+        }
+      }
+
+      console.log("nodeSet:", nodeSet);
+      const nodeList = Array.from(nodeSet);
+      setFilterModule(nodeList.map((node) => node.source));
+    } catch (error) {
+      console.log(error);
+    }
+  }, [savediagram, diagramVersion]);
 
   useEffect(() => {
     const $ = go.GraphObject.make;
 
     let myPalette = $(go.Palette, {
-      // enable Ctrl+Z to undo and Ctrl+Y to redo
       "undoManager.isEnabled": true,
       "animationManager.isEnabled": false,
       model: new go.GraphLinksModel(nodeDataArray),
@@ -160,10 +251,22 @@ const Palette = memo(({ divClassName }) => {
       myPalette.model.nodeDataArray = dataToUse;
     }
 
+    setMyPalette(myPalette);
+
     return () => {
       myPalette.div = null;
     };
   }, [selectedTab, searchTerm]);
+
+  useEffect(() => {
+    if (selectedTab === "Module") {
+      const filteredData = nodeDataArrayPalette.filter((node) =>
+        filterModule.some((moduleNode) => moduleNode.source === node.source)
+      );
+
+      myPalette.model.nodeDataArray = filteredData;
+    }
+  }, [selectedTab, filterModule]);
 
   return (
     <div className={divClassName}>
@@ -196,10 +299,9 @@ const Palette = memo(({ divClassName }) => {
                     name="rd"
                     onClick={() => setSelectedTab("Search")}
                   />
-                  <TabLabel htmlFor="rd_select">
-                    Search
-                  </TabLabel>
-                  <div className="tab-content"
+                  <TabLabel htmlFor="rd_select">Search</TabLabel>
+                  <div
+                    className="tab-content"
                     ref={(el) => (paletteDivs.current["Search"] = el)}
                   />
                 </Tab>
@@ -209,28 +311,37 @@ const Palette = memo(({ divClassName }) => {
         )}
         {filteredNodes.length === 0 && (
           <ScrollableTabsContainer>
-          {tabs.map((tab) => (
-           <Tab key={tab}>
-           <RadioInput
-             type="radio"
-             id={`rd_${tab}`}
-             name="rd"
-             onClick={() => setSelectedTab(tab)}
-           />
-           <TabLabel htmlFor={`rd_${tab}`}>
-             {formatKey(tab)}
-           </TabLabel>
-           <div className="tab-content"
-             ref={(el) => (paletteDivs.current[tab] = el)}
-           />
-         </Tab>
-          ))}
+            {filterModule.length > 0 && (
+              <Tab key="Module">
+                <RadioInput
+                  type="radio"
+                  id="rd_Module"
+                  name="rd"
+                  onClick={() => setSelectedTab("Module")}
+                />
+                <TabLabel htmlFor="rd_Module">Module</TabLabel>
+                <div className="tab-content" ref={(el) => (myPalette = el)} />
+              </Tab>
+            )}
+            {tabs.map((tab) => (
+              <Tab key={tab}>
+                <RadioInput
+                  type="radio"
+                  id={`rd_${tab}`}
+                  name="rd"
+                  onClick={() => setSelectedTab(tab)}
+                />
+                <TabLabel htmlFor={`rd_${tab}`}>{formatKey(tab)}</TabLabel>
+                <div
+                  className="tab-content"
+                  ref={(el) => (paletteDivs.current[tab] = el)}
+                />
+              </Tab>
+            ))}
           </ScrollableTabsContainer>
         )}
       </div>
-      
     </div>
-    
   );
 });
 
@@ -251,14 +362,14 @@ const Tab = styled.div`
   border-radius: 5px;
 
   color: rgba(0, 0, 0, 0.65);
-  
+
   &:hover {
     color: #bfd3ff;
   }
 `;
 
 // Hidden radio input for accessibility
- const RadioInput = styled.input.attrs({ type: 'radio' })`
+const RadioInput = styled.input.attrs({ type: "radio" })`
   position: absolute;
   opacity: 0;
   border-radius: 5px;
@@ -269,9 +380,9 @@ const Tab = styled.div`
 const TabLabel = styled.label`
   border-radius: 5px;
   box-shadow: 0 2px 8px #f0f1f2;
-  margin-bottom:5px;
+  margin-bottom: 5px;
 
-  padding: 12px 16px; 
+  padding: 12px 16px;
   display: flex;
   align-items: center;
   font-size: 15px;
@@ -310,23 +421,21 @@ const ScrollableTabsContainer = styled.div`
   }
 `;
 
-
 // Styled component for the search container
 const SearchContainer = styled.div`
-margin-bottom: 10px;
+  margin-bottom: 10px;
   padding: 10px;
-  
+
   display: flex;
   align-items: center;
   background-color: #fff;
   /* box-shadow: 0 2px 8px #f0f1f2; */
 `;
 
-
 // Styled component for the input
-const SearchInput = styled.input.attrs({ type: 'text' })`
+const SearchInput = styled.input.attrs({ type: "text" })`
   outline: none;
-  
+
   border: 1px solid #d9d9d9;
   padding: 6.5px 11px;
   width: 100%;
@@ -354,4 +463,3 @@ const FilteredNodesContainer = styled.div`
   border-radius: 2px;
   text-align: left;
 `;
-
