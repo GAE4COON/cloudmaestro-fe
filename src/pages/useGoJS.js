@@ -3,10 +3,10 @@ import * as go from "gojs";
 import "../styles/App.css"; // contains .diagram-component CSS
 import handleChangedSelection from "./toggle/toggle";
 import { alertCheck } from "../apis/fileAPI";
-import { sidebarResource } from "../apis/sidebar"
-import { useData } from '../components/DataContext';
+import { sidebarResource } from "../apis/sidebar";
+import { useData } from "../components/DataContext";
 
-const useGoJS = (setShowToggle) => {
+const useGoJS = (setShowToggle, onDiagramChange) => {
   const [diagram, setDiagram] = useState(null);
   const [clickedNodeKey, setClickedNodeKey] = useState();
   const [showSelectToggle, setShowSelectToggle] = useState({ value: false });
@@ -46,9 +46,15 @@ const useGoJS = (setShowToggle) => {
     const diagram = $(go.Diagram, {
       "undoManager.isEnabled": true,
       "resizingTool.isGridSnapEnabled": true,
-      "commandHandler.archetypeGroupData": { text: "Group", type: "group", isGroup: true },
+      "commandHandler.archetypeGroupData": {
+        text: "Group",
+        type: "group",
+        isGroup: true,
+      },
       "contextMenuTool.isEnabled": true,
-      grid: $(go.Panel, "Grid",
+      grid: $(
+        go.Panel,
+        "Grid",
         { gridCellSize: new go.Size(20, 20) }, // 여기서 칸의 크기를 설정
         $(go.Shape, "LineH", { stroke: "lightgray", strokeWidth: 0.7 }),
         $(go.Shape, "LineV", { stroke: "lightgray", strokeWidth: 0.7 })
@@ -88,7 +94,6 @@ const useGoJS = (setShowToggle) => {
       $(go.Layer, { name: "BottomLayer" }),
       diagram.findLayer("Background")
     );
-
 
     // Define nodeTemplate (simplified, add other properties as needed)
     diagram.nodeTemplate = $(
@@ -138,7 +143,7 @@ const useGoJS = (setShowToggle) => {
           new go.Binding("source").makeTwoWay(),
           new go.Binding("desiredSize", "size", go.Size.parse).makeTwoWay(
             go.Size.stringify
-          ),
+          )
         ),
         $(
           go.TextBlock,
@@ -166,8 +171,8 @@ const useGoJS = (setShowToggle) => {
           //     return node.text+"_"+diff;
           //   }
           // }),
-          new go.Binding("text", "key"),
-        ),
+          new go.Binding("text", "key")
+        )
       )
     );
 
@@ -186,16 +191,19 @@ const useGoJS = (setShowToggle) => {
         //   cellSize: new go.Size(1, 1), // 셀 크기 설정
         //   spacing: new go.Size(4, 4) // 노드 간 간격 설정
         // }),
-
       },
-      new go.Binding("background", "isHighlighted", h => h ? "rgba(128,128,128,0.1)" : "transparent").ofObject(),
-      $(go.Panel,
+      new go.Binding("background", "isHighlighted", (h) =>
+        h ? "rgba(128,128,128,0.1)" : "transparent"
+      ).ofObject(),
+      $(
+        go.Panel,
         {
           padding: new go.Margin(4, 4, 4, 4), // Panel에 마진 추가
         },
         new go.Binding("background", "stroke"),
 
-        $(go.TextBlock,
+        $(
+          go.TextBlock,
           {
             font: "10pt Noto Sans KR",
             stroke: "white",
@@ -208,8 +216,8 @@ const useGoJS = (setShowToggle) => {
             portId: "",
             editable: true,
           },
-          new go.Binding("text", "key"),
-        ),
+          new go.Binding("text", "key")
+        )
       ),
 
       $(
@@ -219,7 +227,6 @@ const useGoJS = (setShowToggle) => {
         {
           stretch: go.GraphObject.Fill,
           margin: new go.Margin(25, 0, 0, 0), // Panel에 마진 추가
-
         },
         $(
           go.Shape,
@@ -230,7 +237,10 @@ const useGoJS = (setShowToggle) => {
             strokeWidth: 3,
           },
           new go.Binding("fill", "", function (data) {
-            if (data.key.toLowerCase().includes("public") || data.key.toLowerCase().includes("private")) {
+            if (
+              data.key.toLowerCase().includes("public") ||
+              data.key.toLowerCase().includes("private")
+            ) {
               // Parse the RGB color to get individual components
               let rgb = data.stroke.match(/\d+/g);
               if (rgb && rgb.length >= 3) {
@@ -241,17 +251,18 @@ const useGoJS = (setShowToggle) => {
             return "transparent";
           }),
           new go.Binding("stroke", "", function (data) {
-            if (data.key.toLowerCase().includes("public") || data.key.toLowerCase().includes("private")) {
+            if (
+              data.key.toLowerCase().includes("public") ||
+              data.key.toLowerCase().includes("private")
+            ) {
               return "transparent";
             }
             return data.stroke;
-          }),
-
+          })
         ),
 
         $(go.Placeholder, { padding: 30 })
-
-      ),
+      )
     );
 
     diagram.linkTemplate = $(
@@ -276,8 +287,7 @@ const useGoJS = (setShowToggle) => {
               width: 40,
               height: 40,
             }),
-            $(go.TextBlock, "━", {font: "10pt Noto Sans KR",
-          }),
+            $(go.TextBlock, "━", { font: "10pt Noto Sans KR" }),
             {
               row: 0,
               column: 0,
@@ -296,7 +306,7 @@ const useGoJS = (setShowToggle) => {
               width: 40,
               height: 40,
             }),
-            $(go.TextBlock, "┈", { font: "10pt Noto Sans KR", }),
+            $(go.TextBlock, "┈", { font: "10pt Noto Sans KR" }),
             {
               row: 0,
               column: 1,
@@ -315,7 +325,7 @@ const useGoJS = (setShowToggle) => {
               width: 40,
               height: 40,
             }),
-            $(go.TextBlock, "↔", { font: "10pt Noto Sans KR", }),
+            $(go.TextBlock, "↔", { font: "10pt Noto Sans KR" }),
             {
               row: 1,
               column: 0,
@@ -335,7 +345,7 @@ const useGoJS = (setShowToggle) => {
               width: 40,
               height: 40,
             }),
-            $(go.TextBlock, "→", { font: "10pt Noto Sans KR", }),
+            $(go.TextBlock, "→", { font: "10pt Noto Sans KR" }),
             {
               row: 1,
               column: 1,
@@ -437,6 +447,12 @@ const useGoJS = (setShowToggle) => {
           //console.log("move to: " + part.location.toString());
         }
       });
+    });
+
+    diagram.addModelChangedListener(function (e) {
+      if (e.isTransactionFinished) {
+        onDiagramChange(diagram);
+      }
     });
 
     diagram.addDiagramListener("ChangedSelection", async (e) => {
