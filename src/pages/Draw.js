@@ -183,6 +183,7 @@ function Draw() {
     return setIsPopup(!ispopup);
   };
 
+
   return (
     <div>
       <div className="Draw">
@@ -281,11 +282,10 @@ function Draw() {
                   divClassName={diagramClassName}
                 />
                 <ButtonContainer>
-                  <StyledButton onClick={summaryRequest}>
-                    Go to summary
-                  </StyledButton>
+                  <StyledButton onClick={summaryRequest}>Go to summary</StyledButton>
                   <StyledButton onClick={null}>Save as Cloud</StyledButton>
                   <StyledButton onClick={handlePopup}>Optimize</StyledButton>
+
                 </ButtonContainer>
               </StyledDiagram>
             </DiagramContainer>

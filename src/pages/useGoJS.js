@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import * as go from "gojs";
 import "../styles/App.css"; // contains .diagram-component CSS
 import handleChangedSelection from "./toggle/toggle";
@@ -6,12 +6,7 @@ import { alertCheck } from "../apis/fileAPI";
 import { sidebarResource } from "../apis/sidebar";
 import { useData } from "../components/DataContext";
 
-const useGoJS = (
-  setSelectedNodeData,
-  setShowToggle,
-  showToggle,
-  onDiagramChange
-) => {
+const useGoJS = (setShowToggle, onDiagramChange) => {
   const [diagram, setDiagram] = useState(null);
   const [clickedNodeKey, setClickedNodeKey] = useState();
   const [showSelectToggle, setShowSelectToggle] = useState({ value: false });
@@ -57,11 +52,19 @@ const useGoJS = (
         isGroup: true,
       },
       "contextMenuTool.isEnabled": true,
+      grid: $(
+        go.Panel,
+        "Grid",
+        { gridCellSize: new go.Size(20, 20) }, // 여기서 칸의 크기를 설정
+        $(go.Shape, "LineH", { stroke: "lightgray", strokeWidth: 0.7 }),
+        $(go.Shape, "LineV", { stroke: "lightgray", strokeWidth: 0.7 })
+      ),
+      "draggingTool.isGridSnapEnabled": true,
+      "resizingTool.isGridSnapEnabled": true,
       ModelChanged: async (e) => {
-        // 오직 트랜잭션 완료 시에만 로그 출력
         if (e.isTransactionFinished) {
           const jsonString = e.model.toIncrementalJson(e);
-          const data = JSON.parse(jsonString); // JSON 문자열을 JavaScript 객체로 변환
+          const data = JSON.parse(jsonString);
           if (data.insertedLinkKeys) {
             console.log("insertedLinkKeys", data.modifiedLinkData);
             try {
@@ -73,17 +76,12 @@ const useGoJS = (
                   console.log(
                     "링크 취소해도 되는 부분.. 주석처리만 하니까 안 올라가서 우선 콘솔로그라도 띄움"
                   );
-                  //   diagram.undoManager.undo();
                 }
               }
             } catch (error) {
-              // Handle API error here
               console.error("API Error:", error);
             }
           }
-          // if (data.insertedNodeKeys) {
-          //   console.log("insertedLinkKeys", data.insertedLinkKeys);
-          // }
         }
       },
       model: new go.GraphLinksModel({
@@ -126,8 +124,8 @@ const useGoJS = (
         portId: "",
         fromLinkable: true,
         toLinkable: true,
-        fromSpot: go.Spot.NotBottomSide,
-        toSpot: go.Spot.NotBottomSide,
+        fromSpot: go.Spot.AllSides,
+        toSpot: go.Spot.AllSides,
       }),
 
       $(
@@ -151,7 +149,7 @@ const useGoJS = (
           go.TextBlock,
           {
             editable: true,
-            font: "bold 10pt noto-sans",
+            font: "10pt Noto Sans KR",
             alignment: go.Spot.TopLeft,
             cursor: "pointer",
             width: 100, // 예를 들어, 최대 너비를 100픽셀로 설정
@@ -188,6 +186,11 @@ const useGoJS = (
         mouseDrop: finishDrop,
         ungroupable: true,
         resizable: true,
+        // layout: $(go.GridLayout, {
+        //   wrappingColumn: 3, // 한 열에 하나의 노드만 표시
+        //   cellSize: new go.Size(1, 1), // 셀 크기 설정
+        //   spacing: new go.Size(4, 4) // 노드 간 간격 설정
+        // }),
       },
       new go.Binding("background", "isHighlighted", (h) =>
         h ? "rgba(128,128,128,0.1)" : "transparent"
@@ -202,7 +205,7 @@ const useGoJS = (
         $(
           go.TextBlock,
           {
-            font: "12pt noto-sans",
+            font: "10pt Noto Sans KR",
             stroke: "white",
             alignment: go.Spot.TopLeft,
             cursor: "pointer",
@@ -283,7 +286,7 @@ const useGoJS = (
               width: 40,
               height: 40,
             }),
-            $(go.TextBlock, "━", { font: "bold 14pt serif" }),
+            $(go.TextBlock, "━", { font: "10pt Noto Sans KR" }),
             {
               row: 0,
               column: 0,
@@ -302,7 +305,7 @@ const useGoJS = (
               width: 40,
               height: 40,
             }),
-            $(go.TextBlock, "┈", { font: "bold 14pt serif" }),
+            $(go.TextBlock, "┈", { font: "10pt Noto Sans KR" }),
             {
               row: 0,
               column: 1,
@@ -321,7 +324,7 @@ const useGoJS = (
               width: 40,
               height: 40,
             }),
-            $(go.TextBlock, "↔", { font: "bold 14pt serif" }),
+            $(go.TextBlock, "↔", { font: "10pt Noto Sans KR" }),
             {
               row: 1,
               column: 0,
@@ -341,7 +344,7 @@ const useGoJS = (
               width: 40,
               height: 40,
             }),
-            $(go.TextBlock, "→", { font: "bold 14pt serif" }),
+            $(go.TextBlock, "→", { font: "10pt Noto Sans KR" }),
             {
               row: 1,
               column: 1,
@@ -408,7 +411,7 @@ const useGoJS = (
             height: 20,
           }),
           $(go.TextBlock, "?", {
-            font: "bold 10pt sans-serif",
+            font: "10pt Noto Sans KR",
             stroke: "white",
             verticalAlignment: go.Spot.Center,
           })

@@ -6,7 +6,13 @@ import { industrial, zoneRequest } from "../db/Requirement";
 
 const { SHOW_PARENT } = TreeSelect;
 
-function ZoneComponent({ diagram, zone, industrial_BP, onDataChange }) {
+function ZoneComponent({
+  diagram,
+  zone,
+  industrial_BP,
+  onDataChange,
+  onRemoveZone,
+}) {
   const [ZoneData, setZoneData] = useState([]); //Zone select에서 쓰기 위한 데이터
   const [zoneValue, setZoneValue] = useState([]); //Zone에 대한 private, public subnet 정보 list
   const [zoneNode, setZoneNode] = useState([]); //Zone에 대한 private, public subnet node 정보 list
@@ -190,13 +196,13 @@ function ZoneComponent({ diagram, zone, industrial_BP, onDataChange }) {
     );
   };
 
-  const removeZone = (zoneId) => {
-    setZones(zones.filter((zone) => zone.id !== zoneId));
+  const removeCurrentZone = () => {
+    onRemoveZone(zone.id);
   };
 
   return (
     <ZoneContainer key={zone.id}>
-      <ZoneCloseButton onClick={() => removeZone(zone.id)}>✖</ZoneCloseButton>
+      <ZoneCloseButton onClick={removeCurrentZone}>✖</ZoneCloseButton>
 
       <SelectContainer>
         <SelectTitle>망 이름</SelectTitle>
