@@ -258,7 +258,8 @@ const useGoJS = (setShowToggle) => {
       go.Link,
       {
         toShortLength: 3,
-        routing: go.Link.AvoidsNodes,
+        routing: go.Link.Normal,
+        // routing: go.Link.AvoidsNodes,
         curve: go.Link.JumpGap,
         corner: 5,
         contextMenu: $(
