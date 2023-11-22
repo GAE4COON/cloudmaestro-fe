@@ -251,22 +251,19 @@ const Palette = memo(({ divClassName, diagram, diagramVersion }) => {
       myPalette.model.nodeDataArray = dataToUse;
     }
 
+    if (modulePaletteData) {
+      myPalette.model.nodeDataArray = modulePaletteData;
+    } else {
+      setFilteredNodes([]);
+      myPalette.model.nodeDataArray = dataToUse;
+    }
+
     setMyPalette(myPalette);
 
     return () => {
       myPalette.div = null;
     };
-  }, [selectedTab, searchTerm]);
-
-  useEffect(() => {
-    if (selectedTab === "Module") {
-      const filteredData = nodeDataArrayPalette.filter((node) =>
-        filterModule.some((moduleNode) => moduleNode.source === node.source)
-      );
-
-      myPalette.model.nodeDataArray = filteredData;
-    }
-  }, [selectedTab, filterModule]);
+  }, [selectedTab, searchTerm, modulePaletteData]);
 
   return (
     <div className={divClassName}>
@@ -320,7 +317,10 @@ const Palette = memo(({ divClassName, diagram, diagramVersion }) => {
                   onClick={() => setSelectedTab("Module")}
                 />
                 <TabLabel htmlFor="rd_Module">Module</TabLabel>
-                <div className="tab-content" ref={(el) => (myPalette = el)} />
+                <div
+                  className="tab-content"
+                  ref={(el) => (paletteDivs.current["Module"] = el)}
+                />
               </Tab>
             )}
             {tabs.map((tab) => (

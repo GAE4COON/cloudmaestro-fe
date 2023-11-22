@@ -54,11 +54,13 @@ function Draw() {
   const { isSidebarOpen, setIsSidebarOpen } = useData();
 
   useEffect(() => {
+    //setmyDiagram(diagram);
     console.log("Updated diagram version:", diagramVersion);
   }, [diagramVersion]); // Dependency on diagramVersion
 
   const handleDiagramChange = useCallback((changedDiagram) => {
-    //console.log("다이어그램이 변경되었습니다:", changedDiagram.model.toJson());
+    console.log("다이어그램이 변경되었습니다:", changedDiagram.model.toJson());
+    setmyDiagram(changedDiagram);
     setDiagramVersion((prevVersion) => prevVersion + 1);
   });
 
@@ -69,12 +71,7 @@ function Draw() {
     clickedNodeKey,
     DiagramCheck,
     NodeGuide,
-  } = useGoJS(
-    setSelectedNodeData,
-    setShowToggle,
-    showToggle,
-    handleDiagramChange
-  );
+  } = useGoJS(setShowToggle, handleDiagramChange);
 
   const location = useLocation();
   const file = location.state ? location.state.file : null;
@@ -183,7 +180,6 @@ function Draw() {
     return setIsPopup(!ispopup);
   };
 
-
   return (
     <div>
       <div className="Draw">
@@ -192,7 +188,7 @@ function Draw() {
             <div className="palette">
               <Palette
                 divClassName={paletteClassName}
-                diagram={diagram}
+                diagram={mydiagram}
                 diagramVersion={diagramVersion}
               />
             </div>
@@ -282,10 +278,11 @@ function Draw() {
                   divClassName={diagramClassName}
                 />
                 <ButtonContainer>
-                  <StyledButton onClick={summaryRequest}>Go to summary</StyledButton>
+                  <StyledButton onClick={summaryRequest}>
+                    Go to summary
+                  </StyledButton>
                   <StyledButton onClick={null}>Save as Cloud</StyledButton>
                   <StyledButton onClick={handlePopup}>Optimize</StyledButton>
-
                 </ButtonContainer>
               </StyledDiagram>
             </DiagramContainer>
