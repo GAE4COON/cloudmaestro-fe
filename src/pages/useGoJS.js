@@ -55,14 +55,10 @@ const useGoJS = (setShowToggle) => {
       ),
       "draggingTool.isGridSnapEnabled": true,
       "resizingTool.isGridSnapEnabled": true,
-      // layout: $(go.ForceDirectedLayout),
-
-      // 레이아웃 설정
       ModelChanged: async (e) => {
-        // 오직 트랜잭션 완료 시에만 로그 출력
         if (e.isTransactionFinished) {
           const jsonString = e.model.toIncrementalJson(e);
-          const data = JSON.parse(jsonString); // JSON 문자열을 JavaScript 객체로 변환
+          const data = JSON.parse(jsonString);
           if (data.insertedLinkKeys) {
             console.log("insertedLinkKeys", data.modifiedLinkData);
             try {
@@ -74,17 +70,12 @@ const useGoJS = (setShowToggle) => {
                   console.log(
                     "링크 취소해도 되는 부분.. 주석처리만 하니까 안 올라가서 우선 콘솔로그라도 띄움"
                   );
-                  //   diagram.undoManager.undo();
                 }
               }
             } catch (error) {
-              // Handle API error here
               console.error("API Error:", error);
             }
           }
-          // if (data.insertedNodeKeys) {
-          //   console.log("insertedLinkKeys", data.insertedLinkKeys);
-          // }
         }
       },
       model: new go.GraphLinksModel({
@@ -190,6 +181,11 @@ const useGoJS = (setShowToggle) => {
         mouseDrop: finishDrop,
         ungroupable: true,
         resizable: true,
+        // layout: $(go.GridLayout, {
+        //   wrappingColumn: 3, // 한 열에 하나의 노드만 표시
+        //   cellSize: new go.Size(1, 1), // 셀 크기 설정
+        //   spacing: new go.Size(4, 4) // 노드 간 간격 설정
+        // }),
 
       },
       new go.Binding("background", "isHighlighted", h => h ? "rgba(128,128,128,0.1)" : "transparent").ofObject(),
