@@ -268,12 +268,15 @@ const RequirementPopup = (props) => {
     );
   };
 
+  const removeZone = (zoneId) => {
+    setZones(zones.filter(zone => zone.id !== zoneId));
+  };
+
   return (
     <Backdrop>
       <PopupBox>
         <PopupBoxHeader>Optimization input</PopupBoxHeader>
         <CloseButton onClick={() => props.handlePopup()}>✖</CloseButton>
-        {/* <Title>Requirement</Title> */}
         <ScrollableContent>
           <SelectContainer>
             <SelectTitle>산업군</SelectTitle>
@@ -309,10 +312,13 @@ const RequirementPopup = (props) => {
           <div className="망 모음">
             {zones.map((zone) => (
               <ZoneComponent
+                key={zone.id}
                 diagram={savediagram}
                 zone={zone}
                 onDataChange={handleDataChange}
-              ></ZoneComponent>
+                onRemoveZone={removeZone} // 새로 추가
+              />
+
             ))}
 
             <div
