@@ -26,7 +26,7 @@ export const industrial = [
 export const globalRequest = [
   {
     title: "보안",
-    value: "security",
+    value: "보안",
     key: "보안",
     children: [
       {

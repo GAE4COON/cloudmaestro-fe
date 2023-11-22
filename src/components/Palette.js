@@ -84,7 +84,7 @@ const Palette = memo(({ divClassName }) => {
             overflow: go.TextBlock.WrapFit, // 너비를 초과하는 텍스트를 래핑
             textAlign: "center",
           },
-          new go.Binding("text", "key", formatKey)
+          new go.Binding("text", "key")
         )
       )
     );
@@ -133,7 +133,7 @@ const Palette = memo(({ divClassName }) => {
             overflow: go.TextBlock.WrapFit,
             textAlign: "center",
           },
-          new go.Binding("text", "key", formatKey)
+          new go.Binding("text", "key")
         )
       )
     );
