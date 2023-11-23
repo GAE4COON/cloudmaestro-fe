@@ -26,7 +26,7 @@ import { useFileUpload } from "../components/useFileInput";
 import { summaryFile } from "../apis/fileAPI.js";
 import { Link } from "react-router-dom";
 import RequirementPopup from "../components/RequirementPopup";
-import { DataContext, useData } from '../components/DataContext.js'; // DataContext의 경로를 수정하세요
+import { DataContext, useData } from "../components/DataContext.js"; // DataContext의 경로를 수정하세요
 
 function Draw() {
   const navigate = useNavigate();
@@ -43,12 +43,26 @@ function Draw() {
   const [showToggle, setShowToggle] = useState(true);
   const [alertMessage, setAlertMessage] = useState(null);
   const { setData } = useData();
+  const [mydiagram, setmyDiagram] = useState(null);
   const [NodeGuideLine, setNodeGuideLine] = useState({
     key: null,
     message: null,
   });
 
+  const [diagramVersion, setDiagramVersion] = useState(0);
+
   const { isSidebarOpen, setIsSidebarOpen } = useData();
+
+  useEffect(() => {
+    //setmyDiagram(diagram);
+    console.log("Updated diagram version:", diagramVersion);
+  }, [diagramVersion]); // Dependency on diagramVersion
+
+  const handleDiagramChange = useCallback((changedDiagram) => {
+    console.log("다이어그램이 변경되었습니다:", changedDiagram.model.toJson());
+    setmyDiagram(changedDiagram);
+    setDiagramVersion((prevVersion) => prevVersion + 1);
+  });
 
   const {
     initDiagram,
@@ -57,11 +71,7 @@ function Draw() {
     clickedNodeKey,
     DiagramCheck,
     NodeGuide,
-  } = useGoJS(setSelectedNodeData, setShowToggle, showToggle);
-
-  //console.log("show", showSelectToggle.value);
-
-  // Go to Draw page 완료
+  } = useGoJS(setShowToggle, handleDiagramChange);
 
   const location = useLocation();
   const file = location.state ? location.state.file : null;
@@ -82,7 +92,7 @@ function Draw() {
           const ResourceData = { title: NodeGuide };
           const response = await DrawResourceGuide(ResourceData);
           console.log(response);
-          if (!response.data.result === "fail") {
+          if (response.data.result !== "fail") {
             setNodeGuideLine({ key: NodeGuide, message: response.data.result });
           } else {
             setNodeGuideLine({
@@ -177,8 +187,9 @@ function Draw() {
           <div className="workspace">
             <div className="palette">
               <Palette
-                nodeDataArray={nodeDataArrayPalette}
                 divClassName={paletteClassName}
+                diagram={mydiagram}
+                diagramVersion={diagramVersion}
               />
             </div>
 

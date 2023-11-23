@@ -1,10 +1,6 @@
 export const backupOptions = ["중앙관리", "일반"];
 
 export const industrial = [
-  // {
-  //   value: '1',
-  //   label: '선택안함',
-  // },
   {
     value: "금융",
     label: "금융",
@@ -23,10 +19,58 @@ export const industrial = [
   },
 ];
 
+export const industrial_BP_game = [
+  {
+    value: "비동기",
+    label: "비동기",
+  },
+  {
+    value: "서버리스",
+    label: "서버리스",
+  },
+];
+
+export const industrial_BP_fin = [
+  {
+    value: "규제보고",
+    label: "규제보고",
+  },
+  {
+    value: "그리드컴퓨팅",
+    label: "그리드컴퓨팅",
+  },
+];
+
+export const industrial_BP_media = [
+  {
+    value: "비디오라이브스트리밍",
+    label: "비디오라이브스트리밍",
+  },
+  {
+    value: "비디오콘텐츠제공",
+    label: "비디오콘텐츠제공",
+  },
+];
+
+export const industrial_BP_same = [
+  {
+    value: "광고마케팅분석",
+    label: "광고마케팅분석",
+  },
+  {
+    value: "EFS",
+    label: "EFS",
+  },
+  {
+    value: "Kinesis",
+    label: "Kinesis",
+  },
+];
+
 export const globalRequest = [
   {
     title: "보안",
-    value: "security",
+    value: "보안",
     key: "보안",
     children: [
       {
@@ -142,56 +186,55 @@ export const globalRequest = [
         ],
       },
     ],
-
-},
-{
-    title: '부하 분산',
-    value: '부하 분산',
-    key: '부하 분산',
+  },
+  {
+    title: "부하 분산",
+    value: "부하 분산",
+    key: "부하 분산",
     children: [
-        {
-            title: '웹 트래픽 분산',
-            value: '웹 트래픽 분산',
-            key: '웹 트래픽 분산',
-            children: [
-                {
-                    title: 'DNS 서비스',
-                    value: 'DNS 서비스',
-                    key: 'DNS 서비스',
-                },
-            ],
-        },
+      {
+        title: "웹 트래픽 분산",
+        value: "웹 트래픽 분산",
+        key: "웹 트래픽 분산",
+        children: [
+          {
+            title: "DNS 서비스",
+            value: "DNS 서비스",
+            key: "DNS 서비스",
+          },
+        ],
+      },
     ],
-},
-{
-    title: '이중화',
-    value: '이중화',
-    key: '이중화',
+  },
+  {
+    title: "이중화",
+    value: "이중화",
+    key: "이중화",
     children: [
-        {
-            title: '다중 AW 배포 구성 및 관리',
-            value: '다중 AW 배포 구성 및 관리',
-            key: '다중 AW 배포 구성 및 관리',
-            children: [
-                {
-                    title: 'DNS 서버 이중화',
-                    value: 'DNS 서버 이중화',
-                    key: 'DNS 서버 이중화',
-                },
-                {
-                    title: '서버 이중화',
-                    value: '서버 이중화',
-                    key: '서버 이중화',
-                },
-                {
-                    title: '데이터베이스 분산',
-                    value: '데이터베이스 분산',
-                    key: '데이터베이스 분산',
-                },
-            ],
-        },
+      {
+        title: "다중 AW 배포 구성 및 관리",
+        value: "다중 AW 배포 구성 및 관리",
+        key: "다중 AW 배포 구성 및 관리",
+        children: [
+          {
+            title: "DNS 서버 이중화",
+            value: "DNS 서버 이중화",
+            key: "DNS 서버 이중화",
+          },
+          {
+            title: "서버 이중화",
+            value: "서버 이중화",
+            key: "서버 이중화",
+          },
+          {
+            title: "데이터베이스 분산",
+            value: "데이터베이스 분산",
+            key: "데이터베이스 분산",
+          },
+        ],
+      },
     ],
-},
+  },
 ];
 
 export const zoneRequest = [
