@@ -10,20 +10,26 @@ const Footer = () => {
           <Col lg={12} sm={24} xs={24}>
             <div className="footer-center">
               <h2>Gae4coon</h2>
-              <h4>Kitri BoB 12th, 가산동 에이스 하이엔드타워 1004-2</h4>
+              <h4>Office: 서울 금천구 가산디지털1로 145</h4>
+              <h4>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;에이스하이엔드
+                타워 3차 제1004호, 1004-2 (08506)
+              </h4>
+              <h4>Belong: Kitri, BoB 12th</h4>
+              <h4>Email: gae4coon@gmail.com</h4>
             </div>
           </Col>
           <Col lg={12} sm={24} xs={24}>
             <div className="footer-center">
-              <h2>Quick Links</h2>
+              <h2>Go to Links</h2>
               <h4>
-                <a href="">Link 1</a>
+                <a href="https://aws.amazon.com/ko/">AWS</a>
               </h4>
               <h4>
-                <a href="#">Link 2</a>
+                <a href="https://www.kitribob.kr/">Best of the Best</a>
               </h4>
               <h4>
-                <a href="#">Link 2</a>
+                <a href="https://www.kitri.re.kr/">KTRI</a>
               </h4>
             </div>
           </Col>
