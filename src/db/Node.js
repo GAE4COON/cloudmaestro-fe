@@ -1,3 +1,5 @@
+import * as go from "gojs";
+
 export const nodeDataArrayPalette = [
   {
     text: "Anti DDoS",
@@ -5538,7 +5540,7 @@ export const nodeDataArrayPalette = [
     text: "Transit Gateway Attachment"
   },
   {
-    key: "Elastic Load Balancing Application Load Balancer",
+    key: "Application Load Balancer(ALB)",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Networking-Content-Delivery/Res_Elastic-Load-Balancing_Application-Load-Balancer_48.svg",
     type: "Networking-Content-Delivery",

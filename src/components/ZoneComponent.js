@@ -17,7 +17,8 @@ function ZoneComponent({
   const [zoneValue, setZoneValue] = useState([]); //Zone에 대한 private, public subnet 정보 list
   const [zoneNode, setZoneNode] = useState([]); //Zone에 대한 private, public subnet node 정보 list
   const [SelectZone, setSelectZone] = useState(null); //망 선택
-  const [availableNode, setAvailableNode] = useState([]); //고가용성 선택
+  const [availableNode, setAvailableNode] = useState([]); //고가용성 - 트래픽 분산 선택
+  const [serverNode, setServerNode] = useState([]); //고가용성 -  선택
   const [zoneFunc, setSelectedZoneFunc] = useState(null); //망 기능 선택
   const [zoneReqValue, setSelectedZoneReqValue] = useState([]); //요구사항 선택
 
@@ -99,26 +100,33 @@ function ZoneComponent({
         }
 
         const nodeSet = new Set();
-
         for (let i = 0; i < diagramData.nodeDataArray.length; i++) {
           let nodeData = diagramData.nodeDataArray[i];
+          let backupValues = backupgroupNode[resultList[idx].label].map((item) => item.value);
+        
           if (nodeData.isGroup === null && nodeData.key.includes("EC2")) {
-            // console.log("우왕 EC2다", nodeData);
-            if (
-              backupgroupNode[resultList[idx].label]
-                .map((item) => item.value)
-                .includes(nodeData.group)
-            ) {
-              // 조건을 만족하는 경우 nodeSet에 nodeData.group 추가
+            console.log("Security Group 있는 Ec2" + nodeData);
+            if (backupValues.includes(nodeData.group)) {
               nodeSet.add(nodeData.group);
             }
           }
+        
+          if (typeof nodeData.group === 'string' && !nodeData.group.includes("Security Group") && nodeData.key.includes("EC2")) {
+            console.log("Security Group 없는 " + nodeData);
+          
+              nodeSet.add(nodeData.key);
+            
+          }
         }
+        
+    
 
         // console.log("nodeSet: ", nodeSet);
 
         const nodeSetList = Array.from(nodeSet);
         backupNode[resultList[idx].label] = nodeSetList;
+        
+
         // console.log("backupNode: ", backupNode);
 
         // for (let i = 0; i < diagramData.nodeDataArray.length; i++) {
@@ -140,7 +148,9 @@ function ZoneComponent({
           };
         }
 
+
         setZoneNode(backupNode);
+
       }
     } catch (error) {
       console.log(error);
@@ -153,16 +163,18 @@ function ZoneComponent({
         SelectZone,
         zoneFunc,
         availableNode,
+        serverNode,
         zoneReqValue,
         zones,
       });
     };
     updateTossPopup();
-  }, [availableNode, zoneFunc, zoneReqValue, SelectZone, zones]);
+  }, [availableNode,serverNode, zoneFunc, zoneReqValue, SelectZone, zones]);
   //여기에 상위props로 보낼 것 다 넣어주세요.
 
   const resetFields = () => {
     setAvailableNode([]); // Resetting High Availability
+    setServerNode([]);
     setSelectedZoneFunc(null); // Resetting Selected Zone Function
     setSelectedZoneReqValue([]); // Resetting Selected Zone Requirements
   };
@@ -176,6 +188,10 @@ function ZoneComponent({
   const handleChange1 = (value) => {
     console.log(`selected ${value}`);
     setAvailableNode(value);
+  };
+  const handleChange2 = (value) => {
+    console.log(`selected ${value}`);
+    setServerNode(value);
   };
 
   const handleZoneFuncChange = (value) => {
@@ -246,7 +262,7 @@ function ZoneComponent({
       </SelectContainer>
 
       <SelectContainer>
-        <SelectTitle>고가용성</SelectTitle>
+        <SelectTitle>트래픽 조절</SelectTitle>
         <StyledBackupSelect
           mode="tags"
           showSearch
@@ -264,6 +280,27 @@ function ZoneComponent({
           }
           options={zoneNode[SelectZone]}
         />
+      </SelectContainer>
+
+      <SelectContainer>
+        <SelectTitle>서버 수 조절</SelectTitle>
+          <StyledBackupSelect
+            mode="tags"
+            showSearch
+            value={serverNode}
+            onChange={handleChange2}
+            placeholder="node select..."
+            optionFilterProp="children"
+            filterOption={(input, option) =>
+              (option?.label ?? "").includes(input)
+            }
+            filterSort={(optionA, optionB) =>
+              (optionA?.label ?? "")
+                .toLowerCase()
+                .localeCompare((optionB?.label ?? "").toLowerCase())
+            }
+            options={zoneNode[SelectZone]}
+          />
       </SelectContainer>
 
       <SelectContainer>

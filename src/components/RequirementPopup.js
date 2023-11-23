@@ -148,6 +148,7 @@ const RequirementPopup = (props) => {
         zoneName: null,
         zoneFunc: null,
         availableNode: [],
+        serverNode : [],
         zoneReqValue: [],
       },
     ]);
@@ -162,10 +163,15 @@ const RequirementPopup = (props) => {
         industrial: industrialValue,
         globalRequirements: globalReqValue,
         backup: selectBackup,
-        zones: zones.map((zone) => ({
+        
+        zones: zones.map((zone) => (
+          console.log("zones", zone),
+          {
+          // console.log("zones",zone);
           name: zone.zoneName,
           function: zone.zoneFunc,
           availableNode: zone.availableNode,
+          serverNode : zone.serverNode,
           zoneRequirements: zone.zoneReqValue,
         })),
       },
@@ -199,6 +205,7 @@ const RequirementPopup = (props) => {
       zoneName: updatedData.SelectZone,
       zoneFunc: updatedData.zoneFunc, // 예: updatedData에 zoneFunc가 있다고 가정
       availableNode: updatedData.availableNode,
+      serverNode : updatedData.serverNode,
       zoneReqValue: updatedData.zoneReqValue, // 예: updatedData에 zoneReqValue가 있다고 가정
     };
 
