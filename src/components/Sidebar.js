@@ -52,7 +52,27 @@ function Sidebar({ isOpen, setIsOpen }) {
           </div>
         </>
       ) : (
+        <>        
         <FiMenu size={24} onClick={() => setIsOpen(true)} className="icon" />
+        <div className="sidebar-content">
+        {data && data.length > 0 ? (
+              data.map((item, index) => {
+                const node = nodeDataArrayPalette.find(node => node.text === item);
+                const source = node ? node.source : '';
+                console.log(source);
+                return (
+                  <div key={index} className="sidebar-item-closed">
+                    <h3><img src={source}/></h3>
+                  </div>
+                );
+              })
+            ) : (
+              <p></p>
+            )}
+
+        </div>
+        </>
+
       )}
     </div>
   );

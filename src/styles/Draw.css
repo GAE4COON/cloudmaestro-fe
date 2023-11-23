@@ -67,7 +67,11 @@
   z-index: 1;
   width: 100%;
   height: 100%;
-  border: solid 1px black;
+  margin-left: 10px;
+  border-radius: 5px;
+  /* box-shadow: 0 2px 4px #dadada; */
+  border: 1px solid lightgray;
+
   background-color: white;
   background-size:20px 20px;
   display: flex;
@@ -75,19 +79,4 @@
    /* background-image:
      linear-gradient(to right, rgb(231, 231, 231) .5px, transparent .5px),
      linear-gradient(to bottom, rgb(231, 231, 231)  .5px, transparent .5px); */
-}
-
-.diagram-component-small{
-  position: relative;
-  width : 80%;
-  height : 80%;
-  border: solid 1px black;
-  background-color: white;
-  background-size:20px 20px;
-  
-   /* create a grid pattern using linear gradients */
-   background-image:
-     linear-gradient(to right, rgb(231, 231, 231) .5px, transparent .5px),
-     linear-gradient(to bottom, rgb(231, 231, 231)  .5px, transparent .5px);
-
 }

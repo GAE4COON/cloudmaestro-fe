@@ -12,7 +12,7 @@
   overflow-y: auto;
   margin-top: 2px;
   font-family: "Noto Sans KR", sans-serif;
-  box-shadow: -8px 8px 0px rgba(0, 0, 0, 0.05);
+  box-shadow: -2px 2px 5px rgba(109, 109, 109, 0.05);
 }
 
 .sidebar-title {
@@ -62,4 +62,32 @@
   top: 12px;
   left: 12px;
   cursor: pointer;
+}
+
+
+.sidebar-item-closed {
+  display: flex; /* Flexbox 레이아웃 사용 */
+  align-items: center; /* 세로 중앙 정렬 */
+  justify-content: space-around; /* 공간을 균등하게 나눔 */
+  height: auto; /* 고정된 높이 설정 */
+
+}
+
+
+.sidebar-item-closed img {
+  width: 10%; /* 이미지 너비를 30%로 설정 */
+  height: 10%;
+  object-fit: cover; /* 이미지 비율을 유지하면서 자르기 */
+}
+
+.sidebar-item-closed h3 {
+  margin-left: 0px;
+  text-align: left;
+  flex: 1; 
+  /* margin-right: 10px; */
+}
+
+
+.sidebar-item-closed:first-child {
+  margin-top: 40px; /* 첫 번째 아이템의 상단에 여백 추가 */
 }
