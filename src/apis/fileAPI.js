@@ -1,27 +1,70 @@
 import api from "./index.js";
 
-export const requestExample = (order) =>
-  api.get(`/api/v1/file-api/example/${order}`); // 백틱 사용
+export const requestExample = async (order) => {
+  try {
+    const response = await api.get(`/api/v1/file-api/example/${order}`);
+    return response;
+  } catch (error) {
+    // 여기에 오류 처리 로직 작성
+    console.error("requestExample 오류:", error);
+    throw error; // 오류를 다시 던지거나 필요에 따라 다른 동작을 수행
+  }
+};
 
-export const fileUpload = (file) =>
-  api.post("/api/v1/file-api/upload", file, {
-    headers: {
-      "Content-Type": `multipart/form-data; `,
-    },
-  });
+export const fileUpload = async (file) => {
+  try {
+    const response = await api.post("/api/v1/file-api/upload", file, {
+      headers: {
+        "Content-Type": `multipart/form-data; `,
+      },
+    });
+    return response;
+  } catch (error) {
+    console.error("fileUpload 오류:", error);
+    throw error;
+  }
+};
 
-export const summaryFile = (file) =>
-  api.post("/api/v1/file-api/summary", file, {
-    headers: {
-      "Content-Type": `multipart/form-data; `,
-    },
-  });
+export const summaryFile = async (file) => {
+  try {
+    const response = await api.post("/api/v1/file-api/summary", file, {
+      headers: {
+        "Content-Type": `multipart/form-data; `,
+      },
+    });
+    return response;
+  } catch (error) {
+    console.error("summaryFile 오류:", error);
+    throw error;
+  }
+};
 
-export const rehostRequest = (data) =>
-  api.post("/api/v1/file-api/rehost/ssohost", data);
+export const rehostRequest = async (data) => {
+  try {
+    const response = await api.post("/api/v1/file-api/rehost/ssohost", data);
+    return response;
+  } catch (error) {
+    console.error("rehostRequest 오류:", error);
+    throw error;
+  }
+};
 
-export const alertCheck = (data) =>
-  api.post("/api/v1/alert-api/alert-check", data);
+export const alertCheck = async (data) => {
+  try {
+    const response = await api.post("/api/v1/alert-api/alert-check", data);
+    return response;
+  } catch (error) {
+    console.error("alertCheck 오류:", error);
+    throw error;
+  }
+};
 
-  export const requirementRequest = (data) =>
-  api.post("/api/v1/naindae-api/multiregion", data);
+export const requirementRequest = async (data) => {
+  try {
+    const response = await api.post("/api/v1/naindae-api/multiregion", data);
+    return response;
+  } catch (error) {
+    console.error("requirementRequest 오류:", error);
+    throw error;
+  }
+};

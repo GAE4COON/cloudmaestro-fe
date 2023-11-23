@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Select, TreeSelect, Checkbox } from "antd";
 
-import { industrial, zoneRequest } from "../db/Requirement";
+import { industrial, zoneSecurityReq } from "../db/Requirement";
 
 const { SHOW_PARENT } = TreeSelect;
 
@@ -267,15 +267,17 @@ function ZoneComponent({
       </SelectContainer>
 
       <SelectContainer>
-        <SelectTitle>요구사항</SelectTitle>
-        <StyledTreeSelect
-          treeData={zoneRequest}
+        <SelectTitle>보안</SelectTitle>
+        {/* <StyledTreeSelect
+          treeData={zoneSecurityReq}
           value={zoneReqValue}
           onChange={handleZoneReqValueChange}
           treeCheckable={true}
           showCheckedStrategy={SHOW_PARENT}
           placeholder="Please select"
-        />
+        /> */}
+                      <Checkbox.Group options={zoneSecurityReq} onChange={handleZoneReqValueChange} />
+
       </SelectContainer>
     </ZoneContainer>
   );

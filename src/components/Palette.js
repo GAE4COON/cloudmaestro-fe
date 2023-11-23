@@ -189,7 +189,7 @@ const Palette = memo(({ divClassName, diagram, diagramVersion }) => {
         "Vertical",
         $(
           go.Picture,
-          { margin: 5, width: 50, height: 50, background: "white" },
+          { margin: 5, width: 50, height: 50, background: "transparent" },
           new go.Binding("source")
         ),
 
@@ -461,24 +461,6 @@ const SearchContainer = styled.div`
   /* box-shadow: 0 2px 8px #f0f1f2; */
 `;
 
-// Styled component for the input
-const SearchInput = styled.input.attrs({ type: "text" })`
-  outline: none;
-
-  border: 1px solid #d9d9d9;
-  padding: 6.5px 11px;
-  width: 100%;
-  border-radius: 2px;
-  font-size: 14px;
-  transition: all 0.3s;
-  &:hover {
-    border-color: #40a9ff;
-  }
-  &:focus {
-    border-color: #40a9ff;
-    box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
-  }
-`;
 
 // Styled component for nodes container with filtered results
 const FilteredNodesContainer = styled.div`
@@ -497,7 +479,6 @@ const StyledSearch = styled(Search)`
   .ant-input {
     color: #000;
   }
-
   .ant-input-search-button {
     background-color: #dee8ff;
     border-color: #dee8ff;

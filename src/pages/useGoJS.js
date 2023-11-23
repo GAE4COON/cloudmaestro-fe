@@ -138,7 +138,7 @@ const useGoJS = (setShowToggle, onDiagramChange) => {
             margin: 10,
             width: 50,
             height: 50,
-            background: "white",
+            background: "transparent",
           },
           new go.Binding("source").makeTwoWay(),
           new go.Binding("desiredSize", "size", go.Size.parse).makeTwoWay(
