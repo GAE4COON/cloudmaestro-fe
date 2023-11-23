@@ -216,7 +216,7 @@ const useGoJS = (setShowToggle, onDiagramChange) => {
             portId: "",
             editable: true,
           },
-          new go.Binding("text", "key")
+          new go.Binding("text", "text")
         )
       ),
 
