@@ -401,7 +401,7 @@ const useGoJS = (setShowToggle, onDiagramChange) => {
             mouseEnter: function (e, panel) {
               const node = panel.part.adornedPart;
               if (node instanceof go.Node) {
-                setNodeGuide(node.data.key);
+                setNodeGuide(node.data.text);
               }
             },
             mouseLeave: function (e, panel) {
