@@ -48,12 +48,12 @@ const Palette = memo(({ divClassName, diagram, diagramVersion }) => {
   const [nodeDataArray, setNodeDataArray] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedTab, setSelectedTab] = useState("Storage");
-  const [filteredNodes, setFilteredNodes] = useState([]);
+  const [filteredNodes, setFilteredNodes] = useState(new Map());
   const paletteDivs = useRef({});
 
   const [savediagram, setSaveDiagram] = useState(null);
   const [filterModule, setFilterModule] = useState([]);
-  const [modulePaletteData, setModulePaletteData] = useState([]);
+  const [modulePaletteData, setModulePaletteData] = useState(new Map());
   const [myPalette, setMyPalette] = useState([]);
 
   useEffect(() => {
@@ -65,12 +65,17 @@ const Palette = memo(({ divClassName, diagram, diagramVersion }) => {
   }, [diagramVersion]); // diagramVersion을 의존성 배열에 추가
 
   useEffect(() => {
-    const filteredData = nodeDataArrayPalette.filter((node) =>
-      filterModule.some((moduleNode) => moduleNode === node.source)
-    );
+    const newModulePaletteData = new Map();
 
-    console.log("filteredData:", filteredData);
-    setModulePaletteData(filteredData);
+    filterModule.forEach((sources, key) => {
+      const nodes = nodeDataArrayPalette.filter((node) =>
+        sources.includes(node.source)
+      );
+      newModulePaletteData.set(key, nodes);
+    });
+
+    console.log("newModulePaletteData:", newModulePaletteData);
+    setModulePaletteData(newModulePaletteData);
   }, [filterModule]);
 
   useEffect(() => {
@@ -91,55 +96,73 @@ const Palette = memo(({ divClassName, diagram, diagramVersion }) => {
       }
 
       const result = new Set();
+      const resultSet = new Map(); // resultSet을 Map으로 초기화
+      const nodeSet = new Map();
+
       GroupData.forEach((item) => {
         if (typeof item.key === "string") {
-          const match = item.key.match(/Module(.*)$/);
-          if (match && match[1]) {
-            result.add(item.key);
+          const match = item.key.match(/Module BP(\d+)$/);
+          if (match) {
+            if (!resultSet.has(item.key)) {
+              resultSet.set(item.key, new Set());
+              nodeSet.set(item.key, new Set());
+            }
+            resultSet.get(item.key).add(item.key);
           }
         }
       });
-      let previousSize = 0;
-      let currentSize = result.size;
 
-      while (previousSize !== currentSize) {
-        previousSize = result.size; // 현재 result의 크기를 저장
+      console.log("resultSet:", resultSet);
 
-        for (let i = 0; i < GroupData.length; i++) {
-          if (typeof GroupData[i].group === "string") {
-            result.forEach((r) => {
-              if (GroupData[i].group.includes(r)) {
-                result.add(GroupData[i].key);
-              }
-            });
-          }
+      resultSet.forEach((set, key) => {
+        let previousSize = 0;
+        let currentSize = set.size;
+        console.log("set:", set);
+        console.log("key:", key);
+
+        while (previousSize !== currentSize) {
+          previousSize = currentSize;
+
+          GroupData.forEach((groupItem) => {
+            if (typeof groupItem.group === "string") {
+              set.forEach((setItem) => {
+                if (groupItem.group === setItem) {
+                  set.add(groupItem.key);
+                }
+              });
+            }
+          });
+
+          currentSize = set.size;
         }
+      });
 
-        currentSize = result.size;
-        if (previousSize === currentSize) {
-          break;
-        }
-      }
+      console.log("resultSet 최종 상태:", resultSet);
 
       const groupList = Array.from(result);
       console.log("groupList:", groupList);
 
-      const nodeSet = new Set();
-
       for (let i = 0; i < diagramData.nodeDataArray.length; i++) {
         let nodeData = diagramData.nodeDataArray[i];
         if (nodeData.isGroup === null) {
-          groupList.forEach((group) => {
-            if (nodeData.group && nodeData.group.includes(group)) {
-              nodeSet.add(nodeData);
+          resultSet.forEach((set, key) => {
+            if (nodeData.group && set.has(nodeData.group)) {
+              nodeSet.get(key).add(nodeData); // nodeSet의 해당 Set에 nodeData 추가
             }
           });
         }
       }
+      const nodeMap = new Map();
+      nodeSet.forEach((nodes, key) => {
+        const sourcesSet = new Set(
+          Array.from(nodes).map((node) => node.source)
+        ); // 중복 제거를 위해 Set 사용
+        const sources = Array.from(sourcesSet); // Set을 다시 배열로 변환
+        nodeMap.set(key, sources); // 변환된 배열을 nodeMap에 저장
+      });
 
-      console.log("nodeSet:", nodeSet);
-      const nodeList = Array.from(nodeSet);
-      setFilterModule(nodeList.map((node) => node.source));
+      console.log("nodeMap:", nodeMap);
+      setFilterModule(nodeMap);
     } catch (error) {
       console.log(error);
     }
@@ -235,8 +258,8 @@ const Palette = memo(({ divClassName, diagram, diagramVersion }) => {
 
     let dataToUse;
 
-    if (selectedTab === "Module") {
-      dataToUse = modulePaletteData;
+    if (modulePaletteData.has(selectedTab)) {
+      dataToUse = modulePaletteData.get(selectedTab);
     } else {
       dataToUse = nodeDataArrayPalette.filter(
         (item) => item.type === selectedTab
@@ -307,21 +330,23 @@ const Palette = memo(({ divClassName, diagram, diagramVersion }) => {
         )}
         {filteredNodes.length === 0 && (
           <ScrollableTabsContainer>
-            {filterModule.length > 0 && (
-              <Tab key="Module">
-                <RadioInput
-                  type="radio"
-                  id="rd_Module"
-                  name="rd"
-                  onClick={() => setSelectedTab("Module")}
-                />
-                <TabLabel htmlFor="rd_Module">Module</TabLabel>
-                <div
-                  className="tab-content"
-                  ref={(el) => (paletteDivs.current["Module"] = el)}
-                />
-              </Tab>
-            )}
+            {filterModule.size > 0 &&
+              Array.from(filterModule.keys()).map((key) => (
+                <Tab key={key}>
+                  <RadioInput
+                    type="radio"
+                    id={`rd_${key}`}
+                    name="rd"
+                    onClick={() => setSelectedTab(key)}
+                  />
+                  <TabLabel htmlFor={`rd_${key}`}>{formatKey(key)}</TabLabel>
+                  <div
+                    className="tab-content"
+                    ref={(el) => (paletteDivs.current[key] = el)}
+                  />
+                </Tab>
+              ))}
+
             {tabs.map((tab) => (
               <Tab key={tab}>
                 <RadioInput
