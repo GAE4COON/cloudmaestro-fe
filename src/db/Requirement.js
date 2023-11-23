@@ -1,4 +1,5 @@
 export const backupOptions = ["중앙관리", "일반"];
+export const zoneSecurityReq = ["웹 방화벽으로 보호"]
 
 export const industrial = [
   {
