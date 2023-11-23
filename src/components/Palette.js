@@ -66,9 +66,11 @@ const Palette = memo(({ divClassName }) => {
     myPalette.nodeTemplate = $(
       go.Node,
       "Auto",
+
       $(
         go.Panel,
         "Vertical",
+
         $(
           go.Picture,
           { margin: 5, width: 50, height: 50, background: "white" },
@@ -107,6 +109,7 @@ const Palette = memo(({ divClassName }) => {
         $(
           go.Panel,
           "Auto",
+        
           $(
             go.Shape,
             "Rectangle",
@@ -135,7 +138,16 @@ const Palette = memo(({ divClassName }) => {
           },
           new go.Binding("text", "key", formatKey)
         )
-      )
+      ),
+      $(
+        go.TextBlock,
+        {
+          alignment: go.Spot.BottomCenter,
+          margin: 3, // 마진을 추가하여 텍스트가 겹치지 않도록 조정
+          font: "10pt Noto Sans KR",
+        },
+       )
+
     );
 
     if (paletteDivs.current[selectedTab]) {

@@ -1,3 +1,5 @@
+import * as go from "gojs";
+
 export const nodeDataArrayPalette = [
   // Network icon
   {
