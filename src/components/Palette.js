@@ -3,7 +3,8 @@ import React, { memo, useEffect, useRef, useState } from "react";
 import * as go from "gojs";
 import { nodeDataArrayPalette } from "../db/Node";
 import styled from "styled-components";
-import { SoundTwoTone } from "@ant-design/icons";
+import { Input } from "antd";
+const { Search } = Input;
 
 function formatKey(key) {
   return String(key)
@@ -56,12 +57,20 @@ const Palette = memo(({ divClassName, diagram, diagramVersion }) => {
   const [modulePaletteData, setModulePaletteData] = useState(new Map());
   const [myPalette, setMyPalette] = useState([]);
 
+  const onChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const onSearch = (value) => {
+    setSelectedTab("Search");
+  };
+
   useEffect(() => {
     setSaveDiagram(diagram);
     if (!savediagram) {
       return;
     }
-    console.log("diagram change:", savediagram.model.toJson());
+    //console.log("diagram change:", savediagram.model.toJson());
   }, [diagramVersion]); // diagramVersion을 의존성 배열에 추가
 
   useEffect(() => {
@@ -96,7 +105,7 @@ const Palette = memo(({ divClassName, diagram, diagramVersion }) => {
       }
 
       const result = new Set();
-      const resultSet = new Map(); // resultSet을 Map으로 초기화
+      const resultSet = new Map();
       const nodeSet = new Map();
 
       GroupData.forEach((item) => {
@@ -111,8 +120,6 @@ const Palette = memo(({ divClassName, diagram, diagramVersion }) => {
           }
         }
       });
-
-      console.log("resultSet:", resultSet);
 
       resultSet.forEach((set, key) => {
         let previousSize = 0;
@@ -137,10 +144,7 @@ const Palette = memo(({ divClassName, diagram, diagramVersion }) => {
         }
       });
 
-      console.log("resultSet 최종 상태:", resultSet);
-
       const groupList = Array.from(result);
-      console.log("groupList:", groupList);
 
       for (let i = 0; i < diagramData.nodeDataArray.length; i++) {
         let nodeData = diagramData.nodeDataArray[i];
@@ -156,7 +160,7 @@ const Palette = memo(({ divClassName, diagram, diagramVersion }) => {
       nodeSet.forEach((nodes, key) => {
         const sourcesSet = new Set(
           Array.from(nodes).map((node) => node.source)
-        ); // 중복 제거를 위해 Set 사용
+        );
         const sources = Array.from(sourcesSet); // Set을 다시 배열로 변환
         nodeMap.set(key, sources); // 변환된 배열을 nodeMap에 저장
       });
@@ -291,11 +295,12 @@ const Palette = memo(({ divClassName, diagram, diagramVersion }) => {
     <div className={divClassName}>
       <div id="allSampleContent">
         <SearchContainer>
-          <SearchInput
-            type="text"
+          <StyledSearch
+            allowClear
             placeholder="Search..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={onChange}
+            onSearch={onSearch}
+            enterButton
           />
         </SearchContainer>
 
@@ -486,4 +491,20 @@ const FilteredNodesContainer = styled.div`
   border: 1px solid #e8e8e8;
   border-radius: 2px;
   text-align: left;
+`;
+
+const StyledSearch = styled(Search)`
+  .ant-input {
+    color: #000;
+  }
+
+  .ant-input-search-button {
+    background-color: #dee8ff;
+    border-color: #dee8ff;
+
+    &:hover {
+      background-color: #fff;
+      border-color: #dee8ff;
+    }
+  }
 `;
