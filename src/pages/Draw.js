@@ -15,6 +15,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Alert, Space, Layout, Menu } from "antd";
 import { sidebarResource } from "../apis/sidebar";
 import { DrawResourceGuide } from "../apis/resource";
+import "../styles/App.css";
 
 // 페이지
 // import useReadJSON from "./useReadJSON";
@@ -181,7 +182,7 @@ function Draw() {
   };
 
   return (
-    <div>
+    <div className="main-content">
       <div className="Draw">
         <div className="container">
           <div className="workspace">
