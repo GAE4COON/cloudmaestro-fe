@@ -20,6 +20,10 @@ const tagColors = {
   "네트워크 보호": "#FF2DDD",
 };
 
+function renderParagraphs(text) {
+  return text.split("\n").map((line, index) => <p key={index}>{line}</p>);
+}
+
 function Resource({ title_img, title, tags, guide1, guide2, guide3, guide4 }) {
   const text = `
   A dog is a type of domesticated animal.
@@ -30,25 +34,25 @@ function Resource({ title_img, title, tags, guide1, guide2, guide3, guide4 }) {
     {
       key: "1",
       label: "역할",
-      children: <p>{guide1}</p>,
+      children: <p>{renderParagraphs(guide1)}</p>,
       style: panelStyle,
     },
     {
       key: "2",
       label: "동작 방식",
-      children: <p>{guide2}</p>,
+      children: <p>{renderParagraphs(guide2)}</p>,
       style: panelStyle,
     },
     {
       key: "3",
       label: "온프레미스 매칭",
-      children: <p>{guide3}</p>,
+      children: <p>{renderParagraphs(guide3)}</p>,
       style: panelStyle,
     },
     {
       key: "4",
       label: "관리방법(보안 고려사항)",
-      children: <p>{guide4}</p>,
+      children: <p>{renderParagraphs(guide4)}</p>,
       style: panelStyle,
     },
   ];
@@ -59,6 +63,8 @@ function Resource({ title_img, title, tags, guide1, guide2, guide3, guide4 }) {
     background: "#fff",
     borderRadius: token.borderRadiusLG,
     border: "none",
+    textAlign: "left",
+    paddingLeft: "10px",
   };
 
   return (
@@ -80,7 +86,7 @@ function Resource({ title_img, title, tags, guide1, guide2, guide3, guide4 }) {
         </RightSide>
       </ResourceTitleContainer>
       <hr />
-      <Collapse
+      <StyledCollapse
         bordered={false}
         defaultActiveKey={["1"]}
         expandIcon={({ isActive }) => (
@@ -116,7 +122,7 @@ const ResourceTitleContainer = styled.div`
 `;
 
 const ResourceName = styled.div`
-  pont-size: 20px;
+  font-size: 20px;
   margin-left: 15px;
 `;
 
@@ -142,6 +148,15 @@ const Tag = styled.div`
   padding: 5px;
   color: white;
   font-weight: 500;
+`;
+
+const StyledCollapse = styled(Collapse)`
+  .ant-collapse-header {
+    font-size: 17px;
+    font-weight: 700;
+    font-family: "Noto Sans KR", sans-serif !important;
+    color: #333; // 진한 회색으로 글자색 설정
+  }
 `;
 
 export default Resource;

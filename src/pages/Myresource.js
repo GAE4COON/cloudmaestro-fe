@@ -5,7 +5,8 @@ import styled from "styled-components";
 import "../styles/myresource.css";
 import Resource from "../components/Resource";
 import { ResourceGuide } from "../apis/resource";
-import "../styles/resource.css";
+import { Input } from "antd";
+const { Search } = Input;
 
 function MyResource() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -27,6 +28,7 @@ function MyResource() {
     const handleResource = async () => {
       const ResourceData = {
         title: [
+          "Identity and Access Management",
           "Athena",
           "Redshift",
           "VPC",
@@ -82,11 +84,11 @@ function MyResource() {
           <StyledSideMenuTitle>
             <div>나의 리소스</div>
             <SearchContainer>
-              <SearchInput
-                type="text"
+              <Search
+                allowClear
                 placeholder="Search..."
-                value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
+                enterButton
               />
             </SearchContainer>
           </StyledSideMenuTitle>
@@ -121,11 +123,11 @@ const StyledSideMenuTitle = styled.div`
   font-family: "Noto Sans KR", sans-serif !important;
   font-weight: 500;
   font-size: 20px;
-  margin-top: 12px;
+  margin-top: 25px;
   justify-content: space-between;
   padding-right: 25px;
   padding-left: 25px;
-  margin-left: 20px;
+  margin-left: 30px;
 `;
 
 const SearchContainer = styled.div`
@@ -135,26 +137,7 @@ const SearchContainer = styled.div`
   align-items: center;
   background-color: #fff;
   padding: 5px 10px;
-  /* box-shadow: 0 2px 8px #f0f1f2; */
-`;
-
-const SearchInput = styled.input.attrs({ type: "text" })`
-  outline: none;
-
-  border: 1px solid #d9d9d9;
-  width: 100%;
-  height: 32px;
-  radius: 2px;
-  border-radius: 2px;
-  font-size: 14px;
-  transition: all 0.3s;
-  &:hover {
-    border-color: #40a9ff;
-  }
-  &:focus {
-    border-color: #40a9ff;
-    box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
-  }
+  margin-left: 50px;
 `;
 
 export default MyResource;
