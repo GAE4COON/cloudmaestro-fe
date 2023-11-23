@@ -268,16 +268,7 @@ function ZoneComponent({
 
       <SelectContainer>
         <SelectTitle>보안</SelectTitle>
-        {/* <StyledTreeSelect
-          treeData={zoneSecurityReq}
-          value={zoneReqValue}
-          onChange={handleZoneReqValueChange}
-          treeCheckable={true}
-          showCheckedStrategy={SHOW_PARENT}
-          placeholder="Please select"
-        /> */}
-                      <Checkbox.Group options={zoneSecurityReq} onChange={handleZoneReqValueChange} />
-
+          <Checkbox.Group options={zoneSecurityReq} onChange={handleZoneReqValueChange} />
       </SelectContainer>
     </ZoneContainer>
   );
@@ -298,11 +289,6 @@ const ZoneCloseButton = styled.span`
   right: 10px;
   top: 10px;
 `;
-
-// const BackupSelectTitle = styled.div`
-//   width: 10%;
-//   text-align: left;
-// `;
 
 const StyledBackupSelect = styled(Select)`
   width: 80%;
