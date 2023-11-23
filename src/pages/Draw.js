@@ -60,7 +60,7 @@ function Draw() {
   }, [diagramVersion]); // Dependency on diagramVersion
 
   const handleDiagramChange = useCallback((changedDiagram) => {
-    console.log("다이어그램이 변경되었습니다:", changedDiagram.model.toJson());
+    // console.log("다이어그램이 변경되었습니다:", changedDiagram.model.toJson());
     setmyDiagram(changedDiagram);
     setDiagramVersion((prevVersion) => prevVersion + 1);
   });

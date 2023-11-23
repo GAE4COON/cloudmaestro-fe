@@ -70,20 +70,27 @@ const Palette = memo(({ divClassName, diagram, diagramVersion }) => {
     if (!savediagram) {
       return;
     }
-    //console.log("diagram change:", savediagram.model.toJson());
+    // console.log("diagram change:", savediagram.model.toJson());
+    //console.log("diagramVersion11:", diagramVersion);
   }, [diagramVersion]); // diagramVersion을 의존성 배열에 추가
 
   useEffect(() => {
     const newModulePaletteData = new Map();
 
+    console.log("filterModule:", filterModule);
+
     filterModule.forEach((sources, key) => {
-      const nodes = nodeDataArrayPalette.filter((node) =>
-        sources.includes(node.source)
-      );
+      const nodes = nodeDataArrayPalette.filter((node) => {
+        const included = sources.includes(node.source);
+        // console.log(`Node source: ${node.source}, Included: ${included}`);
+        // console.log(`Node source: ${sources}, Included: ${included}`);
+        return included;
+      });
       newModulePaletteData.set(key, nodes);
     });
 
     console.log("newModulePaletteData:", newModulePaletteData);
+
     setModulePaletteData(newModulePaletteData);
   }, [filterModule]);
 
@@ -95,6 +102,8 @@ const Palette = memo(({ divClassName, diagram, diagramVersion }) => {
     const diagramDataStr = savediagram.model.toJson();
     const diagramData = JSON.parse(diagramDataStr);
     const GroupData = [];
+
+    console.log("diagramData:", diagramData);
 
     try {
       for (let i = 0; i < diagramData.nodeDataArray.length; i++) {
@@ -144,11 +153,9 @@ const Palette = memo(({ divClassName, diagram, diagramVersion }) => {
         }
       });
 
-      const groupList = Array.from(result);
-
       for (let i = 0; i < diagramData.nodeDataArray.length; i++) {
         let nodeData = diagramData.nodeDataArray[i];
-        if (nodeData.isGroup === null) {
+        if (nodeData.source !== null) {
           resultSet.forEach((set, key) => {
             if (nodeData.group && set.has(nodeData.group)) {
               nodeSet.get(key).add(nodeData); // nodeSet의 해당 Set에 nodeData 추가
@@ -156,6 +163,7 @@ const Palette = memo(({ divClassName, diagram, diagramVersion }) => {
           });
         }
       }
+
       const nodeMap = new Map();
       nodeSet.forEach((nodes, key) => {
         const sourcesSet = new Set(
@@ -227,7 +235,7 @@ const Palette = memo(({ divClassName, diagram, diagramVersion }) => {
         $(
           go.Panel,
           "Auto",
-        
+
           $(
             go.Shape,
             "Rectangle",
@@ -257,15 +265,11 @@ const Palette = memo(({ divClassName, diagram, diagramVersion }) => {
           new go.Binding("text", "key")
         )
       ),
-      $(
-        go.TextBlock,
-        {
-          alignment: go.Spot.BottomCenter,
-          margin: 3, // 마진을 추가하여 텍스트가 겹치지 않도록 조정
-          font: "10pt Noto Sans KR",
-        },
-       )
-
+      $(go.TextBlock, {
+        alignment: go.Spot.BottomCenter,
+        margin: 3, // 마진을 추가하여 텍스트가 겹치지 않도록 조정
+        font: "10pt Noto Sans KR",
+      })
     );
 
     if (paletteDivs.current[selectedTab]) {
@@ -472,7 +476,6 @@ const SearchContainer = styled.div`
   background-color: #fff;
   /* box-shadow: 0 2px 8px #f0f1f2; */
 `;
-
 
 // Styled component for nodes container with filtered results
 const FilteredNodesContainer = styled.div`

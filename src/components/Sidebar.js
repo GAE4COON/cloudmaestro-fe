@@ -44,7 +44,7 @@ function Sidebar({ isOpen, setIsOpen }) {
                   (node) => node.text === item
                 );
                 const source = node ? node.source : "";
-                console.log(source);
+                // console.log(source);
                 return (
                   <div key={index} className="sidebar-item">
                     {source && <img src={source} alt={item} />}
@@ -67,7 +67,7 @@ function Sidebar({ isOpen, setIsOpen }) {
                   (node) => node.text === item
                 );
                 const source = node ? node.source : "";
-                console.log(source);
+                // console.log(source);
                 return (
                   <div key={index} className="sidebar-item-closed">
                     <h3>
