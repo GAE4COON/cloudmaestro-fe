@@ -180,6 +180,9 @@ const useGoJS = (setShowToggle, onDiagramChange) => {
       go.Group,
       // "Auto",
       // "Vertical",
+      new go.Binding("location", "loc", go.Point.parse).makeTwoWay(
+        go.Point.stringify
+      ),
       {
         mouseDragEnter: (e, grp) => highlightGroup(e, grp, true),
         mouseDragLeave: (e, grp) => highlightGroup(e, grp, false),
