@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Select, TreeSelect, Checkbox } from "antd";
 
-import { industrial, zoneRequest } from "../db/Requirement";
+import { industrial, zoneSecurityReq } from "../db/Requirement";
 
 const { SHOW_PARENT } = TreeSelect;
 
@@ -113,7 +113,6 @@ function ZoneComponent({
             
           }
         }
-        
 
         const nodeSetList = Array.from(nodeSet);
         backupNode[resultList[idx].label] = nodeSetList;
@@ -281,15 +280,8 @@ function ZoneComponent({
       </SelectContainer>
 
       <SelectContainer>
-        <SelectTitle>요구사항</SelectTitle>
-        <StyledTreeSelect
-          treeData={zoneRequest}
-          value={zoneReqValue}
-          onChange={handleZoneReqValueChange}
-          treeCheckable={true}
-          showCheckedStrategy={SHOW_PARENT}
-          placeholder="Please select"
-        />
+        <SelectTitle>보안</SelectTitle>
+          <Checkbox.Group options={zoneSecurityReq} onChange={handleZoneReqValueChange} />
       </SelectContainer>
     </ZoneContainer>
   );
@@ -310,11 +302,6 @@ const ZoneCloseButton = styled.span`
   right: 10px;
   top: 10px;
 `;
-
-// const BackupSelectTitle = styled.div`
-//   width: 10%;
-//   text-align: left;
-// `;
 
 const StyledBackupSelect = styled(Select)`
   width: 80%;

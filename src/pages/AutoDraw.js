@@ -99,7 +99,7 @@ const AutoDraw = () => {
         />
       </div>
 
-      <StyledButton>
+      <StyledButton onClick={handleInputFIleUpload}>
         Submit
       </StyledButton>
     </div>

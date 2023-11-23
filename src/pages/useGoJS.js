@@ -138,7 +138,7 @@ const useGoJS = (setShowToggle, onDiagramChange) => {
             margin: 10,
             width: 50,
             height: 50,
-            background: "white",
+            background: "transparent",
           },
           new go.Binding("source").makeTwoWay(),
           new go.Binding("desiredSize", "size", go.Size.parse).makeTwoWay(
@@ -180,6 +180,9 @@ const useGoJS = (setShowToggle, onDiagramChange) => {
       go.Group,
       // "Auto",
       // "Vertical",
+      new go.Binding("location", "loc", go.Point.parse).makeTwoWay(
+        go.Point.stringify
+      ),
       {
         mouseDragEnter: (e, grp) => highlightGroup(e, grp, true),
         mouseDragLeave: (e, grp) => highlightGroup(e, grp, false),
@@ -269,7 +272,8 @@ const useGoJS = (setShowToggle, onDiagramChange) => {
       go.Link,
       {
         toShortLength: 3,
-        routing: go.Link.AvoidsNodes,
+        routing: go.Link.Normal,
+        // routing: go.Link.AvoidsNodes,
         curve: go.Link.JumpGap,
         corner: 5,
         contextMenu: $(
