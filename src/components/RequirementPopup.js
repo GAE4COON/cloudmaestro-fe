@@ -56,6 +56,7 @@ const RequirementPopup = (props) => {
           zone.zoneName &&
           (zone.zoneFunc ||
             zone.availableNode.length > 0 ||
+            zone.serverNode.length > 0 ||
             zone.zoneReqValue.length > 0)
       );
 
