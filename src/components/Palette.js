@@ -61,12 +61,16 @@ const Palette = memo(({ divClassName, diagram, diagramVersion }) => {
     setSearchTerm(e.target.value);
   };
 
+  const onSearch = (value) => {
+    setSelectedTab("Search");
+  };
+
   useEffect(() => {
     setSaveDiagram(diagram);
     if (!savediagram) {
       return;
     }
-    console.log("diagram change:", savediagram.model.toJson());
+    //console.log("diagram change:", savediagram.model.toJson());
   }, [diagramVersion]); // diagramVersion을 의존성 배열에 추가
 
   useEffect(() => {
@@ -101,7 +105,7 @@ const Palette = memo(({ divClassName, diagram, diagramVersion }) => {
       }
 
       const result = new Set();
-      const resultSet = new Map(); // resultSet을 Map으로 초기화
+      const resultSet = new Map();
       const nodeSet = new Map();
 
       GroupData.forEach((item) => {
@@ -116,8 +120,6 @@ const Palette = memo(({ divClassName, diagram, diagramVersion }) => {
           }
         }
       });
-
-      console.log("resultSet:", resultSet);
 
       resultSet.forEach((set, key) => {
         let previousSize = 0;
@@ -142,10 +144,7 @@ const Palette = memo(({ divClassName, diagram, diagramVersion }) => {
         }
       });
 
-      console.log("resultSet 최종 상태:", resultSet);
-
       const groupList = Array.from(result);
-      console.log("groupList:", groupList);
 
       for (let i = 0; i < diagramData.nodeDataArray.length; i++) {
         let nodeData = diagramData.nodeDataArray[i];
@@ -161,7 +160,7 @@ const Palette = memo(({ divClassName, diagram, diagramVersion }) => {
       nodeSet.forEach((nodes, key) => {
         const sourcesSet = new Set(
           Array.from(nodes).map((node) => node.source)
-        ); // 중복 제거를 위해 Set 사용
+        );
         const sources = Array.from(sourcesSet); // Set을 다시 배열로 변환
         nodeMap.set(key, sources); // 변환된 배열을 nodeMap에 저장
       });
@@ -300,6 +299,7 @@ const Palette = memo(({ divClassName, diagram, diagramVersion }) => {
             allowClear
             placeholder="Search..."
             onChange={onChange}
+            onSearch={onSearch}
             enterButton
           />
         </SearchContainer>

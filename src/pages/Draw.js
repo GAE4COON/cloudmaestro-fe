@@ -336,26 +336,26 @@ const StyledButton = styled.div`
   box-sizing: border-box;
   width: 200px;
   padding: 5px;
+  margin: 10px;
+  color: #809cda;
 
   background: #ffffff;
-  border: 1px solid #bababa;
+  border: 2px solid #bbbbda;
   border-radius: 7px;
 
-  font-family: "Noto Sans KR", sans-serif !important;
-  font-style: normal;
-  font-weight: 700;
-  font-family: "Noto Sans KR", sans-serif !important;
+  font-family: "Noto Sans KR", sans-serif;
   font-style: normal;
   font-weight: 700;
 
   line-height: 30px;
   align-items: center;
   text-align: center;
-  line-height: 30px;
-  align-items: center;
-  text-align: center;
 
-  color: #809cda;
+  cursor: pointer;
+  &:hover {
+    background: #809cda;
+    color: #ffffff;
+  }
 `;
 const DiagramContainer = styled.div`
   position: relative;
