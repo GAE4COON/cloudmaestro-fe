@@ -2051,8 +2051,8 @@ export const nodeDataArrayPalette = [
     type: "Security-Identity-Compliance"
   },
   {
-    text: "Identity and Access Management",
-    key: "Identity and Access Management",
+    text: "Identity and Access Management (IAM)",
+    key: "Identity and Access Management (IAM)",
     figure: "Rectangle",
     source: "/img/AWS_icon/Arch_Security-Identity-Compliance/Arch_AWS-Identity-and-Access-Management_48.svg",
     type: "Security-Identity-Compliance"
@@ -2121,8 +2121,8 @@ export const nodeDataArrayPalette = [
     type: "Security-Identity-Compliance"
   },
   {
-    text: "EFS",
-    key: "EFS",
+    text: "Elastic File Systme (EFS)",
+    key: "Elastic File Systme (EFS)",
     figure: "Rectangle",
     source: "/img/AWS_icon/Arch_Storage/Arch_Amazon-EFS_48.svg",
     type: "Storage"
@@ -2198,8 +2198,8 @@ export const nodeDataArrayPalette = [
     type: "Storage"
   },
   {
-    text: "Simple Storage Service",
-    key: "Simple Storage Service",
+    text: "Simple Storage Service (S3)",
+    key: "Simple Storage Service (S3)",
     figure: "Rectangle",
     source: "/img/AWS_icon/Arch_Storage/Arch_Amazon-Simple-Storage-Service_48.svg",
     type: "Storage"
@@ -2392,13 +2392,6 @@ export const nodeDataArrayPalette = [
     stroke: "rgb(150,150,150)",
     text: "Service",
     key: "Service",
-    type: "AWS_Groups"
-  },
-  {
-    isGroup: true,
-    stroke: "rgb(150,100,150)",
-    text: "EC2Group",
-    key: "EC2Group",
     type: "AWS_Groups"
   },
   {
@@ -3739,32 +3732,32 @@ export const nodeDataArrayPalette = [
     text: "Database Migration Service Database migration workflow or job"
   },
   {
-    key: "Cloud9 Cloud9",
+    key: "Res_Cloud9",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Developer-Tools/Res_AWS-Cloud9_Cloud9_48.svg",
     type: "Developer-Tools",
-    text: "Cloud9 Cloud9"
+    text: "Cloud9"
   },
   {
-    key: "WorkSpaces Family  WorkSpaces Core",
+    key: "WorkSpaces Core",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_End-User-Computing/Res_Amazon-WorkSpaces-Family_Amazon-WorkSpaces-Core_48.svg",
     type: "End-User-Computing",
-    text: "WorkSpaces Family  WorkSpaces Core"
+    text: "WorkSpaces Core"
   },
   {
-    key: "WorkSpaces Family  WorkSpaces Web",
+    key: "WorkSpaces Web",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_End-User-Computing/Res_Amazon-WorkSpaces-Family_Amazon-WorkSpaces-Web_48.svg",
     type: "End-User-Computing",
-    text: "WorkSpaces Family  WorkSpaces Web"
+    text: "WorkSpaces Web"
   },
   {
-    key: "WorkSpaces Family  WorkSpaces",
+    key: "WorkSpaces",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_End-User-Computing/Res_Amazon-WorkSpaces-Family_Amazon-WorkSpaces_48.svg",
     type: "End-User-Computing",
-    text: "WorkSpaces Family  WorkSpaces"
+    text: "WorkSpaces"
   },
   {
     key: "Location Service Geofence",
@@ -3802,11 +3795,11 @@ export const nodeDataArrayPalette = [
     text: "Location Service Track"
   },
   {
-    key: "Amplify  Amplify Studio",
+    key: "Amplify Studio",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Front-End-Web-Mobile/Res_AWS-Amplify_AWS-Amplify-Studio_48.svg",
     type: "Front-End-Web-Mobile",
-    text: "Amplify  Amplify Studio"
+    text: "Amplify Studio"
   },
   {
     key: "Alert",
@@ -3914,7 +3907,7 @@ export const nodeDataArrayPalette = [
     text: "Email"
   },
   {
-    key: "Firewall",
+    key: "Res_Firewall",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_General-Icons/Res_48_Light/Res_Firewall_48_Light.svg",
     type: "General-Icons",
@@ -5307,11 +5300,11 @@ export const nodeDataArrayPalette = [
     text: "Route 53 Resolver"
   },
   {
-    key: "Route 53 Route 53 Application Recovery Controller",
+    key: "Route 53 Application Recovery Controller",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Networking-Content-Delivery/Res_Amazon-Route-53_Route-53-Application-Recovery-Controller_48.svg",
     type: "Networking-Content-Delivery",
-    text: "Route 53 Route 53 Application Recovery Controller"
+    text: "Route 53 Application Recovery Controller"
   },
   {
     key: "Route 53 Route Table",
@@ -5328,123 +5321,123 @@ export const nodeDataArrayPalette = [
     text: "Route 53 Routing Controls"
   },
   {
-    key: "VPC Carrier Gateway",
+    key: "Carrier Gateway",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Networking-Content-Delivery/Res_Amazon-VPC_Carrier-Gateway_48.svg",
     type: "Networking-Content-Delivery",
-    text: "VPC Carrier Gateway"
+    text: "Carrier Gateway"
   },
   {
-    key: "VPC Customer Gateway",
+    key: "Customer Gateway",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Networking-Content-Delivery/Res_Amazon-VPC_Customer-Gateway_48.svg",
     type: "Networking-Content-Delivery",
-    text: "VPC Customer Gateway"
+    text: "Customer Gateway"
   },
   {
-    key: "VPC Elastic Network Adapter",
+    key: "Elastic Network Adapter",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Networking-Content-Delivery/Res_Amazon-VPC_Elastic-Network-Adapter_48.svg",
     type: "Networking-Content-Delivery",
-    text: "VPC Elastic Network Adapter"
+    text: "Elastic Network Adapter"
   },
   {
-    key: "VPC Elastic Network Interface",
+    key: "Elastic Network Interface",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Networking-Content-Delivery/Res_Amazon-VPC_Elastic-Network-Interface_48.svg",
     type: "Networking-Content-Delivery",
-    text: "VPC Elastic Network Interface"
+    text: "Elastic Network Interface"
   },
   {
-    key: "VPC Endpoints",
+    key: "Endpoints",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Networking-Content-Delivery/Res_Amazon-VPC_Endpoints_48.svg",
     type: "Networking-Content-Delivery",
-    text: "VPC Endpoints"
+    text: "Endpoints"
   },
   {
-    key: "VPC Flow Logs",
+    key: "Flow Logs",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Networking-Content-Delivery/Res_Amazon-VPC_Flow-Logs_48.svg",
     type: "Networking-Content-Delivery",
-    text: "VPC Flow Logs"
+    text: "Flow Logs"
   },
   {
-    key: "VPC Internet Gateway",
+    key: "Internet Gateway",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Networking-Content-Delivery/Res_Amazon-VPC_Internet-Gateway_48.svg",
     type: "Networking-Content-Delivery",
-    text: "VPC Internet Gateway"
+    text: "Internet Gateway"
   },
   {
-    key: "VPC NAT Gateway",
+    key: "NAT Gateway",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Networking-Content-Delivery/Res_Amazon-VPC_NAT-Gateway_48.svg",
     type: "Networking-Content-Delivery",
-    text: "VPC NAT Gateway"
+    text: "NAT Gateway"
   },
   {
-    key: "VPC Network Access Analyzer",
+    key: "Network Access Analyzer",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Networking-Content-Delivery/Res_Amazon-VPC_Network-Access-Analyzer_48.svg",
     type: "Networking-Content-Delivery",
-    text: "VPC Network Access Analyzer"
+    text: "Network Access Analyzer"
   },
   {
-    key: "VPC Network Access Control List",
+    key: "Network Access Control List (NACL)",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Networking-Content-Delivery/Res_Amazon-VPC_Network-Access-Control-List_48.svg",
     type: "Networking-Content-Delivery",
-    text: "VPC Network Access Control List"
+    text: "Network Access Control List (NACL)"
   },
   {
-    key: "VPC Peering Connection",
+    key: "Peering Connection",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Networking-Content-Delivery/Res_Amazon-VPC_Peering-Connection_48.svg",
     type: "Networking-Content-Delivery",
-    text: "VPC Peering Connection"
+    text: "Peering Connection"
   },
   {
-    key: "VPC Reachability Analyzer",
+    key: "Reachability Analyzer",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Networking-Content-Delivery/Res_Amazon-VPC_Reachability-Analyzer_48.svg",
     type: "Networking-Content-Delivery",
-    text: "VPC Reachability Analyzer"
+    text: "Reachability Analyzer"
   },
   {
-    key: "VPC Router",
+    key: "Router",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Networking-Content-Delivery/Res_Amazon-VPC_Router_48.svg",
     type: "Networking-Content-Delivery",
-    text: "VPC Router"
+    text: "Router"
   },
   {
-    key: "VPC Traffic Mirroring",
+    key: "Traffic Mirroring",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Networking-Content-Delivery/Res_Amazon-VPC_Traffic-Mirroring_48.svg",
     type: "Networking-Content-Delivery",
-    text: "VPC Traffic Mirroring"
+    text: "Traffic Mirroring"
   },
   {
-    key: "VPC Virtual private cloud VPC",
+    key: "Virtual private cloud VPC",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Networking-Content-Delivery/Res_Amazon-VPC_Virtual-private-cloud-VPC_48.svg",
     type: "Networking-Content-Delivery",
-    text: "VPC Virtual private cloud VPC"
+    text: "Virtual private cloud VPC"
   },
   {
-    key: "VPC VPN Connection",
+    key: "VPN Connection",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Networking-Content-Delivery/Res_Amazon-VPC_VPN-Connection_48.svg",
     type: "Networking-Content-Delivery",
-    text: "VPC VPN Connection"
+    text: "VPN Connection"
   },
   {
-    key: "VPC VPN Gateway",
+    key: "VPN Gateway",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Networking-Content-Delivery/Res_Amazon-VPC_VPN-Gateway_48.svg",
     type: "Networking-Content-Delivery",
-    text: "VPC VPN Gateway"
+    text: "VPN Gateway"
   },
   {
     key: "App Mesh Mesh",
@@ -5538,32 +5531,32 @@ export const nodeDataArrayPalette = [
     text: "Transit Gateway Attachment"
   },
   {
-    key: "Elastic Load Balancing Application Load Balancer",
+    key: "Application Load Balancer (ALB)",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Networking-Content-Delivery/Res_Elastic-Load-Balancing_Application-Load-Balancer_48.svg",
     type: "Networking-Content-Delivery",
-    text: "Elastic Load Balancing Application Load Balancer"
+    text: "Application Load Balancer (ALB)"
   },
   {
-    key: "Elastic Load Balancing Classic Load Balancer",
+    key: "Classic Load Balancer (CLB)",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Networking-Content-Delivery/Res_Elastic-Load-Balancing_Classic-Load-Balancer_48.svg",
     type: "Networking-Content-Delivery",
-    text: "Elastic Load Balancing Classic Load Balancer"
+    text: "Classic Load Balancer (CLB)"
   },
   {
-    key: "Elastic Load Balancing Gateway Load Balancer",
+    key: "Gateway Load Balancer (GLB)",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Networking-Content-Delivery/Res_Elastic-Load-Balancing_Gateway-Load-Balancer_48.svg",
     type: "Networking-Content-Delivery",
-    text: "Elastic Load Balancing Gateway Load Balancer"
+    text: "Gateway Load Balancer (GLB)"
   },
   {
-    key: "Elastic Load Balancing Network Load Balancer",
+    key: "Network Load Balancer (NLB)",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Networking-Content-Delivery/Res_Elastic-Load-Balancing_Network-Load-Balancer_48.svg",
     type: "Networking-Content-Delivery",
-    text: "Elastic Load Balancing Network Load Balancer"
+    text: "Network Load Balancer (NLB)"
   },
   {
     key: "Braket Chandelier",
@@ -5720,88 +5713,88 @@ export const nodeDataArrayPalette = [
     text: "Directory Service Simple AD"
   },
   {
-    key: "Identity Access Management Add on",
+    key: "IAM Add on",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Security-Identity-Compliance/Res_AWS-Identity-Access-Management_Add-on_48.svg",
     type: "Security-Identity-Compliance",
-    text: "Identity Access Management Add on"
+    text: "IAM Add on"
   },
   {
-    key: "Identity Access Management  STS Alternate",
+    key: "IAM STS Alternate",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Security-Identity-Compliance/Res_AWS-Identity-Access-Management_AWS-STS-Alternate_48.svg",
     type: "Security-Identity-Compliance",
-    text: "Identity Access Management  STS Alternate"
+    text: "IAM  STS Alternate"
   },
   {
-    key: "Identity Access Management  STS",
+    key: "IAM STS",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Security-Identity-Compliance/Res_AWS-Identity-Access-Management_AWS-STS_48.svg",
     type: "Security-Identity-Compliance",
-    text: "Identity Access Management  STS"
+    text: "IAM  STS"
   },
   {
-    key: "Identity Access Management Data Encryption Key",
+    key: "IAM Data Encryption Key",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Security-Identity-Compliance/Res_AWS-Identity-Access-Management_Data-Encryption-Key_48.svg",
     type: "Security-Identity-Compliance",
-    text: "Identity Access Management Data Encryption Key"
+    text: "IAM Data Encryption Key"
   },
   {
-    key: "Identity Access Management Encrypted Data",
+    key: "IAM Encrypted Data",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Security-Identity-Compliance/Res_AWS-Identity-Access-Management_Encrypted-Data_48.svg",
     type: "Security-Identity-Compliance",
-    text: "Identity Access Management Encrypted Data"
+    text: "IAM Encrypted Data"
   },
   {
-    key: "Identity Access Management IAM Access Analyzer",
+    key: "IAM Access Analyzer",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Security-Identity-Compliance/Res_AWS-Identity-Access-Management_IAM-Access-Analyzer_48.svg",
     type: "Security-Identity-Compliance",
-    text: "Identity Access Management IAM Access Analyzer"
+    text: "IAM Access Analyzer"
   },
   {
-    key: "Identity Access Management IAM Roles Anywhere",
+    key: "IAM Roles Anywhere",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Security-Identity-Compliance/Res_AWS-Identity-Access-Management_IAM-Roles-Anywhere_48.svg",
     type: "Security-Identity-Compliance",
-    text: "Identity Access Management IAM Roles Anywhere"
+    text: "IAM Roles Anywhere"
   },
   {
-    key: "Identity Access Management Long Term Security Credential",
+    key: "IAM Long Term Security Credential",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Security-Identity-Compliance/Res_AWS-Identity-Access-Management_Long-Term-Security-Credential_48.svg",
     type: "Security-Identity-Compliance",
-    text: "Identity Access Management Long Term Security Credential"
+    text: "IAM Long Term Security Credential"
   },
   {
-    key: "Identity Access Management MFA Token",
+    key: "IAM MFA Token",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Security-Identity-Compliance/Res_AWS-Identity-Access-Management_MFA-Token_48.svg",
     type: "Security-Identity-Compliance",
-    text: "Identity Access Management MFA Token"
+    text: "IAM MFA Token"
   },
   {
-    key: "Identity Access Management Permissions",
+    key: "IAM Permissions",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Security-Identity-Compliance/Res_AWS-Identity-Access-Management_Permissions_48.svg",
     type: "Security-Identity-Compliance",
-    text: "Identity Access Management Permissions"
+    text: "IAM Permissions"
   },
   {
-    key: "Identity Access Management Role",
+    key: "IAM Role",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Security-Identity-Compliance/Res_AWS-Identity-Access-Management_Role_48.svg",
     type: "Security-Identity-Compliance",
-    text: "Identity Access Management Role"
+    text: "IAM Role"
   },
   {
-    key: "Identity Access Management Temporary Security Credential",
+    key: "IAM Temporary Security Credential",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Security-Identity-Compliance/Res_AWS-Identity-Access-Management_Temporary-Security-Credential_48.svg",
     type: "Security-Identity-Compliance",
-    text: "Identity Access Management Temporary Security Credential"
+    text: "IAM Temporary Security Credential"
   },
   {
     key: "Key Management Service External Key Store",
@@ -5916,53 +5909,53 @@ export const nodeDataArrayPalette = [
     text: "Elastic Block Store Volume"
   },
   {
-    key: "Elastic File System EFS Intelligent Tiering",
+    key: "EFS Intelligent Tiering",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Storage/Res_Amazon-Elastic-File-System_EFS-Intelligent-Tiering_48.svg",
     type: "Storage",
-    text: "Elastic File System EFS Intelligent Tiering"
+    text: " EFS Intelligent Tiering"
   },
   {
-    key: "Elastic File System EFS One Zone Infrequent Access",
+    key: " EFS One Zone Infrequent Access",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Storage/Res_Amazon-Elastic-File-System_EFS-One-Zone-Infrequent-Access_48.svg",
     type: "Storage",
-    text: "Elastic File System EFS One Zone Infrequent Access"
+    text: " EFS One Zone Infrequent Access"
   },
   {
-    key: "Elastic File System EFS One Zone",
+    key: " EFS One Zone",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Storage/Res_Amazon-Elastic-File-System_EFS-One-Zone_48.svg",
     type: "Storage",
-    text: "Elastic File System EFS One Zone"
+    text: " EFS One Zone"
   },
   {
-    key: "Elastic File System EFS Standard Infrequent Access",
+    key: " EFS Standard Infrequent Access",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Storage/Res_Amazon-Elastic-File-System_EFS-Standard-Infrequent-Access_48.svg",
     type: "Storage",
-    text: "Elastic File System EFS Standard Infrequent Access"
+    text: " EFS Standard Infrequent Access"
   },
   {
-    key: "Elastic File System EFS Standard",
+    key: " EFS Standard",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Storage/Res_Amazon-Elastic-File-System_EFS-Standard_48.svg",
     type: "Storage",
-    text: "Elastic File System EFS Standard"
+    text: " EFS Standard"
   },
   {
-    key: "Elastic File System Elastic Throughput",
+    key: "EFS Elastic Throughput",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Storage/Res_Amazon-Elastic-File-System_Elastic-Throughput_48.svg",
     type: "Storage",
-    text: "Elastic File System Elastic Throughput"
+    text: "EFS Elastic Throughput"
   },
   {
-    key: "Elastic File System File System",
+    key: "EFS File System",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Storage/Res_Amazon-Elastic-File-System_File-System_48.svg",
     type: "Storage",
-    text: "Elastic File System File System"
+    text: "EFS File System"
   },
   {
     key: "File Cache Hybrid NFS linked datasets",
@@ -5986,172 +5979,172 @@ export const nodeDataArrayPalette = [
     text: "File Cache S3 linked datasets"
   },
   {
-    key: "Simple Storage Service Glacier ive",
+    key: "S3 Glacier ive",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Storage/Res_Amazon-Simple-Storage-Service-Glacier_Archive_48.svg",
     type: "Storage",
-    text: "Simple Storage Service Glacier ive"
+    text: "S3 Glacier ive"
   },
   {
-    key: "Simple Storage Service Glacier Vault",
+    key: "S3 Glacier Vault",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Storage/Res_Amazon-Simple-Storage-Service-Glacier_Vault_48.svg",
     type: "Storage",
-    text: "Simple Storage Service Glacier Vault"
+    text: "S3 Glacier Vault"
   },
   {
-    key: "Simple Storage Service Bucket With Objects",
+    key: "S3 Bucket With Objects",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Storage/Res_Amazon-Simple-Storage-Service_Bucket-With-Objects_48.svg",
     type: "Storage",
-    text: "Simple Storage Service Bucket With Objects"
+    text: "S3 Bucket With Objects"
   },
   {
-    key: "Simple Storage Service Bucket",
+    key: "S3 Bucket",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Storage/Res_Amazon-Simple-Storage-Service_Bucket_48.svg",
     type: "Storage",
-    text: "Simple Storage Service Bucket"
+    text: "S3 Bucket"
   },
   {
-    key: "Simple Storage Service General Access Points",
+    key: "S3 General Access Points",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Storage/Res_Amazon-Simple-Storage-Service_General-Access-Points_48.svg",
     type: "Storage",
-    text: "Simple Storage Service General Access Points"
+    text: "S3 General Access Points"
   },
   {
-    key: "Simple Storage Service Object",
+    key: "S3 Object",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Storage/Res_Amazon-Simple-Storage-Service_Object_48.svg",
     type: "Storage",
-    text: "Simple Storage Service Object"
+    text: "S3 Object"
   },
   {
-    key: "Simple Storage Service S3 Batch Operations",
+    key: "S3 Batch Operations",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Storage/Res_Amazon-Simple-Storage-Service_S3-Batch-Operations_48.svg",
     type: "Storage",
-    text: "Simple Storage Service S3 Batch Operations"
+    text: "S3 Batch Operations"
   },
   {
-    key: "Simple Storage Service S3 Glacier Deep ive",
+    key: "S3 Glacier Deep ive",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Storage/Res_Amazon-Simple-Storage-Service_S3-Glacier-Deep-Archive_48.svg",
     type: "Storage",
-    text: "Simple Storage Service S3 Glacier Deep ive"
+    text: "S3 Glacier Deep ive"
   },
   {
-    key: "Simple Storage Service S3 Glacier Flexible Retrieval",
+    key: "S3 Glacier Flexible Retrieval",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Storage/Res_Amazon-Simple-Storage-Service_S3-Glacier-Flexible-Retrieval_48.svg",
     type: "Storage",
-    text: "Simple Storage Service S3 Glacier Flexible Retrieval"
+    text: "S3 Glacier Flexible Retrieval"
   },
   {
-    key: "Simple Storage Service S3 Glacier Instant Retrieval",
+    key: "S3 Glacier Instant Retrieval",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Storage/Res_Amazon-Simple-Storage-Service_S3-Glacier-Instant-Retrieval_48.svg",
     type: "Storage",
-    text: "Simple Storage Service S3 Glacier Instant Retrieval"
+    text: "S3 Glacier Instant Retrieval"
   },
   {
-    key: "Simple Storage Service S3 Intelligent Tiering",
+    key: "S3 Intelligent Tiering",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Storage/Res_Amazon-Simple-Storage-Service_S3-Intelligent-Tiering_48.svg",
     type: "Storage",
-    text: "Simple Storage Service S3 Intelligent Tiering"
+    text: "S3 Intelligent Tiering"
   },
   {
-    key: "Simple Storage Service S3 Multi Region Access Points",
+    key: "S3 Multi Region Access Points",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Storage/Res_Amazon-Simple-Storage-Service_S3-Multi-Region-Access-Points_48.svg",
     type: "Storage",
-    text: "Simple Storage Service S3 Multi Region Access Points"
+    text: "S3 Multi Region Access Points"
   },
   {
-    key: "Simple Storage Service S3 Object Lambda Access Points",
+    key: "S3 Object Lambda Access Points",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Storage/Res_Amazon-Simple-Storage-Service_S3-Object-Lambda-Access-Points_48.svg",
     type: "Storage",
-    text: "Simple Storage Service S3 Object Lambda Access Points"
+    text: "S3 Object Lambda Access Points"
   },
   {
-    key: "Simple Storage Service S3 Object Lambda",
+    key: "S3 Object Lambda",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Storage/Res_Amazon-Simple-Storage-Service_S3-Object-Lambda_48.svg",
     type: "Storage",
-    text: "Simple Storage Service S3 Object Lambda"
+    text: "S3 Object Lambda"
   },
   {
-    key: "Simple Storage Service S3 Object Lock",
+    key: "S3 Object Lock",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Storage/Res_Amazon-Simple-Storage-Service_S3-Object-Lock_48.svg",
     type: "Storage",
-    text: "Simple Storage Service S3 Object Lock"
+    text: "S3 Object Lock"
   },
   {
-    key: "Simple Storage Service S3 On Outposts",
+    key: "S3 On Outposts",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Storage/Res_Amazon-Simple-Storage-Service_S3-On-Outposts_48.svg",
     type: "Storage",
-    text: "Simple Storage Service S3 On Outposts"
+    text: "S3 On Outposts"
   },
   {
-    key: "Simple Storage Service S3 One Zone IA",
+    key: "S3 One Zone IA",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Storage/Res_Amazon-Simple-Storage-Service_S3-One-Zone-IA_48.svg",
     type: "Storage",
-    text: "Simple Storage Service S3 One Zone IA"
+    text: "S3 One Zone IA"
   },
   {
-    key: "Simple Storage Service S3 Replication Time Control",
+    key: "S3 Replication Time Control",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Storage/Res_Amazon-Simple-Storage-Service_S3-Replication-Time-Control_48.svg",
     type: "Storage",
-    text: "Simple Storage Service S3 Replication Time Control"
+    text: "S3 Replication Time Control"
   },
   {
-    key: "Simple Storage Service S3 Replication",
+    key: "S3 Replication",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Storage/Res_Amazon-Simple-Storage-Service_S3-Replication_48.svg",
     type: "Storage",
-    text: "Simple Storage Service S3 Replication"
+    text: "S3 Replication"
   },
   {
-    key: "Simple Storage Service S3 Select",
+    key: "S3 Select",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Storage/Res_Amazon-Simple-Storage-Service_S3-Select_48.svg",
     type: "Storage",
-    text: "Simple Storage Service S3 Select"
+    text: "S3 Select"
   },
   {
-    key: "Simple Storage Service S3 Standard IA",
+    key: "S3 Standard IA",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Storage/Res_Amazon-Simple-Storage-Service_S3-Standard-IA_48.svg",
     type: "Storage",
-    text: "Simple Storage Service S3 Standard IA"
+    text: "S3 Standard IA"
   },
   {
-    key: "Simple Storage Service S3 Standard",
+    key: "S3 Standard",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Storage/Res_Amazon-Simple-Storage-Service_S3-Standard_48.svg",
     type: "Storage",
-    text: "Simple Storage Service S3 Standard"
+    text: "S3 Standard"
   },
   {
-    key: "Simple Storage Service S3 Storage Lens",
+    key: "S3 Storage Lens",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Storage/Res_Amazon-Simple-Storage-Service_S3-Storage-Lens_48.svg",
     type: "Storage",
-    text: "Simple Storage Service S3 Storage Lens"
+    text: "S3 Storage Lens"
   },
   {
-    key: "Simple Storage Service VPC Access Points",
+    key: "S3 VPC Access Points",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Storage/Res_Amazon-Simple-Storage-Service_VPC-Access-Points_48.svg",
     type: "Storage",
-    text: "Simple Storage Service VPC Access Points"
+    text: "S3 VPC Access Points"
   },
   {
     key: "Backup Audit Manager",
@@ -6161,53 +6154,53 @@ export const nodeDataArrayPalette = [
     text: "Backup Audit Manager"
   },
   {
-    key: "Backup  Backup for  CloudFormation",
+    key: "Backup for CloudFormation",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Storage/Res_AWS-Backup_AWS-Backup-for-AWS-CloudFormation_48.svg",
     type: "Storage",
-    text: "Backup  Backup for  CloudFormation"
+    text: "Backup for CloudFormation"
   },
   {
-    key: "Backup  Backup support for  FSx for NetApp ONTAP",
+    key: "Backup support for FSx for NetApp ONTAP",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Storage/Res_AWS-Backup_AWS-Backup-support-for-Amazon-FSx-for-NetApp-ONTAP_48.svg",
     type: "Storage",
-    text: "Backup  Backup support for  FSx for NetApp ONTAP"
+    text: "Backup support for  FSx for NetApp ONTAP"
   },
   {
-    key: "Backup  Backup support for  S3",
+    key: "Backup support for S3",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Storage/Res_AWS-Backup_AWS-Backup-support-for-Amazon-S3_48.svg",
     type: "Storage",
-    text: "Backup  Backup support for  S3"
+    text: "Backup support for S3"
   },
   {
-    key: "Backup  Backup Support for VMware Workloads",
+    key: "Backup Support for VMware Workloads",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Storage/Res_AWS-Backup_AWS-Backup-Support-for-VMware-Workloads_48.svg",
     type: "Storage",
-    text: "Backup  Backup Support for VMware Workloads"
+    text: "Backup Support for VMware Workloads"
   },
   {
-    key: "Backup Backup Plan",
+    key: "Backup Plan",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Storage/Res_AWS-Backup_Backup-Plan_48.svg",
     type: "Storage",
-    text: "Backup Backup Plan"
+    text: "Backup Plan"
   },
   {
-    key: "Backup Backup Restore",
+    key: "Backup Restore",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Storage/Res_AWS-Backup_Backup-Restore_48.svg",
     type: "Storage",
-    text: "Backup Backup Restore"
+    text: "Backup Restore"
   },
   {
-    key: "Backup Backup Vault",
+    key: "Backup Vault",
     figure: "Rectangle",
     source: "/img/AWS_icon/Resource_icon/Res_Storage/Res_AWS-Backup_Backup-Vault_48.svg",
     type: "Storage",
-    text: "Backup Backup Vault"
+    text: "Backup Vault"
   },
   {
     key: "Backup Compliance Reporting",
