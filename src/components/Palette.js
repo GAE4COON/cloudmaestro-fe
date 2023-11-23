@@ -3,7 +3,8 @@ import React, { memo, useEffect, useRef, useState } from "react";
 import * as go from "gojs";
 import { nodeDataArrayPalette } from "../db/Node";
 import styled from "styled-components";
-import { SoundTwoTone } from "@ant-design/icons";
+import { Input } from "antd";
+const { Search } = Input;
 
 function formatKey(key) {
   return String(key)
@@ -55,6 +56,10 @@ const Palette = memo(({ divClassName, diagram, diagramVersion }) => {
   const [filterModule, setFilterModule] = useState([]);
   const [modulePaletteData, setModulePaletteData] = useState(new Map());
   const [myPalette, setMyPalette] = useState([]);
+
+  const onChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
 
   useEffect(() => {
     setSaveDiagram(diagram);
@@ -291,11 +296,11 @@ const Palette = memo(({ divClassName, diagram, diagramVersion }) => {
     <div className={divClassName}>
       <div id="allSampleContent">
         <SearchContainer>
-          <SearchInput
-            type="text"
+          <StyledSearch
+            allowClear
             placeholder="Search..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={onChange}
+            enterButton
           />
         </SearchContainer>
 
@@ -486,4 +491,20 @@ const FilteredNodesContainer = styled.div`
   border: 1px solid #e8e8e8;
   border-radius: 2px;
   text-align: left;
+`;
+
+const StyledSearch = styled(Search)`
+  .ant-input {
+    color: #000;
+  }
+
+  .ant-input-search-button {
+    background-color: #dee8ff;
+    border-color: #dee8ff;
+
+    &:hover {
+      background-color: #fff;
+      border-color: #dee8ff;
+    }
+  }
 `;

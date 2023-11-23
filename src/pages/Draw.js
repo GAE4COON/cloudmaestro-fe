@@ -309,7 +309,7 @@ export default Draw;
 const StyledDiagram = styled.div`
   /* float: left; */
   width: 100%;
-  height: 100%; // 원하는 높이로 설정
+  height: 80vh; // 원하는 높이로 설정
 `;
 
 const StyleSpace = styled(Space)`
@@ -326,7 +326,7 @@ const StyleAlert = styled(Alert)`
 `;
 
 const ButtonContainer = styled.div`
-  // background-color:yellow;
+  position: relative;
   display: flex;
   justify-content: center;
 `;
