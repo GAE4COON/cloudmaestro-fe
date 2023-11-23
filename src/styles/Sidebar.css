@@ -82,6 +82,7 @@
 
 .sidebar-item-closed h3 {
   margin-left: 0px;
+  margin-bottom: 0px;
   text-align: left;
   flex: 1; 
   /* margin-right: 10px; */
