@@ -15,6 +15,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Alert, Space, Layout, Menu } from "antd";
 import { sidebarResource } from "../apis/sidebar";
 import { DrawResourceGuide } from "../apis/resource";
+import "../styles/App.css";
 
 // 페이지
 // import useReadJSON from "./useReadJSON";
@@ -26,7 +27,7 @@ import { useFileUpload } from "../components/useFileInput";
 import { summaryFile } from "../apis/fileAPI.js";
 import { Link } from "react-router-dom";
 import RequirementPopup from "../components/RequirementPopup";
-import { DataContext, useData } from '../components/DataContext.js'; // DataContext의 경로를 수정하세요
+import { DataContext, useData } from "../components/DataContext.js"; // DataContext의 경로를 수정하세요
 
 function Draw() {
   const navigate = useNavigate();
@@ -43,12 +44,26 @@ function Draw() {
   const [showToggle, setShowToggle] = useState(true);
   const [alertMessage, setAlertMessage] = useState(null);
   const { setData } = useData();
+  const [mydiagram, setmyDiagram] = useState(null);
   const [NodeGuideLine, setNodeGuideLine] = useState({
     key: null,
     message: null,
   });
 
+  const [diagramVersion, setDiagramVersion] = useState(0);
+
   const { isSidebarOpen, setIsSidebarOpen } = useData();
+
+  useEffect(() => {
+    //setmyDiagram(diagram);
+    console.log("Updated diagram version:", diagramVersion);
+  }, [diagramVersion]); // Dependency on diagramVersion
+
+  const handleDiagramChange = useCallback((changedDiagram) => {
+    // console.log("다이어그램이 변경되었습니다:", changedDiagram.model.toJson());
+    setmyDiagram(changedDiagram);
+    setDiagramVersion((prevVersion) => prevVersion + 1);
+  });
 
   const {
     initDiagram,
@@ -57,11 +72,7 @@ function Draw() {
     clickedNodeKey,
     DiagramCheck,
     NodeGuide,
-  } = useGoJS(setSelectedNodeData, setShowToggle, showToggle);
-
-  //console.log("show", showSelectToggle.value);
-
-  // Go to Draw page 완료
+  } = useGoJS(setShowToggle, handleDiagramChange);
 
   const location = useLocation();
   const file = location.state ? location.state.file : null;
@@ -82,7 +93,7 @@ function Draw() {
           const ResourceData = { title: NodeGuide };
           const response = await DrawResourceGuide(ResourceData);
           console.log(response);
-          if (!response.data.result === "fail") {
+          if (response.data.result !== "fail") {
             setNodeGuideLine({ key: NodeGuide, message: response.data.result });
           } else {
             setNodeGuideLine({
@@ -171,14 +182,15 @@ function Draw() {
   };
 
   return (
-    <div>
+    <div className="main-content">
       <div className="Draw">
         <div className="container">
           <div className="workspace">
             <div className="palette">
               <Palette
-                nodeDataArray={nodeDataArrayPalette}
                 divClassName={paletteClassName}
+                diagram={mydiagram}
+                diagramVersion={diagramVersion}
               />
             </div>
 
@@ -298,7 +310,7 @@ export default Draw;
 const StyledDiagram = styled.div`
   /* float: left; */
   width: 100%;
-  height: 100%; // 원하는 높이로 설정
+  height: 80vh; // 원하는 높이로 설정
 `;
 
 const StyleSpace = styled(Space)`
@@ -315,7 +327,7 @@ const StyleAlert = styled(Alert)`
 `;
 
 const ButtonContainer = styled.div`
-  // background-color:yellow;
+  position: relative;
   display: flex;
   justify-content: center;
 `;
@@ -325,26 +337,26 @@ const StyledButton = styled.div`
   box-sizing: border-box;
   width: 200px;
   padding: 5px;
+  margin: 10px;
+  color: #809cda;
 
   background: #ffffff;
-  border: 1px solid #bababa;
+  border: 2px solid #bbbbda;
   border-radius: 7px;
 
-  font-family: "Noto Sans KR", sans-serif !important;
-  font-style: normal;
-  font-weight: 700;
-  font-family: "Noto Sans KR", sans-serif !important;
+  font-family: "Noto Sans KR", sans-serif;
   font-style: normal;
   font-weight: 700;
 
   line-height: 30px;
   align-items: center;
   text-align: center;
-  line-height: 30px;
-  align-items: center;
-  text-align: center;
 
-  color: #809cda;
+  cursor: pointer;
+  &:hover {
+    background: #809cda;
+    color: #ffffff;
+  }
 `;
 const DiagramContainer = styled.div`
   position: relative;

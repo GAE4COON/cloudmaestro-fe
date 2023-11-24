@@ -25,6 +25,8 @@ import MyResource from "./pages/MyResource";
 import { DataProvider } from "./components/DataContext";
 import MySecurity from "./pages/Guideline";
 
+import FileInput from "./pages/fileInput";
+
 function App() {
   return (
     <div className="App">
@@ -33,36 +35,32 @@ function App() {
           <BrowserRouter>
             <SidebarController />
             <Navbar />
-            <div className="main-content">
-              <Routes>
-                <Route exact path="/" element={<Home />} />
+            <Routes>
+              <Route exact path="/" element={<Home />} />
+              <Route exact path="/home" element={<Home />} />
+              <Route path="/about" element={<Introduce />} />
+              <Route path="/about/example" element={<Example />} />
 
-                <Route exact path="/home" element={<Home />} />
+              <Route path="/draw" element={<Draw />} />
 
-                <Route path="/about" element={<Introduce />} />
-                <Route path="/about/example" element={<Example />} />
+              <Route path="/sign-up" element={<Signup />} />
+              <Route path="/sign-in" element={<Signin />} />
 
-                <Route path="/draw" element={<Draw />} />
+              <Route path="/home/auto" element={<AutoDraw />} />
+              <Route path="/input/aws" element={<InputAWS />} />
 
-                <Route path="/sign-up" element={<Signup />} />
-                <Route path="/sign-in" element={<Signin />} />
+              <Route path="/mypage" element={<MyPage />} />
 
-                <Route path="/home/auto" element={<AutoDraw />} />
-                <Route path="/input/aws" element={<InputAWS />} />
+              <Route path="/mypage/cloud" element={<MyCloud />} />
+              <Route path="/mypage/cloud/resource" element={<MyResource />} />
+              <Route path="/mypage/cloud/security" element={<MySecurity />} />
 
-                <Route path="/mypage" element={<MyPage />} />
+              <Route path="/mypage/network" element={<MyNetwork />} />
 
-                <Route path="/mypage/cloud" element={<MyCloud />} />
-                <Route path="/mypage/cloud/resource" element={<MyResource />} />
-                <Route path="/mypage/cloud/security" element={<MySecurity />} />
-
-                <Route path="/mypage/network" element={<MyNetwork />} />
-
-                <Route path="/mypage/design" element={<MyDesign />} />
+              <Route path="/mypage/design" element={<MyDesign />} />
 
                 <Route path="/summary" element={<Summary />} />
               </Routes>
-            </div>
             <Footer />
           </BrowserRouter>
         </DataProvider>

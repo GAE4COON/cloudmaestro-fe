@@ -2,16 +2,23 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Select, TreeSelect, Checkbox } from "antd";
 
-import { industrial, globalRequest, zoneRequest } from "../db/Requirement";
+import { industrial, zoneSecurityReq } from "../db/Requirement";
 
 const { SHOW_PARENT } = TreeSelect;
 
-function ZoneComponent({ diagram, zone, onDataChange }) {
+function ZoneComponent({
+  diagram,
+  zone,
+  industrial_BP,
+  onDataChange,
+  onRemoveZone,
+}) {
   const [ZoneData, setZoneData] = useState([]); //Zone select에서 쓰기 위한 데이터
   const [zoneValue, setZoneValue] = useState([]); //Zone에 대한 private, public subnet 정보 list
   const [zoneNode, setZoneNode] = useState([]); //Zone에 대한 private, public subnet node 정보 list
   const [SelectZone, setSelectZone] = useState(null); //망 선택
-  const [availableNode, setAvailableNode] = useState([]); //고가용성 선택
+  const [availableNode, setAvailableNode] = useState([]); //고가용성 - 트래픽 분산 선택
+  const [serverNode, setServerNode] = useState([]); //고가용성 -  선택
   const [zoneFunc, setSelectedZoneFunc] = useState(null); //망 기능 선택
   const [zoneReqValue, setSelectedZoneReqValue] = useState([]); //요구사항 선택
 
@@ -59,17 +66,10 @@ function ZoneComponent({ diagram, zone, onDataChange }) {
       const backupgroupNode = [];
 
       for (let idx = 0; idx < resultList.length; idx++) {
-        console.log(resultList[idx]);
+        console.log("resultList", resultList[idx]); // label : DEV , value : DEV 
+        console.log("Group",GroupData);
         backupgroupNode[resultList[idx].label] = [];
         backupNode[resultList[idx].label] = [];
-
-        // for (let i = 0; i < zonelist.length; i++) {
-        //   if (zonelist[i].includes(resultList[idx].label)) {
-        //     backupgroupNode[resultList[idx].label].push(zonelist[i]);
-        //   }
-        // }
-
-        // console.log("test group", backupgroupNode);
 
         //security 그룹 추출
         for (let i = 0; i < GroupData.length; i++) {
@@ -93,40 +93,30 @@ function ZoneComponent({ diagram, zone, onDataChange }) {
         }
 
         const nodeSet = new Set();
-
         for (let i = 0; i < diagramData.nodeDataArray.length; i++) {
           let nodeData = diagramData.nodeDataArray[i];
+          let backupValues = backupgroupNode[resultList[idx].label].map((item) => item.value);
+        
           if (nodeData.isGroup === null && nodeData.key.includes("EC2")) {
-            // console.log("우왕 EC2다", nodeData);
-            if (
-              backupgroupNode[resultList[idx].label]
-                .map((item) => item.value)
-                .includes(nodeData.group)
-            ) {
-              // 조건을 만족하는 경우 nodeSet에 nodeData.group 추가
+            console.log("Security Group 있는 Ec2", nodeData);
+            if (backupValues.includes(nodeData.group)) {
               nodeSet.add(nodeData.group);
             }
           }
+          
+        
+          if (typeof nodeData.group === 'string' && !nodeData.group.includes("Security Group") && nodeData.key.includes("EC2")) {
+           
+            if(nodeData.group.includes(resultList[idx].value)){
+              nodeSet.add(nodeData.key);
+            }
+            
+          }
         }
-
-        // console.log("nodeSet: ", nodeSet);
 
         const nodeSetList = Array.from(nodeSet);
         backupNode[resultList[idx].label] = nodeSetList;
-        // console.log("backupNode: ", backupNode);
-
-        // for (let i = 0; i < diagramData.nodeDataArray.length; i++) {
-        //   let nodeData = diagramData.nodeDataArray[i];
-        //   if (typeof nodeData.group === "string" && nodeData.isGroup === null) {
-        //     if (
-        //       backupgroupNode[resultList[idx].label].includes(nodeData.group)
-        //     ) {
-        //       backupNode[resultList[idx].label].push(nodeData.key);
-        //     }
-        //   }
-        // }
-        // // console.log("backupNode: ", backupNode);
-
+        
         for (let i = 0; i < backupNode[resultList[idx].label].length; i++) {
           backupNode[resultList[idx].label][i] = {
             value: backupNode[resultList[idx].label][i],
@@ -134,7 +124,9 @@ function ZoneComponent({ diagram, zone, onDataChange }) {
           };
         }
 
+
         setZoneNode(backupNode);
+
       }
     } catch (error) {
       console.log(error);
@@ -147,16 +139,18 @@ function ZoneComponent({ diagram, zone, onDataChange }) {
         SelectZone,
         zoneFunc,
         availableNode,
+        serverNode,
         zoneReqValue,
         zones,
       });
     };
     updateTossPopup();
-  }, [availableNode, zoneFunc, zoneReqValue, SelectZone, zones]);
+  }, [availableNode,serverNode, zoneFunc, zoneReqValue, SelectZone, zones]);
   //여기에 상위props로 보낼 것 다 넣어주세요.
 
   const resetFields = () => {
     setAvailableNode([]); // Resetting High Availability
+    setServerNode([]);
     setSelectedZoneFunc(null); // Resetting Selected Zone Function
     setSelectedZoneReqValue([]); // Resetting Selected Zone Requirements
   };
@@ -170,6 +164,10 @@ function ZoneComponent({ diagram, zone, onDataChange }) {
   const handleChange1 = (value) => {
     console.log(`selected ${value}`);
     setAvailableNode(value);
+  };
+  const handleChange2 = (value) => {
+    console.log(`selected ${value}`);
+    setServerNode(value);
   };
 
   const handleZoneFuncChange = (value) => {
@@ -190,13 +188,13 @@ function ZoneComponent({ diagram, zone, onDataChange }) {
     );
   };
 
-  const removeZone = (zoneId) => {
-    setZones(zones.filter((zone) => zone.id !== zoneId));
+  const removeCurrentZone = () => {
+    onRemoveZone(zone.id);
   };
 
   return (
     <ZoneContainer key={zone.id}>
-      <ZoneCloseButton onClick={() => removeZone(zone.id)}>✖</ZoneCloseButton>
+      <ZoneCloseButton onClick={removeCurrentZone}>✖</ZoneCloseButton>
 
       <SelectContainer>
         <SelectTitle>망 이름</SelectTitle>
@@ -235,12 +233,12 @@ function ZoneComponent({ diagram, zone, onDataChange }) {
               .toLowerCase()
               .localeCompare((optionB?.label ?? "").toLowerCase())
           }
-          options={industrial}
+          options={industrial_BP}
         />
       </SelectContainer>
 
       <SelectContainer>
-        <SelectTitle>고가용성</SelectTitle>
+        <SelectTitle>트래픽 조절</SelectTitle>
         <StyledBackupSelect
           mode="tags"
           showSearch
@@ -261,15 +259,29 @@ function ZoneComponent({ diagram, zone, onDataChange }) {
       </SelectContainer>
 
       <SelectContainer>
-        <SelectTitle>요구사항</SelectTitle>
-        <StyledTreeSelect
-          treeData={zoneRequest}
-          value={zoneReqValue}
-          onChange={handleZoneReqValueChange}
-          treeCheckable={true}
-          showCheckedStrategy={SHOW_PARENT}
-          placeholder="Please select"
-        />
+        <SelectTitle>서버 수 조절</SelectTitle>
+          <StyledBackupSelect
+            mode="tags"
+            showSearch
+            value={serverNode}
+            onChange={handleChange2}
+            placeholder="node select..."
+            optionFilterProp="children"
+            filterOption={(input, option) =>
+              (option?.label ?? "").includes(input)
+            }
+            filterSort={(optionA, optionB) =>
+              (optionA?.label ?? "")
+                .toLowerCase()
+                .localeCompare((optionB?.label ?? "").toLowerCase())
+            }
+            options={zoneNode[SelectZone]}
+          />
+      </SelectContainer>
+
+      <SelectContainer>
+        <SelectTitle>보안</SelectTitle>
+          <Checkbox.Group options={zoneSecurityReq} onChange={handleZoneReqValueChange} />
       </SelectContainer>
     </ZoneContainer>
   );
@@ -290,11 +302,6 @@ const ZoneCloseButton = styled.span`
   right: 10px;
   top: 10px;
 `;
-
-// const BackupSelectTitle = styled.div`
-//   width: 10%;
-//   text-align: left;
-// `;
 
 const StyledBackupSelect = styled(Select)`
   width: 80%;

@@ -2,8 +2,9 @@ import "../styles/Palette.css";
 import React, { memo, useEffect, useRef, useState } from "react";
 import * as go from "gojs";
 import { nodeDataArrayPalette } from "../db/Node";
-import styled from 'styled-components';
-
+import styled from "styled-components";
+import { Input } from "antd";
+const { Search } = Input;
 
 function formatKey(key) {
   return String(key)
@@ -40,24 +41,149 @@ const tabs = [
   "Satellite",
   "Security-Identity-Compliance",
   "Storage",
-  "AWS_Groups"
+  "AWS_Groups",
   // Add more tabs here
 ];
 
-const Palette = memo(({ divClassName }) => {
+const Palette = memo(({ divClassName, diagram, diagramVersion }) => {
   const [nodeDataArray, setNodeDataArray] = useState([]);
-
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedTab, setSelectedTab] = useState("Storage");
-  const [filteredNodes, setFilteredNodes] = useState([]);
+  const [filteredNodes, setFilteredNodes] = useState(new Map());
   const paletteDivs = useRef({});
 
+  const [savediagram, setSaveDiagram] = useState(null);
+  const [filterModule, setFilterModule] = useState([]);
+  const [modulePaletteData, setModulePaletteData] = useState(new Map());
+  const [myPalette, setMyPalette] = useState([]);
+
+  const onChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const onSearch = (value) => {
+    setSelectedTab("Search");
+  };
+
+  useEffect(() => {
+    setSaveDiagram(diagram);
+    if (!savediagram) {
+      return;
+    }
+    // console.log("diagram change:", savediagram.model.toJson());
+    //console.log("diagramVersion11:", diagramVersion);
+  }, [diagramVersion]); // diagramVersion을 의존성 배열에 추가
+
+  useEffect(() => {
+    const newModulePaletteData = new Map();
+
+    console.log("filterModule:", filterModule);
+
+    filterModule.forEach((sources, key) => {
+      const nodes = nodeDataArrayPalette.filter((node) => {
+        const included = sources.includes(node.source);
+        // console.log(`Node source: ${node.source}, Included: ${included}`);
+        // console.log(`Node source: ${sources}, Included: ${included}`);
+        return included;
+      });
+      newModulePaletteData.set(key, nodes);
+    });
+
+    console.log("newModulePaletteData:", newModulePaletteData);
+
+    setModulePaletteData(newModulePaletteData);
+  }, [filterModule]);
+
+  useEffect(() => {
+    if (!savediagram) {
+      return;
+    }
+
+    const diagramDataStr = savediagram.model.toJson();
+    const diagramData = JSON.parse(diagramDataStr);
+    const GroupData = [];
+
+    console.log("diagramData:", diagramData);
+
+    try {
+      for (let i = 0; i < diagramData.nodeDataArray.length; i++) {
+        let nodeData = diagramData.nodeDataArray[i];
+        if (nodeData.isGroup === true) {
+          GroupData.push(nodeData);
+        }
+      }
+
+      const result = new Set();
+      const resultSet = new Map();
+      const nodeSet = new Map();
+
+      GroupData.forEach((item) => {
+        if (typeof item.key === "string") {
+          const match = item.key.match(/Module BP(\d+)$/);
+          if (match) {
+            if (!resultSet.has(item.key)) {
+              resultSet.set(item.key, new Set());
+              nodeSet.set(item.key, new Set());
+            }
+            resultSet.get(item.key).add(item.key);
+          }
+        }
+      });
+
+      resultSet.forEach((set, key) => {
+        let previousSize = 0;
+        let currentSize = set.size;
+        console.log("set:", set);
+        console.log("key:", key);
+
+        while (previousSize !== currentSize) {
+          previousSize = currentSize;
+
+          GroupData.forEach((groupItem) => {
+            if (typeof groupItem.group === "string") {
+              set.forEach((setItem) => {
+                if (groupItem.group === setItem) {
+                  set.add(groupItem.key);
+                }
+              });
+            }
+          });
+
+          currentSize = set.size;
+        }
+      });
+
+      for (let i = 0; i < diagramData.nodeDataArray.length; i++) {
+        let nodeData = diagramData.nodeDataArray[i];
+        if (nodeData.source !== null) {
+          resultSet.forEach((set, key) => {
+            if (nodeData.group && set.has(nodeData.group)) {
+              nodeSet.get(key).add(nodeData); // nodeSet의 해당 Set에 nodeData 추가
+            }
+          });
+        }
+      }
+
+      const nodeMap = new Map();
+      nodeSet.forEach((nodes, key) => {
+        const sourcesSet = new Set(
+          Array.from(nodes).map((node) => node.source)
+        );
+        const sources = Array.from(sourcesSet); // Set을 다시 배열로 변환
+        nodeMap.set(key, sources); // 변환된 배열을 nodeMap에 저장
+      });
+
+      console.log("nodeMap:", nodeMap);
+      setFilterModule(nodeMap);
+    } catch (error) {
+      console.log(error);
+    }
+  }, [savediagram, diagramVersion]);
 
   useEffect(() => {
     const $ = go.GraphObject.make;
 
     let myPalette = $(go.Palette, {
-      // enable Ctrl+Z to undo and Ctrl+Y to redo
       "undoManager.isEnabled": true,
       "animationManager.isEnabled": false,
       model: new go.GraphLinksModel(nodeDataArray),
@@ -66,12 +192,14 @@ const Palette = memo(({ divClassName }) => {
     myPalette.nodeTemplate = $(
       go.Node,
       "Auto",
+
       $(
         go.Panel,
         "Vertical",
+
         $(
           go.Picture,
-          { margin: 5, width: 50, height: 50, background: "white" },
+          { margin: 5, width: 50, height: 50, background: "transparent" },
           new go.Binding("source")
         ),
 
@@ -84,7 +212,7 @@ const Palette = memo(({ divClassName }) => {
             overflow: go.TextBlock.WrapFit, // 너비를 초과하는 텍스트를 래핑
             textAlign: "center",
           },
-          new go.Binding("text", "key", formatKey)
+          new go.Binding("text", "text")
         )
       )
     );
@@ -107,6 +235,7 @@ const Palette = memo(({ divClassName }) => {
         $(
           go.Panel,
           "Auto",
+
           $(
             go.Shape,
             "Rectangle",
@@ -133,18 +262,29 @@ const Palette = memo(({ divClassName }) => {
             overflow: go.TextBlock.WrapFit,
             textAlign: "center",
           },
-          new go.Binding("text", "key", formatKey)
+          new go.Binding("text", "key")
         )
-      )
+      ),
+      $(go.TextBlock, {
+        alignment: go.Spot.BottomCenter,
+        margin: 3, // 마진을 추가하여 텍스트가 겹치지 않도록 조정
+        font: "10pt Noto Sans KR",
+      })
     );
 
     if (paletteDivs.current[selectedTab]) {
       myPalette.div = paletteDivs.current[selectedTab];
     }
 
-    let dataToUse = nodeDataArrayPalette.filter(
-      (item) => item.type === selectedTab
-    );
+    let dataToUse;
+
+    if (modulePaletteData.has(selectedTab)) {
+      dataToUse = modulePaletteData.get(selectedTab);
+    } else {
+      dataToUse = nodeDataArrayPalette.filter(
+        (item) => item.type === selectedTab
+      );
+    }
 
     let dataToSearch = nodeDataArrayPalette;
     if (searchTerm) {
@@ -160,20 +300,23 @@ const Palette = memo(({ divClassName }) => {
       myPalette.model.nodeDataArray = dataToUse;
     }
 
+    setMyPalette(myPalette);
+
     return () => {
       myPalette.div = null;
     };
-  }, [selectedTab, searchTerm]);
+  }, [selectedTab, searchTerm, modulePaletteData]);
 
   return (
     <div className={divClassName}>
       <div id="allSampleContent">
         <SearchContainer>
-          <SearchInput
-            type="text"
+          <StyledSearch
+            allowClear
             placeholder="Search..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={onChange}
+            onSearch={onSearch}
+            enterButton
           />
         </SearchContainer>
 
@@ -196,10 +339,9 @@ const Palette = memo(({ divClassName }) => {
                     name="rd"
                     onClick={() => setSelectedTab("Search")}
                   />
-                  <TabLabel htmlFor="rd_select">
-                    Search
-                  </TabLabel>
-                  <div className="tab-content"
+                  <TabLabel htmlFor="rd_select">Search</TabLabel>
+                  <div
+                    className="tab-content"
                     ref={(el) => (paletteDivs.current["Search"] = el)}
                   />
                 </Tab>
@@ -209,28 +351,42 @@ const Palette = memo(({ divClassName }) => {
         )}
         {filteredNodes.length === 0 && (
           <ScrollableTabsContainer>
-          {tabs.map((tab) => (
-           <Tab key={tab}>
-           <RadioInput
-             type="radio"
-             id={`rd_${tab}`}
-             name="rd"
-             onClick={() => setSelectedTab(tab)}
-           />
-           <TabLabel htmlFor={`rd_${tab}`}>
-             {formatKey(tab)}
-           </TabLabel>
-           <div className="tab-content"
-             ref={(el) => (paletteDivs.current[tab] = el)}
-           />
-         </Tab>
-          ))}
+            {filterModule.size > 0 &&
+              Array.from(filterModule.keys()).map((key) => (
+                <Tab key={key}>
+                  <RadioInput
+                    type="radio"
+                    id={`rd_${key}`}
+                    name="rd"
+                    onClick={() => setSelectedTab(key)}
+                  />
+                  <TabLabel htmlFor={`rd_${key}`}>{formatKey(key)}</TabLabel>
+                  <div
+                    className="tab-content"
+                    ref={(el) => (paletteDivs.current[key] = el)}
+                  />
+                </Tab>
+              ))}
+
+            {tabs.map((tab) => (
+              <Tab key={tab}>
+                <RadioInput
+                  type="radio"
+                  id={`rd_${tab}`}
+                  name="rd"
+                  onClick={() => setSelectedTab(tab)}
+                />
+                <TabLabel htmlFor={`rd_${tab}`}>{formatKey(tab)}</TabLabel>
+                <div
+                  className="tab-content"
+                  ref={(el) => (paletteDivs.current[tab] = el)}
+                />
+              </Tab>
+            ))}
           </ScrollableTabsContainer>
         )}
       </div>
-      
     </div>
-    
   );
 });
 
@@ -251,14 +407,14 @@ const Tab = styled.div`
   border-radius: 5px;
 
   color: rgba(0, 0, 0, 0.65);
-  
+
   &:hover {
     color: #bfd3ff;
   }
 `;
 
 // Hidden radio input for accessibility
- const RadioInput = styled.input.attrs({ type: 'radio' })`
+const RadioInput = styled.input.attrs({ type: "radio" })`
   position: absolute;
   opacity: 0;
   border-radius: 5px;
@@ -269,9 +425,9 @@ const Tab = styled.div`
 const TabLabel = styled.label`
   border-radius: 5px;
   box-shadow: 0 2px 8px #f0f1f2;
-  margin-bottom:5px;
+  margin-bottom: 5px;
 
-  padding: 12px 16px; 
+  padding: 12px 16px;
   display: flex;
   align-items: center;
   font-size: 15px;
@@ -310,36 +466,15 @@ const ScrollableTabsContainer = styled.div`
   }
 `;
 
-
 // Styled component for the search container
 const SearchContainer = styled.div`
-margin-bottom: 10px;
+  margin-bottom: 10px;
   padding: 10px;
-  
+
   display: flex;
   align-items: center;
   background-color: #fff;
   /* box-shadow: 0 2px 8px #f0f1f2; */
-`;
-
-
-// Styled component for the input
-const SearchInput = styled.input.attrs({ type: 'text' })`
-  outline: none;
-  
-  border: 1px solid #d9d9d9;
-  padding: 6.5px 11px;
-  width: 100%;
-  border-radius: 2px;
-  font-size: 14px;
-  transition: all 0.3s;
-  &:hover {
-    border-color: #40a9ff;
-  }
-  &:focus {
-    border-color: #40a9ff;
-    box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
-  }
 `;
 
 // Styled component for nodes container with filtered results
@@ -355,3 +490,17 @@ const FilteredNodesContainer = styled.div`
   text-align: left;
 `;
 
+const StyledSearch = styled(Search)`
+  .ant-input {
+    color: #000;
+  }
+  .ant-input-search-button {
+    background-color: #dee8ff;
+    border-color: #dee8ff;
+
+    &:hover {
+      background-color: #fff;
+      border-color: #dee8ff;
+    }
+  }
+`;

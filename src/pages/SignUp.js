@@ -4,8 +4,8 @@ import jwt_decode from "jwt-decode";
 import { useAuth } from "../utils/auth/authContext";
 import { useNavigate } from "react-router-dom";
 import { idCheck, emailCheck, codeCheck, join } from "../apis/auth.js";
-import { Link } from 'react-router-dom';
-
+import { Link } from "react-router-dom";
+import "../styles/App.css";
 import "../styles/signup.css";
 
 function Signup() {
@@ -256,129 +256,129 @@ function Signup() {
     }
   }
 
-
   return (
-    <div className="sign-up-form">
-      <h1>회원가입</h1>
-      <div className="input-group">
-        <label>아이디 *</label>
-        <input type="text" value={id} onChange={handleIdChange} />
-        <button onClick={checkIdDuplication}>중복확인</button>
-      </div>
-      {idError && <span className="error-text">{idError}</span>}
-      {idStatus === "taken" && (
-        <span className="error-text">이미 사용중인 아이디입니다.</span>
-      )}
-      {idStatus === "available" && (
-        <span className="success-text">사용 가능한 아이디입니다.</span>
-      )}
+    <div className="main-content">
+      <div className="sign-up-form">
+        <h1>회원가입</h1>
+        <div className="input-group">
+          <label>아이디 *</label>
+          <input type="text" value={id} onChange={handleIdChange} />
+          <button onClick={checkIdDuplication}>중복확인</button>
+        </div>
+        {idError && <span className="error-text">{idError}</span>}
+        {idStatus === "taken" && (
+          <span className="error-text">이미 사용중인 아이디입니다.</span>
+        )}
+        {idStatus === "available" && (
+          <span className="success-text">사용 가능한 아이디입니다.</span>
+        )}
 
-      <div className="input-group">
-        <label>비밀번호 *</label>
-        <input
-          type="password"
-          value={password}
-          onChange={handlePasswordChange}
-        />
+        <div className="input-group">
+          <label>비밀번호 *</label>
+          <input
+            type="password"
+            value={password}
+            onChange={handlePasswordChange}
+          />
+          <div></div>
+        </div>
+        {passwordError && <span className="error-text">{passwordError}</span>}
+
+        <div className="input-group">
+          <label>비밀번호확인 *</label>
+          <input
+            type="password"
+            value={passwordConfirm}
+            onChange={(e) => setPasswordConfirm(e.target.value)}
+          />
+          <div></div>
+        </div>
+        {passwordConfirmError && (
+          <span className="error-text">{passwordConfirmError}</span>
+        )}
+
+        <div className="input-group">
+          <label>이메일 *</label>
+          <input
+            type="email"
+            value={email}
+            onChange={handleEmailChange}
+            disabled={emailVerified}
+          />
+          <button onClick={checkEmail}>인증요청</button>
+        </div>
+        {emailError && <span className="error-text">{emailError}</span>}
         <div></div>
-      </div>
-      {passwordError && <span className="error-text">{passwordError}</span>}
 
-      <div className="input-group">
-        <label>비밀번호확인 *</label>
-        <input
-          type="password"
-          value={passwordConfirm}
-          onChange={(e) => setPasswordConfirm(e.target.value)}
-        />
-        <div></div>
-      </div>
-      {passwordConfirmError && (
-        <span className="error-text">{passwordConfirmError}</span>
-      )}
+        {emailConfirmed ? (
+          <>
+            <div className="input-group">
+              <label>인증 코드 *</label>
+              <input
+                type="text"
+                value={verificationCode}
+                onChange={(e) => setVerificationCode(e.target.value)}
+              />
+              <button
+                onClick={checkCode}
+                disabled={emailVerified}
+                style={
+                  emailVerified
+                    ? { backgroundColor: "#ccc", cursor: "not-allowed" }
+                    : {}
+                }
+              >
+                확인
+              </button>
+            </div>
+            {emailVerified && (
+              <span className="success-text">인증되었습니다.</span>
+            )}
+          </>
+        ) : null}
 
-      <div className="input-group">
-        <label>이메일 *</label>
-        <input
-          type="email"
-          value={email}
-          onChange={handleEmailChange}
-          disabled={emailVerified}
-        />
-        <button onClick={checkEmail}>인증요청</button>
-      </div>
-      {emailError && <span className="error-text">{emailError}</span>}
-      <div></div>
+        <div className="input-group">
+          <label>휴대전화 *</label>
+          <input type="tel" value={phone} onChange={handlePhoneChange} />
+          <div></div>
+        </div>
+        {phoneError && <span className="error-text">{phoneError}</span>}
 
-      {emailConfirmed ? (
-        <>
-          <div className="input-group">
-            <label>인증 코드 *</label>
-            <input
-              type="text"
-              value={verificationCode}
-              onChange={(e) => setVerificationCode(e.target.value)}
-            />
-            <button
-              onClick={checkCode}
-              disabled={emailVerified}
-              style={
-                emailVerified
-                  ? { backgroundColor: "#ccc", cursor: "not-allowed" }
-                  : {}
-              }
-            >
-              확인
-            </button>
-          </div>
-          {emailVerified && (
-            <span className="success-text">인증되었습니다.</span>
-          )}
-        </>
-      ) : null}
+        <div className="input-group">
+          <label>이름 *</label>
+          <input type="text" value={name} onChange={handleNameChange} />
+          <div></div>
+        </div>
+        {nameError && <span className="error-text">{nameError}</span>}
 
-      <div className="input-group">
-        <label>휴대전화 *</label>
-        <input type="tel" value={phone} onChange={handlePhoneChange} />
-        <div></div>
-      </div>
-      {phoneError && <span className="error-text">{phoneError}</span>}
+        <div className="input-group">
+          <label>소속 *</label>
+          <input type="text" value={belong} onChange={handleBelongChange} />
+          <div></div>
+        </div>
+        {belongError && <span className="error-text">{belongError}</span>}
 
-      <div className="input-group">
-        <label>이름 *</label>
-        <input type="text" value={name} onChange={handleNameChange} />
-        <div></div>
-      </div>
-      {nameError && <span className="error-text">{nameError}</span>}
-
-      <div className="input-group">
-        <label>소속 *</label>
-        <input type="text" value={belong} onChange={handleBelongChange} />
-        <div></div>
-      </div>
-      {belongError && <span className="error-text">{belongError}</span>}
-
-      <button
-        onClick={handleSignUp}
-        className="submit"
-        disabled={
-          idStatus !== "available" ||
-          !emailVerified ||
-          id === "" ||
-          password !== passwordConfirm ||
-          password === "" ||
-          email === "" ||
-          phone === "" ||
-          belong === "" ||
-          name === "" ||
-          belongError !== "" ||
-          nameError !== "" ||
-          passwordError !== "" ||
-          emailError !== "" ||
-          idError !== ""
-        }
-        style={
-          idStatus !== "available" ||
+        <button
+          onClick={handleSignUp}
+          className="submit"
+          disabled={
+            idStatus !== "available" ||
+            !emailVerified ||
+            id === "" ||
+            password !== passwordConfirm ||
+            password === "" ||
+            email === "" ||
+            phone === "" ||
+            belong === "" ||
+            name === "" ||
+            belongError !== "" ||
+            nameError !== "" ||
+            passwordError !== "" ||
+            emailError !== "" ||
+            idError !== ""
+          }
+          style={
+            idStatus !== "available" ||
             !emailVerified ||
             id === "" ||
             password !== passwordConfirm ||
@@ -392,19 +392,21 @@ function Signup() {
             passwordError !== "" ||
             emailError !== "" ||
             idError !== ""
-            ? { backgroundColor: "#ccc", cursor: "not-allowed" }
-            : {}
-        }
-      >
-        제출
-      </button>
+              ? { backgroundColor: "#ccc", cursor: "not-allowed" }
+              : {}
+          }
+        >
+          제출
+        </button>
 
-      <p>
-        아이디가 있는 경우 <Link to="/sign-in">로그인해주세요</Link>. 가입 후 아이디
-        변경은 불가합니다. 가입을 하면 <Link to="/terms">이용약관</Link>,{" "}
-        <Link to="/privacy">개인정보취급 방침</Link> 및 개인정보3자제공에 동의하게
-        됩니다.
-      </p>
+        <p>
+          아이디가 있는 경우 <Link to="/sign-in">로그인해주세요</Link>. 가입 후
+          아이디 변경은 불가합니다. 가입을 하면{" "}
+          <Link to="/terms">이용약관</Link>,{" "}
+          <Link to="/privacy">개인정보취급 방침</Link> 및 개인정보3자제공에
+          동의하게 됩니다.
+        </p>
+      </div>
     </div>
   );
 }

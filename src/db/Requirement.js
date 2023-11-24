@@ -1,10 +1,8 @@
 export const backupOptions = ["중앙관리", "일반"];
+export const zoneSecurityReq = ["웹 방화벽으로 보호"]
+export const websvr = ["웹 서버"]
 
 export const industrial = [
-  // {
-  //   value: '1',
-  //   label: '선택안함',
-  // },
   {
     value: "금융",
     label: "금융",
@@ -23,60 +21,103 @@ export const industrial = [
   },
 ];
 
+export const industrial_BP_game = [
+  {
+    value: "비동기",
+    label: "비동기",
+  },
+  {
+    value: "서버리스",
+    label: "서버리스",
+  },
+];
+
+export const industrial_BP_fin = [
+  {
+    value: "규제보고",
+    label: "규제보고",
+  },
+  {
+    value: "그리드컴퓨팅",
+    label: "그리드컴퓨팅",
+  },
+];
+
+export const industrial_BP_media = [
+  {
+    value: "비디오라이브스트리밍",
+    label: "비디오라이브스트리밍",
+  },
+  {
+    value: "비디오콘텐츠제공",
+    label: "비디오콘텐츠제공",
+  },
+];
+
+export const industrial_BP_same = [
+  {
+    value: "광고마케팅분석",
+    label: "광고마케팅분석",
+  },
+  {
+    value: "EFS",
+    label: "EFS",
+  },
+  {
+    value: "Kinesis",
+    label: "Kinesis",
+  },
+];
+
 export const globalRequest = [
   {
     title: "보안",
-    value: "security",
+    value: "보안",
     key: "보안",
     children: [
       {
-        title: "접근 권한 관리",
-        value: "접근 권한 관리",
-        key: "접근 권한 관리",
+        title: "중앙 집중적 접근 권한 관리 (IAM)",
+        value: "iam",
+        key: "중앙 집중적 접근 권한 관리 (IAM)",
+      },
+
+      {
+        title: "보안 검사 자동화 및 보안 경고 중앙 집중화 (Security Hub)",
+        value: "securityhub",
+        key: "보안 검사 자동화 및 보안 경고 중앙 집중화 (Security Hub)",
       },
       {
-        title: "탐지 및 대응",
-        value: "탐지 및 대응",
-        key: "탐지 및 대응",
-        children: [
-          {
-            title: "보안 로그 통합",
-            value: "보안 로그 통합",
-            key: "보안 로그 통합",
-          },
-          {
-            title: "랜섬웨어 탐지",
-            value: "랜섬웨어 탐지",
-            key: "랜섬웨어 탐지",
-          },
-          {
-            title: "보안 사고 조사",
-            value: "보안 사고 조사",
-            key: "보안 사고 조사",
-          },
-        ],
+        title: "지능형 위협 탐지 (Guard Duty)",
+        value: "guardduty",
+        key: "지능형 위협 탐지 (Guard Duty)",
       },
+      {
+        title: "보안 문제 조사 (Detective)",
+        value: "detective",
+        key: "보안 사고 조사 (Detective)",
+      },
+
       {
         title: "네트워크 보호",
         value: "네트워크 보호",
         key: "네트워크 보호",
         children: [
           {
-            title: "네트워크 방화벽",
-            value: "네트워크 방화벽",
-            key: "네트워크 방화벽",
+            title: "네트워크 방화벽 (Network Firewall)",
+            value: "networkfirewall",
+            key: "네트워크 방화벽 (Network Firewall)",
           },
           {
-            title: "안티 디도스",
-            value: "안티 디도스",
-            key: "안티 디도스",
+            title: "DDoS 보호 (Shield)",
+            value: "shield",
+            key: "DDoS 보호 (Shield)",
           },
         ],
       },
       {
-        title: "웹 애플리케이션 보호",
-        value: "웹 애플리케이션 보호",
-        key: "웹 애플리케이션 보호",
+        title: "웹 애플리케이션 보호 (WAF)",
+        value: "waf",
+        key: "웹 애플리케이션 보호 (WAF)",
       },
       {
         title: "데이터 보호",
@@ -84,14 +125,14 @@ export const globalRequest = [
         key: "데이터 보호",
         children: [
           {
-            title: "키관리",
-            value: "키관리",
-            key: "키관리",
+            title: "키관리 (Secrets Manager)",
+            value: "secretmanager",
+            key: "키관리 (Secrets Manager)",
           },
           {
-            title: "키생성 및 암호화",
-            value: "키생성 및 암호화",
-            key: "키생성 및 암호화",
+            title: "키생성 및 암호화 (KMS)",
+            value: "kms",
+            key: "키생성 및 암호화 (KMS)",
           },
         ],
       },
@@ -108,243 +149,79 @@ export const globalRequest = [
         key: "로그 수집 및 저장",
         children: [
           {
-            title: "API 로그 수집",
-            value: "API 로그 수집",
-            key: "API 로그 수집",
+            title: "API 로그 수집, 저장 (CloudTrail)",
+            value: "cloudtrail",
+            key: "API 로그 수집 저장 (CloudTrail)",
           },
           {
-            title: "리소스 및 애플리케이션 모니터링",
-            value: "리소스 및 애플리케이션 모니터링",
-            key: "리소스 및 애플리케이션 모니터링",
+            title: "로그 모니터링 (CloudWatch)",
+            value: "cloudwatch",
+            key: "로그 모니터링 (CloudWatch)",
           },
         ],
+      },
+
+      {
+        title: "로그 수집/분석/시각화 통합 (OpenSearch)",
+        value: "opensearch",
+        key: "로그 수집/분석/시각화 통합 (OpenSearch)",
       },
       {
-        title: "분석 및 시각화",
-        value: "분석 및 시각화",
-        key: "분석 및 시각화",
-        children: [
-          {
-            title: "로그 수집/분석/시각화 통합 (OpenSearch)",
-            value: "로그 수집/분석/시각화 통합 (OpenSearch)",
-            key: "로그 수집/분석/시각화 통합 (OpenSearch)",
-          },
-          {
-            title: "로그 분석 (SQL 쿼리)",
-            value: "로그 분석 (SQL 쿼리)",
-            key: "로그 분석 (SQL 쿼리)",
-          },
-          {
-            title: "로그 시각화",
-            value: "로그 시각화",
-            key: "로그 시각화",
-          },
-        ],
+        title: "로그 분석 (SQL 쿼리) (Athena)",
+        value: "athena",
+        key: "로그 분석 (SQL 쿼리) (Athena)",
       },
-    ],
+      {
+        title: "로그 시각화 (QuickSight)",
+        value: "quicksight",
+        key: "로그 시각화 (QuickSight)",
+      },
 
-},
-{
-    title: '부하 분산',
-    value: '부하 분산',
-    key: '부하 분산',
-    children: [
-        {
-            title: '웹 트래픽 분산',
-            value: '웹 트래픽 분산',
-            key: '웹 트래픽 분산',
-            children: [
-                {
-                    title: 'DNS 서비스',
-                    value: 'DNS 서비스',
-                    key: 'DNS 서비스',
-                },
-            ],
-        },
     ],
-},
-{
-    title: '이중화',
-    value: '이중화',
-    key: '이중화',
-    children: [
-        {
-            title: '다중 AW 배포 구성 및 관리',
-            value: '다중 AW 배포 구성 및 관리',
-            key: '다중 AW 배포 구성 및 관리',
-            children: [
-                {
-                    title: 'DNS 서버 이중화',
-                    value: 'DNS 서버 이중화',
-                    key: 'DNS 서버 이중화',
-                },
-                {
-                    title: '서버 이중화',
-                    value: '서버 이중화',
-                    key: '서버 이중화',
-                },
-                {
-                    title: '데이터베이스 분산',
-                    value: '데이터베이스 분산',
-                    key: '데이터베이스 분산',
-                },
-            ],
-        },
-    ],
-},
-];
-
-export const zoneRequest = [
+  },
   {
-    title: "보안",
-    value: "망별_보안",
-    key: "망별_보안",
+    title: "부하 분산",
+    value: "부하 분산",
+    key: "부하 분산",
     children: [
       {
-        title: "접근 권한 관리",
-        value: "망별_접근 권한 관리",
-        key: "망별_접근 권한 관리",
-      },
-      {
-        title: "탐지 및 대응",
-        value: "망별_탐지 및 대응",
-        key: "망별_탐지 및 대응",
+        title: "웹 트래픽 분산",
+        value: "웹 트래픽 분산",
+        key: "웹 트래픽 분산",
         children: [
           {
-            title: "보안 로그 통합",
-            value: "망별_보안 로그 통합",
-            key: "망별_보안 로그 통합",
-          },
-          {
-            title: "랜섬웨어 탐지",
-            value: "망별_랜섬웨어 탐지",
-            key: "망별_랜섬웨어 탐지",
-          },
-          {
-            title: "보안 사고 조사",
-            value: "망별_보안 사고 조사",
-            key: "망별_보안 사고 조사",
-          },
-        ],
-      },
-      {
-        title: "네트워크 보호",
-        value: "망별_네트워크 보호",
-        key: "망별_네트워크 보호",
-        children: [
-          {
-            title: "네트워크 방화벽",
-            value: "망별_네트워크 방화벽",
-            key: "네트워크 방화벽",
-          },
-          {
-            title: "안티 디도스",
-            value: "망별_안티 디도스",
-            key: "망별_안티 디도스",
-          },
-        ],
-      },
-      {
-        title: "웹 애플리케이션 보호",
-        value: "망별_웹 애플리케이션 보호",
-        key: "망별_웹 애플리케이션 보호",
-      },
-      {
-        title: "데이터 보호",
-        value: "망별_데이터 보호",
-        key: "망별_데이터 보호",
-        children: [
-          {
-            title: "키관리",
-            value: "망별_키관리",
-            key: "망별_키관리",
-          },
-          {
-            title: "키생성 및 암호화",
-            value: "망별_키생성 및 암호화",
-            key: "망별_키생성 및 암호화",
+            title: "DNS 서비스",
+            value: "DNS 서비스",
+            key: "DNS 서비스",
           },
         ],
       },
     ],
   },
   {
-    title: "로깅",
-    value: "망별_로깅",
-    key: "망별_로깅",
+    title: "이중화",
+    value: "이중화",
+    key: "이중화",
     children: [
       {
-        title: "로그 수집 및 저장",
-        value: "망별_로그 수집 및 저장",
-        key: "망별_로그 수집 및 저장",
+        title: "다중 AW 배포 구성 및 관리",
+        value: "다중 AW 배포 구성 및 관리",
+        key: "다중 AW 배포 구성 및 관리",
         children: [
           {
-            title: "API 로그 수집",
-            value: "망별_API 로그 수집",
-            key: "망별_API 로그 수집",
+            title: "DNS 서버 이중화",
+            value: "DNS 서버 이중화",
+            key: "DNS 서버 이중화",
           },
           {
-            title: "리소스 및 애플리케이션 모니터링",
-            value: "망별_리소스 및 애플리케이션 모니터링",
-            key: "망별_리소스 및 애플리케이션 모니터링",
+            title: "서버 이중화",
+            value: "서버 이중화",
+            key: "서버 이중화",
           },
-        ],
-      },
-      {
-        title: "분석 및 시각화",
-        value: "망별_분석 및 시각화",
-        key: "망별_분석 및 시각화",
-        children: [
-          {
-            title: "로그 수집/분석/시각화 통합 (OpenSearch)",
-            value: "망별_로그 수집/분석/시각화 통합 (OpenSearch)",
-            key: "망별_로그 수집/분석/시각화 통합 (OpenSearch)",
-          },
-          {
-            title: "로그 분석 (SQL 쿼리)",
-            value: "망별_로그 분석 (SQL 쿼리)",
-            key: "망별_로그 분석 (SQL 쿼리)",
-          },
-          {
-            title: "로그 시각화",
-            value: "망별_로그 시각화",
-            key: "망별_로그 시각화",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    title: "고가용성",
-    value: "망별_고가용성",
-    key: "망별_고가용성",
-    children: [
-      {
-        title: "서버 부하 분산",
-        value: "망별_서버 부하 분산",
-        key: "망별_서버 부하 분산",
-        children: [
-          {
-            title: "웹 서비스 부하 감소",
-            value: "망별_웹 서비스 부하 감소",
-            key: "망별_웹 서비스 부하 감소",
-          },
-          {
-            title: "서버 사이즈 자동 조절",
-            value: "망별_서버 사이즈 자동 조절",
-            key: "망별_서버 사이즈 자동 조절",
-          },
-        ],
-      },
-      {
-        title: "다중 배포 구성 및 관리",
-        value: "망별_다중 배포 구성 및 관리",
-        key: "망별_다중 배포 구성 및 관리",
-        children: [
           {
             title: "데이터베이스 분산",
-            value: "망별_데이터베이스 분산",
-            key: "망별_데이터베이스 분산",
+            value: "데이터베이스 분산",
+            key: "데이터베이스 분산",
           },
         ],
       },

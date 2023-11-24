@@ -3,13 +3,13 @@ import React, { useCallback, useState, useEffect } from "react";
 import * as go from "gojs";
 import "../styles/Button.css"; // contains .diagram-component CSS
 import { json, useNavigate } from "react-router-dom";
+
 import { rehostRequest, requirementRequest } from "../apis/fileAPI";
-import {BsUpload,BsDownload,  BsEraser, BsSave, } from "react-icons/bs"
-import {BiSave} from "react-icons/bi"
-import { sidebarResource } from "../apis/sidebar"
-import { useData } from '../components/DataContext';
-
-
+import { BsUpload, BsDownload, BsEraser, BsSave } from "react-icons/bs";
+import { BiSave } from "react-icons/bi";
+import { sidebarResource } from "../apis/sidebar";
+import { useData } from "../components/DataContext";
+import "../styles/App.css";
 
 const Button = ({
   diagram,
@@ -27,9 +27,6 @@ const Button = ({
   const { setData } = useData();
   const [isRehost, setIsRehost] = useState(false);
 
-  
-
-  
   useEffect(() => {
     setFinalToggleValue(finalToggleVal);
   }, [finalToggleVal]);
@@ -70,7 +67,6 @@ const Button = ({
         background: "white",
       });
       let fileName = prompt("파일명을 입력해주세요:", "diagram.png");
-      // 사용자가 프롬프트를 취소하거나 이름을 제공하지 않으면 함수 종료
       if (!fileName) {
         return;
       } else if (!fileName.endsWith(".png")) {
@@ -83,31 +79,32 @@ const Button = ({
     }
   };
 
-
-
   const handleLoad = async () => {
     try {
       const jsonString = diagram.model.toJson();
       const diagramObject = JSON.parse(jsonString);
-      const types = diagramObject.nodeDataArray.map(node => node.type);
-      const otherTypes = types.filter(type => type !== "Network_icon" && type !== "group" && type !== undefined );
+      const types = diagramObject.nodeDataArray.map((node) => node.type);
+      const otherTypes = types.filter(
+        (type) =>
+          type !== "Network_icon" && type !== "group" && type !== undefined
+      );
       const containsOtherTypes = otherTypes.length > 0;
-      
-      if(containsOtherTypes){
-        alert("클라우드 아키텍처가 포함되어있으면 Rehost 하지 못합니다.")
+
+      if (containsOtherTypes) {
+        alert("클라우드 아키텍처가 포함되어있으면 Rehost 하지 못합니다.");
         return;
       }
       if (clickedLoaded) {
-        alert("클라우드 아키텍처는 Rehost 하지 못합니다.")
+        alert("클라우드 아키텍처는 Rehost 하지 못합니다.");
         return;
       }
-      
+
       const response = await rehostRequest(jsonString);
       //console.log("response", response.data.result);
       const Jdata = response.data.result;
-      console.log("rehost:",Jdata)
+      console.log("rehost:", Jdata);
       diagram.model = go.Model.fromJson(Jdata);
-      
+
       const response1 = await sidebarResource(diagram.model.nodeDataArray);
       setData(response1.data); // set the data in context
       setClickedLoaded(true);
@@ -119,32 +116,30 @@ const Button = ({
 
   const ToOptimize = () => {
     <div className="home-content">
-      <div className="img-container">
-        hello
-      </div>
-    </div>
-  }
+      <div className="img-container">hello</div>
+    </div>;
+  };
 
   const onFileChange = (e) => {
     if (e.target.files[0] && e.target.files[0].name.includes("json")) {
       let file = e.target.files[0];
       let fileReader = new FileReader();
       fileReader.readAsText(file);
-      fileReader.onload = async() => {
+      fileReader.onload = async () => {
         //console.log("json", fileReader.result);
 
-      let filejson = JSON.parse(fileReader.result);
-      if (filejson.hasOwnProperty("cost")) {
-        setFinalToggleVal(filejson["cost"]);
-      }
-      if (fileReader.result && diagram) {
-        diagram.model = go.Model.fromJson(fileReader.result);
-        //console.log(JSON.stringify(diagram.model));
-        const response1 = await sidebarResource(diagram.model.nodeDataArray);
-        setData(response1.data); // set the data in context
-        setShowToggle(true);
-        setClickedLoaded(false);
-      }
+        let filejson = JSON.parse(fileReader.result);
+        if (filejson.hasOwnProperty("cost")) {
+          setFinalToggleVal(filejson["cost"]);
+        }
+        if (fileReader.result && diagram) {
+          diagram.model = go.Model.fromJson(fileReader.result);
+          //console.log(JSON.stringify(diagram.model));
+          const response1 = await sidebarResource(diagram.model.nodeDataArray);
+          setData(response1.data); // set the data in context
+          setShowToggle(true);
+          setClickedLoaded(false);
+        }
       };
     } else if (e.target.files[0] && !e.target.files[0].name.includes("json")) {
       alert("Json형식의 파일을 넣어주세요.");
@@ -152,7 +147,7 @@ const Button = ({
     e.target.value = null;
   };
 
-  const handleReset = async() => {
+  const handleReset = async () => {
     if (diagram) {
       diagram.startTransaction("Cleared diagram");
       setFinalToggleValue({});
@@ -168,26 +163,13 @@ const Button = ({
     setShowToggle(false); // toggle 숨김
   };
 
-  const requirement = async() => {
-    try{
-    const jsonString1 = diagram.model.toJson();
-    const response1 = await requirementRequest(jsonString1);
-  
-  
-    const Jdata1 = response1.data.result;
-    console.log("requirement:",Jdata1);
-    diagram.model = go.Model.fromJson(Jdata1);
-    }
-    catch (error) {
-      console.error("requirement error: ", error);
-    }
-  }
-
   return (
     <div>
       <div className="button-container">
         <div className="button-row">
-          <button onClick={handleClick}><BsUpload/></button>
+          <button onClick={handleClick}>
+            <BsUpload />
+          </button>
           <input
             type="file"
             ref={hiddenFileInput}
@@ -197,29 +179,23 @@ const Button = ({
         </div>
 
         <div className="button-row">
-          <button onClick={handleReset}><BsEraser/></button>
+          <button onClick={handleReset}>
+            <BsEraser />
+          </button>
         </div>
         <div className="button-row">
-          <button onClick={handleSave}><BsDownload/></button>
+          <button onClick={handleSave}>
+            <BsDownload />
+          </button>
         </div>
         <div className="button-row">
-          <button onClick={localSaveImage}><BiSave/></button>
+          <button onClick={localSaveImage}>
+            <BiSave />
+          </button>
         </div>
         <div className="button-row">
-            {
-              !isRehost && (
-                <button onClick={handleLoad}>Rehost</button>
-              )
-            }
-            {
-              isRehost && (
-                <button onClick={ToOptimize}>Optimize</button>
-              )
-            }
-            
-        </div>
-        <div className="button-row">
-          <button onClick={requirement}>require</button>
+          {<button onClick={handleLoad}>Rehost</button>}
+          {/* {isRehost && <button onClick={ToOptimize}>Optimize</button>} */}
         </div>
       </div>
     </div>
