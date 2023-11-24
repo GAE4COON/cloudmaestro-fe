@@ -1,69 +1,60 @@
-.home-content {
+.home-content{
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   margin: 0 auto;
-  height: 90vh;
-}
-
-.img-container {
-  /* position: absolute; */
+  height: 100vh;
+  width: 100%;
+  margin-top: 35px;
 }
 
 .home-img {
-  width: auto;
-  height: 75vh;
+  height: 100%;
+  width: 100%;
   object-fit: cover;
   display: block;
   margin: 0 auto;
   position: relative;
-  opacity: 0.5;
+  /* opacity: 0.5; */
 }
 
 .home-select-box {
   width: 50%;
   height: 30%;
-  background-color: white;
   bottom: 0;
-  left: 0;
   color:#3064D6;
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 75%;
+  left: 27%;
   transform: translate(-50%, -50%);
   z-index: 1;
   border-radius: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   font-size: 1rem; /* 이 부분은 상대적 크기 조절의 기준이 됩니다. */
   padding: 20px;
 }
 
-.home-select-text {
-  color: #6F6F6F;
-  font-size: 1em; /* 1em은 home-select-box의 font-size와 동일합니다. */
-}
 
 .home-btn {
-  width: 18vh; /* 상대적 너비 */
-  height: 6vh; /* 상대적 높이 */
-  font-size: 10px;
+  width: 160px;
+  height: 60px;
+  font-size: 16px;
   background-color:white;
   color: #3064D6;
   border: none;
-  border-radius: 5px 5px 5px 5px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  font-size: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(15, 38, 214, 0.1);
   font-weight: bold;
   cursor: pointer;
   outline: none;
   margin-top: 40px;
-  margin-right: 10px;
+  margin-right: 20px;
 }
 
 .home-btn:hover{
   transition: all 0.2s ease-in-out;
-  color: #809CDA;
+  color: #8da4d6;
 }
 
 /* 반응형 스타일 */

@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { login } from "../apis/auth.js";
 import { useAuth } from "../utils/auth/authContext";
 import jwt_decode from "jwt-decode";
-
+import "../styles/App.css";
 import "../styles/signin.css";
 
 function SignIn() {
@@ -84,7 +84,7 @@ function SignIn() {
   }, []);
 
   return (
-    <>
+    <div className="main-content">
       <h1></h1>
       <div className="sign-in-form">
         <h1>로그인</h1>
@@ -116,7 +116,7 @@ function SignIn() {
           style={{ visibility: user ? "hidden" : "visible" }}
         ></div>
       </div>
-    </>
+    </div>
   );
 }
 
