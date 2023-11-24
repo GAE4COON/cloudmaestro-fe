@@ -219,7 +219,7 @@ function Draw() {
                     message={NodeGuideLine.key}
                     description={NodeGuideLine.message}
                     type="info"
-                    // closable
+                    closable
                     // onClose={() =>
                     //   setNodeGuideLine({ key: null, message: null })
                     // }
