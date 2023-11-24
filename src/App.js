@@ -25,6 +25,8 @@ import MyResource from "./pages/MyResource";
 import { DataProvider } from "./components/DataContext";
 import MySecurity from "./pages/Guideline";
 
+import FileInput from "./pages/fileInput";
+
 function App() {
   return (
     <div className="App">
@@ -61,6 +63,9 @@ function App() {
                 <Route path="/mypage/design" element={<MyDesign />} />
 
                 <Route path="/summary" element={<Summary />} />
+
+                <Route path="/file" element={<FileInput />} />
+
               </Routes>
             </div>
             <Footer />

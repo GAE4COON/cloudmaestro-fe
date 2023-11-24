@@ -193,8 +193,8 @@ const Button = ({
           </button>
         </div>
         <div className="button-row">
-          {!isRehost && <button onClick={handleLoad}>Rehost</button>}
-          {isRehost && <button onClick={ToOptimize}>Optimize</button>}
+          {<button onClick={handleLoad}>Rehost</button>}
+          {/* {isRehost && <button onClick={ToOptimize}>Optimize</button>} */}
         </div>
       </div>
     </div>
