@@ -22,10 +22,10 @@
 }
 
 .sidebar-item {
-  display: flex; /* Flexbox 레이아웃 사용 */
+  display: flex;
   align-items: center; /* 세로 중앙 정렬 */
   justify-content: space-around; /* 공간을 균등하게 나눔 */
-  padding: 10px; /* 패딩 추가 */
+  padding: 10px;
   height: auto; /* 고정된 높이 설정 */
   font-family: "Noto Sans KR", sans-serif;
   font-size: 14px;
@@ -33,9 +33,9 @@
 
 
 .sidebar-item img {
-  width: 20%; /* 이미지 너비를 30%로 설정 */
+  width: 20%;
   height: auto;
-  object-fit: cover; /* 이미지 비율을 유지하면서 자르기 */
+  object-fit: cover;
 }
 
 .sidebar-item h3 {

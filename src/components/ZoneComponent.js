@@ -66,17 +66,10 @@ function ZoneComponent({
       const backupgroupNode = [];
 
       for (let idx = 0; idx < resultList.length; idx++) {
-        console.log(resultList[idx]);
+        console.log("resultList", resultList[idx]); // label : DEV , value : DEV 
+        console.log("Group",GroupData);
         backupgroupNode[resultList[idx].label] = [];
         backupNode[resultList[idx].label] = [];
-
-        // for (let i = 0; i < zonelist.length; i++) {
-        //   if (zonelist[i].includes(resultList[idx].label)) {
-        //     backupgroupNode[resultList[idx].label].push(zonelist[i]);
-        //   }
-        // }
-
-        // console.log("test group", backupgroupNode);
 
         //security 그룹 추출
         for (let i = 0; i < GroupData.length; i++) {
@@ -105,41 +98,25 @@ function ZoneComponent({
           let backupValues = backupgroupNode[resultList[idx].label].map((item) => item.value);
         
           if (nodeData.isGroup === null && nodeData.key.includes("EC2")) {
-            console.log("Security Group 있는 Ec2" + nodeData);
+            console.log("Security Group 있는 Ec2", nodeData);
             if (backupValues.includes(nodeData.group)) {
               nodeSet.add(nodeData.group);
             }
           }
+          
         
           if (typeof nodeData.group === 'string' && !nodeData.group.includes("Security Group") && nodeData.key.includes("EC2")) {
-            console.log("Security Group 없는 " + nodeData);
-          
+           
+            if(nodeData.group.includes(resultList[idx].value)){
               nodeSet.add(nodeData.key);
+            }
             
           }
         }
-    
-
-        // console.log("nodeSet: ", nodeSet);
 
         const nodeSetList = Array.from(nodeSet);
         backupNode[resultList[idx].label] = nodeSetList;
         
-
-        // console.log("backupNode: ", backupNode);
-
-        // for (let i = 0; i < diagramData.nodeDataArray.length; i++) {
-        //   let nodeData = diagramData.nodeDataArray[i];
-        //   if (typeof nodeData.group === "string" && nodeData.isGroup === null) {
-        //     if (
-        //       backupgroupNode[resultList[idx].label].includes(nodeData.group)
-        //     ) {
-        //       backupNode[resultList[idx].label].push(nodeData.key);
-        //     }
-        //   }
-        // }
-        // // console.log("backupNode: ", backupNode);
-
         for (let i = 0; i < backupNode[resultList[idx].label].length; i++) {
           backupNode[resultList[idx].label][i] = {
             value: backupNode[resultList[idx].label][i],

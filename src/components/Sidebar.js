@@ -1,8 +1,8 @@
-import React, { useRef, useEffect } from 'react';
-import { FiX, FiMenu } from 'react-icons/fi';
+import React, { useRef, useEffect } from "react";
+import { FiX, FiMenu } from "react-icons/fi";
 import "../styles/Sidebar.css";
-import { useData } from './DataContext';
-import { nodeDataArrayPalette } from '../db/Node'; // nodeDataArrayPalette 가져오기
+import { useData } from "./DataContext";
+import { nodeDataArrayPalette } from "../db/Node"; // nodeDataArrayPalette 가져오기
 
 function Sidebar({ isOpen, setIsOpen }) {
   const outside = useRef();
@@ -17,14 +17,18 @@ function Sidebar({ isOpen, setIsOpen }) {
       }
     }
 
-    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener("mousemove", handleMouseMove);
     return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener("mousemove", handleMouseMove);
     };
   }, [setIsOpen]);
 
   return (
-    <div id="sidebar" ref={outside} className={`sidebar ${isOpen ? 'open' : 'closed'}`}>
+    <div
+      id="sidebar"
+      ref={outside}
+      className={`sidebar ${isOpen ? "open" : "closed"}`}
+    >
       {isOpen ? (
         <>
           <FiX size={24} onClick={() => setIsOpen(false)} className="icon" />
@@ -36,9 +40,11 @@ function Sidebar({ isOpen, setIsOpen }) {
             )}
             {data && data.length > 0 ? (
               data.map((item, index) => {
-                const node = nodeDataArrayPalette.find(node => node.text === item);
-                const source = node ? node.source : '';
-                console.log(source);
+                const node = nodeDataArrayPalette.find(
+                  (node) => node.text === item
+                );
+                const source = node ? node.source : "";
+                // console.log(source);
                 return (
                   <div key={index} className="sidebar-item">
                     {source && <img src={source} alt={item} />}
@@ -52,27 +58,29 @@ function Sidebar({ isOpen, setIsOpen }) {
           </div>
         </>
       ) : (
-        <>        
-        <FiMenu size={24} onClick={() => setIsOpen(true)} className="icon" />
-        <div className="sidebar-content">
-        {data && data.length > 0 ? (
+        <>
+          <FiMenu size={24} onClick={() => setIsOpen(true)} className="icon" />
+          <div className="sidebar-content">
+            {data && data.length > 0 ? (
               data.map((item, index) => {
-                const node = nodeDataArrayPalette.find(node => node.text === item);
-                const source = node ? node.source : '';
-                console.log(source);
+                const node = nodeDataArrayPalette.find(
+                  (node) => node.text === item
+                );
+                const source = node ? node.source : "";
+                // console.log(source);
                 return (
                   <div key={index} className="sidebar-item-closed">
-                    <h3><img src={source}/></h3>
+                    <h3>
+                      <img src={source} />
+                    </h3>
                   </div>
                 );
               })
             ) : (
               <p></p>
             )}
-
-        </div>
+          </div>
         </>
-
       )}
     </div>
   );

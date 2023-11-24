@@ -4,12 +4,11 @@ import { BsChevronDown } from "react-icons/bs";
 import DataTable from "../components/EC2Table";
 import { headers, items } from "../db/EC2TableData";
 import { useLocation } from "react-router-dom";
-
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
-
 import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
+import "../styles/App.css";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -111,63 +110,65 @@ function Summary() {
     .toFixed(2);
 
   return (
-    <div
-      id="export-container"
-      style={{
-        flex: 1,
-        padding: "20px",
-        marginLeft: "100px",
-        marginRight: "100px",
-      }}
-    >
-      <div className="title1">도식화 히스토리</div>
-      <div className="file-name">MyCompany_Cloud1</div>
-      <div className="price-container">
-        <div className="middle-bar"></div>
+    <div className="main-content">
+      <div
+        id="export-container"
+        style={{
+          flex: 1,
+          padding: "20px",
+          marginLeft: "100px",
+          marginRight: "100px",
+        }}
+      >
+        <div className="title1">도식화 히스토리</div>
+        <div className="file-name">MyCompany_Cloud1</div>
+        <div className="price-container">
+          <div className="middle-bar"></div>
 
-        {instanceNameArr.map((instanceObj, index) => {
-          const [category, price] = Object.entries(instanceObj)[0];
+          {instanceNameArr.map((instanceObj, index) => {
+            const [category, price] = Object.entries(instanceObj)[0];
 
-          return (
-            <>
-              <div key={index} className="instance">
-                <div
-                  className="instance-price-container"
-                  onClick={() => handleInstanceClick(index)}
-                >
-                  <div className="instance-title">{category}</div>
-                  <div className="instance-price">
-                    ${price}/mo
-                    <div className="dropdown-icon">
-                      <BsChevronDown color="#cdcdcd" />
+            return (
+              <>
+                <div key={index} className="instance">
+                  <div
+                    className="instance-price-container"
+                    onClick={() => handleInstanceClick(index)}
+                  >
+                    <div className="instance-title">{category}</div>
+                    <div className="instance-price">
+                      ${price}/mo
+                      <div className="dropdown-icon">
+                        <BsChevronDown color="#cdcdcd" />
+                      </div>
                     </div>
                   </div>
+                  {(isExporting || activeDropdown === index) && (
+                    <div className="instance-dropdown">
+                      <DataTable
+                        headers={headers[category]}
+                        items={filteredItems[category]}
+                      />
+                    </div>
+                  )}
                 </div>
-                {(isExporting || activeDropdown === index) && (
-                  <div className="instance-dropdown">
-                    <DataTable
-                      headers={headers[category]}
-                      items={filteredItems[category]}
-                    />
-                  </div>
-                )}
-              </div>
-            </>
-          );
-        })}
-        <div className="total-container">
-          <div className="total-price-title">total</div>
-          <div className="total-price">${totalCost}/mo</div>
+              </>
+            );
+          })}
+          <div className="total-container">
+            <div className="total-price-title">total</div>
+            <div className="total-price">${totalCost}/mo</div>
+          </div>
+          <div className="pie-chart">
+            <Doughnut
+              data={createChart(instanceNameArr)}
+              options={chartOptions}
+            />
+          </div>
+          <button className="export-button" onClick={exportToPDF}>
+            EXPORT
+          </button>
         </div>
-        <div className="pie-chart">
-          <Doughnut
-            data={createChart(instanceNameArr)}
-            options={chartOptions}
-          />
-        </div>
-        <button className="export-button" onClick={exportToPDF}>
-          EXPORT
-        </button>
       </div>
     </div>
   );

@@ -5,6 +5,7 @@ import { useLocation } from "react-router-dom";
 import { Menu } from "antd";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import "../styles/App.css";
 
 export const menu = [
   {
@@ -62,18 +63,20 @@ const MyPageSideBar = () => {
     setCurrent(e.key);
   };
   return (
-    <StyledSideMenu>
-      <StyledSideMenuTitle>
-        <Link to="/mypage">My Page</Link>
-      </StyledSideMenuTitle>
-      <StyledMenu
-        defaultOpenKeys={["1", "2"]}
-        selectedKeys={current ? [current] : []} // 선택된 키를 배열로 설정
-        mode={"inline"}
-        items={menu}
-        onClick={onClick}
-      />
-    </StyledSideMenu>
+    <div className="main-content">
+      <StyledSideMenu>
+        <StyledSideMenuTitle>
+          <Link to="/mypage">My Page</Link>
+        </StyledSideMenuTitle>
+        <StyledMenu
+          defaultOpenKeys={["1", "2"]}
+          selectedKeys={current ? [current] : []} // 선택된 키를 배열로 설정
+          mode={"inline"}
+          items={menu}
+          onClick={onClick}
+        />
+      </StyledSideMenu>
+    </div>
   );
 };
 export default MyPageSideBar;
