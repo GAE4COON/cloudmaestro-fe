@@ -59,10 +59,6 @@ export const alertCheck = async (data) => {
   }
 };
 
-<<<<<<< HEAD
-  export const requirementRequest = (data) =>
-  api.post("/api/v1/naindae-api/dnsmultiregion", data);
-=======
 export const requirementRequest = async (data) => {
   try {
     const response = await api.post("/api/v1/naindae-api/multiregion", data);
@@ -72,4 +68,3 @@ export const requirementRequest = async (data) => {
     throw error;
   }
 };
->>>>>>> 1f846dab24ac5a03515f77eee0853d1eba32732d
