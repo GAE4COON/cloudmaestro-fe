@@ -1,6 +1,6 @@
 export const backupOptions = ["중앙관리", "일반"];
 export const zoneSecurityReq = ["웹 방화벽으로 보호"]
-export const websvr = ["웹 서버"]
+export const zoneFrame = ["웹 서버 존재"]
 
 export const industrial = [
   {

@@ -7,10 +7,12 @@ import { PlusOutlined } from "@ant-design/icons";
 import { sendRequirement } from "../apis/requirementAPI";
 import * as go from "gojs";
 import ZoneComponent from "./ZoneComponent";
+import WebSvrComponent from "./WebSvrComponent";
 
 import {
   backupOptions,
   industrial,
+  zoneFrame,
   globalRequest,
   industrial_BP_fin,
   industrial_BP_media,
@@ -42,6 +44,9 @@ const RequirementPopup = (props) => {
   const [zoneCount, setZoneCount] = useState(0);
   const [isOptimizeEnabled, setIsOptimizeEnabled] = useState(false);
   const [industrial_BP, setIndustrial_BP] = useState([]); //요구사항 선택
+  const [zoneFrameValue, setZoneFrameValue] = useState(null);
+  const [showWebSvrComponent, setShowWebSvrComponent] = useState(false);
+
 
   useEffect(() => {
     const isZoneSelected =
@@ -69,6 +74,8 @@ const RequirementPopup = (props) => {
       "\t\nglobalReqValue: ",
       globalReqValue,
       "\t\nBackup: ",
+      zoneFrameValue,
+      "\t\nzoneFrameValue: ",
       selectBackup,
       "\t\nzones: ",
       zones
@@ -84,7 +91,7 @@ const RequirementPopup = (props) => {
     }
 
     setIndustrial_BP(industrialList);
-  }, [zones, industrialValue, globalReqValue, selectBackup]);
+  }, [zones, industrialValue, globalReqValue, selectBackup, zoneFrameValue]);
 
   useEffect(() => {
     const diagramDataStr = props.diagram.model.toJson();
@@ -149,7 +156,7 @@ const RequirementPopup = (props) => {
         zoneName: null,
         zoneFunc: null,
         availableNode: [],
-        serverNode : [],
+        serverNode: [],
         zoneReqValue: [],
       },
     ]);
@@ -163,18 +170,19 @@ const RequirementPopup = (props) => {
       requirementData: {
         industrial: industrialValue,
         globalRequirements: globalReqValue,
+        zoneFrame: zoneFrameValue,
         backup: selectBackup,
-        
+
         zones: zones.map((zone) => (
           console.log("zones", zone),
           {
-          // console.log("zones",zone);
-          name: zone.zoneName,
-          function: zone.zoneFunc,
-          availableNode: zone.availableNode,
-          serverNode : zone.serverNode,
-          zoneRequirements: zone.zoneReqValue,
-        })),
+            // console.log("zones",zone);
+            name: zone.zoneName,
+            function: zone.zoneFunc,
+            availableNode: zone.availableNode,
+            serverNode: zone.serverNode,
+            zoneRequirements: zone.zoneReqValue,
+          })),
       },
       diagramData: diagram.model.toJson(), // 다이어그램 데이터를 추가
     };
@@ -201,12 +209,21 @@ const RequirementPopup = (props) => {
     setSelectBackup(checkedValues);
   };
 
+  const handleZoneFrame = (value) => {
+    setZoneFrameValue(value);
+    // 선택이 해제되면 (`value`가 `null` 또는 빈 문자열이면) `WebSvrComponent`를 숨깁니다.
+    setShowWebSvrComponent(value=="웹 서버 존재" ? true : false);
+    console.log("value "+value);
+  };
+  
+
+
   const handleDataChange = (zoneId, updatedData) => {
     const formattedUpdatedData = {
       zoneName: updatedData.SelectZone,
       zoneFunc: updatedData.zoneFunc, // 예: updatedData에 zoneFunc가 있다고 가정
       availableNode: updatedData.availableNode,
-      serverNode : updatedData.serverNode,
+      serverNode: updatedData.serverNode,
       zoneReqValue: updatedData.zoneReqValue, // 예: updatedData에 zoneReqValue가 있다고 가정
     };
 
@@ -260,7 +277,19 @@ const RequirementPopup = (props) => {
             </BackupContainer>
           </SelectContainer>
 
+          <SelectContainer>
+            <SelectTitle>망 구조</SelectTitle>
+            <BackupContainer>
+              <Checkbox.Group options={zoneFrame} onChange={handleZoneFrame} />
+            </BackupContainer>
+          </SelectContainer>
+
           <div className="망 모음">
+            {showWebSvrComponent 
+             &&
+              <WebSvrComponent
+              />
+            }
             {zones.map((zone) => (
               <ZoneComponent
                 key={zone.id}
@@ -268,7 +297,7 @@ const RequirementPopup = (props) => {
                 industrial_BP={industrial_BP}
                 zone={zone}
                 onDataChange={handleDataChange}
-                onRemoveZone={removeZone} // 새로 추가
+                onRemoveZone={removeZone}
               />
 
             ))}
@@ -295,7 +324,7 @@ const RequirementPopup = (props) => {
                 size={"medium"}
                 onClick={handleOptimize}
                 disabled={!isOptimizeEnabled}
-                style={{marginBottom: "20px"}}
+                style={{ marginBottom: "20px" }}
               >
                 Optimize
               </Button>
