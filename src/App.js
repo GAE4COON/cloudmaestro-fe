@@ -53,8 +53,22 @@ function App() {
               <Route path="/sign-up" element={<Signup />} />
               <Route path="/sign-in" element={<Signin />} />
 
-              <Route path="/home/auto" element={<AutoDraw />} />
-              <Route path="/input/aws" element={<InputAWS />} />
+              <Route
+                path="/home/auto"
+                element={
+                  <PrivateRoute>
+                    <AutoDraw />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/input/aws"
+                element={
+                  <PrivateRoute>
+                    <InputAWS />
+                  </PrivateRoute>
+                }
+              />
 
               <Route
                 path="/mypage"
