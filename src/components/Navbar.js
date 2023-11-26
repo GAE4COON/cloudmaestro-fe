@@ -2,194 +2,191 @@ import React, { useState, useEffect, useRef } from "react";
 import { useAuth } from "./../utils/auth/authContext";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useLocation } from "react-router-dom";
-import { useCookies } from "react-cookie";
 import jwtDecode from "jwt-decode";
 
 import {
-    NavContainer,
-    DropdownMenu,
-    HamburgerContainer,
-    Hamburger,
-    NavStyled,
-    NavMenuLeft,
-    NavMenuRight,
-    NavLinkLogo,
-    NavLink,
-    SpecialNavLink,
-    NavBtn,
-    NavBtnLink,
-    UserProfileImage,
+  NavContainer,
+  DropdownMenu,
+  HamburgerContainer,
+  Hamburger,
+  NavStyled,
+  NavMenuLeft,
+  NavMenuRight,
+  NavLinkLogo,
+  NavLink,
+  SpecialNavLink,
+  NavBtn,
+  NavBtnLink,
+  UserProfileImage,
 } from "../styles/NavbarStyle";
 
 const Navbar = () => {
-    const [isDropdownOpen, setDropdownOpen] = useState(false);
-    const [isOpen, setIsOpen] = useState(false);
-    const { user, setUser } = useAuth();
-    const menuRef = useRef(null);
-    const location = useLocation();
-    const [cookies, setCookie, removeCookie] = useCookies(["accessToken"]);
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const { user, setUser } = useAuth();
+  const menuRef = useRef(null);
+  const location = useLocation();
+  const ACCESS_TOKEN = localStorage.getItem("accessToken");
 
-    useEffect(() => {
-        const token = cookies.accessToken;
-        if (token) {
-            try {
-                const decodedToken = jwtDecode(token);
-                // 주의: 실제 환경에서는 토큰이 만료되었는지 확인하는 로직도 필요합니다.
-                setUser(decodedToken);
-            } catch (error) {
-                console.log("Invalid token");
-            }
-        }
-
-        function handleClickOutside(event) {
-            if (menuRef.current && !menuRef.current.contains(event.target)) {
-                setIsOpen(false);
-            }
-        }
-
-        document.addEventListener("mousedown", handleClickOutside);
-
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, [cookies]);
-
-    async function handleSignOut(event) {
-        setUser(null);
-        localStorage.removeItem("user");
-        removeCookie("accessToken");
-        removeCookie("refreshToken");
+  useEffect(() => {
+    if (ACCESS_TOKEN) {
+      try {
+        const decodedToken = jwtDecode(ACCESS_TOKEN);
+        console.log(decodedToken);
+        // 주의: 실제 환경에서는 토큰이 만료되었는지 확인하는 로직도 필요합니다.
+        setUser(decodedToken);
+      } catch (error) {
+        console.log("Invalid token");
+      }
     }
 
-    const closeMenu = () => {
+    function handleClickOutside(event) {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
         setIsOpen(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
     };
+  }, [ACCESS_TOKEN]);
 
-    const logoutNclose = (event) => {
-        closeMenu(); // 첫 번째 함수 호출
-        handleSignOut(event); // 두 번째 함수 호출
-    };
+  async function handleSignOut(event) {
+    setUser(null);
+    localStorage.setItem("accessToken", "");
+    localStorage.setItem("refreshToken", "");
+    localStorage.setItem("tokenType", "");
+    window.location.href = "/home"; //
+    // window.location.reload(); // 현재 페이지 새로고침
+  }
 
-    return (
-        <NavContainer>
-            <NavStyled ref={menuRef}>
-                <NavLinkLogo to="/">
-                    <img src="/assets/img/logo.png" alt="logo" />
-                </NavLinkLogo>
+  const closeMenu = () => {
+    setIsOpen(false);
+  };
 
-                <NavMenuLeft $isOpen={isOpen} onMouseLeave={closeMenu}>
-                    <div
-                        onMouseEnter={() => setDropdownOpen(true)}
-                        onMouseLeave={() => setDropdownOpen(false)}
-                        className={location.pathname.startsWith("/home") ? "active" : ""}
-                    >
-                        <NavLink onClick={closeMenu} to="/home">
-                            Home
-                        </NavLink>
-                        {isDropdownOpen && (
-                            <DropdownMenu>
-                                <NavLink onClick={closeMenu} to="/home">
-                                    Home
-                                </NavLink>
-                                <NavLink
-                                    style={{ paddingTop: "8px" }}
-                                    onClick={closeMenu}
-                                    to="/home/autodraw"
-                                >
-                                    Auto Draw
-                                </NavLink>
-                            </DropdownMenu>
-                        )}
-                    </div>
+  const logoutNclose = (event) => {
+    closeMenu(); // 첫 번째 함수 호출
+    handleSignOut(event); // 두 번째 함수 호출
+  };
 
-                    <NavLink
-                        onClick={closeMenu}
-                        to="/draw"
-                        className={location.pathname === "/draw" ? "active" : ""}
-                    >
-                        Draw
-                    </NavLink>
-                    
+  return (
+    <NavContainer>
+      <NavStyled ref={menuRef}>
+        <NavLinkLogo to="/">
+          <img src="/assets/img/logo.png" alt="logo" />
+        </NavLinkLogo>
 
-                    <div
-                        onClick={closeMenu}
-                        onMouseEnter={() => setDropdownOpen(true)}
-                        onMouseLeave={() => setDropdownOpen(false)}
-                        className={location.pathname.startsWith("/about") ? "active" : ""}
-                    >
-                        <NavLink to="/about">
-                            About
-                        </NavLink>
-                        {isDropdownOpen && (
-                            <DropdownMenu>
-                                <NavLink onClick={closeMenu} to="/about">
-                                    About
-                                </NavLink>
-                                <NavLink
-                                    style={{ paddingTop: "8px" }}
-                                    onClick={closeMenu}
-                                    to="/about/example"
-                                >
-                                    Learn Example
-                                </NavLink>
-                            </DropdownMenu>
-                        )}
-                    </div>
+        <NavMenuLeft $isOpen={isOpen} onMouseLeave={closeMenu}>
+          <div
+            onMouseEnter={() => setDropdownOpen(true)}
+            onMouseLeave={() => setDropdownOpen(false)}
+            className={location.pathname.startsWith("/home") ? "active" : ""}
+          >
+            <NavLink onClick={closeMenu} to="/home">
+              Home
+            </NavLink>
+            {isDropdownOpen && (
+              <DropdownMenu>
+                <NavLink onClick={closeMenu} to="/home">
+                  Home
+                </NavLink>
+                <NavLink
+                  style={{ paddingTop: "8px" }}
+                  onClick={closeMenu}
+                  to="/home/autodraw"
+                >
+                  Auto Draw
+                </NavLink>
+              </DropdownMenu>
+            )}
+          </div>
 
-                    <NavLink onClick={closeMenu} to="/mypage">
-                            My Page
-                        </NavLink>
+          <NavLink
+            onClick={closeMenu}
+            to="/draw"
+            className={location.pathname === "/draw" ? "active" : ""}
+          >
+            Draw
+          </NavLink>
 
-                    {!user && (
-                        <SpecialNavLink
-                            className="special-nav-link"
-                            onClick={closeMenu}
-                            to="/sign-up"
-                        >
-                            Login Page
-                        </SpecialNavLink>
-                    )}
-                    {user && (
-                        <SpecialNavLink className="special-nav-link" onClick={logoutNclose}>
-                            SignOut
-                        </SpecialNavLink>
-                    )}
-                </NavMenuLeft>
+          <div
+            onClick={closeMenu}
+            onMouseEnter={() => setDropdownOpen(true)}
+            onMouseLeave={() => setDropdownOpen(false)}
+            className={location.pathname.startsWith("/about") ? "active" : ""}
+          >
+            <NavLink to="/about">About</NavLink>
+            {isDropdownOpen && (
+              <DropdownMenu>
+                <NavLink onClick={closeMenu} to="/about">
+                  About
+                </NavLink>
+                <NavLink
+                  style={{ paddingTop: "8px" }}
+                  onClick={closeMenu}
+                  to="/about/example"
+                >
+                  Learn Example
+                </NavLink>
+              </DropdownMenu>
+            )}
+          </div>
 
-                <HamburgerContainer>
-                    <Hamburger onClick={() => setIsOpen(!isOpen)}>
-                        <GiHamburgerMenu size={50} color="#3b6c7d" />
-                    </Hamburger>
-                </HamburgerContainer>
+          <NavLink onClick={closeMenu} to="/mypage">
+            My Page
+          </NavLink>
 
-                <NavMenuRight $isOpen={isOpen}>
-                    {user ? (
-                        <>
-                            <NavBtn>
-                                <h5>{user.name ? user.name : user.sub}님</h5>
-                            </NavBtn>
-                            {/* <span>{user.name}</span> */}
-                            <NavBtn>
-                                <NavBtnLink onClick={(e) => handleSignOut(e)}>
-                                    SignOut
-                                </NavBtnLink>
-                            </NavBtn>
-                        </>
-                    ) : (
-                        <>
-                            <NavBtn>
-                                <NavBtnLink to="/sign-in">로그인</NavBtnLink>
-                            </NavBtn>
-                            <NavBtn>
-                                <NavBtnLink to="/sign-up">회원가입</NavBtnLink>
-                            </NavBtn>
+          {!user && (
+            <SpecialNavLink
+              className="special-nav-link"
+              onClick={closeMenu}
+              to="/sign-up"
+            >
+              Login Page
+            </SpecialNavLink>
+          )}
+          {user && (
+            <SpecialNavLink className="special-nav-link" onClick={logoutNclose}>
+              SignOut
+            </SpecialNavLink>
+          )}
+        </NavMenuLeft>
 
-                        </>
-                    )}
-                </NavMenuRight>
-            </NavStyled>
-        </NavContainer>
-    );
+        <HamburgerContainer>
+          <Hamburger onClick={() => setIsOpen(!isOpen)}>
+            <GiHamburgerMenu size={50} color="#3b6c7d" />
+          </Hamburger>
+        </HamburgerContainer>
+
+        <NavMenuRight $isOpen={isOpen}>
+          {user ? (
+            <>
+              <NavBtn>
+                <h5>{user.sub ? user.sub : user.name}님</h5>
+              </NavBtn>
+              {/* <span>{user.name}</span> */}
+              <NavBtn>
+                <NavBtnLink onClick={(e) => handleSignOut(e)}>
+                  SignOut
+                </NavBtnLink>
+              </NavBtn>
+            </>
+          ) : (
+            <>
+              <NavBtn>
+                <NavBtnLink to="/sign-in">로그인</NavBtnLink>
+              </NavBtn>
+              <NavBtn>
+                <NavBtnLink to="/sign-up">회원가입</NavBtnLink>
+              </NavBtn>
+            </>
+          )}
+        </NavMenuRight>
+      </NavStyled>
+    </NavContainer>
+  );
 };
 
 export default Navbar;
