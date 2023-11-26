@@ -55,9 +55,7 @@ const Navbar = () => {
 
   async function handleSignOut(event) {
     setUser(null);
-    localStorage.setItem("accessToken", "");
-    localStorage.setItem("refreshToken", "");
-    localStorage.setItem("tokenType", "");
+    localStorage.clear();
     window.location.href = "/home"; //
     // window.location.reload(); // 현재 페이지 새로고침
   }
