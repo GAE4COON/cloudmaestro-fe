@@ -83,23 +83,40 @@ const useGoJS = (setShowToggle, onDiagramChange) => {
             } catch (error) {
               console.error("API Error:", error);
             }
-          } else if (data.insertedNodeKeys) {
+          } else if (data.insertedNodeKeys || data.modifiedNodeData) {
             try {
               const PostData = {
                 checkOption: null,
                 diagramData: diagram.model.toJson(),
               };
-              for (let i = 0; i < data.modifiedNodeData.length; i++) {
-                if (
-                  data.modifiedNodeData[i].text === "VPC" &&
-                  data.modifiedNodeData[i].isGroup === true
-                ) {
-                  PostData.checkOption = "VPC";
-                  console.log("NodeCheck 호출");
-                  const response = await NodeCheck(PostData);
-                  if (response && response.data) {
-                    console.log("API Response:", response.data);
-                    setDiagramCheck(response.data);
+              if (data.insertedNodeKeys) {
+                for (let i = 0; i < data.modifiedNodeData.length; i++) {
+                  if (
+                    data.modifiedNodeData[i].text === "VPC" &&
+                    data.modifiedNodeData[i].isGroup === true
+                  ) {
+                    PostData.checkOption = "VPC";
+                    console.log("NodeCheck 호출");
+                    const response = await NodeCheck(PostData);
+                    if (response && response.data) {
+                      console.log("API Response:", response.data);
+                      setDiagramCheck(response.data);
+                    }
+                  }
+                }
+              } else if (data.modifiedNodeData) {
+                for (let i = 0; i < data.modifiedNodeData.length; i++) {
+                  if (
+                    data.modifiedNodeData[i].text === "VPC" &&
+                    data.modifiedNodeData[i].isGroup === true
+                  ) {
+                    PostData.checkOption = "VPC";
+                    console.log("NodeCheck 호출");
+                    const response = await NodeCheck(PostData);
+                    if (response && response.data) {
+                      console.log("API Response:", response.data);
+                      setDiagramCheck(response.data);
+                    }
                   }
                 }
               }
