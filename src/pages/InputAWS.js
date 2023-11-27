@@ -9,8 +9,7 @@ import {
   costplatOptions,
 } from "../db/inputSelect";
 import "../styles/App.css";
-import { Link } from "react-router-dom";
-import { json, useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const App = () => {
   const [selectedPeriod, setSelectedPeriod] = useState(null);

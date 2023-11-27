@@ -63,20 +63,18 @@ const MyPageSideBar = () => {
     setCurrent(e.key);
   };
   return (
-    <div className="main-content">
-      <StyledSideMenu>
-        <StyledSideMenuTitle>
-          <Link to="/mypage">My Page</Link>
-        </StyledSideMenuTitle>
-        <StyledMenu
-          defaultOpenKeys={["1", "2"]}
-          selectedKeys={current ? [current] : []} // 선택된 키를 배열로 설정
-          mode={"inline"}
-          items={menu}
-          onClick={onClick}
-        />
-      </StyledSideMenu>
-    </div>
+    <StyledSideMenu>
+      <StyledSideMenuTitle>
+        <Link to="/mypage">My Page</Link>
+      </StyledSideMenuTitle>
+      <StyledMenu
+        defaultOpenKeys={["1", "2"]}
+        selectedKeys={current ? [current] : []} // 선택된 키를 배열로 설정
+        mode={"inline"}
+        items={menu}
+        onClick={onClick}
+      />
+    </StyledSideMenu>
   );
 };
 export default MyPageSideBar;

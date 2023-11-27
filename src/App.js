@@ -1,5 +1,4 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import React, { useState, useCallback, useEffect } from "react";
 import "./styles/App.css";
 import Home from "./pages/Home";
 import Draw from "./pages/Draw";
@@ -17,17 +16,18 @@ import AutoDraw from "./pages/AutoDraw";
 import InputAWS from "./pages/InputAWS";
 import Summary from "./pages/Summary";
 import SidebarController from "./components/SidebarController";
-import MyPage from "./components/MyPageSideBar";
+import MyPage from "./pages/Mypage";
 import MyCloud from "./pages/MyCloud";
 import MyNetwork from "./pages/MyNetwork";
 import MyResource from "./pages/MyResource";
 import { DataProvider } from "./components/DataContext";
 import MySecurity from "./pages/Guideline";
-import FileInput from "./pages/fileInput";
+import useTokenExpirationChecker from "./hooks/useTokenExpirationChecker";
 import PrivateRoute from "./components/privateRoute";
-import { PublicRoute } from "./components/publicRoute";
+// import { PublicRoute } from "./components/publicRoute";
 
 function App() {
+  useTokenExpirationChecker();
   return (
     <div className="App">
       <AuthProvider>
@@ -40,7 +40,6 @@ function App() {
               <Route exact path="/home" element={<Home />} />
               <Route path="/about" element={<Introduce />} />
               <Route path="/about/example" element={<Example />} />
-
               <Route
                 path="/draw"
                 element={
@@ -49,10 +48,8 @@ function App() {
                   </PrivateRoute>
                 }
               />
-
               <Route path="/sign-up" element={<Signup />} />
               <Route path="/sign-in" element={<Signin />} />
-
               <Route
                 path="/home/auto"
                 element={
@@ -69,7 +66,6 @@ function App() {
                   </PrivateRoute>
                 }
               />
-
               <Route
                 path="/mypage"
                 element={
@@ -78,7 +74,6 @@ function App() {
                   </PrivateRoute>
                 }
               />
-
               <Route
                 path="/mypage/cloud"
                 element={
@@ -103,7 +98,6 @@ function App() {
                   </PrivateRoute>
                 }
               />
-
               <Route
                 path="/mypage/network"
                 element={
@@ -112,7 +106,6 @@ function App() {
                   </PrivateRoute>
                 }
               />
-
               <Route
                 path="/mypage/design"
                 element={
@@ -121,7 +114,6 @@ function App() {
                   </PrivateRoute>
                 }
               />
-
               <Route
                 path="/summary"
                 element={

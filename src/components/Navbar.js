@@ -18,6 +18,7 @@ import {
   NavBtn,
   NavBtnLink,
   UserProfileImage,
+  Username,
 } from "../styles/NavbarStyle";
 
 const Navbar = () => {
@@ -95,7 +96,7 @@ const Navbar = () => {
                   onClick={closeMenu}
                   to="/home/autodraw"
                 >
-                  Auto Draw
+                  AutoDraw
                 </NavLink>
               </DropdownMenu>
             )}
@@ -132,10 +133,6 @@ const Navbar = () => {
             )}
           </div>
 
-          <NavLink onClick={closeMenu} to="/mypage">
-            My Page
-          </NavLink>
-
           {!user && (
             <SpecialNavLink
               className="special-nav-link"
@@ -162,10 +159,10 @@ const Navbar = () => {
           {user ? (
             <>
               <NavBtn>
-                <h5>{user.sub ? user.sub : user.name}님</h5>
-              </NavBtn>
-              {/* <span>{user.name}</span> */}
-              <NavBtn>
+                <Username>{user.sub ? user.sub : user.name}님</Username>
+                <NavBtnLink onClick={closeMenu} to="/mypage">
+                  MyPage
+                </NavBtnLink>
                 <NavBtnLink onClick={(e) => handleSignOut(e)}>
                   SignOut
                 </NavBtnLink>
