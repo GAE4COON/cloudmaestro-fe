@@ -125,14 +125,7 @@ export const nodeDataArrayPalette = [
     key: "DataZone",
     figure: "Rectangle",
     source: "/img/AWS_icon/Arch_Analytics/Arch_Amazon-DataZone_48.svg",
-    type: "Analytics"
-  },
-  {
-    text: "La",
-    key: "DataZone",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Arch_Analytics/Arch_Amazon-DataZone_48.svg",
-    type: "Analytics"
+    type: "Analytics",
   },
   {
     text: "EMR",
@@ -1825,58 +1818,11 @@ export const nodeDataArrayPalette = [
     text: "CloudFront",
     key: "CloudFront",
     figure: "Rectangle",
-    source: "/img/AWS_icon/Arch_Networking-Content-Delivery/Arch_Amazon-CloudFront_48.svg",
-    type: "Networking-Content-Delivery"
+    source:
+      "/img/AWS_icon/Arch_Networking-Content-Delivery/Arch_Amazon-CloudFront_48.svg",
+    type: "Networking-Content-Delivery",
   },
-  {
-    text: "InternetGateway",
-    key: "InternetGateway",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Arch_Networking-Content-Delivery/Arch_Amazon-CloudFront_48.svg",
-    type: "Networking-Content-Delivery"
-  },
-  {
-    text: "Application Load Balancer",
-    key: "Application Load Balancer",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Arch_Networking-Content-Delivery/Arch_Amazon-Route-53_48.svg",
-    type: "Networking-Content-Delivery"
-  },
-  {
-    text: "VpcPeering",
-    key: "VpcPeering",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Arch_Networking-Content-Delivery/Arch_Amazon-Virtual-Private-Cloud_48.svg",
-    type: "Networking-Content-Delivery"
-  },
-  {
-    text: "RouteTable",
-    key: "RouteTable",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Arch_Networking-Content-Delivery/Arch_Amazon-VPC-Lattice_48.svg",
-    type: "Networking-Content-Delivery"
-  },
-  {
-    text: "VpnConnection",
-    key: "VpnConnection",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Arch_Networking-Content-Delivery/Arch_AWS-App-Mesh_48.svg",
-    type: "Networking-Content-Delivery"
-  },
-  {
-    text: "NatGateway",
-    key: "NatGateway",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Arch_Networking-Content-Delivery/Arch_AWS-Client-VPN_48.svg",
-    type: "Networking-Content-Delivery"
-  },
-  {
-    text: "NACL",
-    key: "NACL",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Arch_Networking-Content-Delivery/Arch_AWS-Cloud-Map_48.svg",
-    type: "Networking-Content-Delivery"
-  },
+
   {
     text: "Route 53",
     key: "Route 53",
