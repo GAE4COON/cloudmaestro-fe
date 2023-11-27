@@ -74,9 +74,11 @@ const RequirementPopup = (props) => {
       "\t\nglobalReqValue: ",
       globalReqValue,
       "\t\nBackup: ",
-      zoneFrameValue,
-      "\t\nzoneFrameValue: ",
       selectBackup,
+
+      "\t\nzoneFrameValue: ",
+      zoneFrameValue,
+
       "\t\nzones: ",
       zones
     );
@@ -162,6 +164,26 @@ const RequirementPopup = (props) => {
     ]);
     setIsOptimizeEnabled(false);
   };
+  const addWebZone = () => {
+    // Check if a webzone already exists
+    const webZoneExists = zones.some(zone => zone.id === "webzone");
+  
+    if (!webZoneExists) {
+      setZones([
+        ...zones,
+        {
+          id: "webzone",
+          zoneName: null,
+          zoneFunc: null,
+          availableNode: [],
+          serverNode: [],
+          zoneReqValue: [],
+        },
+      ]);
+      setIsOptimizeEnabled(false);
+    }
+  };
+  
 
   // Zone 선택을 업데이트하는 함수
 
@@ -213,7 +235,9 @@ const RequirementPopup = (props) => {
     setZoneFrameValue(value);
     // 선택이 해제되면 (`value`가 `null` 또는 빈 문자열이면) `WebSvrComponent`를 숨깁니다.
     setShowWebSvrComponent(value=="웹 서버 존재" ? true : false);
-    console.log("value "+value);
+    if(showWebSvrComponent){
+      removeZone("webzone");
+    }
   };
   
 
@@ -280,17 +304,25 @@ const RequirementPopup = (props) => {
           <SelectContainer>
             <SelectTitle>망 구조</SelectTitle>
             <BackupContainer>
-              <Checkbox.Group options={zoneFrame} onChange={handleZoneFrame} />
+              <Checkbox.Group options={zoneFrame} onClick={addWebZone} onChange={handleZoneFrame} />
             </BackupContainer>
           </SelectContainer>
 
           <div className="망 모음">
-            {showWebSvrComponent 
-             &&
+          {zones.map((zone) => 
+            (showWebSvrComponent&&zone.id=="webzone")&&(
               <WebSvrComponent
+                key={"webzone"}
+                diagram={savediagram}
+                industrial_BP={industrial_BP}
+                zone={zone}
+                onDataChange={handleDataChange}
+                onRemoveZone={removeZone}
               />
-            }
-            {zones.map((zone) => (
+
+            ))}
+            {zones.map((zone) => 
+            (zone.id!="webzone")&&(
               <ZoneComponent
                 key={zone.id}
                 diagram={savediagram}

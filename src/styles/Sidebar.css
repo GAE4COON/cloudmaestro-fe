@@ -7,7 +7,7 @@
   height: 85vh;
   width: 17%;
   top: 50px;
-  position: absolute;
+  position: fixed;
   transition: 0.5s ease;
   overflow-y: auto;
   margin-top: 2px;

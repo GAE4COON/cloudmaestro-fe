@@ -133,4 +133,10 @@ const StyledButton = styled.div`
   text-align: center;
 
   color: #809cda;
+  cursor: pointer;
+
+  &:hover {
+    background: #809cda;
+    color: #ffffff;
+  }
 `;

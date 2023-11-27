@@ -13,8 +13,6 @@ function Signup() {
   const [passwordError, setPasswordError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [nameError, setNameError] = useState("");
-  const [belongError, setbelongError] = useState("");
-  const [phoneError, setphoneError] = useState("");
 
   const [idStatus, setIdStatus] = useState(null);
   const [passwordConfirmError, setPasswordConfirmError] = useState("");
@@ -23,14 +21,13 @@ function Signup() {
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
   const [name, setName] = useState("");
-  const [belong, setBelong] = useState("");
   const [emailVerified, setEmailVerified] = useState(false);
   const [verificationCode, setVerificationCode] = useState("");
   const [emailConfirmed, setEmailConfirmed] = useState(false);
 
   const { user, setUser } = useAuth();
+
   const navigate = useNavigate();
 
   const isValidId = (id) => {
@@ -51,27 +48,6 @@ function Signup() {
   const isValidName = (name) => {
     const nameRegex = /^[a-zA-Z0-9가-힣]{2,15}$/;
     return nameRegex.test(name);
-  };
-
-  const isValidBelong = (belong) => {
-    const belongRegex = /^[a-zA-Z0-9가-힣]{2,15}$/;
-    return belongRegex.test(belong);
-  };
-
-  const isValidPhone = (phone) => {
-    const phoneRegex = /^[0-9]{3,15}$/;
-    return phoneRegex.test(phone);
-  };
-
-  //휴대폰 유효성 검사
-  const handlePhoneChange = (e) => {
-    const phoneValue = e.target.value;
-    setPhone(phoneValue);
-    if (!isValidPhone(phoneValue)) {
-      setphoneError("올바른 휴대폰번호 형식을 입력해주세요.");
-    } else {
-      setphoneError("");
-    }
   };
 
   //이메일 유효성 검사
@@ -98,25 +74,14 @@ function Signup() {
     }
   };
 
-  //이름 유효성 검사
+  //닉네임임 유효성 검사
   const handleNameChange = (e) => {
     const nameValue = e.target.value;
     setName(nameValue);
     if (!isValidName(nameValue)) {
-      setNameError("이름은 최소 두글자 이상을 입력해주세요.");
+      setNameError("닉네임은 최소 두글자 이상을 입력해주세요.");
     } else {
       setNameError("");
-    }
-  };
-
-  //소속 유효성 검사
-  const handleBelongChange = (e) => {
-    const belongValue = e.target.value;
-    setBelong(belongValue);
-    if (!isValidBelong(belongValue)) {
-      setbelongError("소속은 최소 두글자 이상을 입력해주세요.");
-    } else {
-      setbelongError("");
     }
   };
 
@@ -168,10 +133,9 @@ function Signup() {
 
     try {
       const response = await emailCheck(data);
-
-      setEmailConfirmed(true);
       if (response.data.result) {
         alert("인증 코드를 보냈습니다.");
+        setEmailConfirmed(true);
       }
     } catch (error) {
       console.error("이메일 전송 중 오류가 발생했습니다.", error);
@@ -213,8 +177,6 @@ function Signup() {
       user_pw: password,
       user_check_pw: passwordConfirm,
       user_name: name,
-      belong: belong,
-      phone_number: phone,
       email: email,
       emailCheck: emailVerified,
     };
@@ -225,7 +187,7 @@ function Signup() {
 
       if (response.data.result === "success") {
         alert("성공적으로 회원가입되었습니다.");
-        navigate("/login");
+        navigate("/sign-in");
       } else {
         alert(response.data.message || "회원가입 중 오류가 발생했습니다.");
       }
@@ -298,6 +260,13 @@ function Signup() {
         )}
 
         <div className="input-group">
+          <label>닉네임 *</label>
+          <input type="text" value={name} onChange={handleNameChange} />
+          <div></div>
+        </div>
+        {nameError && <span className="error-text">{nameError}</span>}
+
+        <div className="input-group">
           <label>이메일 *</label>
           <input
             type="email"
@@ -337,27 +306,6 @@ function Signup() {
           </>
         ) : null}
 
-        <div className="input-group">
-          <label>휴대전화 *</label>
-          <input type="tel" value={phone} onChange={handlePhoneChange} />
-          <div></div>
-        </div>
-        {phoneError && <span className="error-text">{phoneError}</span>}
-
-        <div className="input-group">
-          <label>이름 *</label>
-          <input type="text" value={name} onChange={handleNameChange} />
-          <div></div>
-        </div>
-        {nameError && <span className="error-text">{nameError}</span>}
-
-        <div className="input-group">
-          <label>소속 *</label>
-          <input type="text" value={belong} onChange={handleBelongChange} />
-          <div></div>
-        </div>
-        {belongError && <span className="error-text">{belongError}</span>}
-
         <button
           onClick={handleSignUp}
           className="submit"
@@ -368,10 +316,7 @@ function Signup() {
             password !== passwordConfirm ||
             password === "" ||
             email === "" ||
-            phone === "" ||
-            belong === "" ||
             name === "" ||
-            belongError !== "" ||
             nameError !== "" ||
             passwordError !== "" ||
             emailError !== "" ||
@@ -384,10 +329,7 @@ function Signup() {
             password !== passwordConfirm ||
             password === "" ||
             email === "" ||
-            phone === "" ||
             name === "" ||
-            belong === "" ||
-            belongError !== "" ||
             nameError !== "" ||
             passwordError !== "" ||
             emailError !== "" ||
