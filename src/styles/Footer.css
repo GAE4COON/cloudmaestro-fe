@@ -27,12 +27,13 @@
 }
 
 .footer-wrap {
-  padding: 10px;
+  padding: 10px 240px;
 }
 
 .footer-center {
   text-align: left;
   margin-bottom: 10px;
+  margin-left: 30px;
 }
 
 .bottom-bar {
