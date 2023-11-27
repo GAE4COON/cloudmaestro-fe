@@ -16,7 +16,7 @@ import AutoDraw from "./pages/AutoDraw";
 import InputAWS from "./pages/InputAWS";
 import Summary from "./pages/Summary";
 import SidebarController from "./components/SidebarController";
-import MyPage from "./components/MyPageSideBar";
+import MyPage from "./pages/Mypage";
 import MyCloud from "./pages/MyCloud";
 import MyNetwork from "./pages/MyNetwork";
 import MyResource from "./pages/MyResource";

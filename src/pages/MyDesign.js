@@ -5,6 +5,7 @@ import Sidebar from "../components/MyPageSideBar";
 import { BsChevronDown } from "react-icons/bs";
 import DataTable from "../components/EC2Table";
 import { headers, items } from "../db/EC2TableData";
+import "../styles/myresource.css";
 import "../styles/App.css";
 
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
@@ -55,53 +56,57 @@ function MyDesign() {
 
   return (
     <div className="main-content">
-      <div style={{ display: "flex" }}>
-        <Sidebar />
-        <div style={{ flex: 1, padding: "20px" }}>
-          <div className="title1">도식화 히스토리</div>
-          <div className="file-name">MyCompany_Cloud1</div>
-          <div className="cost-container">
-            <div className="middle-bar"></div>
+      <div className="mypage-container">
+        <div className="flex-container">
+          <div className="menu-container">
+            <Sidebar />
+          </div>
+          <div className="main-container">
+            <div className="title1">도식화 히스토리</div>
+            <div className="file-name">MyCompany_Cloud1</div>
+            <div className="cost-container">
+              <div className="middle-bar"></div>
 
-            {instanceNameArr.map((instanceObj, index) => {
-              const [category, cost] = Object.entries(instanceObj)[0];
+              {instanceNameArr.map((instanceObj, index) => {
+                const [category, cost] = Object.entries(instanceObj)[0];
 
-              return (
-                <>
-                  <div key={index} className="instance">
-                    <div
-                      className="instance-cost-container"
-                      onClick={() => handleInstanceClick(index)}
-                    >
-                      <div className="instance-title">{category}</div>
-                      <div className="instance-cost">
-                        ${cost}/mo
-                        <div className="dropdown-icon">
-                          <BsChevronDown color="#cdcdcd" />
+                return (
+                  <>
+                    <div key={index} className="instance">
+                      <div
+                        className="instance-cost-container"
+                        onClick={() => handleInstanceClick(index)}
+                      >
+                        <div className="instance-title">{category}</div>
+                        <div className="instance-cost">
+                          ${cost}/mo
+                          <div className="dropdown-icon">
+                            <BsChevronDown color="#cdcdcd" />
+                          </div>
                         </div>
                       </div>
+                      {activeDropdown === index && (
+                        <div className="instance-dropdown">
+                          {category}
+                          <DataTable headers={headers} items={items} />
+                        </div>
+                      )}
                     </div>
-                    {activeDropdown === index && (
-                      <div className="instance-dropdown">
-                        {category}
-                        <DataTable headers={headers} items={items} />
-                      </div>
-                    )}
-                  </div>
-                </>
-              );
-            })}
-            <div className="total-container">
-              <div className="total-cost-title">total</div>
-              <div className="total-cost">${totalCost}/mo</div>
+                  </>
+                );
+              })}
+              <div className="total-container">
+                <div className="total-cost-title">total</div>
+                <div className="total-cost">${totalCost}/mo</div>
+              </div>
+              <div className="pie-chart">
+                <Doughnut
+                  data={createChart(instanceNameArr)}
+                  options={chartOptions}
+                />
+              </div>
+              <button className="export-button">EXPORT</button>
             </div>
-            <div className="pie-chart">
-              <Doughnut
-                data={createChart(instanceNameArr)}
-                options={chartOptions}
-              />
-            </div>
-            <button className="export-button">EXPORT</button>
           </div>
         </div>
       </div>

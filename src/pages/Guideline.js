@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu } from "antd";
 import "../styles/App.css";
 import styled from "styled-components";
-import MyPageSideBar from "../components/MyPageSideBar";
+import Sidebar from "../components/MyPageSideBar";
 import ManageHuman from "../components/security/ManageHuman";
 import { PDFDownloadLink } from "@react-pdf/renderer"; // react-to-pdf의 PDFDownloadLink 가져오기
 
@@ -31,40 +31,44 @@ function MySecurity() {
 
   return (
     <div className="main-content">
-      <MypageContainer>
-        <MyPageSideBar />
-        <SecurityContainer>
-          <Title> 보안 가이드 라인 </Title>
-          {isManage && (
-            <>
-              <Button
-                onClick={() =>
-                  handleDownload(
-                    "/assets/pdf/ManageHuman2.pdf",
-                    "인적/물류 보안가이드라인.pdf"
-                  )
-                }
-              >
-                Download
-                <img
-                  src="/assets/img/pdf2.png"
-                  alt="Download Icon"
-                  style={{ width: "20px", marginLeft: "5px" }}
-                />{" "}
-                {/* 이미지 추가 */}
-              </Button>
-            </>
-          )}
-
-          <ResourceContainer>
+      <div className="mypage-container">
+        <div className="flex-container">
+          <div className="menu-container">
+            <Sidebar />
+          </div>
+          <div className="main-container">
+            <Title> 보안 가이드 라인 </Title>
             {isManage && (
               <>
-                <ManageHuman />
+                <Button
+                  onClick={() =>
+                    handleDownload(
+                      "/assets/pdf/ManageHuman2.pdf",
+                      "인적/물류 보안가이드라인.pdf"
+                    )
+                  }
+                >
+                  Download
+                  <img
+                    src="/assets/img/pdf2.png"
+                    alt="Download Icon"
+                    style={{ width: "20px", marginLeft: "5px" }}
+                  />{" "}
+                  {/* 이미지 추가 */}
+                </Button>
               </>
             )}
-          </ResourceContainer>
-        </SecurityContainer>
-      </MypageContainer>
+
+            <ResourceContainer>
+              {isManage && (
+                <>
+                  <ManageHuman />
+                </>
+              )}
+            </ResourceContainer>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

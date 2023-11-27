@@ -81,8 +81,9 @@ function MyResource() {
     <div className="main-content">
       <div className="mypage-container">
         <div className="flex-container">
-          <div className="menu-container"></div>
-          <Sidebar />
+          <div className="menu-container">
+            <Sidebar />
+          </div>
           <div className="main-container">
             <StyledSideMenuTitle>
               <div>나의 리소스</div>
