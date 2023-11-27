@@ -27,7 +27,7 @@ export const menu = [
     key: "2",
     children: [
       {
-        label: <Link to="/mypage/user">회원 정보 수정</Link>,
+        label: <Link to="/mypage">회원 정보 수정</Link>,
         key: "22",
       },
       {
@@ -65,7 +65,7 @@ const MyPageSideBar = () => {
   return (
     <StyledSideMenu>
       <StyledSideMenuTitle>
-        <Link to="/mypage">My Page</Link>
+        <Link to="/mypage/cloud">My Page</Link>
       </StyledSideMenuTitle>
       <StyledMenu
         defaultOpenKeys={["1", "2"]}

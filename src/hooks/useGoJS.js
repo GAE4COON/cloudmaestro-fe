@@ -87,30 +87,17 @@ const useGoJS = (setShowToggle, onDiagramChange) => {
             try {
               const PostData = {
                 checkOption: null,
+                newData: null,
                 diagramData: diagram.model.toJson(),
               };
-              if (data.insertedNodeKeys) {
+              if (data.insertedNodeKeys || data.modifiedNodeData) {
                 for (let i = 0; i < data.modifiedNodeData.length; i++) {
                   if (
                     data.modifiedNodeData[i].text === "VPC" &&
                     data.modifiedNodeData[i].isGroup === true
                   ) {
                     PostData.checkOption = "VPC";
-                    console.log("NodeCheck 호출");
-                    const response = await NodeCheck(PostData);
-                    if (response && response.data) {
-                      console.log("API Response:", response.data);
-                      setDiagramCheck(response.data);
-                    }
-                  }
-                }
-              } else if (data.modifiedNodeData) {
-                for (let i = 0; i < data.modifiedNodeData.length; i++) {
-                  if (
-                    data.modifiedNodeData[i].text === "VPC" &&
-                    data.modifiedNodeData[i].isGroup === true
-                  ) {
-                    PostData.checkOption = "VPC";
+                    PostData.newData = data.modifiedNodeData[i];
                     console.log("NodeCheck 호출");
                     const response = await NodeCheck(PostData);
                     if (response && response.data) {
