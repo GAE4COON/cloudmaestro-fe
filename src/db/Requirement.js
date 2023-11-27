@@ -169,9 +169,9 @@ export const globalRequest = [
         key: "웹트래픽 분산",
         children: [
           {
-            title: "DNS서비스 (Route 53)",
-            value: "DNS서비스 (Route 53)",
-            key: "DNS서비스 (Route 53)",
+            title: "DNS서비스 (Route53)",
+            value: "DNS서비스 (Route53)",
+            key: "DNS서비스 (Route53)",
           },
         ],
       },
@@ -188,14 +188,14 @@ export const globalRequest = [
         key: "다중AZ배포구성 및 관리",
         children: [
           {
-            title: "DNS서비스 이중화 (Route 53)",
-            value: "DNS서비스 이중화 (Route 53)",
-            key: "DNS서비스 이중화 (Route 53)",
+            title: "DNS서비스 이중화 (Route53)",
+            value: "DNS서비스 이중화 (Route53)",
+            key: "DNS서비스 이중화 (Route53)",
           },
           {
-            title: "글로벌네트워크 구축 (멀티 리전)",
-            value: "글로벌네트워크 구축 (멀티 리전)",
-            key: "글로벌네트워크 구축 (멀티 리전)",
+            title: "글로벌네트워크 구축 (멀티리전)",
+            value: "글로벌네트워크 구축 (멀티리전)",
+            key: "글로벌네트워크 구축 (멀티리전)",
           },
           {
             title: "데이터베이스 분산 (RDS)",
