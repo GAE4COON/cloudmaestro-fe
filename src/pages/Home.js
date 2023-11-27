@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/home.css";
 // import { useCookies } from "react-cookie";
@@ -38,24 +38,14 @@ function Home() {
   return (
     <Fragment>
       <div className="home-content">
-        <div className="img-container">
-          <img
-            src="assets/img/Cloud-architecture.png"
-            alt="logo"
-            className="home-img"
-          />
-          <div className="home-select-box">
-            <h1>WELCOME TO CLOUD MAESTRO!</h1>
-            <h2 className="home-select-text">
-              보안성을 고려한 클라우드 아키텍처 자동 도식화 플랫폼
-            </h2>
-            <button className="home-btn" onClick={handleAutoDraw}>
-              Auto Draw!
-            </button>
-            <button className="home-btn" onClick={handleJustDraw}>
-              Just Draw!
-            </button>
-          </div>
+        <img src="assets/img/home-img.png" alt="logo" className="home-img" />
+        <div className="home-select-box">
+          <button className="home-btn" onClick={handleAutoDraw}>
+            Auto Draw!
+          </button>
+          <button className="home-btn" onClick={handleJustDraw}>
+            Just Draw!
+          </button>
         </div>
       </div>
     </Fragment>
@@ -63,4 +53,3 @@ function Home() {
 }
 
 export default Home;
-

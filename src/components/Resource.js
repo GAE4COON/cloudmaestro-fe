@@ -10,7 +10,19 @@ const tagColors = {
   분석: "#11DD32",
   컴퓨팅: "#F9A825",
   컨테이너: "#6666FF",
+  스토리지: "#6666FF",
+  "네트워킹 및 콘텐츠전송": "#ED7100",
+  "Management Governance": "#D32F2F",
+  "App Integration": "#F89D76",
+  "데이터 보호": "#6666FF",
+  "탐지 및 대응": "#3A3838",
+  "애플리케이션 보호": "#2DF2FF",
+  "네트워크 보호": "#FF2DDD",
 };
+
+function renderParagraphs(text) {
+  return text.split("\n").map((line, index) => <p key={index}>{line}</p>);
+}
 
 function Resource({ title_img, title, tags, guide1, guide2, guide3, guide4 }) {
   const text = `
@@ -22,25 +34,25 @@ function Resource({ title_img, title, tags, guide1, guide2, guide3, guide4 }) {
     {
       key: "1",
       label: "역할",
-      children: <p>{guide1}</p>,
+      children: <p>{renderParagraphs(guide1)}</p>,
       style: panelStyle,
     },
     {
       key: "2",
       label: "동작 방식",
-      children: <p>{guide2}</p>,
+      children: <p>{renderParagraphs(guide2)}</p>,
       style: panelStyle,
     },
     {
       key: "3",
       label: "온프레미스 매칭",
-      children: <p>{guide3}</p>,
+      children: <p>{renderParagraphs(guide3)}</p>,
       style: panelStyle,
     },
     {
       key: "4",
       label: "관리방법(보안 고려사항)",
-      children: <p>{guide4}</p>,
+      children: <p>{renderParagraphs(guide4)}</p>,
       style: panelStyle,
     },
   ];
@@ -48,9 +60,11 @@ function Resource({ title_img, title, tags, guide1, guide2, guide3, guide4 }) {
   const { token } = theme.useToken();
   const panelStyle = {
     marginBottom: 24,
-    background: token.colorFillAlter,
+    background: "#fff",
     borderRadius: token.borderRadiusLG,
     border: "none",
+    textAlign: "left",
+    paddingLeft: "10px",
   };
 
   return (
@@ -72,7 +86,7 @@ function Resource({ title_img, title, tags, guide1, guide2, guide3, guide4 }) {
         </RightSide>
       </ResourceTitleContainer>
       <hr />
-      <Collapse
+      <StyledCollapse
         bordered={false}
         defaultActiveKey={["1"]}
         expandIcon={({ isActive }) => (
@@ -108,7 +122,7 @@ const ResourceTitleContainer = styled.div`
 `;
 
 const ResourceName = styled.div`
-  pont-size: 20px;
+  font-size: 20px;
   margin-left: 15px;
 `;
 
@@ -134,6 +148,15 @@ const Tag = styled.div`
   padding: 5px;
   color: white;
   font-weight: 500;
+`;
+
+const StyledCollapse = styled(Collapse)`
+  .ant-collapse-header {
+    font-size: 17px;
+    font-weight: 700;
+    font-family: "Noto Sans KR", sans-serif !important;
+    color: #333; // 진한 회색으로 글자색 설정
+  }
 `;
 
 export default Resource;

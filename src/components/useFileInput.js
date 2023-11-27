@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { fileUpload } from '../apis/file';
-import { encrypt, decrypt } from '../apis/crpytoAPI';
+import { fileUpload } from '../apis/fileAPI';
 import CryptoJS from 'crypto-js';
 
 
@@ -14,6 +13,7 @@ export const useFileUpload = () => {
 
       const fd = new FormData();
       fd.append('file', selectedFile);
+      console.log("fd", fd);
 
       try {
         const response = await fileUpload(fd);

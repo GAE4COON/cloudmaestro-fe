@@ -13,18 +13,21 @@ import { nodeDataArrayPalette } from "../db/Node";
 
 import { useLocation, useNavigate } from "react-router-dom";
 import { Alert, Space, Layout, Menu } from "antd";
-import { sidebarResource } from "../apis/sidebar"
-import { useData } from '../components/DataContext';
+import { sidebarResource } from "../apis/sidebar";
+import { DrawResourceGuide } from "../apis/resource";
+import "../styles/App.css";
 
 // 페이지
 // import useReadJSON from "./useReadJSON";
 import Button from "./Button.js";
-import Sidebar from '../components/Sidebar';
+import Sidebar from "../components/Sidebar";
 import Palette from "../components/Palette";
 import "../styles/Draw.css";
 import { useFileUpload } from "../components/useFileInput";
-import { summaryFile } from "../apis/file";
+import { summaryFile } from "../apis/fileAPI.js";
 import { Link } from "react-router-dom";
+import RequirementPopup from "../components/RequirementPopup";
+import { DataContext, useData } from "../components/DataContext.js"; // DataContext의 경로를 수정하세요
 
 function Draw() {
   const navigate = useNavigate();
@@ -34,16 +37,32 @@ function Draw() {
   const paletteClassName = isDesktopOrLaptop
     ? "palette-component"
     : "palette-component-small";
-  const diagramClassName = "diagram-component"
+  const diagramClassName = "diagram-component";
 
   const [finalToggleValue, setFinalToggleValue] = useState({});
   const [selectedNodeData, setSelectedNodeData] = useState(null); // <-- 상태 변수를 추가합니다.
   const [showToggle, setShowToggle] = useState(true);
   const [alertMessage, setAlertMessage] = useState(null);
   const { setData } = useData();
+  const [mydiagram, setmyDiagram] = useState(null);
   const [NodeGuideLine, setNodeGuideLine] = useState({
     key: null,
     message: null,
+  });
+
+  const [diagramVersion, setDiagramVersion] = useState(0);
+
+  const { isSidebarOpen, setIsSidebarOpen } = useData();
+
+  useEffect(() => {
+    //setmyDiagram(diagram);
+    console.log("Updated diagram version:", diagramVersion);
+  }, [diagramVersion]); // Dependency on diagramVersion
+
+  const handleDiagramChange = useCallback((changedDiagram) => {
+    // console.log("다이어그램이 변경되었습니다:", changedDiagram.model.toJson());
+    setmyDiagram(changedDiagram);
+    setDiagramVersion((prevVersion) => prevVersion + 1);
   });
 
   const {
@@ -53,11 +72,7 @@ function Draw() {
     clickedNodeKey,
     DiagramCheck,
     NodeGuide,
-  } = useGoJS(setSelectedNodeData, setShowToggle, showToggle);
-
-  //console.log("show", showSelectToggle.value);
-
-  // Go to Draw page 완료
+  } = useGoJS(setShowToggle, handleDiagramChange);
 
   const location = useLocation();
   const file = location.state ? location.state.file : null;
@@ -66,17 +81,35 @@ function Draw() {
 
   useEffect(() => {
     if (diagram) {
-      diagram.clear();  //다른 로케이션으로 가면 다이어그램을 없앤다
+      diagram.clear(); //다른 로케이션으로 가면 다이어그램을 없앤다
     }
     setData(null);
   }, [location]);
 
   useEffect(() => {
-    if (NodeGuide) {
-      setNodeGuideLine({ key: NodeGuide, message: "추가 예정" });
-    } else {
-      setNodeGuideLine({ key: null, message: null });
-    }
+    const fetchResourceGuide = async () => {
+      if (NodeGuide) {
+        try {
+          const ResourceData = { title: NodeGuide };
+          const response = await DrawResourceGuide(ResourceData);
+          console.log(response);
+          if (response.data.result !== "fail") {
+            setNodeGuideLine({ key: NodeGuide, message: response.data.result });
+          } else {
+            setNodeGuideLine({
+              key: NodeGuide,
+              message: "추후 추가 예정",
+            });
+          }
+        } catch (error) {
+          console.error("Error fetching resource guide:", error);
+        }
+      } else {
+        setNodeGuideLine({ key: null, message: null });
+      }
+    };
+
+    fetchResourceGuide();
   }, [NodeGuide]);
 
   useEffect(() => {
@@ -108,7 +141,7 @@ function Draw() {
 
       // 파일 데이터를 FormData에 추가
       const fileData = new Blob([JSON.stringify(jsonData)], {
-        type: "application/json",
+        type: "   ",
       });
       formData.append("file", fileData, "diagram.json");
 
@@ -140,18 +173,24 @@ function Draw() {
   );
   // useReadJSON(file,diagram);
 
+  //popup
+  const [ispopup, setIsPopup] = useState(false);
+
+  const handlePopup = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+    return setIsPopup(!ispopup);
+  };
+
   return (
-    <div>
+    <div className="main-content">
       <div className="Draw">
         <div className="container">
-
-
           <div className="workspace">
             <div className="palette">
-
               <Palette
-                nodeDataArray={nodeDataArrayPalette}
                 divClassName={paletteClassName}
+                diagram={mydiagram}
+                diagramVersion={diagramVersion}
               />
             </div>
 
@@ -180,10 +219,10 @@ function Draw() {
                     message={NodeGuideLine.key}
                     description={NodeGuideLine.message}
                     type="info"
-                  // closable
-                  // onClose={() =>
-                  //   setNodeGuideLine({ key: null, message: null })
-                  // }
+                    closable
+                    // onClose={() =>
+                    //   setNodeGuideLine({ key: null, message: null })
+                    // }
                   />
                 )}
               </StyleSpace>
@@ -240,15 +279,20 @@ function Draw() {
                   divClassName={diagramClassName}
                 />
                 <ButtonContainer>
-                  <StyledButton onClick={summaryRequest}>Go to summary</StyledButton>
+                  <StyledButton onClick={summaryRequest}>
+                    Go to summary
+                  </StyledButton>
                   <StyledButton onClick={null}>Save as Cloud</StyledButton>
+                  <StyledButton onClick={handlePopup}>Optimize</StyledButton>
                 </ButtonContainer>
               </StyledDiagram>
-
             </DiagramContainer>
-
+            {ispopup ? (
+              <RequirementPopup diagram={diagram} handlePopup={handlePopup} />
+            ) : (
+              ""
+            )}
           </div>
-
         </div>
 
         {from === "inputNet" && (
@@ -256,10 +300,7 @@ function Draw() {
             Submit
           </Link>
         )}
-
-
       </div>
-
     </div>
   );
 }
@@ -269,7 +310,7 @@ export default Draw;
 const StyledDiagram = styled.div`
   /* float: left; */
   width: 100%;
-  height: 100%; // 원하는 높이로 설정
+  height: 80vh; // 원하는 높이로 설정
 `;
 
 const StyleSpace = styled(Space)`
@@ -286,34 +327,40 @@ const StyleAlert = styled(Alert)`
 `;
 
 const ButtonContainer = styled.div`
-  // background-color:yellow;
+  position: relative;
   display: flex;
   justify-content: center;
-`
+`;
 
 const StyledButton = styled.div`
-margin-top: 10px;
-box-sizing: border-box;
-width: 200px;
-padding:5px;
+  margin-top: 10px;
+  box-sizing: border-box;
+  width: 200px;
+  padding: 5px;
+  margin: 10px;
+  color: #809cda;
 
-background: #FFFFFF;
-border: 1px solid #BABABA;
-border-radius: 7px;
+  background: #ffffff;
+  border: 2px solid #bbbbda;
+  border-radius: 7px;
 
-font-family: "Noto Sans KR", sans-serif !important;
-font-style: normal;
-font-weight: 700;
+  font-family: "Noto Sans KR", sans-serif;
+  font-style: normal;
+  font-weight: 700;
 
-line-height: 30px;
-align-items: center;
-text-align: center;
+  line-height: 30px;
+  align-items: center;
+  text-align: center;
 
-color: #809CDA;
-`
+  cursor: pointer;
+  &:hover {
+    background: #809cda;
+    color: #ffffff;
+  }
+`;
 const DiagramContainer = styled.div`
   position: relative;
   display: inline;
   width: 75%;
   height: 75%;
-`
+`;

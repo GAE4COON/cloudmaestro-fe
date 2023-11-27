@@ -1,18 +1,16 @@
 /* global google */
 import React, { useState, useEffect } from "react";
-import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import { login } from "../apis/auth.js";
 import { useAuth } from "../utils/auth/authContext";
 import jwt_decode from "jwt-decode";
-
+import "../styles/App.css";
 import "../styles/signin.css";
 
 function SignIn() {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const [cookies, setCookie] = useCookies(["accessToken", "refreshToken"]);
 
   const { user, setUser } = useAuth();
 
@@ -24,26 +22,22 @@ function SignIn() {
 
     try {
       const response = await login(userData);
-      const { accessToken, refreshToken } = response.data;
+      console.log(response.data);
+      const { grantType, accessToken, refreshToken } = response.data;
 
-      setCookie("accessToken", accessToken, {
-        path: "/",
-        //httpOnly: true,
-        // 다른 쿠키 설정들 (예: maxAge, domain, secure 등)도 추가 가능
-      });
+      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("refreshToken", refreshToken);
+      localStorage.setItem("tokenType", grantType);
 
-      setCookie("refreshToken", refreshToken, {
-        path: "/",
-        //httpOnly: true,
-        // 다른 쿠키 설정들 (예: maxAge, domain, secure 등)도 추가 가능
-      });
+      console.log("Local check :", localStorage.getItem("accessToken"));
 
-      //console.log("로그인 성공 :", response.data);
-
-      navigate("/");
+      window.location.href = "/home";
     } catch (error) {
-      //console.log("로그인 실패 :", error.response);
-      alert("로그인 실패");
+      console.error("로그인 실패:", error.message);
+      if (error.response) {
+        console.error("응답 상태:", error.response.status);
+        console.error("응답 데이터:", error.response.data);
+      }
     }
   };
 
@@ -84,7 +78,7 @@ function SignIn() {
   }, []);
 
   return (
-    <>
+    <div className="main-content">
       <h1></h1>
       <div className="sign-in-form">
         <h1>로그인</h1>
@@ -116,7 +110,7 @@ function SignIn() {
           style={{ visibility: user ? "hidden" : "visible" }}
         ></div>
       </div>
-    </>
+    </div>
   );
 }
 

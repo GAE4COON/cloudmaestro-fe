@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import * as go from "gojs";
 import "../styles/App.css"; // contains .diagram-component CSS
 import handleChangedSelection from "./toggle/toggle";
-import { alertCheck } from "../apis/file";
-import { sidebarResource } from "../apis/sidebar"
-import { useData } from '../components/DataContext';
+import { alertCheck } from "../apis/fileAPI";
+import { sidebarResource } from "../apis/sidebar";
+import { useData } from "../components/DataContext";
 
-const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
+const useGoJS = (setShowToggle, onDiagramChange) => {
   const [diagram, setDiagram] = useState(null);
   const [clickedNodeKey, setClickedNodeKey] = useState();
   const [showSelectToggle, setShowSelectToggle] = useState({ value: false });
@@ -46,13 +46,25 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
     const diagram = $(go.Diagram, {
       "undoManager.isEnabled": true,
       "resizingTool.isGridSnapEnabled": true,
-      "commandHandler.archetypeGroupData": { text: "Group", type: "group", isGroup: true },
+      "commandHandler.archetypeGroupData": {
+        text: "Group",
+        type: "group",
+        isGroup: true,
+      },
       "contextMenuTool.isEnabled": true,
+      grid: $(
+        go.Panel,
+        "Grid",
+        { gridCellSize: new go.Size(20, 20) }, // 여기서 칸의 크기를 설정
+        $(go.Shape, "LineH", { stroke: "lightgray", strokeWidth: 0.7 }),
+        $(go.Shape, "LineV", { stroke: "lightgray", strokeWidth: 0.7 })
+      ),
+      "draggingTool.isGridSnapEnabled": true,
+      "resizingTool.isGridSnapEnabled": true,
       ModelChanged: async (e) => {
-        // 오직 트랜잭션 완료 시에만 로그 출력
         if (e.isTransactionFinished) {
           const jsonString = e.model.toIncrementalJson(e);
-          const data = JSON.parse(jsonString); // JSON 문자열을 JavaScript 객체로 변환
+          const data = JSON.parse(jsonString);
           if (data.insertedLinkKeys) {
             console.log("insertedLinkKeys", data.modifiedLinkData);
             try {
@@ -64,35 +76,18 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
                   console.log(
                     "링크 취소해도 되는 부분.. 주석처리만 하니까 안 올라가서 우선 콘솔로그라도 띄움"
                   );
-                  //   diagram.undoManager.undo();
                 }
               }
             } catch (error) {
-              // Handle API error here
               console.error("API Error:", error);
             }
           }
-          // if (data.insertedNodeKeys) {
-          //   console.log("insertedLinkKeys", data.insertedLinkKeys);
-          // }
         }
       },
       model: new go.GraphLinksModel({
         linkKeyProperty: "key",
       }),
     });
-
-    function formatKey(key) {
-      // _를 공백으로 대체합니다.
-      let words = key.replace(/_/g, " ").split(" ");
-
-      // 각 단어의 첫 글자를 대문자로 바꿉니다.
-      let result = words
-        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(" ");
-
-      return result;
-    }
 
     // delete
     diagram.addLayerBefore(
@@ -104,12 +99,12 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
     diagram.nodeTemplate = $(
       go.Node,
       "Spot", // Spot 패널 사용으로 변경
-      {
-        click: (e, node) => {
-          const text = node.data.text || node.data.key;
-          setClickedNodeKey(text);
-        },
-      },
+      // {
+      //   click: (e, node) => {
+      //     const text = node.data.text || node.data.key;
+      //     setClickedNodeKey(text);
+      //   },
+      // },
       { resizable: false, resizeObjectName: "Picture" },
       // { background: "#A0BCC2" },
       new go.Binding("layerName", "key", function (key) {
@@ -122,10 +117,10 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
 
       //마진에 포트 추가해서 링크가 동작되게 만든다
       $(go.Shape, {
-        width: 70,
-        height: 70,
+        width: 80,
+        height: "auto",
         fill: "transparent",
-        stroke: null,
+        stroke: "transparent",
         portId: "",
         fromLinkable: true,
         toLinkable: true,
@@ -143,89 +138,144 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
             margin: 10,
             width: 50,
             height: 50,
-            background: "white",
+            background: "transparent",
           },
           new go.Binding("source").makeTwoWay(),
           new go.Binding("desiredSize", "size", go.Size.parse).makeTwoWay(
             go.Size.stringify
-          ),
-          // modify or delete -> if unnecessary
-          new go.Binding("fromLinkable", "key", function (k) {
-            return k !== -7;
-          }),
-          new go.Binding("toLinkable", "key", function (k) {
-            return k !== -7;
-          }),
-          new go.Binding("text", "key")
+          )
         ),
         $(
           go.TextBlock,
           {
-            font: "bold 12pt sans-serif",
+            editable: true,
+            font: "10pt Noto Sans KR",
             alignment: go.Spot.TopLeft,
-            portId: "",
             cursor: "pointer",
-            fromLinkable: true,
-            toLinkable: true,
+            width: 100, // 예를 들어, 최대 너비를 100픽셀로 설정
+            overflow: go.TextBlock.WrapFit, // 너비를 초과하는 텍스트를 래핑
+            textAlign: "center",
           },
+          // EC2_2로 나오게하는 코드
+          // new go.Binding("text", "", function(node){
+          //   console.log("data", node);
+          //   console.log("key", node.key);
+          //   console.log("text", node.text);
+          //   if(node.key===node.text){
+          //     return node.key;
+          //   }
+          //   else{
+          //     var diff = node.key.replace(node.text, "").trim();
+          //     console.log("diff", diff);
+          //     console.log(node.text+"_"+diff);
+          //     return node.text+"_"+diff;
+          //   }
+          // }),
           new go.Binding("text", "key")
-        ),
-
-        // modify or delete -> if unnecessary
-        new go.Binding("fromLinkable", "key", function (k) {
-          return k !== -7;
-        }),
-        new go.Binding("toLinkable", "key", function (k) {
-          return k !== -7;
-        })
+        )
       )
     );
 
     diagram.groupTemplate = $(
       go.Group,
-      "Auto",
-      "Vertical",
+      // "Auto",
+      // "Vertical",
+      new go.Binding("location", "loc", go.Point.parse).makeTwoWay(
+        go.Point.stringify
+      ),
       {
-        // layout: $(go.GridLayout, { alignment: go.GridLayout.Position }),
-        mouseDragEnter: (e, grp, prev) => highlightGroup(e, grp, true),
-        mouseDragLeave: (e, grp, next) => highlightGroup(e, grp, false),
+        mouseDragEnter: (e, grp) => highlightGroup(e, grp, true),
+        mouseDragLeave: (e, grp) => highlightGroup(e, grp, false),
         mouseDrop: finishDrop,
         ungroupable: true,
+        resizable: true,
+        // layout: $(go.GridLayout, {
+        //   wrappingColumn: 3, // 한 열에 하나의 노드만 표시
+        //   cellSize: new go.Size(1, 1), // 셀 크기 설정
+        //   spacing: new go.Size(4, 4) // 노드 간 간격 설정
+        // }),
       },
-      $(go.TextBlock,
+      new go.Binding("background", "isHighlighted", (h) =>
+        h ? "rgba(128,128,128,0.1)" : "transparent"
+      ).ofObject(),
+      $(
+        go.Panel,
         {
-          font: "10pt sans-serif",
-          alignment: go.Spot.TopLeft,
-          portId: "",
-          cursor: "pointer",
-          fromLinkable: true,
-          toLinkable: true,
+          padding: new go.Margin(4, 4, 4, 4), // Panel에 마진 추가
         },
-        new go.Binding("text", "key")
+        new go.Binding("background", "stroke"),
+
+        $(
+          go.TextBlock,
+          {
+            font: "10pt Noto Sans KR",
+            stroke: "white",
+            alignment: go.Spot.TopLeft,
+            cursor: "pointer",
+            fromLinkable: true,
+            fromSpot: go.Spot.NotBottomSide,
+            toLinkable: true,
+            toSpot: go.Spot.NotBottomSide,
+            portId: "",
+            editable: true,
+          },
+          new go.Binding("text", "text")
+        )
       ),
 
       $(
         go.Panel,
         "Auto",
+
+        {
+          stretch: go.GraphObject.Fill,
+          margin: new go.Margin(25, 0, 0, 0), // Panel에 마진 추가
+        },
         $(
           go.Shape,
           "Rectangle",
           {
-            margin: 10,
-            fill: "transparent",
+            fill: "transparent", // default fill
             stroke: "rgb(128,128,128)",
             strokeWidth: 3,
           },
-          new go.Binding("stroke")
+          new go.Binding("fill", "", function (data) {
+            if (
+              data.key.toLowerCase().includes("public") ||
+              data.key.toLowerCase().includes("private")
+            ) {
+              // Parse the RGB color to get individual components
+              let rgb = data.stroke.match(/\d+/g);
+              if (rgb && rgb.length >= 3) {
+                // Construct an RGBA color with 0.4 opacity
+                return `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, 0.2)`;
+              }
+            }
+            return "transparent";
+          }),
+          new go.Binding("stroke", "", function (data) {
+            if (
+              data.key.toLowerCase().includes("public") ||
+              data.key.toLowerCase().includes("private")
+            ) {
+              return "transparent";
+            }
+            return data.stroke;
+          })
         ),
-        // new go.Binding("fill", "stroke")),
+
         $(go.Placeholder, { padding: 30 })
       )
-      // $(go.Placeholder, { padding: 30 })
     );
+
     diagram.linkTemplate = $(
       go.Link,
       {
+        toShortLength: 3,
+        routing: go.Link.Normal,
+        // routing: go.Link.AvoidsNodes,
+        curve: go.Link.JumpGap,
+        corner: 5,
         contextMenu: $(
           go.Adornment,
           "Table",
@@ -235,13 +285,12 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
 
           $(
             "ContextMenuButton",
-
             $(go.Shape, "RoundedRectangle", {
               fill: "transparent",
               width: 40,
               height: 40,
             }),
-            $(go.TextBlock, "━", { font: "bold 14pt serif" }),
+            $(go.TextBlock, "━", { font: "10pt Noto Sans KR" }),
             {
               row: 0,
               column: 0,
@@ -260,7 +309,7 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
               width: 40,
               height: 40,
             }),
-            $(go.TextBlock, "┈", { font: "bold 14pt serif" }),
+            $(go.TextBlock, "┈", { font: "10pt Noto Sans KR" }),
             {
               row: 0,
               column: 1,
@@ -279,7 +328,7 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
               width: 40,
               height: 40,
             }),
-            $(go.TextBlock, "↔", { font: "bold 14pt serif" }),
+            $(go.TextBlock, "↔", { font: "10pt Noto Sans KR" }),
             {
               row: 1,
               column: 0,
@@ -299,7 +348,7 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
               width: 40,
               height: 40,
             }),
-            $(go.TextBlock, "→", { font: "bold 14pt serif" }),
+            $(go.TextBlock, "→", { font: "10pt Noto Sans KR" }),
             {
               row: 1,
               column: 1,
@@ -312,12 +361,6 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
             }
           )
         ),
-
-        routing: go.Link.Orthogonal,
-        corner: 5,
-        reshapable: true,
-        relinkableFrom: true,
-        relinkableTo: true,
       },
       // for link shape
       $(go.Shape, { strokeWidth: 2, stroke: "#000", name: "LinkShape" }),
@@ -358,7 +401,7 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
             mouseEnter: function (e, panel) {
               const node = panel.part.adornedPart;
               if (node instanceof go.Node) {
-                setNodeGuide(node.data.key);
+                setNodeGuide(node.data.text);
               }
             },
             mouseLeave: function (e, panel) {
@@ -372,7 +415,7 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
             height: 20,
           }),
           $(go.TextBlock, "?", {
-            font: "bold 10pt sans-serif",
+            font: "10pt Noto Sans KR",
             stroke: "white",
             verticalAlignment: go.Spot.Center,
           })
@@ -387,7 +430,7 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
       } else if (part instanceof go.Node) {
         //console.log("나는 node 입니다", part.data);
         const key = part.data.key;
-        //console.log("나는 key 입니다", key);
+        console.log("나는 node data 입니다", part.data);
         if (key) {
           if (handleChangedSelection(key)) {
             setShowSelectToggle({ value: true, key: key });
@@ -409,12 +452,16 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
       });
     });
 
-    diagram.addDiagramListener("ChangedSelection", async(e) => {
+    diagram.addModelChangedListener(function (e) {
+      if (e.isTransactionFinished) {
+        onDiagramChange(diagram);
+      }
+    });
+
+    diagram.addDiagramListener("ChangedSelection", async (e) => {
       const selectedNode = e.diagram.selection.first();
       if (selectedNode instanceof go.Node) {
         const key = selectedNode.data.key;
-        const type = selectedNode.data.type;
-        console.log("나는 type 입니다", type);
       } else {
         setShowSelectToggle({ value: false }); // 추가된 로직
       }
@@ -423,7 +470,7 @@ const useGoJS = (setSelectedNodeData, setShowToggle, showToggle) => {
     });
 
     setDiagram(diagram);
-    
+
     return diagram;
   };
 

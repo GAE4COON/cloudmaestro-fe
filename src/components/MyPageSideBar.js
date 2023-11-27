@@ -5,6 +5,7 @@ import { useLocation } from "react-router-dom";
 import { Menu } from "antd";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import "../styles/App.css";
 
 export const menu = [
   {

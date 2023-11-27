@@ -8,9 +8,17 @@
   display: flex;
   flex-direction: column;
   margin-top: 35px;
-  min-height: 90vh;
+  min-height: 100vh;
   padding-left:10%;
   padding-right: 10%;
+}
+
+
+.home-content {
+  display: flex;
+  flex-direction: column;
+  margin-top: 35px;
+  min-height: 100vh;
 }
 
 @media (max-width: 768px) {

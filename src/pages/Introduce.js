@@ -5,6 +5,8 @@ import styled from "styled-components";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+import "../styles/App.css";
+
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 const LogoSection = () => {
@@ -30,29 +32,31 @@ const TabSection = () => {
     {
       key: "1",
       label: "Cloud Migration이란?",
-      children: "온프레미스의 정보자산을 Cloud 환경으로 이전하는 과정"
+      children: "온프레미스의 정보자산을 Cloud 환경으로 이전하는 과정",
     },
     {
       key: "2",
       label: "클라우드 보안, 꼭 필요할까?",
-      children: "ISO 27001 is an international standard for Information Security Management Systems (ISMS). It provides a framework for establishing, implementing, maintaining, and continually improving an ISMS within the context of an organization's overall business risks. The standard outlines a risk management process and specifies a set of controls that organizations can implement to secure their information assets."
+      children:
+        "ISO 27001 is an international standard for Information Security Management Systems (ISMS). It provides a framework for establishing, implementing, maintaining, and continually improving an ISMS within the context of an organization's overall business risks. The standard outlines a risk management process and specifies a set of controls that organizations can implement to secure their information assets.",
     },
     {
       key: "3",
       label: "ISO/IEC 27001이란?",
-      children: "ISO 27001 is an international standard for Information Security Management Systems (ISMS). It provides a framework for establishing, implementing, maintaining, and continually improving an ISMS within the context of an organization's overall business risks. The standard outlines a risk management process and specifies a set of controls that organizations can implement to secure their information assets."
-    }
+      children:
+        "ISO 27001 is an international standard for Information Security Management Systems (ISMS). It provides a framework for establishing, implementing, maintaining, and continually improving an ISMS within the context of an organization's overall business risks. The standard outlines a risk management process and specifies a set of controls that organizations can implement to secure their information assets.",
+    },
   ];
   return (
     <div className="container2">
-      <StyledTabs items = {tabs}/>
-      </div>
+      <StyledTabs items={tabs} />
+    </div>
   );
 };
 
 const ImageSection = () => {
   return (
-    <>
+    <div className="main-content">
       <div className="img">
         <ImageWithCaption
           src="/assets/img/Draw(Network).png"
@@ -68,7 +72,7 @@ const ImageSection = () => {
           caption="After Migration"
         />
       </div>
-    </>
+    </div>
   );
 };
 

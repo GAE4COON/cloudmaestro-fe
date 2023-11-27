@@ -88,15 +88,17 @@ export const NavStyled = styled.nav`
   position: relative;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   font-family: "Noto Sans KR", sans-serif !important;
-
 `;
 
 export const NavMenuLeft = styled.div`
+  position: fixed;
   display: flex;
   align-items: center;
   justify-content: flex-start;
   text-align: center;
   transition: all 0.3s ease-in-out; // Add this line for transition effect
+  left: 42%;
+  margin-top: 5px;
 
   @media screen and (max-width: 768px) {
     display: flex; // Show the menu all the time but slide it in and out
@@ -106,8 +108,10 @@ export const NavMenuLeft = styled.div`
     text-align: center;
     position: fixed;
 
-    right: ${({ $isOpen }) => ($isOpen ? "0" : "-50%")}; // Notice the change here
-    visibility: ${({ $isOpen }) => ($isOpen ? "visible" : "hidden")}; // And here
+    right: ${({ $isOpen }) =>
+      $isOpen ? "0" : "-50%"}; // Notice the change here
+    visibility: ${({ $isOpen }) =>
+      $isOpen ? "visible" : "hidden"}; // And here
     top: 40px;
     background: #fff;
     z-index: 1;
@@ -115,14 +119,15 @@ export const NavMenuLeft = styled.div`
 `;
 
 export const NavMenuRight = styled.div`
-  width: 150px;
+  width: auto;
   display: flex;
   align-items: center;
   justify-content: flex-end;
   margin-right: 50px;
 
   @media screen and (max-width: 768px) {
-    display: ${({ $isOpen }) => ($isOpen ? "flex" : "none")}; // Notice the change here
+    display: ${({ $isOpen }) =>
+      $isOpen ? "flex" : "none"}; // Notice the change here
     flex-direction: column;
     width: 100%;
     text-align: center;
@@ -133,7 +138,6 @@ export const NavMenuRight = styled.div`
     z-index: 1;
   }
 `;
-
 
 export const NavLinkLogo = styled(Link)`
   display: flex;
@@ -235,6 +239,23 @@ export const NavBtnLink = styled(Link)`
     color: #3064d6;
     font-weight: bold;
   }
+`;
+
+export const Username = styled(Link)`
+  width: auto;
+  height: auto;
+  border-radius: 4px;
+  background: #fff;
+  padding: 5px 12px;
+  color: #000000;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  text-decoration: none;
+  // margin-left: 5px;
+  align-items: center;
+  font-size: 16px;
 `;
 
 export const UserProfileImage = styled.img`
