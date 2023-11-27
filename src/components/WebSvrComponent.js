@@ -38,6 +38,20 @@ function WebSvrComponent({
       console.log(GroupData);
       const result = new Set();
       const zonelist = [];
+
+      GroupData.forEach((item) => {
+        if (typeof item.key === "string") {
+          console.log("item.key", item.key);
+          // Exclude keys containing 'Security Group', 'Private subnet', or 'Public subnet'
+          const excludePattern = /(Security Group|Private subnet|Public subnet)/;
+          if (!excludePattern.test(item.key)) {
+            // Now, 'item.key' does not contain the excluded strings
+            result.add(item.key.trim());
+            zonelist.push(item.key);
+          }
+        }
+      });
+
       GroupData.forEach((item) => {
         if (typeof item.key === "string") {
           const match = item.key.match(
@@ -49,6 +63,9 @@ function WebSvrComponent({
           }
         }
       });
+      console.log("result", result);
+      console.log("zonelist", zonelist);
+
 
       const resultList = Array.from(result); // Set을 배열로 변환
       for (let i = 0; i < resultList.length; i++) {
@@ -59,27 +76,42 @@ function WebSvrComponent({
       }
       setZoneData(resultList);
       setZoneValue(zonelist);
-      console.log("Zone", resultList);
-      // console.log("Zone subnet", zonelist);
+      console.log("Zone", resultList); // 완성
 
       const backupNode = [];
       const backupgroupNode = [];
 
+      function getAllNestedGroups(groupId, groupData) {
+        let nestedGroups = [];
+      
+        groupData.forEach(groupItem => {
+          if (groupItem.group === groupId) {
+            nestedGroups.push(groupItem.key);
+            // Recursively find nested groups
+            nestedGroups = nestedGroups.concat(getAllNestedGroups(groupItem.key, groupData));
+          }
+        });
+      
+        return nestedGroups;
+      }
+      
       for (let idx = 0; idx < resultList.length; idx++) {
-        console.log("resultList", resultList[idx]); // label : DEV , value : DEV 
-        console.log("Group",GroupData);
+        console.log("resultList", resultList[idx]);
+        console.log("resultList", resultList[idx].label);
+      
         backupgroupNode[resultList[idx].label] = [];
         backupNode[resultList[idx].label] = [];
-
-        //security 그룹 추출
+      
+        // Extracting security groups, including nested ones
         for (let i = 0; i < GroupData.length; i++) {
           if (typeof GroupData[i].group === "string") {
             if (GroupData[i].group.includes(resultList[idx].label)) {
-              backupgroupNode[resultList[idx].label].push(GroupData[i].key);
+              const nestedGroups = getAllNestedGroups(GroupData[i].key, GroupData);
+              backupgroupNode[resultList[idx].label].push(GroupData[i].key, ...nestedGroups);
             }
           }
         }
-        // console.log("backupgroupNode: ", backupgroupNode);
+        console.log([resultList[idx].label], "backupgroupNode: ", backupgroupNode[resultList[idx].label]);
 
         for (
           let i = 0;
@@ -96,27 +128,27 @@ function WebSvrComponent({
         for (let i = 0; i < diagramData.nodeDataArray.length; i++) {
           let nodeData = diagramData.nodeDataArray[i];
           let backupValues = backupgroupNode[resultList[idx].label].map((item) => item.value);
-        
+
           if (nodeData.isGroup === null && nodeData.key.includes("EC2")) {
-            console.log("Security Group 있는 Ec2", nodeData);
+            // console.log("Security Group 있는 Ec2", nodeData);
             if (backupValues.includes(nodeData.group)) {
               nodeSet.add(nodeData.group);
             }
           }
-          
-        
+
+
           if (typeof nodeData.group === 'string' && !nodeData.group.includes("Security Group") && nodeData.key.includes("EC2")) {
-           
-            if(nodeData.group.includes(resultList[idx].value)){
+
+            if (nodeData.group.includes(resultList[idx].value)) {
               nodeSet.add(nodeData.key);
             }
-            
+
           }
         }
 
         const nodeSetList = Array.from(nodeSet);
         backupNode[resultList[idx].label] = nodeSetList;
-        
+
         for (let i = 0; i < backupNode[resultList[idx].label].length; i++) {
           backupNode[resultList[idx].label][i] = {
             value: backupNode[resultList[idx].label][i],
@@ -145,7 +177,7 @@ function WebSvrComponent({
       });
     };
     updateTossPopup();
-  }, [availableNode,serverNode, zoneFunc, zoneReqValue, SelectZone, zones]);
+  }, [availableNode, serverNode, zoneFunc, zoneReqValue, SelectZone, zones]);
   //여기에 상위props로 보낼 것 다 넣어주세요.
 
   const resetFields = () => {
@@ -238,7 +270,7 @@ function WebSvrComponent({
       </SelectContainer>
       <SelectContainer>
         <SelectTitle>보안</SelectTitle>
-          <Checkbox.Group options={zoneSecurityReq} onChange={handleZoneReqValueChange} />
+        <Checkbox.Group options={zoneSecurityReq} onChange={handleZoneReqValueChange} />
       </SelectContainer>
       <SelectContainer>
         <SelectTitle>트래픽 조절</SelectTitle>
@@ -263,29 +295,29 @@ function WebSvrComponent({
 
       <SelectContainer>
         <SelectTitle>서버 수 조절</SelectTitle>
-          <StyledBackupSelect
-            mode="tags"
-            showSearch
-            value={serverNode}
-            onChange={handleChange2}
-            placeholder="node select..."
-            optionFilterProp="children"
-            filterOption={(input, option) =>
-              (option?.label ?? "").includes(input)
-            }
-            filterSort={(optionA, optionB) =>
-              (optionA?.label ?? "")
-                .toLowerCase()
-                .localeCompare((optionB?.label ?? "").toLowerCase())
-            }
-            options={zoneNode[SelectZone]}
-          />
+        <StyledBackupSelect
+          mode="tags"
+          showSearch
+          value={serverNode}
+          onChange={handleChange2}
+          placeholder="node select..."
+          optionFilterProp="children"
+          filterOption={(input, option) =>
+            (option?.label ?? "").includes(input)
+          }
+          filterSort={(optionA, optionB) =>
+            (optionA?.label ?? "")
+              .toLowerCase()
+              .localeCompare((optionB?.label ?? "").toLowerCase())
+          }
+          options={zoneNode[SelectZone]}
+        />
       </SelectContainer>
 
 
       <SelectContainer>
         <SelectTitle>고가용성</SelectTitle>
-          <Checkbox.Group options={zoneRdsReq} onChange={handleZoneReqValueChange} />
+        <Checkbox.Group options={zoneRdsReq} onChange={handleZoneReqValueChange} />
       </SelectContainer>
     </ZoneContainer>
   );
