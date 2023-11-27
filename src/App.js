@@ -1,5 +1,4 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import React, { useState, useCallback, useEffect } from "react";
 import "./styles/App.css";
 import Home from "./pages/Home";
 import Draw from "./pages/Draw";
@@ -23,9 +22,9 @@ import MyNetwork from "./pages/MyNetwork";
 import MyResource from "./pages/MyResource";
 import { DataProvider } from "./components/DataContext";
 import MySecurity from "./pages/Guideline";
-import FileInput from "./pages/fileInput";
+// import FileInput from "./pages/fileInput";
 import PrivateRoute from "./components/privateRoute";
-import { PublicRoute } from "./components/publicRoute";
+// import { PublicRoute } from "./components/publicRoute";
 
 function App() {
   return (
@@ -40,7 +39,6 @@ function App() {
               <Route exact path="/home" element={<Home />} />
               <Route path="/about" element={<Introduce />} />
               <Route path="/about/example" element={<Example />} />
-
               <Route
                 path="/draw"
                 element={
@@ -49,10 +47,8 @@ function App() {
                   </PrivateRoute>
                 }
               />
-
               <Route path="/sign-up" element={<Signup />} />
               <Route path="/sign-in" element={<Signin />} />
-
               <Route
                 path="/home/auto"
                 element={
@@ -69,7 +65,6 @@ function App() {
                   </PrivateRoute>
                 }
               />
-
               <Route
                 path="/mypage"
                 element={
@@ -78,7 +73,6 @@ function App() {
                   </PrivateRoute>
                 }
               />
-
               <Route
                 path="/mypage/cloud"
                 element={
@@ -103,7 +97,6 @@ function App() {
                   </PrivateRoute>
                 }
               />
-
               <Route
                 path="/mypage/network"
                 element={
@@ -112,7 +105,6 @@ function App() {
                   </PrivateRoute>
                 }
               />
-
               <Route
                 path="/mypage/design"
                 element={
@@ -121,7 +113,6 @@ function App() {
                   </PrivateRoute>
                 }
               />
-
               <Route
                 path="/summary"
                 element={
