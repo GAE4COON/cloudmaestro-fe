@@ -18,7 +18,7 @@ const createChart = (array) => {
 
     datasets: [
       {
-        label: "price",
+        label: "cost",
         data: array.map((obj) => Object.values(obj)[0]), // Extract the values (e.g., 503, 12, etc.)
         backgroundColor: ["#173577", "#3064D6", "#799DEE", "#D1DEFB"],
       },
@@ -90,15 +90,15 @@ function Summary() {
 
   Object.entries(file).map(([resourceName, valueObject]) => {
     var items = [];
-    var price = 0.0;
+    var cost = 0.0;
     Object.entries(valueObject).map(([instanceName, detail]) => {
-      price += parseFloat(detail.price);
+      cost += parseFloat(detail.cost);
       items.push(detail);
-      detail.price = parseFloat(detail.price).toFixed(2);
+      detail.cost = parseFloat(detail.cost).toFixed(2);
       detail.instance = instanceName;
     });
-    price = parseFloat(price.toFixed(2));
-    resourceCost[resourceName] = price;
+    cost = parseFloat(cost.toFixed(2));
+    resourceCost[resourceName] = cost;
     filteredItems[resourceName] = items;
   });
 
@@ -126,7 +126,7 @@ function Summary() {
           <div className="middle-bar"></div>
 
           {instanceNameArr.map((instanceObj, index) => {
-            const [category, price] = Object.entries(instanceObj)[0];
+            const [category, cost] = Object.entries(instanceObj)[0];
 
             return (
               <>
@@ -137,7 +137,7 @@ function Summary() {
                   >
                     <div className="instance-title">{category}</div>
                     <div className="instance-price">
-                      ${price}/mo
+                      ${cost}/mo
                       <div className="dropdown-icon">
                         <BsChevronDown color="#cdcdcd" />
                       </div>

@@ -19,8 +19,8 @@
   padding-right: 8px;
   z-index:10;
   top:1px;
-  margin : 0 auto;
-
+  /* margin : 0 auto; */
+  margin: 60px 0 0 0;
 }
 
 .toggle {
