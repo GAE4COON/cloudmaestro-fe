@@ -164,14 +164,14 @@ export const globalRequest = [
     key: "부하 분산",
     children: [
       {
-        title: "웹 트래픽 분산",
-        value: "웹 트래픽 분산",
-        key: "웹 트래픽 분산",
+        title: "웹트래픽 분산",
+        value: "웹트래픽 분산",
+        key: "웹트래픽 분산",
         children: [
           {
-            title: "DNS 서비스(Route 53)",
-            value: "DNS 서비스(Route 53)",
-            key: "DNS 서비스(Route 53)",
+            title: "DNS서비스 (Route 53)",
+            value: "DNS서비스 (Route 53)",
+            key: "DNS서비스 (Route 53)",
           },
         ],
       },
@@ -183,24 +183,24 @@ export const globalRequest = [
     key: "리소스 이중화",
     children: [
       {
-        title: "다중 AZ 배포 구성 및 관리",
-        value: "다중 AZ 배포 구성 및 관리",
-        key: "다중 AZ 배포 구성 및 관리",
+        title: "다중AZ배포구성 및 관리",
+        value: "다중AZ배포구성 및 관리",
+        key: "다중AZ배포구성 및 관리",
         children: [
           {
-            title: "DNS 서버 이중화(Route 53)",
-            value: "DNS 서버 이중화(Route 53)",
-            key: "DNS 서버 이중화(Route 53)",
+            title: "DNS서비스 이중화 (Route 53)",
+            value: "DNS서비스 이중화 (Route 53)",
+            key: "DNS서비스 이중화 (Route 53)",
           },
           {
-            title: "글로벌 네트워크 구축(멀티 리전)",
-            value: "글로벌 네트워크 구축(멀티 리전)",
-            key: "글로벌 네트워크 구축(멀티 리전)",
+            title: "글로벌네트워크 구축 (멀티 리전)",
+            value: "글로벌네트워크 구축 (멀티 리전)",
+            key: "글로벌네트워크 구축 (멀티 리전)",
           },
           {
-            title: "데이터베이스 분산(RDS)",
-            value: "데이터베이스 분산(RDS)",
-            key: "데이터베이스 분산(RDS)",
+            title: "데이터베이스 분산 (RDS)",
+            value: "데이터베이스 분산 (RDS)",
+            key: "데이터베이스 분산 (RDS)",
           },
         ],
       },
