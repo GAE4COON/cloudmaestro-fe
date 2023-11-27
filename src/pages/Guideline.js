@@ -1,11 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { Menu } from "antd";
+import React, { useState, useEffect } from "react";
 import "../styles/App.css";
 import styled from "styled-components";
 import Sidebar from "../components/MyPageSideBar";
 import ManageHuman from "../components/security/ManageHuman";
-import { PDFDownloadLink } from "@react-pdf/renderer"; // react-to-pdf의 PDFDownloadLink 가져오기
+// import { PDFDownloadLink } from "@react-pdf/renderer"; // react-to-pdf의 PDFDownloadLink 가져오기
 
 //import { PDFViewer } from '@react-pdf/renderer';
 
@@ -26,8 +24,6 @@ function MySecurity() {
   useEffect(() => {
     setIsManage(keyword === "Manage");
   });
-
-  const componentRef = useRef(); // 페이지 전체를 인쇄하기 위한 ref
 
   return (
     <div className="main-content">
@@ -75,19 +71,6 @@ function MySecurity() {
 
 export default MySecurity;
 
-const StyledMenu = styled(Menu)`
-  text-align: left;
-  background: #edf3ff;
-  border-radius: 10px;
-  margin-top: 10px;
-
-  .ant-menu-submenu-title {
-    color: #333; // 글자 색상 변경
-    font-weight: bold; // 글자 두께 변경
-    font-size: 18px;
-    font-family: "Noto Sans KR", sans-serif !important;
-  }
-`;
 const Button = styled.div`
   color: black; /* 버튼 텍스트 색상 */
 
@@ -106,13 +89,6 @@ const Button = styled.div`
   &:hover {
     color: #1a66cc;
   }
-`;
-
-const MypageContainer = styled.div`
-  display: flex;
-  font-family: "Noto Sans KR", sans-serif !important;
-  border-radius: 8px; /* 모서리 둥글게 처리 */
-  background: #ffffff; /* 배경색 설정 */
 `;
 
 const ResourceContainer = styled.div`
@@ -150,14 +126,6 @@ const ResourceContainer = styled.div`
     background: #0000ff; /* 단색 배경 */
     box-shadow: inset 2px 2px 5px 0 rgba(255, 255, 255, 0.5);
   }
-`;
-
-const SecurityContainer = styled.div`
-  position: relative;
-  width: 76%;
-  height: 100%;
-  justify-content: center;
-  height: auto;
 `;
 
 const Title = styled.div`

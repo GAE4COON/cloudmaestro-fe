@@ -22,11 +22,12 @@ import MyNetwork from "./pages/MyNetwork";
 import MyResource from "./pages/MyResource";
 import { DataProvider } from "./components/DataContext";
 import MySecurity from "./pages/Guideline";
-// import FileInput from "./pages/fileInput";
+import useTokenExpirationChecker from "./hooks/useTokenExpirationChecker";
 import PrivateRoute from "./components/privateRoute";
 // import { PublicRoute } from "./components/publicRoute";
 
 function App() {
+  useTokenExpirationChecker();
   return (
     <div className="App">
       <AuthProvider>

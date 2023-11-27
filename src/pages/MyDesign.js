@@ -1,5 +1,4 @@
 import React, { useState } from "react"; // add useState
-import { useNavigate } from "react-router-dom";
 import "../styles/MyDesign.css";
 import Sidebar from "../components/MyPageSideBar";
 import { BsChevronDown } from "react-icons/bs";
