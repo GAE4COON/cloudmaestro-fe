@@ -9,19 +9,15 @@ const compute = [
     },
     {
         text: 'InstanceType',
-        value: 'instanceType',
+        value: 'instancetype',
     },
     {
         text: 'InstanceSize',
-        value: 'instanceSize',
+        value: 'size',
     },
     {
-        text: 'Billing',
-        value: 'billingOption',
-    },
-    {
-        text: 'Price',
-        value: 'price',
+        text: 'Cost',
+        value: 'cost',
     },
 ]
 
