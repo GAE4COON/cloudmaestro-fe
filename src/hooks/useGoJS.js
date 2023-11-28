@@ -2,21 +2,27 @@ import { useState, useEffect } from "react";
 import * as go from "gojs";
 import "../styles/App.css"; // contains .diagram-component CSS
 import handleChangedSelection from "../pages/toggle/toggle";
-import { alertCheck, NodeCheck } from "../apis/fileAPI";
+import { alertCheck, NodeCheck, GroupCheck } from "../apis/fileAPI";
 import { sidebarResource } from "../apis/sidebar";
 import { useData } from "../components/DataContext";
 
-const useGoJS = (setShowToggle, onDiagramChange) => {
+const useGoJS = (
+  setShowToggle,
+  onDiagramChange,
+  handleguide,
+  handleAlertGuide
+) => {
   const [diagram, setDiagram] = useState(null);
   const [clickedNodeKey, setClickedNodeKey] = useState();
   const [showSelectToggle, setShowSelectToggle] = useState({ value: false });
-  const [DiagramCheck, setDiagramCheck] = useState(null);
-  const [NodeGuide, setNodeGuide] = useState(null);
+  const [DiagramCheck, setDiagramCheck] = useState([]);
+  // const [NodeGuide, setNodeGuide] = useState(null);
   const { setData } = useData();
 
   useEffect(() => {
-    //console.log("Updated clickedNodeKey:", clickedNodeKey);
-  }, [clickedNodeKey]);
+    handleAlertGuide(DiagramCheck);
+    console.log("DiagramCheck", DiagramCheck);
+  }, [DiagramCheck]);
 
   function highlightGroup(e, grp, show) {
     if (!grp) return;
@@ -99,10 +105,44 @@ const useGoJS = (setShowToggle, onDiagramChange) => {
                     PostData.checkOption = "VPC";
                     PostData.newData = data.modifiedNodeData[i];
                     console.log("NodeCheck 호출");
+                    const response = await GroupCheck(PostData);
+                    console.log("API Response:", response.data);
+                    if (response.data.result.status === "fail") {
+                      setDiagramCheck((prevDiagramCheck) => {
+                        const isDuplicate = prevDiagramCheck.some(
+                          (item) => item === response.data.result.message
+                        );
+                        // 중복되지 않고 result가 "success"인 경우에만 추가
+                        if (!isDuplicate) {
+                          return [
+                            ...prevDiagramCheck,
+                            response.data.result.message,
+                          ];
+                        } else {
+                          return prevDiagramCheck;
+                        }
+                      });
+                    }
+                  } else if (data.modifiedNodeData[i].text === "API Gateway") {
+                    PostData.checkOption = "API Gateway";
+                    PostData.newData = data.modifiedNodeData[i];
+                    console.log("NodeCheck 호출");
                     const response = await NodeCheck(PostData);
-                    if (response && response.data) {
+                    if (response.data.result.status === "fail") {
                       console.log("API Response:", response.data);
-                      setDiagramCheck(response.data);
+                      setDiagramCheck((prevDiagramCheck) => {
+                        const isDuplicate = prevDiagramCheck.some(
+                          (item) => item === response.data.result.message
+                        );
+                        if (!isDuplicate) {
+                          return [
+                            ...prevDiagramCheck,
+                            response.data.result.message,
+                          ];
+                        } else {
+                          return prevDiagramCheck;
+                        }
+                      });
                     }
                   }
                 }
@@ -430,12 +470,13 @@ const useGoJS = (setShowToggle, onDiagramChange) => {
             mouseEnter: function (e, panel) {
               const node = panel.part.adornedPart;
               if (node instanceof go.Node) {
-                setNodeGuide(node.data.text);
+                handleguide(node.data.text);
+                // setNodeGuide(node.data.text);
               }
             },
-            mouseLeave: function (e, panel) {
-              setNodeGuide(null);
-            },
+            // mouseLeave: function (e, panel) {
+            //   setNodeGuide(null);
+            // },
           },
           $(go.Shape, "Circle", {
             fill: "rgba(82,96,208,0.7)",
@@ -508,8 +549,6 @@ const useGoJS = (setShowToggle, onDiagramChange) => {
     diagram,
     showSelectToggle,
     clickedNodeKey,
-    DiagramCheck,
-    NodeGuide,
   };
 };
 
