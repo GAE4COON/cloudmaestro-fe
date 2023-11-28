@@ -3,6 +3,9 @@ import { useNavigate } from "react-router-dom";
 import "../styles/home.css";
 // import { useCookies } from "react-cookie";
 // import { loginTest } from "../apis/auth.js";
+import Page1 from "./Home/Page1";
+import Page2 from "./Home/Page2";
+import Page3 from "./Home/Page3";
 
 function Home() {
   const navigate = useNavigate();
@@ -36,6 +39,7 @@ function Home() {
   };
 
   return (
+    <>
     <Fragment>
       <div className="home-content">
         <img src="assets/img/home-img.png" alt="logo" className="home-img" />
@@ -49,6 +53,10 @@ function Home() {
         </div>
       </div>
     </Fragment>
+    <Page1 />
+    <Page2 />
+    <Page3 />
+    </>
   );
 }
 
