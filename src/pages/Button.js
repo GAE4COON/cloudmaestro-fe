@@ -17,6 +17,7 @@ const Button = ({
   finalToggleValue,
   setFinalToggleValue,
 }) => {
+  
   const hiddenFileInput = React.useRef(null);
   const handleClick = () => {
     hiddenFileInput.current.click();

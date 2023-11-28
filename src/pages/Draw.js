@@ -14,6 +14,7 @@ import { nodeDataArrayPalette } from "../db/Node";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Alert, Space, Layout, Menu } from "antd";
 import { sidebarResource } from "../apis/sidebar";
+import {saveDiagram} from "../apis/fileAPI";
 import { DrawResourceGuide } from "../apis/resource";
 import "../styles/App.css";
 
@@ -75,9 +76,19 @@ function Draw() {
   } = useGoJS(setShowToggle, handleDiagramChange);
 
   const location = useLocation();
-  const file = location.state ? location.state.file : null;
+  const file = location.state ? location.state.file.result : null;
   const from = location.from;
-  // //console.log(file);
+  console.log("file", file);
+
+  useEffect(() => {
+    if (file && diagram) {
+      console.log("usefile", file);
+      const diagramModel = go.Model.fromJson(file);
+      diagram.model = diagramModel;
+      // setmyDiagram(diagram);
+
+    }
+  }, [file, diagram]);
 
   useEffect(() => {
     if (diagram) {
@@ -122,11 +133,7 @@ function Draw() {
     }
   }, [DiagramCheck]);
 
-  useEffect(() => {
-    if (file && diagram) {
-      diagram.model = go.Model.fromJson(file);
-    }
-  }, [file, diagram]);
+
 
   const summaryRequest = async () => {
     if (diagram) {
@@ -144,11 +151,12 @@ function Draw() {
         type: "   ",
       });
       formData.append("file", fileData, "diagram.json");
-
+      console.log("formData", formData)
       try {
         // FormData를 서버에 전송
         const response = await summaryFile(formData);
         //console.log(response.data);
+        console.log(response.data)
         navigate("/summary", { state: { file: response.data } });
       } catch (error) {
         //console.log("error", error);
@@ -180,6 +188,24 @@ function Draw() {
     setIsSidebarOpen(!isSidebarOpen);
     return setIsPopup(!ispopup);
   };
+
+  const handleSaveDiagram = async () => {
+    try {
+      const diagramData = diagram.model.toJson();
+      const fileName = window.prompt("저장할 파일의 이름을 입력하세요.", "MyDiagram");
+      
+      if (fileName) {
+        const response = await saveDiagram(diagramData, fileName+".json");
+        console.log(response);
+        alert("저장되었습니다.");
+      } else {
+        alert("파일 저장이 취소되었습니다.");
+      }
+    } catch (error) {
+      console.error("저장 중 오류가 발생했습니다: ", error);
+    }
+  }
+
 
   return (
     <div className="main-content">
@@ -282,7 +308,7 @@ function Draw() {
                   <StyledButton onClick={summaryRequest}>
                     Go to summary
                   </StyledButton>
-                  <StyledButton onClick={null}>Save as Cloud</StyledButton>
+                  <StyledButton onClick={handleSaveDiagram}>Save</StyledButton>
                   <StyledButton onClick={handlePopup}>Optimize</StyledButton>
                 </ButtonContainer>
               </StyledDiagram>

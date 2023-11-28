@@ -68,3 +68,17 @@ export const requirementRequest = async (data) => {
     throw error;
   }
 };
+
+export const saveDiagram = async (data, fileName) => {
+  try {
+    const body = {
+      diagramData: data,
+      fileName: fileName
+    };
+    const response = await api.post("/api/v1/file-api/save-diagram", body);
+    return response;
+  } catch (error) {
+    console.error("save-diagram 오류:", error);
+    throw error;
+  }
+};

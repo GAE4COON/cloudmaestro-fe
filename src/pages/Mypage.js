@@ -5,7 +5,7 @@ import styled from "styled-components";
 import "../styles/myresource.css";
 import "../styles/App.css";
 
-function Mypage() {
+function MyPage() {
   // 필터링된 리소스를 기반으로 resourceItems 상태 업데이트
 
   return (
@@ -51,4 +51,4 @@ const SearchContainer = styled.div`
   margin-left: 50px;
 `;
 
-export default Mypage;
+export default MyPage;

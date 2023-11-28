@@ -1,5 +1,5 @@
 import React from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 
 const getLocalStorageToken = () => {
   return localStorage.getItem("accessToken");
@@ -7,7 +7,7 @@ const getLocalStorageToken = () => {
 
 const PrivateRoute = ({ children }) => {
   const isLogined = getLocalStorageToken();
-  return isLogined ? children : <Navigate to="/sign-in" />;
+  return isLogined ? children || <Outlet/>: <Navigate to="/sign-in" />;
 };
 
 export default PrivateRoute;
