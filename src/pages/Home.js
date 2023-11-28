@@ -1,11 +1,18 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+
 import "../styles/home.css";
+import Page1 from "./Home/Page1";
+import Page2 from "./Home/Page2";
+import Page3 from "./Home/Page3";
+
+
 // import { useCookies } from "react-cookie";
 // import { loginTest } from "../apis/auth.js";
 
 function Home() {
   const navigate = useNavigate();
+
   // const [Greeting, setGreeting] = useState("");
   // const [cookies, setCookie] = useCookies(["accessToken", "refreshToken"]);
 
@@ -36,6 +43,7 @@ function Home() {
   };
 
   return (
+    <>
     <Fragment>
       <div className="home-content">
         <img src="assets/img/home-img.png" alt="logo" className="home-img" />
@@ -48,8 +56,19 @@ function Home() {
           </button>
         </div>
       </div>
+  
     </Fragment>
+
+    <Page1 />
+    <Page2 />
+    <Page3 />
+ 
+          
+
+    </>
   );
 }
 
 export default Home;
+// Styled image container
+
