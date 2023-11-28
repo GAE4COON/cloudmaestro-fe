@@ -39,6 +39,8 @@ const Navbar = () => {
       } catch (error) {
         console.log("Invalid token");
       }
+    } else {
+      setUser(null);
     }
 
     function handleClickOutside(event) {

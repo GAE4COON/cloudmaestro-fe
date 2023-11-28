@@ -128,6 +128,14 @@ export const nodeDataArrayPalette = [
     type: "Analytics"
   },
   {
+    text: "La",
+    key: "DataZone",
+    figure: "Rectangle",
+    source: "/img/AWS_icon/Arch_Analytics/Arch_Amazon-DataZone_48.svg",
+    type: "Analytics"
+
+  },
+  {
     text: "EMR",
     key: "EMR",
     figure: "Rectangle",
@@ -1818,9 +1826,11 @@ export const nodeDataArrayPalette = [
     text: "CloudFront",
     key: "CloudFront",
     figure: "Rectangle",
-    source: "/img/AWS_icon/Arch_Networking-Content-Delivery/Arch_Amazon-CloudFront_48.svg",
-    type: "Networking-Content-Delivery"
+    source:
+      "/img/AWS_icon/Arch_Networking-Content-Delivery/Arch_Amazon-CloudFront_48.svg",
+    type: "Networking-Content-Delivery",
   },
+
   {
     text: "Route 53",
     key: "Route 53",

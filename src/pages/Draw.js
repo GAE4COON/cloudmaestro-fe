@@ -3,7 +3,7 @@ import * as go from "gojs";
 import { ReactDiagram } from "gojs-react";
 import styled from "styled-components";
 
-import useGoJS from "./useGoJS";
+import useGoJS from "../hooks/useGoJS.js";
 import SelectEc2Toggle from "../components/cost/SelectEc22Toggle";
 import SelectRdsToggle from "../components/cost/SelectRdsToggle";
 import SelectS3Toggle from "../components/cost/SelectS3Toggle";
@@ -58,7 +58,7 @@ function Draw() {
 
   useEffect(() => {
     //setmyDiagram(diagram);
-    console.log("Updated diagram version:", diagramVersion);
+    //console.log("Updated diagram version:", diagramVersion);
   }, [diagramVersion]); // Dependency on diagramVersion
 
   const handleDiagramChange = useCallback((changedDiagram) => {

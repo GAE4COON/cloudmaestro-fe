@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import * as go from "gojs";
 import "../styles/App.css"; // contains .diagram-component CSS
-import handleChangedSelection from "./toggle/toggle";
-import { alertCheck } from "../apis/fileAPI";
+import handleChangedSelection from "../pages/toggle/toggle";
+import { alertCheck, NodeCheck } from "../apis/fileAPI";
 import { sidebarResource } from "../apis/sidebar";
 import { useData } from "../components/DataContext";
 
@@ -65,6 +65,7 @@ const useGoJS = (setShowToggle, onDiagramChange) => {
         if (e.isTransactionFinished) {
           const jsonString = e.model.toIncrementalJson(e);
           const data = JSON.parse(jsonString);
+          console.log("data", data);
           if (data.insertedLinkKeys) {
             console.log("insertedLinkKeys", data.modifiedLinkData);
             try {
@@ -76,6 +77,47 @@ const useGoJS = (setShowToggle, onDiagramChange) => {
                   console.log(
                     "링크 취소해도 되는 부분.. 주석처리만 하니까 안 올라가서 우선 콘솔로그라도 띄움"
                   );
+                  //diagram.undoManager.undo();
+                }
+              }
+            } catch (error) {
+              console.error("API Error:", error);
+            }
+          } else if (data.insertedNodeKeys || data.modifiedNodeData) {
+            try {
+              const PostData = {
+                checkOption: null,
+                diagramData: diagram.model.toJson(),
+              };
+              if (data.insertedNodeKeys) {
+                for (let i = 0; i < data.modifiedNodeData.length; i++) {
+                  if (
+                    data.modifiedNodeData[i].text === "VPC" &&
+                    data.modifiedNodeData[i].isGroup === true
+                  ) {
+                    PostData.checkOption = "VPC";
+                    console.log("NodeCheck 호출");
+                    const response = await NodeCheck(PostData);
+                    if (response && response.data) {
+                      console.log("API Response:", response.data);
+                      setDiagramCheck(response.data);
+                    }
+                  }
+                }
+              } else if (data.modifiedNodeData) {
+                for (let i = 0; i < data.modifiedNodeData.length; i++) {
+                  if (
+                    data.modifiedNodeData[i].text === "VPC" &&
+                    data.modifiedNodeData[i].isGroup === true
+                  ) {
+                    PostData.checkOption = "VPC";
+                    console.log("NodeCheck 호출");
+                    const response = await NodeCheck(PostData);
+                    if (response && response.data) {
+                      console.log("API Response:", response.data);
+                      setDiagramCheck(response.data);
+                    }
+                  }
                 }
               }
             } catch (error) {

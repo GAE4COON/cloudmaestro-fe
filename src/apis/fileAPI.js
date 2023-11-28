@@ -59,12 +59,32 @@ export const alertCheck = async (data) => {
   }
 };
 
+export const NodeCheck = async (data) => {
+  try {
+    const response = await api.post("/api/v1/alert-api/node-check", data);
+    return response;
+  } catch (error) {
+    console.error("nodeCheck 오류:", error);
+    throw error;
+  }
+};
+
 export const requirementRequest = async (data) => {
   try {
     const response = await api.post("/api/v1/naindae-api/multiregion", data);
     return response;
   } catch (error) {
     console.error("requirementRequest 오류:", error);
+    throw error;
+  }
+};
+
+export const NodeCheck = async (data) => {
+  try {
+    const response = await api.post("/api/v1/alert-api/node-check", data);
+    return response;
+  } catch (error) {
+    console.error("nodeCheck 오류:", error);
     throw error;
   }
 };

@@ -77,7 +77,7 @@ const Palette = memo(({ divClassName, diagram, diagramVersion }) => {
   useEffect(() => {
     const newModulePaletteData = new Map();
 
-    console.log("filterModule:", filterModule);
+    //console.log("filterModule:", filterModule);
 
     filterModule.forEach((sources, key) => {
       const nodes = nodeDataArrayPalette.filter((node) => {
@@ -89,7 +89,7 @@ const Palette = memo(({ divClassName, diagram, diagramVersion }) => {
       newModulePaletteData.set(key, nodes);
     });
 
-    console.log("newModulePaletteData:", newModulePaletteData);
+    //console.log("newModulePaletteData:", newModulePaletteData);
 
     setModulePaletteData(newModulePaletteData);
   }, [filterModule]);
@@ -103,7 +103,7 @@ const Palette = memo(({ divClassName, diagram, diagramVersion }) => {
     const diagramData = JSON.parse(diagramDataStr);
     const GroupData = [];
 
-    console.log("diagramData:", diagramData);
+    // console.log("diagramData:", diagramData);
 
     try {
       for (let i = 0; i < diagramData.nodeDataArray.length; i++) {
@@ -173,7 +173,7 @@ const Palette = memo(({ divClassName, diagram, diagramVersion }) => {
         nodeMap.set(key, sources); // 변환된 배열을 nodeMap에 저장
       });
 
-      console.log("nodeMap:", nodeMap);
+      //console.log("nodeMap:", nodeMap);
       setFilterModule(nodeMap);
     } catch (error) {
       console.log(error);
