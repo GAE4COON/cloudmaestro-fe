@@ -24,6 +24,7 @@ import { DataProvider } from "./components/DataContext";
 import MySecurity from "./pages/Guideline";
 import useTokenExpirationChecker from "./hooks/useTokenExpirationChecker";
 import PrivateRoute from "./components/privateRoute";
+import NotFound from "./pages/NotFound";
 // import { PublicRoute } from "./components/publicRoute";
 
 function App() {
@@ -122,6 +123,7 @@ function App() {
                   </PrivateRoute>
                 }
               />
+              <Route path="*" element={<NotFound />} />
             </Routes>
             <Footer />
           </BrowserRouter>
