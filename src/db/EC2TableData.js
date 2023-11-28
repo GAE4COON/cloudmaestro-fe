@@ -28,20 +28,20 @@ const database = [
     },
     {
         text: 'Engine',
-        value: 'dbEngine',
+        value: 'engine',
     },
 
     {
         text: 'InstanceType',
-        value: 'instanceType',
+        value: 'instancetype',
     },
     {
         text: 'Size',
-        value: 'instanceSize',
+        value: 'size',
     },
     {
-        text: 'Price',
-        value: 'price',
+        text: 'Cost',
+        value: 'cost',
     },
 ];
 
@@ -55,43 +55,33 @@ const storage = [
         value: 'storage',
     },
     {
-        text: 'Price',
-        value: 'price',
+        text: 'Cost',
+        value: 'cost',
     },
 ];
+
+const waf = [
+    {
+        text: 'Instance',
+        value: 'instance',
+    },
+    {
+        text: 'Rule',
+        value: 'rule',
+    },
+    {
+        text: "Request",
+        value: "request" 
+    },
+    {
+        text: 'Cost',
+        value: 'cost',
+    },
+]
+
 
 export const headers={};
 headers["compute"] = compute;
 headers["database"] = database;
 headers["storage"] = storage;
-
-
-export const items = [
-    {
-        instance: "EC2",
-        platform: "Linux",
-        type: "t2",
-        size: "micro",
-        billing: "on-demand",
-        ea: "2",
-        price: "$534.00/mo",
-    },
-    {
-        instance: "EC2",
-        platform: "Linux",
-        type: "t2",
-        size: "micro",
-        billing: "on-demand",
-        ea: "2",
-        price: "$534.00/mo",
-    },
-    {
-        instance: "EC2",
-        platform: "Linux",
-        type: "t2",
-        size: "micro",
-        billing: "on-demand",
-        ea: "2",
-        price: "$534.00/mo",
-    }
-];
+headers["waf"] = waf;

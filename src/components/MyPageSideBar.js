@@ -13,12 +13,8 @@ export const menu = [
     key: "1",
     children: [
       {
-        label: <Link to="/mypage/network">네트워크 도식화</Link>,
+        label: <Link to="/mypage/diagram">도식화 히스토리</Link>,
         key: "12",
-      },
-      {
-        label: <Link to="/mypage/cloud">클라우드 도식화</Link>,
-        key: "13",
       },
     ],
   },

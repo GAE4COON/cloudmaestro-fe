@@ -14,6 +14,7 @@ import { nodeDataArrayPalette } from "../db/Node";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Alert, Space, Layout, Menu } from "antd";
 import { sidebarResource } from "../apis/sidebar";
+import {saveDiagram} from "../apis/fileAPI";
 import { DrawResourceGuide } from "../apis/resource";
 import "../styles/App.css";
 
@@ -51,6 +52,7 @@ function Draw() {
   });
 
   const [diagramVersion, setDiagramVersion] = useState(0);
+  const [isPopup, setIsPopup] = useState(false);
 
   const { isSidebarOpen, setIsSidebarOpen } = useData();
 
@@ -75,9 +77,17 @@ function Draw() {
   } = useGoJS(setShowToggle, handleDiagramChange);
 
   const location = useLocation();
-  const file = location.state ? location.state.file : null;
+  const file = location.state ? location.state.file.result : null;
   const from = location.from;
-  // //console.log(file);
+
+  useEffect(() => {
+    if (file && diagram) {
+      const diagramModel = go.Model.fromJson(file);
+      diagram.model = diagramModel;
+      // setmyDiagram(diagram);
+
+    }
+  }, [file, diagram]);
 
   useEffect(() => {
     if (diagram) {
@@ -92,7 +102,6 @@ function Draw() {
         try {
           const ResourceData = { title: NodeGuide };
           const response = await DrawResourceGuide(ResourceData);
-          console.log(response);
           if (response.data.result !== "fail") {
             setNodeGuideLine({ key: NodeGuide, message: response.data.result });
           } else {
@@ -122,46 +131,40 @@ function Draw() {
     }
   }, [DiagramCheck]);
 
-  useEffect(() => {
-    if (file && diagram) {
-      diagram.model = go.Model.fromJson(file);
-    }
-  }, [file, diagram]);
 
-  const summaryRequest = async () => {
-    if (diagram) {
-      let jsonData = diagram.model.toJson();
-      jsonData = JSON.parse(jsonData);
-      jsonData.cost = finalToggleValue; // ec2도 해야할 듯
 
-      const formData = new FormData(); // FormData 객체 생성
+  // const summaryRequest = async () => {
+  //   if (diagram) {
+  //     let jsonData = diagram.model.toJson();
+  //     jsonData = JSON.parse(jsonData);
+  //     jsonData.cost = finalToggleValue; // ec2도 해야할 듯
 
-      // JSON 데이터를 문자열로 변환하여 FormData에 추가
-      formData.append("jsonData", JSON.stringify(jsonData));
+  //     const formData = new FormData(); // FormData 객체 생성
 
-      // 파일 데이터를 FormData에 추가
-      const fileData = new Blob([JSON.stringify(jsonData)], {
-        type: "   ",
-      });
-      formData.append("file", fileData, "diagram.json");
+  //     // JSON 데이터를 문자열로 변환하여 FormData에 추가
+  //     formData.append("jsonData", JSON.stringify(jsonData));
 
-      try {
-        // FormData를 서버에 전송
-        const response = await summaryFile(formData);
-        //console.log(response.data);
-        navigate("/summary", { state: { file: response.data } });
-      } catch (error) {
-        //console.log("error", error);
-      }
-    }
-  };
+  //     // 파일 데이터를 FormData에 추가
+  //     const fileData = new Blob([JSON.stringify(jsonData)], {
+  //       type: "   ",
+  //     });
+  //     formData.append("file", fileData, "diagram.json");
+  //     try {
+  //       // FormData를 서버에 전송
+  //       const response = await summaryFile(formData);
+  //       console.log(response.data)
+  //       navigate("/summary", { state: { file: response.data } });
+  //     } catch (error) {
+  //     }
+  //   }
+  // };
 
   const handleNodeSelect = useCallback(
     (label) => {
       if (diagram) {
         const selectedNode = diagram.selection.first();
         if (selectedNode instanceof go.Node) {
-          //const updatedData = { ...selectedNode.data, text: label };
+          //const updsPopupatedData = { ...selectedNode.data, text: label };
           diagram.model.commit((model) => {
             model.set(selectedNode.data, "text", label);
           }, "updated text");
@@ -174,12 +177,33 @@ function Draw() {
   // useReadJSON(file,diagram);
 
   //popup
-  const [ispopup, setIsPopup] = useState(false);
 
   const handlePopup = () => {
     setIsSidebarOpen(!isSidebarOpen);
-    return setIsPopup(!ispopup);
+    return setIsPopup(!isPopup);
   };
+
+  const handlePopupChange = (newPopupState) => {
+    setIsPopup(newPopupState);
+  };
+
+
+  const handleSaveDiagram = async () => {
+    try {
+      const diagramData = diagram.model.toJson();
+      const fileName = window.prompt("저장할 파일의 이름을 입력하세요.", "MyDiagram");
+      
+      if (fileName) {
+        const response = await saveDiagram(diagramData, fileName+".json");
+        alert("저장되었습니다.");
+      } else {
+        alert("파일 저장이 취소되었습니다.");
+      }
+    } catch (error) {
+      console.error("저장 중 오류가 발생했습니다: ", error);
+    }
+  }
+
 
   return (
     <div className="main-content">
@@ -196,14 +220,17 @@ function Draw() {
 
             <DiagramContainer>
               <div className="button-container">
-                <Button
+              <Button
                   diagram={diagram}
                   showToggle={showToggle}
                   setShowToggle={setShowToggle}
                   finalToggleValue={finalToggleValue}
                   setFinalToggleValue={setFinalToggleValue}
+                  onPopupChange={handlePopupChange} 
                 />
               </div>
+              <StyledButton onClick={handleSaveDiagram}>Save</StyledButton>
+
               <StyleSpace direction="vertical">
                 {alertMessage && (
                   <StyleAlert
@@ -278,28 +305,16 @@ function Draw() {
                   initDiagram={initDiagram}
                   divClassName={diagramClassName}
                 />
-                <ButtonContainer>
-                  <StyledButton onClick={summaryRequest}>
-                    Go to summary
-                  </StyledButton>
-                  <StyledButton onClick={null}>Save as Cloud</StyledButton>
-                  <StyledButton onClick={handlePopup}>Optimize</StyledButton>
-                </ButtonContainer>
+
               </StyledDiagram>
             </DiagramContainer>
-            {ispopup ? (
+            {isPopup ? (
               <RequirementPopup diagram={diagram} handlePopup={handlePopup} />
             ) : (
               ""
             )}
           </div>
         </div>
-
-        {from === "inputNet" && (
-          <Link to={"/input/aws"} state={{ file: diagram.model.toJson() }}>
-            Submit
-          </Link>
-        )}
       </div>
     </div>
   );
@@ -309,6 +324,7 @@ export default Draw;
 
 const StyledDiagram = styled.div`
   /* float: left; */
+  margin-top: 60px;
   width: 100%;
   height: 80vh; // 원하는 높이로 설정
 `;
@@ -332,15 +348,15 @@ const ButtonContainer = styled.div`
   justify-content: center;
 `;
 
-const StyledButton = styled.div`
-  margin-top: 10px;
+const StyledButton = styled.div`  
+  margin-top: 20px;
+  position: absolute;
+  right: 0;
   box-sizing: border-box;
-  width: 200px;
-  padding: 5px;
-  margin: 10px;
+  width: 70px;
+  /* margin: 10px; */
   color: #809cda;
 
-  background: #ffffff;
   border: 2px solid #bbbbda;
   border-radius: 7px;
 
