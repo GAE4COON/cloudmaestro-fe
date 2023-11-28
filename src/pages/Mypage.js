@@ -41,7 +41,7 @@ function Mypage() {
             </StyledSideMenuTitle>
             {/* mypage id, email imformation */}
             <div className="mypage-info-container">
-              <div className="input-group">
+              <div className="my-input-group">
                 <label>아이디</label>
                 <input
                   type="text"
@@ -49,7 +49,7 @@ function Mypage() {
                   // onChange={handleIdChange}
                 />
               </div>
-              <div className="input-group">
+              <div className="my-input-group">
                 <label>비밀번호</label>
                 <input
                   type="password"
@@ -58,7 +58,7 @@ function Mypage() {
                 />
               </div>
 
-              <div className="input-group">
+              <div className="my-input-group">
                 <label>닉네임</label>
                 <input
                   type="text"
@@ -67,7 +67,7 @@ function Mypage() {
                 />
               </div>
 
-              <div className="input-group">
+              <div className="my-input-group">
                 <label>이메일</label>
                 <input
                   type="email"

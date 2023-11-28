@@ -11,34 +11,34 @@
     /* justify-content: center; */
   }
   
-  .input-group {
+  .my-input-group {
     position: relative;
     margin-bottom: 20px;
-    width: 50%; /* 입력 그룹이 전체 너비를 차지하도록 */
+    width: 50%; 
     display: flex; /* 플렉스박스로 나열 */
     justify-content: center;
     margin-right: 200px;
 
 }
 
-.input-group label {
+.my-input-group label {
     width: 70px;
     display: block;
     margin-right: 10px; /* 오른쪽 마진 추가 */
 }
 
-.input-group input {
+.my-input-group input {
     flex: 1; /* 가능한 모든 공간 차지 */
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
-.input-group div{
+.my-input-group div{
     width: 70px;
     margin-left: 10px;
 }
 
-.input-group button {
+.my-input-group button {
     width: 70px;
     margin-left: 10px;
     padding: 7px 5px;
@@ -52,6 +52,6 @@
     height: 35px;
 }
 
-.input-group button:hover {
+.my-input-group button:hover {
     background-color: #0056b3;
 }

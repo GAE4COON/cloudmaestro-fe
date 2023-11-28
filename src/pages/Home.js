@@ -38,7 +38,8 @@ function Home() {
   return (
     <Fragment>
       <div className="home-content">
-        <img src="assets/img/home-img.png" alt="logo" className="home-img" />
+        <img src="assets/img/hometext.png" alt="logo" className="home-text" />
+        <img src="assets/img/homelogo.png" alt="logo" className="home-logo" />
         <div className="home-select-box">
           <button className="home-btn" onClick={handleAutoDraw}>
             Auto Draw!
