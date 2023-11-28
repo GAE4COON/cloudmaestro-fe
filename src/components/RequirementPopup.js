@@ -41,7 +41,7 @@ const RequirementPopup = (props) => {
   const [savediagram, setSaveDiagram] = useState();
   const [zones, setZones] = useState([]);
   const [selectBackup, setSelectBackup] = useState([]);
-  const [zoneCount, setZoneCount] = useState(0);
+  const [zoneCount, setZoneCount] = useState(1);
   const [isOptimizeEnabled, setIsOptimizeEnabled] = useState(false);
   const [industrial_BP, setIndustrial_BP] = useState([]); //요구사항 선택
   const [zoneFrameValue, setZoneFrameValue] = useState(null);

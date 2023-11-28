@@ -98,6 +98,7 @@ const MypageContainer = styled.div`
   // box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 효과 추가 */
   border-radius: 8px; /* 모서리 둥글게 처리 */
   background: #FFFFFF; /* 배경색 설정 */
+
 `;
 
 const ResourceContainer = styled.div`
