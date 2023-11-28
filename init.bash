@@ -17,3 +17,4 @@ npm install gsap
 npm install crypto-js
 npm install -D @types/crypto-js
 npm install react-to-print
+npm install react-intersection-observer
