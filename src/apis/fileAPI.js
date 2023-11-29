@@ -59,6 +59,16 @@ export const alertCheck = async (data) => {
   }
 };
 
+export const GroupCheck = async (data) => {
+  try {
+    const response = await api.post("/api/v1/alert-api/group-check", data);
+    return response;
+  } catch (error) {
+    console.error("nodeCheck 오류:", error);
+    throw error;
+  }
+};
+
 export const NodeCheck = async (data) => {
   try {
     const response = await api.post("/api/v1/alert-api/node-check", data);
@@ -79,21 +89,11 @@ export const requirementRequest = async (data) => {
   }
 };
 
-export const NodeCheck = async (data) => {
-  try {
-    const response = await api.post("/api/v1/alert-api/node-check", data);
-    return response;
-  } catch (error) {
-    console.error("nodeCheck 오류:", error);
-    throw error;
-  }
-};
-
 export const saveDiagram = async (data, fileName) => {
   try {
     const body = {
       diagramData: data,
-      fileName: fileName
+      fileName: fileName,
     };
     const response = await api.post("/api/v1/file-api/save-diagram", body);
     return response;
