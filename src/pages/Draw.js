@@ -14,9 +14,10 @@ import { nodeDataArrayPalette } from "../db/Node";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Alert, Space, Layout, Menu } from "antd";
 import { sidebarResource } from "../apis/sidebar";
-import {saveDiagram} from "../apis/fileAPI";
+import { saveDiagram } from "../apis/fileAPI";
 import { DrawResourceGuide } from "../apis/resource";
 import "../styles/App.css";
+
 
 // 페이지
 // import useReadJSON from "./useReadJSON";
@@ -43,9 +44,10 @@ function Draw() {
   const [finalToggleValue, setFinalToggleValue] = useState({});
   const [selectedNodeData, setSelectedNodeData] = useState(null); // <-- 상태 변수를 추가합니다.
   const [showToggle, setShowToggle] = useState(true);
-  const [alertMessage, setAlertMessage] = useState(null);
+  const [alertMessage, setAlertMessage] = useState([]);
   const { setData } = useData();
   const [mydiagram, setmyDiagram] = useState(null);
+  const [NodeGuide, setNodeGuide] = useState(null);
   const [NodeGuideLine, setNodeGuideLine] = useState({
     key: null,
     message: null,
@@ -56,10 +58,7 @@ function Draw() {
 
   const { isSidebarOpen, setIsSidebarOpen } = useData();
 
-  useEffect(() => {
-    //setmyDiagram(diagram);
-    //console.log("Updated diagram version:", diagramVersion);
-  }, [diagramVersion]); // Dependency on diagramVersion
+  useEffect(() => {}, [diagramVersion]); // Dependency on diagramVersion
 
   const handleDiagramChange = useCallback((changedDiagram) => {
     // console.log("다이어그램이 변경되었습니다:", changedDiagram.model.toJson());
@@ -67,25 +66,24 @@ function Draw() {
     setDiagramVersion((prevVersion) => prevVersion + 1);
   });
 
-  const {
-    initDiagram,
-    diagram,
-    showSelectToggle,
-    clickedNodeKey,
-    DiagramCheck,
-    NodeGuide,
-  } = useGoJS(setShowToggle, handleDiagramChange);
+  const handleguide = useCallback((guide) => {
+    setNodeGuide(guide);
+  });
+
+  const { initDiagram, diagram, showSelectToggle, clickedNodeKey} = useGoJS(
+    setShowToggle,
+    handleDiagramChange,
+    handleguide,
+    setAlertMessage
+  );
 
   const location = useLocation();
-  const file = location.state ? location.state.file.result : null;
+  const file = location.state ? location.state.file : null;
   const from = location.from;
 
   useEffect(() => {
     if (file && diagram) {
-      const diagramModel = go.Model.fromJson(file);
-      diagram.model = diagramModel;
-      // setmyDiagram(diagram);
-
+      diagram.model = go.Model.fromJson(file);
     }
   }, [file, diagram]);
 
@@ -121,17 +119,13 @@ function Draw() {
     fetchResourceGuide();
   }, [NodeGuide]);
 
-  useEffect(() => {
-    if (
-      DiagramCheck &&
-      DiagramCheck.result &&
-      DiagramCheck.result.status === "fail"
-    ) {
-      setAlertMessage(DiagramCheck.result.message);
-    }
-  }, [DiagramCheck]);
 
-
+  const removeAlert = (index) => {
+    setAlertMessage((currentMessages) =>
+      currentMessages.filter((_, i) => i !== index)
+    );
+    console.log("change AlertMessage:", alertMessage);
+  };
 
   // const summaryRequest = async () => {
   //   if (diagram) {
@@ -177,7 +171,6 @@ function Draw() {
   // useReadJSON(file,diagram);
 
   //popup
-
   const handlePopup = () => {
     setIsSidebarOpen(!isSidebarOpen);
     return setIsPopup(!isPopup);
@@ -187,14 +180,16 @@ function Draw() {
     setIsPopup(newPopupState);
   };
 
-
   const handleSaveDiagram = async () => {
     try {
       const diagramData = diagram.model.toJson();
-      const fileName = window.prompt("저장할 파일의 이름을 입력하세요.", "MyDiagram");
-      
+      const fileName = window.prompt(
+        "저장할 파일의 이름을 입력하세요.",
+        "MyDiagram"
+      );
+
       if (fileName) {
-        const response = await saveDiagram(diagramData, fileName+".json");
+        const response = await saveDiagram(diagramData, fileName + ".json");
         alert("저장되었습니다.");
       } else {
         alert("파일 저장이 취소되었습니다.");
@@ -202,8 +197,7 @@ function Draw() {
     } catch (error) {
       console.error("저장 중 오류가 발생했습니다: ", error);
     }
-  }
-
+  };
 
   return (
     <div className="main-content">
@@ -217,39 +211,40 @@ function Draw() {
                 diagramVersion={diagramVersion}
               />
             </div>
-
             <DiagramContainer>
               <div className="button-container">
-              <Button
+                <Button
                   diagram={diagram}
                   showToggle={showToggle}
                   setShowToggle={setShowToggle}
                   finalToggleValue={finalToggleValue}
                   setFinalToggleValue={setFinalToggleValue}
-                  onPopupChange={handlePopupChange} 
+                  onPopupChange={handlePopupChange}
                 />
               </div>
               <StyledButton onClick={handleSaveDiagram}>Save</StyledButton>
 
               <StyleSpace direction="vertical">
-                {alertMessage && (
+                {alertMessage.map((message, index) => (
                   <StyleAlert
-                    message={alertMessage}
+                    key={index}
+                    message={message}
                     type="error"
                     showIcon
                     closable
-                    onClose={() => setAlertMessage(null)}
+                    onClose={() => removeAlert(index)}
                   />
-                )}
+                ))}
                 {NodeGuideLine && NodeGuideLine.key && (
                   <StyleAlert
                     message={NodeGuideLine.key}
                     description={NodeGuideLine.message}
                     type="info"
                     closable
-                    // onClose={() =>
-                    //   setNodeGuideLine({ key: null, message: null })
-                    // }
+                    onClose={() => {
+                      setNodeGuide(null);
+                      setNodeGuideLine({ key: null, message: null });
+                    }}
                   />
                 )}
               </StyleSpace>
@@ -305,7 +300,6 @@ function Draw() {
                   initDiagram={initDiagram}
                   divClassName={diagramClassName}
                 />
-
               </StyledDiagram>
             </DiagramContainer>
             {isPopup ? (
@@ -331,15 +325,33 @@ const StyledDiagram = styled.div`
 
 const StyleSpace = styled(Space)`
   position: absolute;
-  width: 20%;
+  width: 25%;
   z-index: 100;
-  left: 78%;
+  left: 73%;
   top: 20%;
 `;
 
 const StyleAlert = styled(Alert)`
   position: relative;
   width: 100%;
+  max-height: 100px; // Adjust as needed
+  overflow-y: scroll;
+  overflow-x: hidden;
+  &::-webkit-scrollbar {
+    width: 7px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #d9d9d9;
+    border-radius: 10px;
+    margin-top: 10px; // 상단 마진
+    margin-bottom: 10px; // 하단 마진
+  }
+
+  .ant-alert-close-icon {
+    position: absolute;
+    right: 5px; // 오른쪽에서부터의 위치 조정
+    top: 10px; // 상단에서부터의 위치 조정
+  }
 `;
 
 const ButtonContainer = styled.div`
@@ -348,7 +360,7 @@ const ButtonContainer = styled.div`
   justify-content: center;
 `;
 
-const StyledButton = styled.div`  
+const StyledButton = styled.div`
   margin-top: 20px;
   position: absolute;
   right: 0;

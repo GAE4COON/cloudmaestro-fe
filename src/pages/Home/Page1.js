@@ -1,42 +1,61 @@
-import React , {useEffect} from 'react';
-import styled, { keyframes, css } from 'styled-components';
+import React, { useEffect , useState} from 'react';
+import styled, { css } from 'styled-components';
 import { Button } from 'antd';
 import { useInView } from 'react-intersection-observer';
+import { Link } from "react-router-dom";
 
 
 export default function Page1() {
+  
+  const [jsonData, setJsonData] = useState(null);
+
   const [imageRef, imageInView] = useInView({
     triggerOnce: false,
     threshold: 0.1,
   });
-  
-  const [buttonRef, buttonInView] = useInView({
-    triggerOnce: false,
-    threshold: 0.1,
-  });
+
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('/assets/json/network.json');
+        const filejson = await response.json();
+        console.log("filejson" ,filejson);
+        setJsonData(filejson); // Store the JSON data in state
+      } catch (error) {
+        console.error("Error fetching file:", error);
+      }
+    };
+
+    fetchData();
+     
+  },[])
+
 
   return (
     <FlexContainer>
-      <ImageContainer ref={imageRef} inView={imageInView}>
-        <img src="assets/img/Home(Network)2.png" alt="logo" />
-      </ImageContainer>
-      <ButtonContainer ref={buttonRef} inView={buttonInView}>
-        <h2>Network</h2>
-        <p>
-        Network diagram that can be drawn quickly and easily in Excel or directly
-        </p>
-        <div style={{ marginTop: '5%'}}>
-          <a href="./draw">
-          <Button type="primary">See More</Button>
-          </a>
-        </div>
-      </ButtonContainer>
-    </FlexContainer>
+    <ImageContainer ref={imageRef} inView={imageInView}>
+      <img src="assets/img/Home(Network)2.png" alt="logo" />
+    </ImageContainer>
+    <ButtonContainer ref={imageRef} inView={imageInView}>
+      <h2>Network</h2>
+      <p>
+      Optimized for AWS environments based on user requirements
+      </p>
+      <div style={{ marginTop: '5%'}}>
+      <Link to="/draw" state={{ file: jsonData }}>
+        <Button type="primary">See More</Button>
+      </Link>
+      </div>
+    </ButtonContainer>
+  </FlexContainer>
   );
 }
 
+// CSS animations and styled components remain unchanged
 
-// Define the CSS animation
+
 const fadeIn = css`
   @keyframes fadeIn {
     from { opacity: 0; }
@@ -50,13 +69,12 @@ const slideInFromRight = css`
     from { transform: translateX(100%); opacity: 0; }
     to { transform: translateX(0); opacity: 1; }
   }
-  animation: fadeIn 1s ease-out forwards;
+  animation: slideInFromRight 1s ease-out forwards;
 `;
 const FlexContainer = styled.div`
   display: flex;
   justify-content: space-between;
   height: 100vh;
-  
 `;
 
 const ImageContainer = styled.div`
@@ -71,7 +89,7 @@ img {
 flex: 7;
 `;
 const ButtonContainer = styled.div`
-${({ inView }) => inView && slideInFromRight}
+${({ inView }) => inView && fadeIn}
   text-align: left;
   flex:3;
   h2{

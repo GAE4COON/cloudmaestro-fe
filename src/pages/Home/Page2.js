@@ -1,13 +1,30 @@
-import React , {useEffect} from 'react';
+import React , {useEffect, useState} from 'react';
 import styled, { keyframes, css } from 'styled-components';
 import { Button } from 'antd';
 import { useInView } from 'react-intersection-observer';
+import { Link } from "react-router-dom";
 
 export default function Page2() {
+    const [jsonData, setJsonData] = useState(null);
     const [imageRef, imageInView] = useInView({
         triggerOnce: false,
         threshold: 0.1,
       });
+
+      useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const response = await fetch('/assets/json/rehost.json');
+            const filejson = await response.json();
+            setJsonData(filejson); // Store the JSON data in state
+          } catch (error) {
+            console.error("Error fetching file:", error);
+          }
+        };
+    
+        fetchData();
+         
+      },[])
       
 
     
@@ -21,9 +38,9 @@ export default function Page2() {
         One-to-one response of network environment to AWS environment
         </p>
         <div style={{ marginTop: '5%'}}>
-          <a href="./draw">
-          <Button type="primary">See More</Button>
-          </a>
+          <Link to="/draw" state={{ file: jsonData }}>
+            <Button type="primary">See More</Button>
+          </Link>
         </div>
       </ButtonContainer>
       

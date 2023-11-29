@@ -24,43 +24,46 @@ import { DataProvider } from "./components/DataContext";
 import MySecurity from "./pages/Guideline";
 import useTokenExpirationChecker from "./hooks/useTokenExpirationChecker";
 import PrivateRoute from "./components/privateRoute";
+import NotFound from "./pages/NotFound";
 // import { PublicRoute } from "./components/publicRoute";
 
 function App() {
   useTokenExpirationChecker();
   return (
     <div className="App">
-<AuthProvider>
-  <DataProvider>
-    <BrowserRouter>
-      <SidebarController />
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/about" element={<Introduce />} />
-        <Route path="/about/example" element={<Example />} />
-        <Route path="/sign-up" element={<Signup />} />
-        <Route path="/sign-in" element={<Signin />} />
+      <AuthProvider>
+        <DataProvider>
+          <BrowserRouter>
+            <SidebarController />
+            <Navbar />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/home" element={<Home />} />
+              <Route path="/about" element={<Introduce />} />
+              <Route path="/about/example" element={<Example />} />
+              <Route path="/sign-up" element={<Signup />} />
+              <Route path="/sign-in" element={<Signin />} />
 
-        <Route element={<PrivateRoute />}>
-          <Route path="/draw" element={<Draw />} />
-          <Route path="/home/auto" element={<AutoDraw />} />
-          <Route path="/input/aws" element={<InputAWS />} />
-          <Route path="/summary" element={<Summary />} />
-          
-          <Route path="/mypage" element={<MyArchitecture />} />
-          <Route path="/mypage/diagram" element={<MyArchitecture />} />
-          <Route path="/mypage/diagram/resource" element={<MyResource />} />
-          <Route path="/mypage/diagram/security" element={<MySecurity />} />
-          <Route path="/mypage/diagram/summary" element={<MySummary />} />
-        </Route>
-      </Routes>
-      <Footer />
-    </BrowserRouter>
-  </DataProvider>
-</AuthProvider>
+              <Route element={<PrivateRoute />}>
+                <Route path="/draw" element={<Draw />} />
+                <Route path="/home/auto" element={<AutoDraw />} />
+                <Route path="/input/aws" element={<InputAWS />} />
+                <Route path="/summary" element={<Summary />} />
 
+                <Route path="/mypage" element={<MyArchitecture />} />
+                <Route path="/mypage/diagram" element={<MyArchitecture />} />
+                <Route path="/mypage/diagram/resource" element={<MyResource />}
+                />
+                <Route path="/mypage/diagram/security" element={<MySecurity />}
+                />
+                <Route path="/mypage/diagram/summary" element={<MySummary />} />
+              </Route>
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+            <Footer />
+          </BrowserRouter>
+        </DataProvider>
+      </AuthProvider>
     </div>
   );
 }
