@@ -18,6 +18,7 @@ import { saveDiagram } from "../apis/fileAPI";
 import { DrawResourceGuide } from "../apis/resource";
 import "../styles/App.css";
 
+
 // 페이지
 // import useReadJSON from "./useReadJSON";
 import Button from "./Button.js";
@@ -69,7 +70,7 @@ function Draw() {
     setNodeGuide(guide);
   });
 
-  const { initDiagram, diagram, showSelectToggle, clickedNodeKey } = useGoJS(
+  const { initDiagram, diagram, showSelectToggle, clickedNodeKey} = useGoJS(
     setShowToggle,
     handleDiagramChange,
     handleguide,
@@ -77,14 +78,12 @@ function Draw() {
   );
 
   const location = useLocation();
-  const file = location.state ? location.state.file.result : null;
+  const file = location.state ? location.state.file : null;
   const from = location.from;
 
   useEffect(() => {
     if (file && diagram) {
-      const diagramModel = go.Model.fromJson(file);
-      diagram.model = diagramModel;
-      // setmyDiagram(diagram);
+      diagram.model = go.Model.fromJson(file);
     }
   }, [file, diagram]);
 
@@ -120,11 +119,6 @@ function Draw() {
     fetchResourceGuide();
   }, [NodeGuide]);
 
-  useEffect(() => {
-    if (file && diagram) {
-      diagram.model = go.Model.fromJson(file);
-    }
-  }, [file, diagram]);
 
   const removeAlert = (index) => {
     setAlertMessage((currentMessages) =>
@@ -217,7 +211,6 @@ function Draw() {
                 diagramVersion={diagramVersion}
               />
             </div>
-
             <DiagramContainer>
               <div className="button-container">
                 <Button
