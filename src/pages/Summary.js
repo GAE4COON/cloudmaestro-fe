@@ -1,8 +1,8 @@
 import React, { useState } from "react"; // add useState
-import "../styles/MyDesign.css";
+import "../styles/MySummary.css";
 import { BsChevronDown } from "react-icons/bs";
 import DataTable from "../components/EC2Table";
-import { headers, items } from "../db/EC2TableData";
+import { headers } from "../db/EC2TableData";
 import { useLocation } from "react-router-dom";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
@@ -35,8 +35,15 @@ const chartOptions = {
   },
 };
 
-function Summary() {
+const Summary = ({ costdata: propCostData }) => {
+  console.log("costdata",propCostData)
+
+  const location = useLocation();
+  const costdata = location.state ? location.state.file : propCostData;
+
   const [isExporting, setIsExporting] = useState(false);
+
+  console.log("costdata",costdata)
 
   function exportToPDF() {
     setIsExporting(true); // Open all dropdowns
@@ -73,10 +80,6 @@ function Summary() {
     }, 100);
   }
 
-  const location = useLocation();
-  const file = location.state ? location.state.file : null;
-  //console.log(file);
-
   const [activeDropdown, setActiveDropdown] = useState(null);
 
   const handleInstanceClick = (index) => {
@@ -88,7 +91,7 @@ function Summary() {
 
   //console.log("file!!!! ", file);
 
-  Object.entries(file).map(([resourceName, valueObject]) => {
+  Object.entries(costdata).map(([resourceName, valueObject]) => {
     var items = [];
     var cost = 0.0;
     Object.entries(valueObject).map(([instanceName, detail]) => {
@@ -127,6 +130,7 @@ function Summary() {
 
           {instanceNameArr.map((instanceObj, index) => {
             const [category, cost] = Object.entries(instanceObj)[0];
+            console.log(index, category, cost)
 
             return (
               <>
