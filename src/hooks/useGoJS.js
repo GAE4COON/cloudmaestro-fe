@@ -76,16 +76,30 @@ const useGoJS = (
             console.log("insertedLinkKeys", data.modifiedLinkData);
             try {
               const response = await alertCheck(data.modifiedLinkData[0]);
-              if (response && response.data) {
-                console.log("API Response:", response.data);
-                setDiagramCheck(response.data);
-                if (response.data.result.status === "fail") {
-                  console.log(
-                    "링크 취소해도 되는 부분.. 주석처리만 하니까 안 올라가서 우선 콘솔로그라도 띄움"
+              if (response.data.result.status === "fail") {
+                console.log(
+                  "링크 취소해도 되는 부분.. 주석처리만 하니까 안 올라가서 우선 콘솔로그라도 띄움"
+                );
+                //diagram.undoManager.undo();
+                setDiagramCheck((prevDiagramCheck) => {
+                  const isDuplicate = prevDiagramCheck.some(
+                    (item) => item === response.data.result.message
                   );
-                  //diagram.undoManager.undo();
-                }
+                  if (!isDuplicate) {
+                    return [...prevDiagramCheck, response.data.result.message];
+                  } else {
+                    return prevDiagramCheck;
+                  }
+                });
               }
+
+              // if (response && response.data) {
+              //   console.log("API Response:", response.data);
+              //   setDiagramCheck(response.data);
+              //   if (response.data.result.status === "fail") {
+
+              //   }
+              // }
             } catch (error) {
               console.error("API Error:", error);
             }
