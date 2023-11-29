@@ -10,19 +10,19 @@ const useGoJS = (
   setShowToggle,
   onDiagramChange,
   handleguide,
-  handleAlertGuide
+  setAlertMessage
 ) => {
   const [diagram, setDiagram] = useState(null);
   const [clickedNodeKey, setClickedNodeKey] = useState();
   const [showSelectToggle, setShowSelectToggle] = useState({ value: false });
-  const [DiagramCheck, setDiagramCheck] = useState([]);
-  // const [NodeGuide, setNodeGuide] = useState(null);
+  // const [DiagramCheck, setDiagramCheck] = useState([]);
+  const [NodeGuide, setNodeGuide] = useState(null);
   const { setData } = useData();
 
-  useEffect(() => {
-    handleAlertGuide(DiagramCheck);
-    console.log("DiagramCheck", DiagramCheck);
-  }, [DiagramCheck]);
+  // useEffect(() => {
+  //   handleAlertGuide(DiagramCheck);
+  //   console.log("DiagramCheck", DiagramCheck);
+  // }, [DiagramCheck]);
 
   function highlightGroup(e, grp, show) {
     if (!grp) return;
@@ -81,7 +81,7 @@ const useGoJS = (
                   "링크 취소해도 되는 부분.. 주석처리만 하니까 안 올라가서 우선 콘솔로그라도 띄움"
                 );
                 //diagram.undoManager.undo();
-                setDiagramCheck((prevDiagramCheck) => {
+                setAlertMessage((prevDiagramCheck) => {
                   const isDuplicate = prevDiagramCheck.some(
                     (item) => item === response.data.result.message
                   );
@@ -122,7 +122,7 @@ const useGoJS = (
                     const response = await GroupCheck(PostData);
                     console.log("API Response:", response.data);
                     if (response.data.result.status === "fail") {
-                      setDiagramCheck((prevDiagramCheck) => {
+                      setAlertMessage((prevDiagramCheck) => {
                         const isDuplicate = prevDiagramCheck.some(
                           (item) => item === response.data.result.message
                         );
@@ -144,7 +144,7 @@ const useGoJS = (
                     const response = await NodeCheck(PostData);
                     if (response.data.result.status === "fail") {
                       console.log("API Response:", response.data);
-                      setDiagramCheck((prevDiagramCheck) => {
+                      setAlertMessage((prevDiagramCheck) => {
                         const isDuplicate = prevDiagramCheck.some(
                           (item) => item === response.data.result.message
                         );

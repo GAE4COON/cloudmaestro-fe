@@ -69,15 +69,11 @@ function Draw() {
     setNodeGuide(guide);
   });
 
-  const handleAlertGuide = useCallback((guide) => {
-    setAlertMessage(guide);
-  });
-
   const { initDiagram, diagram, showSelectToggle, clickedNodeKey } = useGoJS(
     setShowToggle,
     handleDiagramChange,
     handleguide,
-    handleAlertGuide
+    setAlertMessage
   );
 
   const location = useLocation();
@@ -181,7 +177,6 @@ function Draw() {
   // useReadJSON(file,diagram);
 
   //popup
-
   const handlePopup = () => {
     setIsSidebarOpen(!isSidebarOpen);
     return setIsPopup(!isPopup);
