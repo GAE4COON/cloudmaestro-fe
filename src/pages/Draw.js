@@ -30,7 +30,6 @@ import { summaryFile } from "../apis/fileAPI.js";
 import { Link } from "react-router-dom";
 import RequirementPopup from "../components/RequirementPopup";
 import { DataContext, useData } from "../components/DataContext.js"; // DataContext의 경로를 수정하세요
-import Page1 from "./Home/Page1.js";
 
 function Draw() {
   const navigate = useNavigate();
@@ -71,7 +70,7 @@ function Draw() {
     setNodeGuide(guide);
   });
 
-  const { initDiagram, diagram, showSelectToggle, clickedNodeKey } = useGoJS(
+  const { initDiagram, diagram, showSelectToggle, clickedNodeKey} = useGoJS(
     setShowToggle,
     handleDiagramChange,
     handleguide,
@@ -79,14 +78,12 @@ function Draw() {
   );
 
   const location = useLocation();
-  const file = location.state ? location.state.file.result : null;
+  const file = location.state ? location.state.file : null;
   const from = location.from;
 
   useEffect(() => {
     if (file && diagram) {
-      const diagramModel = go.Model.fromJson(file);
-      diagram.model = diagramModel;
-      // setmyDiagram(diagram);
+      diagram.model = go.Model.fromJson(file);
     }
   }, [file, diagram]);
 
@@ -122,11 +119,6 @@ function Draw() {
     fetchResourceGuide();
   }, [NodeGuide]);
 
-  useEffect(() => {
-    if (file && diagram) {
-      diagram.model = go.Model.fromJson(file);
-    }
-  }, [file, diagram]);
 
   const removeAlert = (index) => {
     setAlertMessage((currentMessages) =>

@@ -14,16 +14,14 @@ export default function Page1() {
     threshold: 0.1,
   });
 
-  const [buttonRef, buttonInView] = useInView({
-    triggerOnce: false,
-    threshold: 0.1,
-  });
+
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch('/assets/json/network.json');
         const filejson = await response.json();
+        console.log("filejson" ,filejson);
         setJsonData(filejson); // Store the JSON data in state
       } catch (error) {
         console.error("Error fetching file:", error);
@@ -34,13 +32,14 @@ export default function Page1() {
      
   },[])
 
+
   return (
     <FlexContainer>
     <ImageContainer ref={imageRef} inView={imageInView}>
       <img src="assets/img/Home(Network)2.png" alt="logo" />
     </ImageContainer>
     <ButtonContainer ref={imageRef} inView={imageInView}>
-      <h2>Optimize</h2>
+      <h2>Network</h2>
       <p>
       Optimized for AWS environments based on user requirements
       </p>
