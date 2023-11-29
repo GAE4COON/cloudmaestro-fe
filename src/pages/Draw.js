@@ -58,6 +58,10 @@ function Draw() {
 
   const { isSidebarOpen, setIsSidebarOpen } = useData();
 
+  const location = useLocation();
+  const file = location.state ? location.state.file.result : null;
+  const from = location.from;
+
   useEffect(() => {}, [diagramVersion]); // Dependency on diagramVersion
 
   const handleDiagramChange = useCallback((changedDiagram) => {
@@ -77,14 +81,13 @@ function Draw() {
     setAlertMessage
   );
 
-  const location = useLocation();
-  const file = location.state ? location.state.file : null;
-  const from = location.from;
+
 
   useEffect(() => {
     if (file && diagram) {
-      diagram.model = go.Model.fromJson(file);
-    }
+      const diagramModel = go.Model.fromJson(file);
+      diagram.model = diagramModel;
+        }
   }, [file, diagram]);
 
   useEffect(() => {
