@@ -1,22 +1,25 @@
 import React, { useCallback, useState, useEffect } from "react";
-
 import * as go from "gojs";
 import "../styles/Button.css"; // contains .diagram-component CSS
 import { json, useNavigate } from "react-router-dom";
 
 import { rehostRequest, requirementRequest } from "../apis/fileAPI";
-import { BsUpload, BsDownload, BsEraser, BsSave } from "react-icons/bs";
+import { BsGear , BsClipboard2Data , BsCloud, BsUpload, BsDownload, BsEraser, BsSave } from "react-icons/bs";
 import { BiSave } from "react-icons/bi";
 import { sidebarResource } from "../apis/sidebar";
 import { useData } from "../components/DataContext";
 import "../styles/App.css";
+import { summaryFile } from "../apis/fileAPI.js";
 
 const Button = ({
   diagram,
   setShowToggle,
   finalToggleValue,
   setFinalToggleValue,
+  onPopupChange 
 }) => {
+
+  const navigate = useNavigate();
   const hiddenFileInput = React.useRef(null);
   const handleClick = () => {
     hiddenFileInput.current.click();
@@ -26,6 +29,12 @@ const Button = ({
   const [clickedLoaded, setClickedLoaded] = useState(false);
   const { setData } = useData();
   const [isRehost, setIsRehost] = useState(false);
+  const { isSidebarOpen, setIsSidebarOpen } = useData();
+
+  const handlePopup = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+    onPopupChange(isSidebarOpen);
+  };
 
   useEffect(() => {
     setFinalToggleValue(finalToggleVal);
@@ -163,6 +172,32 @@ const Button = ({
     setShowToggle(false); // toggle 숨김
   };
 
+  const summaryRequest = async () => {
+    if (diagram) {
+      let jsonData = diagram.model.toJson();
+      jsonData = JSON.parse(jsonData);
+      jsonData.cost = finalToggleValue; // ec2도 해야할 듯
+
+      const formData = new FormData(); // FormData 객체 생성
+
+      // JSON 데이터를 문자열로 변환하여 FormData에 추가
+      formData.append("jsonData", JSON.stringify(jsonData));
+
+      // 파일 데이터를 FormData에 추가
+      const fileData = new Blob([JSON.stringify(jsonData)], {
+        type: "   ",
+      });
+      formData.append("file", fileData, "diagram.json");
+      try {
+        // FormData를 서버에 전송
+        const response = await summaryFile(formData);
+        console.log(response.data)
+        navigate("/summary", { state: { file: response.data } });
+      } catch (error) {
+      }
+    }
+  };
+
   return (
     <div>
       <div className="button-container">
@@ -194,9 +229,21 @@ const Button = ({
           </button>
         </div>
         <div className="button-row">
-          {<button onClick={handleLoad}>Rehost</button>}
-          {/* {isRehost && <button onClick={ToOptimize}>Optimize</button>} */}
+          <button onClick={handleLoad}>
+          <BsCloud />
+            </button>
         </div>
+        <div className="button-row">
+          <button onClick={summaryRequest}>
+            <BsClipboard2Data />
+          </button>
+          </div>
+          <div className="button-row">
+          <button onClick={handlePopup}>
+            <BsGear />
+          </button>
+          </div>
+
       </div>
     </div>
   );

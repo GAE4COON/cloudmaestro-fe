@@ -161,8 +161,8 @@ const Navbar = () => {
           {user ? (
             <>
               <NavBtn>
-                <Username>{user.sub ? user.sub : user.name}님</Username>
-                <NavBtnLink onClick={closeMenu} to="/mypage">
+                <Username>{user.name}님</Username>
+                <NavBtnLink onClick={closeMenu} to="/mypage/cloud">
                   MyPage
                 </NavBtnLink>
                 <NavBtnLink onClick={(e) => handleSignOut(e)}>

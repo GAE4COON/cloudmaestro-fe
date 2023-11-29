@@ -13,12 +13,8 @@ export const menu = [
     key: "1",
     children: [
       {
-        label: <Link to="/mypage/network">네트워크 도식화</Link>,
+        label: <Link to="/mypage/diagram">도식화 히스토리</Link>,
         key: "12",
-      },
-      {
-        label: <Link to="/mypage/cloud">클라우드 도식화</Link>,
-        key: "13",
       },
     ],
   },
@@ -27,7 +23,7 @@ export const menu = [
     key: "2",
     children: [
       {
-        label: <Link to="/mypage/user">회원 정보 수정</Link>,
+        label: <Link to="/mypage">회원 정보 수정</Link>,
         key: "22",
       },
       {
@@ -65,7 +61,7 @@ const MyPageSideBar = () => {
   return (
     <StyledSideMenu>
       <StyledSideMenuTitle>
-        <Link to="/mypage">My Page</Link>
+        <Link to="/mypage/cloud">My Page</Link>
       </StyledSideMenuTitle>
       <StyledMenu
         defaultOpenKeys={["1", "2"]}
