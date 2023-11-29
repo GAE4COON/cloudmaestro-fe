@@ -27,11 +27,7 @@ export const fileUpload = async (file) => {
 
 export const summaryFile = async (file) => {
   try {
-    const response = await api.post("/api/v1/file-api/summary", file, {
-      headers: {
-        "Content-Type": `multipart/form-data; `,
-      },
-    });
+    const response = await api.post("/api/v1/file-api/summary", JSON.stringify(file));
     return response;
   } catch (error) {
     console.error("summaryFile 오류:", error);

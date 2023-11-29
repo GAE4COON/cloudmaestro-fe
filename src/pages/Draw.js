@@ -11,7 +11,7 @@ import SelectWafToggle from "../components/cost/SelectWafToggle";
 import { useMediaQuery } from "react-responsive";
 import { nodeDataArrayPalette } from "../db/Node";
 
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { Alert, Space, Layout, Menu } from "antd";
 import { sidebarResource } from "../apis/sidebar";
 import { saveDiagram } from "../apis/fileAPI";
@@ -32,7 +32,6 @@ import RequirementPopup from "../components/RequirementPopup";
 import { DataContext, useData } from "../components/DataContext.js"; // DataContext의 경로를 수정하세요
 
 function Draw() {
-  const navigate = useNavigate();
   const { data } = useFileUpload();
   //console.log("draw data ", data);
   const isDesktopOrLaptop = useMediaQuery({ query: "(min-width: 700px)" });
@@ -81,10 +80,11 @@ function Draw() {
     setAlertMessage
   );
 
-
-
   useEffect(() => {
     if (file && diagram) {
+      if (file.hasOwnProperty("cost")) {
+        setFinalToggleValue(file["cost"]);
+      }
       const diagramModel = go.Model.fromJson(file);
       diagram.model = diagramModel;
         }
@@ -130,32 +130,6 @@ function Draw() {
     console.log("change AlertMessage:", alertMessage);
   };
 
-  // const summaryRequest = async () => {
-  //   if (diagram) {
-  //     let jsonData = diagram.model.toJson();
-  //     jsonData = JSON.parse(jsonData);
-  //     jsonData.cost = finalToggleValue; // ec2도 해야할 듯
-
-  //     const formData = new FormData(); // FormData 객체 생성
-
-  //     // JSON 데이터를 문자열로 변환하여 FormData에 추가
-  //     formData.append("jsonData", JSON.stringify(jsonData));
-
-  //     // 파일 데이터를 FormData에 추가
-  //     const fileData = new Blob([JSON.stringify(jsonData)], {
-  //       type: "   ",
-  //     });
-  //     formData.append("file", fileData, "diagram.json");
-  //     try {
-  //       // FormData를 서버에 전송
-  //       const response = await summaryFile(formData);
-  //       console.log(response.data)
-  //       navigate("/summary", { state: { file: response.data } });
-  //     } catch (error) {
-  //     }
-  //   }
-  // };
-
   const handleNodeSelect = useCallback(
     (label) => {
       if (diagram) {
@@ -185,7 +159,11 @@ function Draw() {
 
   const handleSaveDiagram = async () => {
     try {
-      const diagramData = diagram.model.toJson();
+      let diagramData = diagram.model.toJson();
+      diagramData = JSON.parse(diagramData);
+      diagramData["cost"] = finalToggleValue; //ec2도 해야할 듯
+      diagramData = JSON.stringify(diagramData);
+
       const fileName = window.prompt(
         "저장할 파일의 이름을 입력하세요.",
         "MyDiagram"
