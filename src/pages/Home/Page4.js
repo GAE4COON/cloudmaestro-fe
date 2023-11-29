@@ -4,7 +4,7 @@ import { Button } from 'antd';
 import { useInView } from 'react-intersection-observer';
 
 
-export default function Page3() {
+export default function Page4() {
     const [imageRef, imageInView] = useInView({
         triggerOnce: false,
         threshold: 0.1,
