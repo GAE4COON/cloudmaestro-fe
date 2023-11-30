@@ -1,38 +1,61 @@
-import React , {useEffect} from 'react';
-import styled, { keyframes, css } from 'styled-components';
+import React, { useEffect , useState} from 'react';
+import styled, { css } from 'styled-components';
 import { Button } from 'antd';
 import { useInView } from 'react-intersection-observer';
+import { Link } from "react-router-dom";
 
 
-export default function Page3() {
-    const [imageRef, imageInView] = useInView({
-        triggerOnce: false,
-        threshold: 0.1,
-      });
-      
+export default function Page1() {
+  
+  const [jsonData, setJsonData] = useState(null);
+
+  const [imageRef, imageInView] = useInView({
+    triggerOnce: false,
+    threshold: 0.1,
+  });
+
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('/assets/json/optimize.json');
+        const filejson = await response.json();
+        console.log("filejson" ,filejson);
+        setJsonData(filejson); // Store the JSON data in state
+      } catch (error) {
+        console.error("Error fetching file:", error);
+      }
+    };
+
+    fetchData();
+     
+  },[])
+
 
   return (
     <FlexContainer>
-      <ImageContainer ref={imageRef} inView={imageInView}>
-        <img src="assets/img/Home(AWS)Optimize2.png" alt="logo" />
-      </ImageContainer>
-      <ButtonContainer ref={imageRef} inView={imageInView}>
-        <h2>Optimize</h2>
-        <p>
-        Optimized for AWS environments based on user requirements
-        </p>
-        <div style={{ marginTop: '5%'}}>
-          <a href="./draw">
-          <Button type="primary">See More</Button>
-          </a>
-        </div>
-      </ButtonContainer>
-    </FlexContainer>
+    <ImageContainer ref={imageRef} inView={imageInView}>
+      <img src="assets/img/Home(AWS)Optimize2.png" alt="logo" />
+    </ImageContainer>
+    <ButtonContainer ref={imageRef} inView={imageInView}>
+      <h2>Optimize</h2>
+      <p>
+        Optimized for AWS environments based on user requirementsutomatic schematic and direct drawing based on Excel
+      </p>
+      <div style={{ marginTop: '5%'}}>
+      <Link to="/draw" state={{ file: jsonData }}>
+        <Button type="primary">See More</Button>
+      </Link>
+      </div>
+    </ButtonContainer>
+  </FlexContainer>
   );
 }
 
+// CSS animations and styled components remain unchanged
 
-// Define the CSS animation
+
 const fadeIn = css`
   @keyframes fadeIn {
     from { opacity: 0; }
