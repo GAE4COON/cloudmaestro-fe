@@ -174,27 +174,10 @@ const Button = ({
 
   const summaryRequest = async () => {
     if (diagram) {
-      let jsonData = diagram.model.toJson();
-      jsonData = JSON.parse(jsonData);
-      jsonData.cost = finalToggleValue; // ec2도 해야할 듯
-
-      const formData = new FormData(); // FormData 객체 생성
-
-      // JSON 데이터를 문자열로 변환하여 FormData에 추가
-      formData.append("jsonData", JSON.stringify(jsonData));
-
-      // 파일 데이터를 FormData에 추가
-      const fileData = new Blob([JSON.stringify(jsonData)], {
-        type: "   ",
-      });
-      formData.append("file", fileData, "diagram.json");
-      try {
-        // FormData를 서버에 전송
-        const response = await summaryFile(formData);
-        console.log(response.data)
-        navigate("/summary", { state: { file: response.data } });
-      } catch (error) {
-      }
+      console.log("summaryRequest", finalToggleValue);
+      const response = await summaryFile(finalToggleValue);
+      console.log(response.data)
+      navigate("/summary", { state: { costdata: response.data, from: "draw" } });
     }
   };
 

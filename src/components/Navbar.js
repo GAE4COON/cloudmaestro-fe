@@ -162,7 +162,7 @@ const Navbar = () => {
             <>
               <NavBtn>
                 <Username>{user.name}님</Username>
-                <NavBtnLink onClick={closeMenu} to="/mypage/cloud">
+                <NavBtnLink onClick={closeMenu} to="/mypage/diagram">
                   MyPage
                 </NavBtnLink>
                 <NavBtnLink onClick={(e) => handleSignOut(e)}>
