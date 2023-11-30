@@ -5,11 +5,11 @@ import { useNavigate } from "react-router-dom";
 import { DownOutlined } from "@ant-design/icons";
 import "../styles/App.css";
 import { Space, Dropdown, Button } from "antd";
-import { Menu } from "antd"; 
+import { Menu } from "antd";
+import { CloseButton } from "react-bootstrap";
 
 import styled from "styled-components";
-import { getDiagramData } from "../apis/myPage";
-import { myNetworkDB } from "../apis/myPage";
+import { getDiagramData, myNetworkDB, deleteDiagramData } from "../apis/myPage";
 
 const MyArchitecture = () => {
   const [cloudInstances, setCloudInstances] = useState([]);
@@ -37,11 +37,21 @@ const MyArchitecture = () => {
 
   const handleCloudInstance = async (key, path) => {
     const response = await getDiagramData(key);
-    console.log("response.data",response.data)
+    console.log("response.data", response.data)
     navigate(`${path}`, { state: { file: response.data } });
   }
 
+  const handleDeleteInstance = async (key) => {
+    const confirmDelete = window.confirm("도식화를 삭제하시겠습니까?");
 
+    if (confirmDelete) {
+      // 사용자가 'OK'를 선택한 경우, 삭제 작업 진행
+      const response = await deleteDiagramData(key);
+      console.log("response.data", response.data);
+      setCloudInstances(cloudInstances.filter(instance => instance.key !== key));
+      alert("도식화가 삭제되었습니다.");
+    }
+  }
 
   return (
     <div className="main-content">
@@ -60,32 +70,35 @@ const MyArchitecture = () => {
                     {
                       key: "1",
                       label: (
-                        <StyledButton
+                        <button
                           onClick={() => handleCloudInstance(instance.key, "/mypage/diagram/security")}>
                           Security
-                        </StyledButton>
+                        </button>
                       ),
                     },
                     {
                       key: "2",
                       label: (
-                        <StyledButton
+                        <button
                           onClick={() => handleCloudInstance(instance.key, "/mypage/diagram/resource")}>
                           Resource
-                        </StyledButton>
+                        </button>
                       ),
                     },
                   ];
                   return (
-
-
                     <CloudInstance key={instance.key}>
+                        <DeleteInstanceButton 
+                        onClick={() => handleDeleteInstance(instance.key)}
+                        >X</DeleteInstanceButton>
                       <img
-                       onClick={() => handleCloudInstance(instance.key, "/draw")}
+                        onClick={() => handleCloudInstance(instance.key, "/draw")}
                         alt="diagram_img"
                         src={instance.imgSrc}
-                        style={{ width: "100%", 
-                      boxShadow: "1px 1px 1px 1px rgb(235, 235, 235)"}}
+                        style={{
+                          marginTop: "20px",
+                          width: "100%",
+                        }}
                       />
                       <StyledInstanceTitle>{instance.title}</StyledInstanceTitle>
 
@@ -96,7 +109,7 @@ const MyArchitecture = () => {
                           Total Cost
                         </StyledButton>
 
-                        <Dropdown overlay = {<Menu items={dropdownItems} />}  placement="bottomLeft">
+                        <Dropdown overlay={<Menu items={dropdownItems} />} placement="bottomLeft">
                           <StyledButton style={{ backgroundColor: "#FD754A" }}>
                             Guide
                             <DownOutlined style={{ marginTop: "5px" }} />
@@ -119,14 +132,23 @@ const MyArchitecture = () => {
 export default MyArchitecture;
 
 const CloudInstance = styled.div`
-    width:26%;
-    padding:10px;
-    /* margin-top: 10px; */
-    border: 1px solid gray;
-    margin-left: 10px;
-    margin: 10px;
-    border-radius: 5px;
-    box-shadow: 1px 1px 1px 1px rgb(235, 235, 235);
+  width: 26%;
+  padding: 10px;
+  border: 1px solid gray;
+  margin-left: 10px;
+  margin: 10px;
+  border-radius: 5px;
+  box-shadow: 1px 1px 1px 1px rgb(235, 235, 235);
+  position: relative; /* 상대적 위치 지정 */
+`
+
+const DeleteInstanceButton = styled.button`
+  font-size: 15px;
+  font-weight: 500;
+  position: absolute; /* 절대적 위치 지정 */
+  top: 0px; /* 상단에서의 위치 */
+  right: 3px;
+  background-color:transparent;
 `
 
 const CloudInstanceRow = styled.div`
