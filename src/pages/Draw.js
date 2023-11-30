@@ -171,7 +171,14 @@ function Draw() {
 
       if (fileName) {
         const response = await saveDiagram(diagramData, fileName + ".json");
-        alert("저장되었습니다.");
+        console.log(response.data);
+        if(response.data === true ){
+          alert("저장되었습니다.");
+        }
+        else{
+          alert("중복된 이름이 존재합니다. 다시 입력해주세요.")
+          handleSaveDiagram();
+        }
       } else {
         alert("파일 저장이 취소되었습니다.");
       }
