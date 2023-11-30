@@ -7,6 +7,7 @@ import "../styles/App.css";
 import Resource from "../components/Resource";
 import { ResourceGuide } from "../apis/resource";
 import { Input } from "antd";
+import { useLocation } from "react-router-dom";
 
 const { Search } = Input;
 
@@ -16,6 +17,18 @@ function MyResource() {
   const [filteredResource, setFilteredResource] = useState([]);
   const [resourceItems, setResourceItems] = useState([]);
 
+  const location = useLocation();
+  const file = location.state.info.file.result;
+  const nodeDataArray = file["nodeDataArray"];
+  
+  // isGroup이 true인 노드를 제외하고 text 속성만 추출
+  const extractedTexts = nodeDataArray
+    .filter(node => !node.isGroup)
+    .map(node => node.text);
+  
+  // 중복을 제거하기 위해 Set을 사용
+  const uniqueTexts = new Set(extractedTexts);
+  
   useEffect(() => {
     if (resource) {
       const filtered = resource.filter((item) =>
@@ -29,16 +42,20 @@ function MyResource() {
   useEffect(() => {
     const handleResource = async () => {
       const ResourceData = {
-        title: [
-          "Identity and Access Management",
-          "Athena",
-          "Redshift",
-          "VPC",
-          "Aurora",
-          "Elastic Kubernetes Service",
-          "EC2",
-        ],
+        title: Array.from(uniqueTexts),
+        // title2: [
+        //   "Identity and Access Management",
+        //   "Athena",
+        //   "Redshift",
+        //   "VPC",
+        //   "Aurora",
+        //   "Elastic Kubernetes Service",
+        //   "EC2",
+        // ],
       };
+      console.log("ResourceData", ResourceData.title)
+      console.log("ResourceData2", ResourceData.title2)
+
 
       try {
         const res = await ResourceGuide(ResourceData);
