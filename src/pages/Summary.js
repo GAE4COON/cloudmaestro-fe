@@ -9,6 +9,7 @@ import { Doughnut } from "react-chartjs-2";
 import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
 import "../styles/App.css";
+import styled from "styled-components";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -35,15 +36,18 @@ const chartOptions = {
   },
 };
 
-const Summary = ({ costdata: propCostData }) => {
-  console.log("costdata",propCostData)
+const Summary = ({ costdata }) => {
+  console.log("costdata",costdata)
 
   const location = useLocation();
-  const costdata = location.state ? location.state.file : propCostData;
+  const costData = costdata ? costdata : location.state?.costdata;
+  const from = location.state.from;
+
+  console.log("location?", location.state)
 
   const [isExporting, setIsExporting] = useState(false);
 
-  console.log("costdata",costdata)
+  console.log("costdata!!!!!!",costData)
 
   function exportToPDF() {
     setIsExporting(true); // Open all dropdowns
@@ -91,7 +95,7 @@ const Summary = ({ costdata: propCostData }) => {
 
   //console.log("file!!!! ", file);
 
-  Object.entries(costdata).map(([resourceName, valueObject]) => {
+  Object.entries(costData).map(([resourceName, valueObject]) => {
     var items = [];
     var cost = 0.0;
     Object.entries(valueObject).map(([instanceName, detail]) => {
@@ -113,16 +117,16 @@ const Summary = ({ costdata: propCostData }) => {
     .toFixed(2);
 
   return (
-    <div className="main-content">
-      <div
-        id="export-container"
-        style={{
-          flex: 1,
-          padding: "20px",
-          marginLeft: "100px",
-          marginRight: "100px",
-        }}
-      >
+<SummaryContainer style={{ 
+  marginLeft: from === 'draw' ? '0px' : '20px' ,
+  marginRight: from === 'draw' ? '0px' : '20px' ,
+  marginTop: from === 'draw' ? '30px' : '' ,
+  
+  width: from === 'draw' ? '' : "100%",
+  paddingLeft: from === 'draw' ? '20%' : "0%",
+  paddingRight: from === 'draw' ? '20%' : "0%"
+
+}}>
         <div className="title1">도식화 히스토리</div>
         <div className="file-name">MyCompany_Cloud1</div>
         <div className="price-container">
@@ -173,9 +177,11 @@ const Summary = ({ costdata: propCostData }) => {
             EXPORT
           </button>
         </div>
-      </div>
-    </div>
+      </SummaryContainer>
   );
 }
 
 export default Summary;
+
+const SummaryContainer = styled.div`
+`

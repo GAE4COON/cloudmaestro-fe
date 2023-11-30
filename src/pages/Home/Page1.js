@@ -41,7 +41,7 @@ export default function Page1() {
     <ButtonContainer ref={imageRef} inView={imageInView}>
       <h2>Network</h2>
       <p>
-      Optimized for AWS environments based on user requirements
+      Automatic schematic and direct drawing based on Excel
       </p>
       <div style={{ marginTop: '5%'}}>
       <Link to="/draw" state={{ file: jsonData }}>

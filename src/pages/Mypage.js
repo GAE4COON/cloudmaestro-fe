@@ -108,4 +108,4 @@ const SearchContainer = styled.div`
   margin-left: 50px;
 `;
 
-export default MyPage;
+export default Mypage;
