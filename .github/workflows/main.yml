@@ -1,0 +1,48 @@
+name: cloud maesto Front server CI/CD
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  S3_BUCKET_NAME: cloudmaestro-front
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Check Node version
+      run: node -v
+
+    - name: Install Dependencies
+      run: yarn install --frozen-lockfile
+
+    - name: Build
+      run: yarn build
+      env:
+        CI: ""
+
+    - name: Zip Create
+      run: zip -qq -r ./build-fe.zip .
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.SECRET_ACCESS_KEY }}
+        aws-region: ${{ secrets.AWS_REGION }}
+
+    - name: Upload to S3
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
+      run: |
+        aws s3 cp --region ap-northeast-2 ./build-fe.zip s3://$S3_BUCKET_NAME/build-fe.zip
+
+    - name: Deploy
+      run: |
+        aws deploy create-deployment --application-name Cloudmaestro-front --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name Cloudmaestro-front --s3-location bucket=$S3_BUCKET_NAME,key=build-fe.zip,bundleType=zip
