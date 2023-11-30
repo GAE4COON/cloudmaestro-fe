@@ -38,7 +38,7 @@ const MyArchitecture = () => {
   const handleCloudInstance = async (key, path) => {
     const response = await getDiagramData(key);
     console.log("response.data", response.data)
-    navigate(`${path}`, { state: { file: response.data } });
+    navigate(`${path}`, { state: { info: response.data } });
   }
 
   const handleDeleteInstance = async (key) => {

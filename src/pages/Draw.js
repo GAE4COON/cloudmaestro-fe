@@ -51,6 +51,7 @@ function Draw() {
     key: null,
     message: null,
   });
+  const [fileName, setFileName] = useState("MyDiagram");
 
   const [diagramVersion, setDiagramVersion] = useState(0);
   const [isPopup, setIsPopup] = useState(false);
@@ -58,8 +59,7 @@ function Draw() {
   const { isSidebarOpen, setIsSidebarOpen } = useData();
 
   const location = useLocation();
-  const file = location.state ? location.state.file.result : null;
-  const from = location.from;
+  const info = location.state ? location.state.info : null;
 
   useEffect(() => {}, [diagramVersion]); // Dependency on diagramVersion
 
@@ -81,14 +81,17 @@ function Draw() {
   );
 
   useEffect(() => {
-    if (file && diagram) {
-      if (file.hasOwnProperty("cost")) {
-        setFinalToggleValue(file["cost"]);
+    if (info && diagram) {
+      setFileName(info.filename)
+      console.log(info.filename);
+      console.log(info.file.result);
+      if (info.file.result.hasOwnProperty("cost")) {
+        setFinalToggleValue(info.file.result["cost"]);
       }
-      const diagramModel = go.Model.fromJson(file);
+      const diagramModel = go.Model.fromJson(info.file.result);
       diagram.model = diagramModel;
         }
-  }, [file, diagram]);
+  }, [info, diagram]);
 
   useEffect(() => {
     if (diagram) {
@@ -174,6 +177,7 @@ function Draw() {
         console.log(response.data);
         if(response.data === true ){
           alert("저장되었습니다.");
+          setFileName(fileName);
         }
         else{
           alert("중복된 이름이 존재합니다. 다시 입력해주세요.")
@@ -200,7 +204,9 @@ function Draw() {
               />
             </div>
             <DiagramContainer>
-              <div className="button-container">
+              <DiagramTop>
+              <FileName>파일 이름: {fileName}</FileName>
+              <SaveButton>
                 <Button
                   diagram={diagram}
                   showToggle={showToggle}
@@ -209,7 +215,8 @@ function Draw() {
                   setFinalToggleValue={setFinalToggleValue}
                   onPopupChange={handlePopupChange}
                 />
-              </div>
+              </SaveButton>
+              </DiagramTop>
               <StyledButton onClick={handleSaveDiagram}>Save</StyledButton>
 
               <StyleSpace direction="vertical">
@@ -303,6 +310,30 @@ function Draw() {
 }
 
 export default Draw;
+
+const SaveButton = styled.div`
+  background-color: white;
+  position: absolute;
+  margin-top: 40px;
+  margin-left: 10px;
+  z-index: 20;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+`
+const DiagramTop = styled.div`
+  display: flex;
+`
+
+const FileName = styled.div`
+  font-family: "Noto Sans KR", sans-serif !important;
+  font-weight: 500;
+  font-size: 15px;
+  position: absolute;
+  margin-top: 20px;
+  margin-left: 20px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #d9d9d9;
+`
 
 const StyledDiagram = styled.div`
   /* float: left; */
