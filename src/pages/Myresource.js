@@ -43,15 +43,6 @@ function MyResource() {
     const handleResource = async () => {
       const ResourceData = {
         title: Array.from(uniqueTexts),
-        // title2: [
-        //   "Identity and Access Management",
-        //   "Athena",
-        //   "Redshift",
-        //   "VPC",
-        //   "Aurora",
-        //   "Elastic Kubernetes Service",
-        //   "EC2",
-        // ],
       };
       console.log("ResourceData", ResourceData.title)
       console.log("ResourceData2", ResourceData.title2)
