@@ -6,6 +6,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import { Button , Flex} from 'antd';
+import IntroduceSecurity from "./Home/IntroduceSecurity"
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
@@ -46,44 +47,6 @@ const TabSection = () => {
   );
 };
 
-const ImageSection = () => {
-  return (
-    <div className="main-content">
-      <div className="img">
-        <ImageWithCaption
-          src="/assets/img/Draw(Network).png"
-          alt="input_img"
-          caption="On Premise"
-        />
-      </div>
-
-      <div className="img">
-        <ImageWithCaption
-          src="/assets/img/Draw(AWS).png"
-          alt="output_img"
-          caption="After Migration"
-        />
-      </div>
-    </div>
-  );
-};
-
-const ImageWithCaption = ({ src, alt, caption }) => {
-  return (
-    <>
-      <img src={src} alt={alt} className="box-shadow" />
-      <p>{caption}</p>
-    </>
-  );
-};
-
-
-const ContentBlock = ({ summaryText, securityText }) => (
-  <div className="content-block">
-    <p>{summaryText}</p>
-    <p>{securityText}</p>
-  </div>
-);
 
 const Home = () => {
   let ref = useRef(null);
@@ -234,6 +197,7 @@ const Home = () => {
     </SecurityContainer>
     )
   }
+
   const Introduce=()=>{
     return(
       <div style={{ marginBottom: "30px" }}>
@@ -255,6 +219,7 @@ const Home = () => {
   }
 
 
+
   return (
     <div className="about-container" ref={containerRef} onWheel={handleScroll}>
       <div ref={addtoRefs}>
@@ -271,6 +236,9 @@ const Home = () => {
       </div>
       <div ref={addtoRefs}>
         <Flow />
+      </div>
+      <div ref={addtoRefs}>
+        <IntroduceSecurity />
       </div>
     </div>
   );
@@ -318,7 +286,6 @@ const FlexContainer = styled.div`
 const ImageContainer = styled.div`
 img {
   margin-top: 10%;
-  margin-bottom:10%;
   width:70px;
   height:auto;
 }
@@ -339,7 +306,7 @@ const ButtonContainer = styled.div`
 const SecurityContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  height: 100vh;
+  height: 40vh;
   margin-left:5%;
   margin-right:5%;
 `;
