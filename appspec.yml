@@ -13,5 +13,5 @@ permissions:
 hooks:
   AfterInstall:
     - location: /home/ubuntu/deploy-fe/deploy.sh
-      timeout: 120
+      timeout: 300
       runas: root
