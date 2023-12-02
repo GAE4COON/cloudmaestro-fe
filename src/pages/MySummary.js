@@ -12,51 +12,30 @@ import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
 import "../styles/App.css";
 import Summary from "./Summary";
+import { useEffect } from "react";
 import { summaryFile } from "../apis/fileAPI";
 
 const MySummary = () => {
 
-  const costdata = {
+  const [costData, setCostData] = useState({});
+  const location = useLocation();
 
-      "compute": {
+  useEffect(() => {
+    const fetchCostData = async () => {
+      if (location.state && location.state.file && location.state.file.result) {
+        requestSummary(location.state.file.result.cost);
+      }
+    };
+   
+    fetchCostData();
+  }, [location.state]); 
 
-        "EC2": {
-          "platform": "windows",
-          "instancetype": "r6id",
-          "size": "32xlarge",
-          "cost": "11.6288"
-        },
-      },
-
-      "database": {
-        "RDS": {
-          "engine": "MySQL",
-          "instancetype": "db.m6g",
-          "size": "4xlarge",
-          "cost": "1.6780000000"
-        },
-        "RDS2": {
-          "engine": "AuroraPostgresMySQL",
-          "instancetype": "db.r5",
-          "size": "12xlarge",
-          "cost": "10.9200000000"
-        },
-      },
-      "storage": {
-        "Simple Storage Service (S3)": {
-          "storage": "12",
-          "cost": 12
-        },
-      },
-      "waf": {
-        "AWS_WAF": {
-          "rule": "12",
-          "request": "12",
-          "cost": 12.2
-        },
-      },
-    
-  }
+  // Asynchronous function to request summary data
+  const requestSummary = async (cost) => {
+    const response = await summaryFile(cost);
+    setCostData(response.data);
+    return response;
+  };
 
   return (
     <div className="main-content">
@@ -65,7 +44,7 @@ const MySummary = () => {
           <div className="menu-container">
             <SideBar />
           </div>
-          <Summary costdata={costdata} style={{
+          <Summary costdata={costData} style={{
             margin:"0px",
             padding: "0px"
           }}/>
@@ -73,7 +52,6 @@ const MySummary = () => {
         </div>
       </div>
     </div>
-
   );
 }
 

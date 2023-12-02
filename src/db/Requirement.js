@@ -164,14 +164,24 @@ export const globalRequest = [
     key: "부하 분산",
     children: [
       {
-        title: "웹트래픽 분산",
-        value: "웹트래픽 분산",
-        key: "웹트래픽 분산",
+        title: "트래픽 분산",
+        value: "트래픽 분산",
+        key: "트래픽 분산",
         children: [
           {
             title: "DNS서비스 (Route53)",
             value: "DNS서비스 (Route53)",
             key: "DNS서비스 (Route53)",
+          },
+          {
+            title: "정적,동적컨텐츠 분산 (CloudFront)",
+            value: "정적,동적컨텐츠 분산 (CloudFront)",
+            key: "정적,동적컨텐츠 분산 (CloudFront)",
+          },
+          {
+            title: "RDS 읽기복제 및 캐싱",
+            value: "RDS 읽기복제 및 캐싱",
+            key: "RDS 읽기복제 및 캐싱",
           },
         ],
       },
@@ -198,9 +208,9 @@ export const globalRequest = [
             key: "글로벌네트워크 구축 (멀티리전)",
           },
           {
-            title: "데이터베이스 분산 (RDS)",
-            value: "데이터베이스 분산 (RDS)",
-            key: "데이터베이스 분산 (RDS)",
+            title: "데이터베이스 이중화 (RDS)",
+            value: "데이터베이스 이중화 (RDS)",
+            key: "데이터베이스 이중화 (RDS)",
           },
         ],
       },

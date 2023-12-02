@@ -11,7 +11,7 @@ import SelectWafToggle from "../components/cost/SelectWafToggle";
 import { useMediaQuery } from "react-responsive";
 import { nodeDataArrayPalette } from "../db/Node";
 
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { Alert, Space, Layout, Menu } from "antd";
 import { sidebarResource } from "../apis/sidebar";
 import { saveDiagram } from "../apis/fileAPI";
@@ -32,7 +32,6 @@ import RequirementPopup from "../components/RequirementPopup";
 import { DataContext, useData } from "../components/DataContext.js"; // DataContext의 경로를 수정하세요
 
 function Draw() {
-  const navigate = useNavigate();
   const { data } = useFileUpload();
   //console.log("draw data ", data);
   const isDesktopOrLaptop = useMediaQuery({ query: "(min-width: 700px)" });
@@ -52,11 +51,15 @@ function Draw() {
     key: null,
     message: null,
   });
+  const [fileName, setFileName] = useState("MyDiagram");
 
   const [diagramVersion, setDiagramVersion] = useState(0);
   const [isPopup, setIsPopup] = useState(false);
 
   const { isSidebarOpen, setIsSidebarOpen } = useData();
+
+  const location = useLocation();
+  const info = location.state ? location.state.info : null;
 
   useEffect(() => {}, [diagramVersion]); // Dependency on diagramVersion
 
@@ -77,15 +80,18 @@ function Draw() {
     setAlertMessage
   );
 
-  const location = useLocation();
-  const file = location.state ? location.state.file : null;
-  const from = location.from;
-
   useEffect(() => {
-    if (file && diagram) {
-      diagram.model = go.Model.fromJson(file);
-    }
-  }, [file, diagram]);
+    if (info && diagram) {
+      setFileName(info.filename)
+      console.log(info.filename);
+      console.log(info.file.result);
+      if (info.file.result.hasOwnProperty("cost")) {
+        setFinalToggleValue(info.file.result["cost"]);
+      }
+      const diagramModel = go.Model.fromJson(info.file.result);
+      diagram.model = diagramModel;
+        }
+  }, [info, diagram]);
 
   useEffect(() => {
     if (diagram) {
@@ -127,32 +133,6 @@ function Draw() {
     console.log("change AlertMessage:", alertMessage);
   };
 
-  // const summaryRequest = async () => {
-  //   if (diagram) {
-  //     let jsonData = diagram.model.toJson();
-  //     jsonData = JSON.parse(jsonData);
-  //     jsonData.cost = finalToggleValue; // ec2도 해야할 듯
-
-  //     const formData = new FormData(); // FormData 객체 생성
-
-  //     // JSON 데이터를 문자열로 변환하여 FormData에 추가
-  //     formData.append("jsonData", JSON.stringify(jsonData));
-
-  //     // 파일 데이터를 FormData에 추가
-  //     const fileData = new Blob([JSON.stringify(jsonData)], {
-  //       type: "   ",
-  //     });
-  //     formData.append("file", fileData, "diagram.json");
-  //     try {
-  //       // FormData를 서버에 전송
-  //       const response = await summaryFile(formData);
-  //       console.log(response.data)
-  //       navigate("/summary", { state: { file: response.data } });
-  //     } catch (error) {
-  //     }
-  //   }
-  // };
-
   const handleNodeSelect = useCallback(
     (label) => {
       if (diagram) {
@@ -182,7 +162,11 @@ function Draw() {
 
   const handleSaveDiagram = async () => {
     try {
-      const diagramData = diagram.model.toJson();
+      let diagramData = diagram.model.toJson();
+      diagramData = JSON.parse(diagramData);
+      diagramData["cost"] = finalToggleValue; //ec2도 해야할 듯
+      diagramData = JSON.stringify(diagramData);
+
       const fileName = window.prompt(
         "저장할 파일의 이름을 입력하세요.",
         "MyDiagram"
@@ -190,7 +174,15 @@ function Draw() {
 
       if (fileName) {
         const response = await saveDiagram(diagramData, fileName + ".json");
-        alert("저장되었습니다.");
+        console.log(response.data);
+        if(response.data === true ){
+          alert("저장되었습니다.");
+          setFileName(fileName);
+        }
+        else{
+          alert("중복된 이름이 존재합니다. 다시 입력해주세요.")
+          handleSaveDiagram();
+        }
       } else {
         alert("파일 저장이 취소되었습니다.");
       }
@@ -212,7 +204,9 @@ function Draw() {
               />
             </div>
             <DiagramContainer>
-              <div className="button-container">
+              <DiagramTop>
+              <FileName>파일 이름: {fileName}</FileName>
+              <SaveButton>
                 <Button
                   diagram={diagram}
                   showToggle={showToggle}
@@ -221,7 +215,8 @@ function Draw() {
                   setFinalToggleValue={setFinalToggleValue}
                   onPopupChange={handlePopupChange}
                 />
-              </div>
+              </SaveButton>
+              </DiagramTop>
               <StyledButton onClick={handleSaveDiagram}>Save</StyledButton>
 
               <StyleSpace direction="vertical">
@@ -315,6 +310,30 @@ function Draw() {
 }
 
 export default Draw;
+
+const SaveButton = styled.div`
+  background-color: white;
+  position: absolute;
+  margin-top: 40px;
+  margin-left: 10px;
+  z-index: 20;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+`
+const DiagramTop = styled.div`
+  display: flex;
+`
+
+const FileName = styled.div`
+  font-family: "Noto Sans KR", sans-serif !important;
+  font-weight: 500;
+  font-size: 15px;
+  position: absolute;
+  margin-top: 20px;
+  margin-left: 20px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #d9d9d9;
+`
 
 const StyledDiagram = styled.div`
   /* float: left; */
