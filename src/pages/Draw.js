@@ -167,13 +167,23 @@ function Draw() {
       diagramData["cost"] = finalToggleValue; //ec2도 해야할 듯
       diagramData = JSON.stringify(diagramData);
 
+
+      // 이미지 데이터 생성
+      const img = diagram.makeImageData({
+        scale: 0.6,
+        background: "white",
+        type: "image/png",
+      });
+
       const fileName = window.prompt(
         "저장할 파일의 이름을 입력하세요.",
         "MyDiagram"
       );
 
+      const base64ImageContent = img.split(',')[1]; // 'data:image/png;base64,' 부분 제거
+
       if (fileName) {
-        const response = await saveDiagram(diagramData, fileName + ".json");
+        const response = await saveDiagram(diagramData, fileName, base64ImageContent);
         console.log(response.data);
         if(response.data === true ){
           alert("저장되었습니다.");
