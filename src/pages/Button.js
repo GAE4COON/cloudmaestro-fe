@@ -1,10 +1,11 @@
-import React, { useCallback, useState, useEffect } from "react";
+import React, { useCallback, useState, useEffect, useMemo } from "react";
 import * as go from "gojs";
 import "../styles/Button.css"; // contains .diagram-component CSS
 import { json, useNavigate } from "react-router-dom";
 
 import { rehostRequest, requirementRequest } from "../apis/fileAPI";
-import { BsGear , BsClipboard2Data , BsCloud, BsUpload, BsDownload, BsEraser, BsSave } from "react-icons/bs";
+import { BsGear, BsClipboard2Data, BsCloud, BsUpload, BsDownload, BsEraser, BsSave } from "react-icons/bs";
+import { Tooltip } from "antd";
 import { BiSave } from "react-icons/bi";
 import { sidebarResource } from "../apis/sidebar";
 import { useData } from "../components/DataContext";
@@ -14,9 +15,10 @@ import { summaryFile } from "../apis/fileAPI.js";
 const Button = ({
   diagram,
   setShowToggle,
+  setFileName,
   finalToggleValue,
   setFinalToggleValue,
-  onPopupChange 
+  onPopupChange
 }) => {
 
   const navigate = useNavigate();
@@ -128,6 +130,9 @@ const Button = ({
   const onFileChange = (e) => {
     if (e.target.files[0] && e.target.files[0].name.includes("json")) {
       let file = e.target.files[0];
+      let fileName = file.name; // 선택된 파일의 이름
+      setFileName(fileName);
+
       let fileReader = new FileReader();
       fileReader.readAsText(file);
       fileReader.onload = async () => {
@@ -176,11 +181,27 @@ const Button = ({
       navigate("/summary", { state: { costdata: response.data, from: "draw" } });
     }
   };
+  const [arrow, setArrow] = useState('Show');
 
+  const mergedArrow = useMemo(() => {
+    if (arrow === 'Hide') {
+      return false;
+    }
+
+    if (arrow === 'Show') {
+      return true;
+    }
+
+    return {
+      pointAtCenter: true,
+    };
+  }, [arrow]);
   return (
     <div>
       <div className="button-container">
         <div className="button-row">
+        <Tooltip placement="right" title={"upload"} arrow={mergedArrow}>
+
           <button onClick={handleClick}>
             <BsUpload />
           </button>
@@ -190,38 +211,62 @@ const Button = ({
             onChange={onFileChange}
             style={{ display: "none" }}
           />
+          </Tooltip>
         </div>
 
         <div className="button-row">
+        <Tooltip placement="right" title={"eraser"} arrow={mergedArrow}>
+
           <button onClick={handleReset}>
             <BsEraser />
           </button>
+          </Tooltip>
+
         </div>
         <div className="button-row">
+        <Tooltip placement="right" title={"download"} arrow={mergedArrow}>
+
           <button onClick={handleSave}>
             <BsDownload />
           </button>
+          </Tooltip>
+
         </div>
         <div className="button-row">
-          <button onClick={localSaveImage}>
-            <BiSave />
-          </button>
-        </div>
-        <div className="button-row">
-          <button onClick={handleLoad}>
-          <BsCloud />
+          <Tooltip placement="right" title={"download as png"} arrow={mergedArrow}>
+            <button onClick={localSaveImage}>
+              <BiSave />
             </button>
+          </Tooltip>
+
         </div>
         <div className="button-row">
+        <Tooltip placement="right" title={"lift & shift"} arrow={mergedArrow}>
+
+          <button onClick={handleLoad}>
+            <BsCloud />
+          </button>
+          </Tooltip>
+
+        </div>
+        <div className="button-row">
+        <Tooltip placement="right" title={"summary"} arrow={mergedArrow}>
+
           <button onClick={summaryRequest}>
             <BsClipboard2Data />
           </button>
-          </div>
-          <div className="button-row">
+          </Tooltip>
+
+        </div>
+        <div className="button-row">
+        <Tooltip placement="right" title={"optimize"} arrow={mergedArrow}>
+
           <button onClick={handlePopup}>
             <BsGear />
           </button>
-          </div>
+          </Tooltip>
+
+        </div>
 
       </div>
     </div>

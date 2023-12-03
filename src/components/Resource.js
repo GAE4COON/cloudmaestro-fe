@@ -104,7 +104,7 @@ function Resource({ title_img, title, tags, guide1, guide2, guide3, guide4 }) {
 const ResourceContain = styled.div`
   position: relative;
   width: 100%;
-  height: auto%;
+  height: auto;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   margin-left: 20px;
   padding: 25px;
