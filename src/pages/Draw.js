@@ -35,6 +35,11 @@ import { Link } from "react-router-dom";
 import RequirementPopup from "../components/RequirementPopup";
 import { DataContext, useData } from "../components/DataContext.js"; // DataContext의 경로를 수정하세요
 
+message.config({
+  top: 50,
+  duration: 1
+});
+
 function Draw() {
   const { data } = useFileUpload();
   //console.log("draw data ", data);
@@ -212,6 +217,8 @@ function Draw() {
 
   const handleOk = async () => {
     setIsModalVisible(false);
+    const hideLoading = message.loading("저장 중...", 0);
+
     try {
       let diagramData = diagram.model.toJson();
       diagramData = JSON.parse(diagramData);
@@ -228,6 +235,8 @@ function Draw() {
       const base64ImageContent = img.split(',')[1];
 
       const response = await saveDiagram(diagramData, fileName, base64ImageContent);
+      hideLoading();
+
       console.log(response.data);
       if (response.data === true) {
         message.success("저장되었습니다.");
@@ -236,7 +245,7 @@ function Draw() {
         message.warning("중복된 이름이 존재합니다. 다시 시도해주세요.");
       }
     } catch (error) {
-      console.error("저장 중 오류가 발생했습니다: ", error);
+      hideLoading();
       message.error("저장 중 오류가 발생했습니다.");
     }
   };

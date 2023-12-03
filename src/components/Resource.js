@@ -78,7 +78,10 @@ function Resource({ title_img, title, tags, guide1, guide2, guide3, guide4 }) {
           {tags.map((tag, index) => (
             <Tag
               key={index}
-              style={{ backgroundColor: tagColors[tag] || "#fbb1d5" }}
+              style={{ backgroundColor: tagColors[tag] || "#fbb1d5", 
+                        fontFamily: "Noto Sans KR",
+                        fontSize: "14px",
+            }}
             >
               #{tag}
             </Tag> // key를 index로 주고 tag 내용을 표시합니다.
@@ -119,9 +122,12 @@ const ResourceTitleContainer = styled.div`
   align-items: center;
   margin-bottom: 10px;
   justify-content: space-between;
+  
 `;
 
 const ResourceName = styled.div`
+    font-family: "Noto Sans KR", sans-serif !important;
+
   font-size: 20px;
   margin-left: 15px;
 `;
@@ -151,6 +157,8 @@ const Tag = styled.div`
 `;
 
 const StyledCollapse = styled(Collapse)`
+    font-family: "Noto Sans KR", sans-serif !important;
+
   .ant-collapse-header {
     font-size: 17px;
     font-weight: 700;

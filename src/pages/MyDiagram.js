@@ -1,5 +1,6 @@
 import SideBar from "../components/MyPageSideBar";
 import React, { useState, useEffect } from "react";
+import { Popconfirm, message} from 'antd';
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { DownOutlined } from "@ant-design/icons";
@@ -14,8 +15,15 @@ import jwtDecode from "jwt-decode";
 import styled from "styled-components";
 import { getDiagramData, myNetworkDB, deleteDiagramData } from "../apis/myPage";
 
+message.config({
+  top: 50, 
+  duration: 1
+});
+
 const MyArchitecture = () => {
   const [cloudInstances, setCloudInstances] = useState([]);
+  const [messageApi, contextHolder] = message.useMessage();
+
   const navigate = useNavigate();
 
   const { user, setUser } = useAuth();
@@ -62,18 +70,15 @@ const MyArchitecture = () => {
     navigate(`${path}`, { state: { info: response.data } });
   }
 
-  const handleDeleteInstance = async (key) => {
-    const confirmDelete = window.confirm("도식화를 삭제하시겠습니까?");
+  const confirm = async (key, e) => {
+    const response = await deleteDiagramData(key);
+    console.log("response.data", response.data);
+    setCloudInstances(cloudInstances.filter(instance => instance.key !== key));
 
-    if (confirmDelete) {
-      // 사용자가 'OK'를 선택한 경우, 삭제 작업 진행
-      const response = await deleteDiagramData(key);
-      console.log("response.data", response.data);
-      setCloudInstances(cloudInstances.filter(instance => instance.key !== key));
-      alert("도식화가 삭제되었습니다.");
-    }
-  }
-
+    message.success('도식화가 삭제되었습니다.');
+    
+  };
+  
   return (
     <div className="main-content">
       <div className="mypage-container">
@@ -84,7 +89,9 @@ const MyArchitecture = () => {
 
           <div className="main-container">
             <StyledSideMenuTitle>도식화 히스토리</StyledSideMenuTitle>
-            {getRows(cloudInstances).map((row, idx) => (
+            {cloudInstances.length > 0 ? (
+
+            getRows(cloudInstances).map((row, idx) => (
               <CloudInstanceRow key={idx}>
                 {row.map((instance) => {
                   const dropdownItems = [
@@ -109,8 +116,18 @@ const MyArchitecture = () => {
                   ];
                   return (
                     <CloudInstance key={instance.key}>
-                        <DeleteInstanceButton 
-                        onClick={() => handleDeleteInstance(instance.key)}>X</DeleteInstanceButton>
+
+                  <Popconfirm
+                      title="도식화 삭제"
+                      description={`${instance.title} 도식화를 삭제하시겠습니까?`}
+                      onConfirm={()=>confirm(instance.key)}
+                      cancelText="No"
+                      okText="Yes"
+                      placement="right"
+                    >
+                          <DeleteInstanceButton >X</DeleteInstanceButton>
+                          </Popconfirm>
+
                       <img
                         onClick={() => handleCloudInstance(instance.key, "/draw")}
                         alt="diagram_img"
@@ -145,7 +162,13 @@ const MyArchitecture = () => {
                   );
                 })}
               </CloudInstanceRow>
-            ))}
+            ))):(
+              <div style={{display: "flex", justifyContent: "center", alignItems: "center", height: "100%"}}>
+                <p>도식화 히스토리가 없습니다.</p>
+                
+              </div>
+            )
+            }
           </div>
         </div>
       </div>
