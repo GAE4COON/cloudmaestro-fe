@@ -5,7 +5,7 @@ import { json, useNavigate } from "react-router-dom";
 
 import { rehostRequest, requirementRequest } from "../apis/fileAPI";
 import { BsGear, BsClipboard2Data, BsCloud, BsUpload, BsDownload, BsEraser, BsSave } from "react-icons/bs";
-import { Tooltip } from "antd";
+import { Tooltip, message } from "antd";
 import { BiSave } from "react-icons/bi";
 import { sidebarResource } from "../apis/sidebar";
 import { useData } from "../components/DataContext";
@@ -104,11 +104,11 @@ const Button = ({
       const containsOtherTypes = otherTypes.length > 0;
 
       if (containsOtherTypes) {
-        alert("클라우드 아키텍처가 포함되어있으면 Rehost 하지 못합니다.");
+        message.warning("클라우드 아키텍처가 포함되어있으면 Rehost 하지 못합니다.");
         return;
       }
       if (clickedLoaded) {
-        alert("클라우드 아키텍처는 Rehost 하지 못합니다.");
+        message.warning("클라우드 아키텍처는 Rehost 하지 못합니다.");
         return;
       }
 
@@ -130,7 +130,11 @@ const Button = ({
   const onFileChange = (e) => {
     if (e.target.files[0] && e.target.files[0].name.includes("json")) {
       let file = e.target.files[0];
-      let fileName = file.name; // 선택된 파일의 이름
+      let fileName = file.name;
+      const lastIndex = fileName.lastIndexOf(".");
+      if (lastIndex > 0) {
+        fileName = fileName.substring(0, lastIndex);
+      }
       setFileName(fileName);
 
       let fileReader = new FileReader();
@@ -152,7 +156,7 @@ const Button = ({
         }
       };
     } else if (e.target.files[0] && !e.target.files[0].name.includes("json")) {
-      alert("Json형식의 파일을 넣어주세요.");
+      message.warning("Json형식의 파일을 넣어주세요.");
     }
     e.target.value = null;
   };
