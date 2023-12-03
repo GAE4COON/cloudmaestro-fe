@@ -325,7 +325,8 @@ const useGoJS = (
           new go.Binding("fill", "", function (data) {
             if (
               data.key.toLowerCase().includes("public") ||
-              data.key.toLowerCase().includes("private")
+              data.key.toLowerCase().includes("private") ||
+              data.key.toLowerCase().includes("service")
             ) {
               // Parse the RGB color to get individual components
               let rgb = data.stroke.match(/\d+/g);
@@ -339,7 +340,8 @@ const useGoJS = (
           new go.Binding("stroke", "", function (data) {
             if (
               data.key.toLowerCase().includes("public") ||
-              data.key.toLowerCase().includes("private")
+              data.key.toLowerCase().includes("private") ||
+              data.key.toLowerCase().includes("service")
             ) {
               return "transparent";
             }

@@ -7,6 +7,9 @@ import "../styles/App.css";
 import { Space, Dropdown, Button } from "antd";
 import { Menu } from "antd";
 import { CloseButton } from "react-bootstrap";
+import { useAuth } from "../utils/auth/authContext";
+import jwtDecode from "jwt-decode";
+
 
 import styled from "styled-components";
 import { getDiagramData, myNetworkDB, deleteDiagramData } from "../apis/myPage";
@@ -14,6 +17,24 @@ import { getDiagramData, myNetworkDB, deleteDiagramData } from "../apis/myPage";
 const MyArchitecture = () => {
   const [cloudInstances, setCloudInstances] = useState([]);
   const navigate = useNavigate();
+
+  const { user, setUser } = useAuth();
+  const ACCESS_TOKEN = localStorage.getItem("accessToken");
+
+  useEffect(() => {
+    if (ACCESS_TOKEN) {
+      try {
+        const decodedToken = jwtDecode(ACCESS_TOKEN);
+        console.log(decodedToken.sub);
+        // 주의: 실제 환경에서는 토큰이 만료되었는지 확인하는 로직도 필요합니다.
+        setUser(decodedToken.sub);
+      } catch (error) {
+        console.log("Invalid token");
+      }
+    } else {
+      setUser(null);
+    }
+  }, [ACCESS_TOKEN]);
 
   useEffect(() => {
     const fetchMyNetwork = async () => {
@@ -89,15 +110,19 @@ const MyArchitecture = () => {
                   return (
                     <CloudInstance key={instance.key}>
                         <DeleteInstanceButton 
-                        onClick={() => handleDeleteInstance(instance.key)}
-                        >X</DeleteInstanceButton>
+                        onClick={() => handleDeleteInstance(instance.key)}>X</DeleteInstanceButton>
                       <img
                         onClick={() => handleCloudInstance(instance.key, "/draw")}
                         alt="diagram_img"
-                        src={instance.imgSrc}
+                        src={`https://cm-user-file.s3.ap-northeast-2.amazonaws.com/${instance.title}_${user}.png`}
                         style={{
                           marginTop: "20px",
                           width: "100%",
+                          height: "40%",
+                          objectFit: "contain",
+                          borderRadius: "5px",
+                          boxShadow: "1px 1px 1px 1px rgb(235, 235, 235)",
+                        
                         }}
                       />
                       <StyledInstanceTitle>{instance.title}</StyledInstanceTitle>
@@ -133,6 +158,7 @@ export default MyArchitecture;
 
 const CloudInstance = styled.div`
   width: 26%;
+  height: 320px;
   padding: 10px;
   border: 1px solid gray;
   margin-left: 10px;
