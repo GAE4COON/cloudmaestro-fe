@@ -53,8 +53,10 @@ const useGoJS = (
       "undoManager.isEnabled": true,
       "resizingTool.isGridSnapEnabled": true,
       "commandHandler.archetypeGroupData": {
+        key: "Group",
         text: "Group",
         type: "group",
+        stroke: "rgba(128, 128, 128)",
         isGroup: true,
       },
       "contextMenuTool.isEnabled": true,
@@ -92,14 +94,6 @@ const useGoJS = (
                   }
                 });
               }
-
-              // if (response && response.data) {
-              //   console.log("API Response:", response.data);
-              //   setDiagramCheck(response.data);
-              //   if (response.data.result.status === "fail") {
-
-              //   }
-              // }
             } catch (error) {
               console.error("API Error:", error);
             }
@@ -126,7 +120,6 @@ const useGoJS = (
                         const isDuplicate = prevDiagramCheck.some(
                           (item) => item === response.data.result.message
                         );
-                        // 중복되지 않고 result가 "success"인 경우에만 추가
                         if (!isDuplicate) {
                           return [
                             ...prevDiagramCheck,
@@ -261,8 +254,7 @@ const useGoJS = (
 
     diagram.groupTemplate = $(
       go.Group,
-      // "Auto",
-      // "Vertical",
+      // {key: "Group"},
       new go.Binding("location", "loc", go.Point.parse).makeTwoWay(
         go.Point.stringify
       ),
@@ -272,11 +264,6 @@ const useGoJS = (
         mouseDrop: finishDrop,
         ungroupable: true,
         resizable: true,
-        // layout: $(go.GridLayout, {
-        //   wrappingColumn: 3, // 한 열에 하나의 노드만 표시
-        //   cellSize: new go.Size(1, 1), // 셀 크기 설정
-        //   spacing: new go.Size(4, 4) // 노드 간 간격 설정
-        // }),
       },
       new go.Binding("background", "isHighlighted", (h) =>
         h ? "rgba(128,128,128,0.1)" : "transparent"
@@ -302,7 +289,7 @@ const useGoJS = (
             portId: "",
             editable: true,
           },
-          new go.Binding("text", "text")
+          new go.Binding("text", "text"),
         )
       ),
 
