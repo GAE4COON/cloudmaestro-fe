@@ -122,7 +122,7 @@ const Navbar = () => {
             {isDropdownOpen && (
               <DropdownMenu>
                 <NavLink onClick={closeMenu} to="/about">
-                  About
+                 Introduce
                 </NavLink>
                 <NavLink
                   style={{ paddingTop: "8px" }}
