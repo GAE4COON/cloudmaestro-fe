@@ -19,6 +19,9 @@ rm package-lock.json
 echo "> npm 패키지 재설치"
 npm install
 
+echo "> 라이브러리 설치"
+bash init.sh
+
 echo "> 애플리케이션 시작"
 nohup npm start &
 
