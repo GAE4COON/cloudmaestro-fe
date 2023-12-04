@@ -46,8 +46,8 @@ jobs:
     - name: Deploy
       run: |
         aws deploy create-deployment --application-name Cloudmaestro-front --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name Cloudmaestro-front --s3-location bucket=$S3_BUCKET_NAME,key=build-fe.zip,bundleType=zip
-    - name: Set Script Permissions
-      run: chmod +x ./deploy.sh
-    - name: Execute Deploy Script
-      run: ./deploy.sh
+    # - name: Set Script Permissions
+    #   run: chmod +x ./deploy.sh
+    # - name: Execute Deploy Script
+    #   run: ./deploy.sh
 
