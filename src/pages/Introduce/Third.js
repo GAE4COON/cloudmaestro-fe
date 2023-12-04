@@ -46,7 +46,7 @@ export default function Third() {
         <CloudContainer>
             <IntroduceContainer ref={imageRef} inView={imageInView}>
                 <h2>
-                ISO/IEC 27001은 국제적으로 통용되는 정보보호 관리 시스템에 대한 표준이자 인증기준입니다.
+                ISO/IEC 27001은 국제적으로 통용되는<br/> 정보보호 관리 시스템에 대한 표준이자 인증기준입니다.
                 </h2>
                 <p>
                 ISO/IEC 27001의 구성은 조직, 리더십, 계획, 지원, 운영, 이행 평가, 개선으로 이루어져 있어 조직적 관점에서의 보안 정책 수립과 이를 적절히 수행시키기 위한 종사자의 책임과 역할, 보안 위험 평가 및 처리, 정보 자산 관리에 대한 지원 프로세스 명확화, 보안 정책에 대한 평가와 지속적인 개선 등 기업의 전반적인 보안 프로세스 정착을 위한 기준을 제시하고 있습니다
@@ -57,7 +57,7 @@ export default function Third() {
 
         <CloudContainer>
 
-                <IntroduceImageContainer ref={imageRef} inView={imageInView} width="90%">
+                <IntroduceImageContainer ref={imageRef} inView={imageInView} width="120%">
                     <img src="/assets/introduce_img/iso.png" alt="logo" />
                 </IntroduceImageContainer>
                 <IntroduceContainer ref={imageRef} inView={imageInView}>

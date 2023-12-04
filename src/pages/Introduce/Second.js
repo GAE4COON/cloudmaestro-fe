@@ -42,7 +42,7 @@ export default function Second() {
         </CloudContainer>
         <FlexContainer>
             <ButtonContainer ref={imageRef} inView={imageInView}>
-                <p>
+                <p style={{  fontSize: '20px'  }}>
                 국내에선 2015년, 클라우드컴퓨팅 발전 및 이용자 보호에 관한 법률을 제정하고 2021년, 본격적인 디지털 뉴딜 정책 시행 등을 통해 
                 클라우드 이용을 추진하고 있으며2017년, ISMS-P 인증 기반의 클라우드 서비스 보안인증 제도 설립을 통해 클라우드 보안 사고를 줄이기 위한 움직임 또한 지속적으로 취하고 있습니다.
 
@@ -57,13 +57,16 @@ export default function Second() {
         <CloudContainer>
             <IntroduceContainer ref={imageRef} inView={imageInView}>
                 <p>
-                    즉 클라우드 보안에 대한 국가적 관심이 높아지고 있으며,  <span style={{ fontWeight: 'bold', fontSize: 'larger', color: 'blue'  }}>클라우드 보안은 선택이 아닌 필수</span>가 되었다는 것입니다.
+                    즉 클라우드 보안에 대한 국가적 관심이 높아지고 있으며,  <span style={{ fontWeight: 'bold', fontSize: 'larger', color: 'blue'  }}>클라우드 보안은 선택이 아닌 필수</span>입니다.
                  </p>
                  <h2>클라우드 보안 사고는 왜 발생할까요?</h2>
 
-                 <p>클라우드 보안 사고의 <span style={{ fontWeight: 'bold', fontSize: 'larger', color: 'red'  }}>99%</span>는 관리 과실로 발생</p>
-
-                 <p>세계 최대의 정보기술 자문회사 Gartner에 따르면, 2025년까지 클라우드 보안사고의 99%는 사용자 과실에 의해 발생할 것임을 경고하고 있습니다.
+                
+                 <p>
+                    <span style={{ fontWeight: 'bold' }}> 클라우드 보안 사고의 <span style={{ fontWeight: 'bold', fontSize: 'larger', color: 'red'  }}>99%</span>는 관리 과실로 발생 </span>
+                    <br/>
+                    <br/>
+                    세계 최대의 정보기술 자문회사 Gartner에 따르면, 2025년까지 클라우드 보안사고의 99%는 사용자 과실에 의해 발생할 것임을 경고하고 있습니다.
                     2021년 개인정보보호위원회의 보도자료에 따르면, 유명 숙박 서비스 제공 기업을 비롯한 4개의 기업에서 관리자 접근권한을 IP로 제한하지 않아 외부 권한 탈취에 따른 개인정보 유출 및 제3자 열람이 가능하였던 사례가 존재합니다. 또한 비가용 자원의 정리가 이뤄지지 않았기에 추가적인 제재 조치가 발생하기도 했습니다.
                 </p>
                 <h2>어떻게 관리해야 할까요?</h2>
@@ -109,7 +112,7 @@ export default function Second() {
             </ButtonContainer2>
         </FlexContainer2>
 
-       
+
 
 
     </div>

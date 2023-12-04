@@ -119,7 +119,7 @@ export default function First() {
                 </p>
                 
             </IntroduceContainer>
-            <IntroduceImageContainer ref={imageRef} inView={imageInView} width="70%">
+            <IntroduceImageContainer ref={imageRef} inView={imageInView} width="90%">
                 <img src="/assets/introduce_img/migration.png" alt="logo" />
             </IntroduceImageContainer>
 
@@ -134,7 +134,7 @@ export default function First() {
                 </p>
                 
             </IntroduceContainer>
-            <IntroduceImageContainer ref={imageRef} inView={imageInView} width="50%">
+            <IntroduceImageContainer ref={imageRef} inView={imageInView} width="40%">
                 <img src="/assets/introduce_img/migration2.png" alt="logo" />
             </IntroduceImageContainer>
 
