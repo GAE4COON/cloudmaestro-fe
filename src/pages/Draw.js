@@ -2,6 +2,8 @@ import React, { useState, useCallback, useEffect } from "react";
 import * as go from "gojs";
 import { ReactDiagram } from "gojs-react";
 import styled from "styled-components";
+import { message } from 'antd';
+
 
 import useGoJS from "../hooks/useGoJS.js";
 import SelectEc2Toggle from "../components/cost/SelectEc22Toggle";
@@ -12,11 +14,13 @@ import { useMediaQuery } from "react-responsive";
 import { nodeDataArrayPalette } from "../db/Node";
 
 import { useLocation } from "react-router-dom";
-import { Alert, Space, Layout, Menu } from "antd";
+import { Alert, Space, Modal, Input } from "antd";
 import { sidebarResource } from "../apis/sidebar";
 import { saveDiagram } from "../apis/fileAPI";
 import { DrawResourceGuide } from "../apis/resource";
 import "../styles/App.css";
+import jsonData from '../db/ResourceGuide.json'; // JSON 파일 경로
+
 
 
 // 페이지
@@ -30,6 +34,11 @@ import { summaryFile } from "../apis/fileAPI.js";
 import { Link } from "react-router-dom";
 import RequirementPopup from "../components/RequirementPopup";
 import { DataContext, useData } from "../components/DataContext.js"; // DataContext의 경로를 수정하세요
+
+message.config({
+  top: 50,
+  duration: 1
+});
 
 function Draw() {
   const { data } = useFileUpload();
@@ -51,7 +60,7 @@ function Draw() {
     key: null,
     message: null,
   });
-  const [fileName, setFileName] = useState("MyDiagram");
+  const [fileName, setFileName] = useState("제목 없는 다이어그램");
 
   const [diagramVersion, setDiagramVersion] = useState(0);
   const [isPopup, setIsPopup] = useState(false);
@@ -61,7 +70,13 @@ function Draw() {
   const location = useLocation();
   const info = location.state ? location.state.info : null;
 
-  useEffect(() => {}, [diagramVersion]); // Dependency on diagramVersion
+  useEffect(() => { }, [diagramVersion]); // Dependency on diagramVersion
+
+  const [nodeRole, setNodeRole] = useState({});
+
+  useEffect(() => {
+    setNodeRole(jsonData); // JSON 파일에서 데이터 가져오기
+  }, []);
 
   const handleDiagramChange = useCallback((changedDiagram) => {
     // console.log("다이어그램이 변경되었습니다:", changedDiagram.model.toJson());
@@ -73,7 +88,7 @@ function Draw() {
     setNodeGuide(guide);
   });
 
-  const { initDiagram, diagram, showSelectToggle, clickedNodeKey} = useGoJS(
+  const { initDiagram, diagram, showSelectToggle, clickedNodeKey } = useGoJS(
     setShowToggle,
     handleDiagramChange,
     handleguide,
@@ -90,7 +105,7 @@ function Draw() {
       }
       const diagramModel = go.Model.fromJson(info.file.result);
       diagram.model = diagramModel;
-        }
+    }
   }, [info, diagram]);
 
   useEffect(() => {
@@ -101,24 +116,16 @@ function Draw() {
   }, [location]);
 
   useEffect(() => {
-    const fetchResourceGuide = async () => {
+    const fetchResourceGuide = () => {
       if (NodeGuide) {
-        try {
-          const ResourceData = { title: NodeGuide };
-          const response = await DrawResourceGuide(ResourceData);
-          if (response.data.result !== "fail") {
-            setNodeGuideLine({ key: NodeGuide, message: response.data.result });
-          } else {
-            setNodeGuideLine({
-              key: NodeGuide,
-              message: "추후 추가 예정",
-            });
-          }
-        } catch (error) {
-          console.error("Error fetching resource guide:", error);
+        if (nodeRole[`${NodeGuide}`] && nodeRole[`${NodeGuide}`].role) {
+          setNodeGuideLine({ key: NodeGuide, message: nodeRole[`${NodeGuide}`].role });
+        } else {
+          setNodeGuideLine({
+            key: NodeGuide,
+            message: "추후 추가 예정",
+          });
         }
-      } else {
-        setNodeGuideLine({ key: null, message: null });
       }
     };
 
@@ -160,36 +167,102 @@ function Draw() {
     setIsPopup(newPopupState);
   };
 
-  const handleSaveDiagram = async () => {
+  // const handleSaveDiagram = async () => {
+  //   try {
+  //     let diagramData = diagram.model.toJson();
+  //     diagramData = JSON.parse(diagramData);
+  //     diagramData["cost"] = finalToggleValue; //ec2도 해야할 듯
+  //     diagramData = JSON.stringify(diagramData);
+
+
+  //     // 이미지 데이터 생성
+  //     const img = diagram.makeImageData({
+  //       scale: 0.6,
+  //       background: "white",
+  //       type: "image/png",
+  //     });
+
+  //     const fileName = window.prompt(
+  //       "저장할 파일의 이름을 입력하세요.",
+  //       "MyDiagram"
+  //     );
+
+  //     const base64ImageContent = img.split(',')[1]; // 'data:image/png;base64,' 부분 제거
+
+  //     if (fileName) {
+  //       const response = await saveDiagram(diagramData, fileName, base64ImageContent);
+  //       console.log(response.data);
+  //       if(response.data === true ){
+  //         message.success("저장되었습니다.");
+
+  //         setFileName(fileName);
+  //       }
+  //       else{
+  //         message.warning("중복된 이름이 존재합니다. 다시 시도해주세요.");
+  //         // handleSaveDiagram();
+  //       }
+  //     } else {
+  //       message.info("파일 저장이 취소되었습니다.");
+  //     }
+  //   } catch (error) {
+  //     console.error("저장 중 오류가 발생했습니다: ", error);
+  //   }
+  // };
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleOk = async () => {
+    setIsModalVisible(false);
+    const hideLoading = message.loading("저장 중...", 0);
+
     try {
       let diagramData = diagram.model.toJson();
       diagramData = JSON.parse(diagramData);
-      diagramData["cost"] = finalToggleValue; //ec2도 해야할 듯
+      diagramData["cost"] = finalToggleValue;
       diagramData = JSON.stringify(diagramData);
 
-      const fileName = window.prompt(
-        "저장할 파일의 이름을 입력하세요.",
-        "MyDiagram"
-      );
+      // 이미지 데이터 생성
+      const img = diagram.makeImageData({
+        scale: 0.6,
+        background: "white",
+        type: "image/png",
+      });
 
-      if (fileName) {
-        const response = await saveDiagram(diagramData, fileName + ".json");
-        console.log(response.data);
-        if(response.data === true ){
-          alert("저장되었습니다.");
-          setFileName(fileName);
-        }
-        else{
-          alert("중복된 이름이 존재합니다. 다시 입력해주세요.")
-          handleSaveDiagram();
-        }
-      } else {
-        alert("파일 저장이 취소되었습니다.");
+      const base64ImageContent = img.split(',')[1];
+
+      const response = await saveDiagram(diagramData, fileName, base64ImageContent);
+      hideLoading();
+
+      console.log(response.data);
+      if (response.data === true) {
+        message.success("저장되었습니다.");
+      }
+      else {
+        message.warning("중복된 이름이 존재합니다. 다시 시도해주세요.");
       }
     } catch (error) {
-      console.error("저장 중 오류가 발생했습니다: ", error);
+      hideLoading();
+      message.error("저장 중 오류가 발생했습니다.");
     }
   };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+    message.info("파일 저장이 취소되었습니다.");
+  };
+
+  const handleChange = (e) => {
+    setFileName(e.target.value);
+  };
+
+  const handleSaveDiagram = () => {
+    showModal();
+  };
+
 
   return (
     <div className="main-content">
@@ -205,20 +278,28 @@ function Draw() {
             </div>
             <DiagramContainer>
               <DiagramTop>
-              <FileName>파일 이름: {fileName}</FileName>
-              <SaveButton>
-                <Button
-                  diagram={diagram}
-                  showToggle={showToggle}
-                  setShowToggle={setShowToggle}
-                  finalToggleValue={finalToggleValue}
-                  setFinalToggleValue={setFinalToggleValue}
-                  onPopupChange={handlePopupChange}
-                />
-              </SaveButton>
+                <FileName>파일 이름: {fileName}</FileName>
+                <SaveButton>
+                  <Button
+                    diagram={diagram}
+                    showToggle={showToggle}
+                    setShowToggle={setShowToggle}
+                    setFileName={setFileName}
+                    finalToggleValue={finalToggleValue}
+                    setFinalToggleValue={setFinalToggleValue}
+                    onPopupChange={handlePopupChange}
+                  />
+                </SaveButton>
               </DiagramTop>
               <StyledButton onClick={handleSaveDiagram}>Save</StyledButton>
-
+              <Modal
+                title="저장할 파일의 이름을 입력하세요."
+                visible={isModalVisible}
+                onOk={handleOk}
+                onCancel={handleCancel}
+              >
+                <Input value={fileName} onChange={handleChange} placeholder="파일 이름" />
+              </Modal>
               <StyleSpace direction="vertical">
                 {alertMessage.map((message, index) => (
                   <StyleAlert

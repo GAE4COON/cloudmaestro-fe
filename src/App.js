@@ -26,6 +26,7 @@ import useTokenExpirationChecker from "./hooks/useTokenExpirationChecker";
 import PrivateRoute from "./components/privateRoute";
 import NotFound from "./pages/NotFound";
 // import { PublicRoute } from "./components/publicRoute";
+import DataComponent from "./pages/DataComponent";
 
 function App() {
   useTokenExpirationChecker();
@@ -43,6 +44,7 @@ function App() {
               <Route path="/about/example" element={<Example />} />
               <Route path="/sign-up" element={<Signup />} />
               <Route path="/sign-in" element={<Signin />} />
+              <Route path="/data" element={<DataComponent />} />
 
               <Route element={<PrivateRoute />}>
                 <Route path="/draw" element={<Draw />} />

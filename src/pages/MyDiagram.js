@@ -1,5 +1,6 @@
 import SideBar from "../components/MyPageSideBar";
 import React, { useState, useEffect } from "react";
+import { Popconfirm, message} from 'antd';
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { DownOutlined } from "@ant-design/icons";
@@ -7,13 +8,41 @@ import "../styles/App.css";
 import { Space, Dropdown, Button } from "antd";
 import { Menu } from "antd";
 import { CloseButton } from "react-bootstrap";
+import { useAuth } from "../utils/auth/authContext";
+import jwtDecode from "jwt-decode";
+
 
 import styled from "styled-components";
 import { getDiagramData, myNetworkDB, deleteDiagramData } from "../apis/myPage";
 
+message.config({
+  top: 50, 
+  duration: 1
+});
+
 const MyArchitecture = () => {
   const [cloudInstances, setCloudInstances] = useState([]);
+  const [messageApi, contextHolder] = message.useMessage();
+
   const navigate = useNavigate();
+
+  const { user, setUser } = useAuth();
+  const ACCESS_TOKEN = localStorage.getItem("accessToken");
+
+  useEffect(() => {
+    if (ACCESS_TOKEN) {
+      try {
+        const decodedToken = jwtDecode(ACCESS_TOKEN);
+        console.log(decodedToken.sub);
+        // 주의: 실제 환경에서는 토큰이 만료되었는지 확인하는 로직도 필요합니다.
+        setUser(decodedToken.sub);
+      } catch (error) {
+        console.log("Invalid token");
+      }
+    } else {
+      setUser(null);
+    }
+  }, [ACCESS_TOKEN]);
 
   useEffect(() => {
     const fetchMyNetwork = async () => {
@@ -41,18 +70,15 @@ const MyArchitecture = () => {
     navigate(`${path}`, { state: { info: response.data } });
   }
 
-  const handleDeleteInstance = async (key) => {
-    const confirmDelete = window.confirm("도식화를 삭제하시겠습니까?");
+  const confirm = async (key, e) => {
+    const response = await deleteDiagramData(key);
+    console.log("response.data", response.data);
+    setCloudInstances(cloudInstances.filter(instance => instance.key !== key));
 
-    if (confirmDelete) {
-      // 사용자가 'OK'를 선택한 경우, 삭제 작업 진행
-      const response = await deleteDiagramData(key);
-      console.log("response.data", response.data);
-      setCloudInstances(cloudInstances.filter(instance => instance.key !== key));
-      alert("도식화가 삭제되었습니다.");
-    }
-  }
-
+    message.success('도식화가 삭제되었습니다.');
+    
+  };
+  
   return (
     <div className="main-content">
       <div className="mypage-container">
@@ -63,7 +89,9 @@ const MyArchitecture = () => {
 
           <div className="main-container">
             <StyledSideMenuTitle>도식화 히스토리</StyledSideMenuTitle>
-            {getRows(cloudInstances).map((row, idx) => (
+            {cloudInstances.length > 0 ? (
+
+            getRows(cloudInstances).map((row, idx) => (
               <CloudInstanceRow key={idx}>
                 {row.map((instance) => {
                   const dropdownItems = [
@@ -88,16 +116,30 @@ const MyArchitecture = () => {
                   ];
                   return (
                     <CloudInstance key={instance.key}>
-                        <DeleteInstanceButton 
-                        onClick={() => handleDeleteInstance(instance.key)}
-                        >X</DeleteInstanceButton>
+
+                  <Popconfirm
+                      title="도식화 삭제"
+                      description={`${instance.title} 도식화를 삭제하시겠습니까?`}
+                      onConfirm={()=>confirm(instance.key)}
+                      cancelText="No"
+                      okText="Yes"
+                      placement="right"
+                    >
+                          <DeleteInstanceButton >X</DeleteInstanceButton>
+                          </Popconfirm>
+
                       <img
                         onClick={() => handleCloudInstance(instance.key, "/draw")}
                         alt="diagram_img"
-                        src={instance.imgSrc}
+                        src={`https://cm-user-file.s3.ap-northeast-2.amazonaws.com/${instance.title}_${user}.png`}
                         style={{
                           marginTop: "20px",
                           width: "100%",
+                          height: "40%",
+                          objectFit: "contain",
+                          borderRadius: "5px",
+                          boxShadow: "1px 1px 1px 1px rgb(235, 235, 235)",
+                        
                         }}
                       />
                       <StyledInstanceTitle>{instance.title}</StyledInstanceTitle>
@@ -120,7 +162,13 @@ const MyArchitecture = () => {
                   );
                 })}
               </CloudInstanceRow>
-            ))}
+            ))):(
+              <div style={{display: "flex", justifyContent: "center", alignItems: "center", height: "100%"}}>
+                <p>도식화 히스토리가 없습니다.</p>
+                
+              </div>
+            )
+            }
           </div>
         </div>
       </div>
@@ -133,6 +181,7 @@ export default MyArchitecture;
 
 const CloudInstance = styled.div`
   width: 26%;
+  height: 320px;
   padding: 10px;
   border: 1px solid gray;
   margin-left: 10px;

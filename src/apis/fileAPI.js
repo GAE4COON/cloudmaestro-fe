@@ -86,11 +86,12 @@ export const requirementRequest = async (data) => {
   }
 };
 
-export const saveDiagram = async (data, fileName) => {
+export const saveDiagram = async (data, fileName, img) => {
   try {
     const body = {
       diagramData: data,
       fileName: fileName,
+      fileImg: img
     };
     const response = await api.post("/api/v1/file-api/save-diagram", body);
     return response;
