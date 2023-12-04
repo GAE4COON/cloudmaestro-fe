@@ -6,7 +6,7 @@ let REFRESH_TOKEN = localStorage.getItem("refreshToken");
 
 //proxy: "http://localhost:8080", path:"/api/v1/users-api/",
 const api = axios.create({
-  baseURL: "https://43.201.196.128:8080",
+  baseURL: "https://cloudmaestroback.site",
   headers: {
     "Content-type": "application/json",
     Authorization: `${TOKEN_TYPE} ${ACCESS_TOKEN}`,
