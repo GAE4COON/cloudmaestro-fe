@@ -6,7 +6,14 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import { Button , Flex} from 'antd';
-import IntroduceSecurity from "./Home/IntroduceSecurity"
+import IntroduceSecurity from "./Introduce/IntroduceSecurity";
+// PAGE 
+
+import First from "./Introduce/First";
+import Second from  "./Introduce/Second";
+import Third from "./Introduce/Third"
+import Introduce from "./Introduce/intro";
+const { TabPane } = Tabs;
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
@@ -19,39 +26,125 @@ const LogoSection = () => {
     </div>
   );
 };
+const tabs = [
+  {
+    key: "1",
+    label: "Cloud Migration이란?",
+    id: "section1",
+    content: <First />,
+  },
+  {
+    key: "2",
+    label: "클라우드 보안, 꼭 필요할까?",
+    id: "section2",
+    content: <Second />,
+  },
+  {
+    key: "3",
+    label: "ISO/IEC 27001이란?",
+    id: "section3",
+    content: <Third />,
+  },
+];
 
-const TabSection = () => {
-  const tabs = [
-    {
-      key: "1",
-      label: "Cloud Migration이란?",
-      children: "온프레미스의 정보자산을 Cloud 환경으로 이전하는 과정",
-    },
-    {
-      key: "2",
-      label: "클라우드 보안, 꼭 필요할까?",
-      children:
-        "ISO 27001 is an international standard for Information Security Management Systems (ISMS). It provides a framework for establishing, implementing, maintaining, and continually improving an ISMS within the context of an organization's overall business risks. The standard outlines a risk management process and specifies a set of controls that organizations can implement to secure their information assets.",
-    },
-    {
-      key: "3",
-      label: "ISO/IEC 27001이란?",
-      children:
-        "ISO 27001 is an international standard for Information Security Management Systems (ISMS). It provides a framework for establishing, implementing, maintaining, and continually improving an ISMS within the context of an organization's overall business risks. The standard outlines a risk management process and specifies a set of controls that organizations can implement to secure their information assets.",
-    },
-  ];
+function StyledTabs({ items, activeTab, onTabClick }) {
   return (
-    <div>
-      <StyledTabs items={tabs} />
-    </div>
+    <StyledTabsContainer>
+    {items.map((item) => (
+      <StyledTab
+        key={item.id}
+        onClick={() => {
+          if (activeTab !== item.id) {
+            onTabClick(item.id);
+          } else {
+            const labelRef = document.getElementById(item.id);
+            if (labelRef) {
+              labelRef.scrollIntoView({ behavior: "smooth", block: "start" });
+            }
+          }
+        }}
+        active={activeTab === item.id}
+      >
+        <h2>{item.label}</h2>
+      </StyledTab>
+    ))}
+  </StyledTabsContainer>
   );
-};
+}
+
+const StyledTabsContainer = styled.div`
+  margin-top:20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const StyledTab = styled.div`
+.ant-tabs-nav {
+  justify-content: center;
+}
+
+.ant-tabs-tab {
+  font-size: 20px;
+  width: 30%;
+  justify-content: center;
+  color: black;
+  font-weight: bold;
+  margin-left:10px;
+}
+.ant-tabs-content {
+  width: 80%; // Set the width of the tab content to 50%
+  margin: 0 auto; // Center the content
+  text-align:left;
+}
+
+display: flex;
+justify-content: center;
+width: 100%;
+height:20vh;
+font-size: 17px;
+`;
+
+
 
 
 const Home = () => {
+  const [activeTab, setActiveTab] = useState(null);
+  const section1Ref = useRef(null);
+  const section2Ref = useRef(null);
+  const section3Ref = useRef(null);
+
   let ref = useRef(null);
   ref.current = [];
+  let isScrolling = false;
 
+  const handleTabClick = (id) => {
+    // Scroll to the clicked section
+    const sectionRef = id === "section1" ? section1Ref : id === "section2" ? section2Ref : section3Ref;
+    scrollTo(sectionRef.current);
+
+    // Set the active tab
+    setActiveTab(id);
+  };
+
+  // Custom scroll function
+  const scrollTo = (element) => {
+    if (element) {
+      gsap.to(window, {
+        duration: 1,
+        scrollTo: {
+          y: element.offsetTop,
+        },
+      });
+    }
+  };
+
+  useEffect(() => {
+    // Scroll to the active section when the activeTab changes
+    const sectionRef = activeTab === "section1" ? section1Ref.current : activeTab === "section2" ? section2Ref.current : section3Ref.current;
+    scrollTo(sectionRef);
+  }, [activeTab]);
+  
   useEffect(() => {
     ref.current.forEach((el) => {
       gsap.fromTo(
@@ -198,25 +291,7 @@ const Home = () => {
     )
   }
 
-  const Introduce=()=>{
-    return(
-      <div style={{ marginBottom: "30px" }}>
-        <p style={{ fontSize: '20px',  marginBottom: "100px"  }}>
-            'CLOUD MAESTRO'는 보안 전문가들로 구성된 팀, 'GAE4COON'입니다.
-            <br />
-            클라우드 마이그레이션 이전 단계에서{" "}
-            <span style={{ fontWeight: 'bold' }}>ISO 27001</span>을 기반으로 <br />
-            <span style={{ fontWeight: 'bold' }}>보안성을 고려한 아키텍처 도식화</span>를
-            제공합니다.
-          </p>
 
-      <span style={{ textShadow: '2px 2px lightgray',fontWeight: 'bold',color: '#4D6295' ,fontSize: '50px' }}>
-          Cloud Maestro
-        </span>
-  
-    </div>
-    )
-  }
 
 
 
@@ -231,13 +306,25 @@ const Home = () => {
       <div  ref={addtoRefs}>
         <ImageSection/>
       </div>
-      <div ref={addtoRefs}>
-        <TabSection />
+      <div>
+        <div>
+          <StyledTabs items={tabs} activeTab={activeTab} onTabClick={handleTabClick} />
+          {/* Add your sections with corresponding IDs */}
+          <div ref={section1Ref} id="section1">
+            {activeTab === "section1" && <First />}
+          </div>
+          <div ref={section2Ref} id="section2">
+            {activeTab === "section2" && <Second />}
+          </div>
+          <div ref={section3Ref} id="section3">
+            {activeTab === "section3" && <Third />}
+          </div>
+        </div>
       </div>
-      <div ref={addtoRefs}>
+    <div ref={addtoRefs}>
         <Flow />
       </div>
-      <div ref={addtoRefs}>
+     <div ref={addtoRefs}>
         <IntroduceSecurity />
       </div>
     </div>
@@ -246,33 +333,7 @@ const Home = () => {
 
 export default Home;
 
-const StyledTabs = styled(Tabs)`
-  .ant-tabs-nav {
-    justify-content: center;
-  }
 
-  .ant-tabs-tab {
-    font-size: 20px;
-    width: 30%;
-    justify-content: center;
-    color: black;
-    font-weight: bold;
-    margin-left:10px;
-  }
-  .ant-tabs-content {
-    width: 80%; // Set the width of the tab content to 50%
-    margin: 0 auto; // Center the content
-    text-align:left;
-  }
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height:50vh;
-  margin-top:20%;
-  font-size: 17px;
-`;
 
 const FlexContainer = styled.div`
   display: flex;
@@ -307,9 +368,12 @@ const SecurityContainer = styled.div`
   display: flex;
   justify-content: space-between;
   height: 40vh;
+  margin-top:5%;
   margin-left:5%;
   margin-right:5%;
 `;
+
+
 
 
 
