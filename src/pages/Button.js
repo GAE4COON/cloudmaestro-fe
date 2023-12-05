@@ -113,9 +113,7 @@ const Button = ({
       }
 
       const response = await rehostRequest(jsonString);
-      //console.log("response", response.data.result);
       const Jdata = response.data.result;
-      console.log("rehost:", Jdata);
       diagram.model = go.Model.fromJson(Jdata);
 
       setData(diagram.model.nodeDataArray);
@@ -139,7 +137,6 @@ const Button = ({
       let fileReader = new FileReader();
       fileReader.readAsText(file);
       fileReader.onload = async () => {
-        //console.log("json", fileReader.result);
 
         let filejson = JSON.parse(fileReader.result);
         if (filejson.hasOwnProperty("cost")) {
