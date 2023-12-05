@@ -118,7 +118,7 @@ const Navbar = () => {
             onMouseLeave={() => setDropdownOpen(false)}
             className={location.pathname.startsWith("/about") ? "active" : ""}
           >
-            <NavLink to="/about">About</NavLink>
+            <NavLink to="/about">Introduce</NavLink>
             {isDropdownOpen && (
               <DropdownMenu>
                 <NavLink onClick={closeMenu} to="/about">

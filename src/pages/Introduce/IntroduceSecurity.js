@@ -19,6 +19,7 @@ export default function IntroduceSecurity() {
       };
 
   return (
+    <div className="about-container" >
     <FlexContainer>
       <ButtonContainer ref={imageRef} inView={imageInView}>
         <div class="intro"> Examples of Security Guidelines by industry</div>
@@ -48,6 +49,7 @@ export default function IntroduceSecurity() {
         </div>
       </ButtonContainer>
     </FlexContainer>
+    </div>
   );
 }
 
