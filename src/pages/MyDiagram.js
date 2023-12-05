@@ -1,6 +1,6 @@
 import SideBar from "../components/MyPageSideBar";
 import React, { useState, useEffect } from "react";
-import { Popconfirm, message} from 'antd';
+import { Popconfirm, message } from 'antd';
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { DownOutlined } from "@ant-design/icons";
@@ -16,7 +16,7 @@ import styled from "styled-components";
 import { getDiagramData, myNetworkDB, deleteDiagramData } from "../apis/myPage";
 
 message.config({
-  top: 50, 
+  top: 50,
   duration: 1
 });
 
@@ -34,7 +34,6 @@ const MyArchitecture = () => {
       try {
         const decodedToken = jwtDecode(ACCESS_TOKEN);
         console.log(decodedToken.sub);
-        // 주의: 실제 환경에서는 토큰이 만료되었는지 확인하는 로직도 필요합니다.
         setUser(decodedToken.sub);
       } catch (error) {
         console.log("Invalid token");
@@ -67,7 +66,7 @@ const MyArchitecture = () => {
   const handleCloudInstance = async (key, path) => {
     const response = await getDiagramData(key);
     console.log("response.data", response.data)
-    navigate(`${path}`, { state: { info: response.data } });
+    navigate(`${path}`, { state: { info: response.data, save:true } });
   }
 
   const confirm = async (key, e) => {
@@ -76,9 +75,9 @@ const MyArchitecture = () => {
     setCloudInstances(cloudInstances.filter(instance => instance.key !== key));
 
     message.success('도식화가 삭제되었습니다.');
-    
+
   };
-  
+
   return (
     <div className="main-content">
       <div className="mypage-container">
@@ -91,81 +90,81 @@ const MyArchitecture = () => {
             <StyledSideMenuTitle>도식화 히스토리</StyledSideMenuTitle>
             {cloudInstances.length > 0 ? (
 
-            getRows(cloudInstances).map((row, idx) => (
-              <CloudInstanceRow key={idx}>
-                {row.map((instance) => {
-                  const dropdownItems = [
-                    {
-                      key: "1",
-                      label: (
-                        <button
-                          onClick={() => handleCloudInstance(instance.key, "/mypage/diagram/security")}>
-                          Security
-                        </button>
-                      ),
-                    },
-                    {
-                      key: "2",
-                      label: (
-                        <button
-                          onClick={() => handleCloudInstance(instance.key, "/mypage/diagram/resource")}>
-                          Resource
-                        </button>
-                      ),
-                    },
-                  ];
-                  return (
-                    <CloudInstance key={instance.key}>
+              getRows(cloudInstances).map((row, idx) => (
+                <CloudInstanceRow key={idx}>
+                  {row.map((instance) => {
+                    const dropdownItems = [
+                      {
+                        key: "1",
+                        label: (
+                          <button
+                            onClick={() => handleCloudInstance(instance.key, "/mypage/diagram/security")}>
+                            Security
+                          </button>
+                        ),
+                      },
+                      {
+                        key: "2",
+                        label: (
+                          <button
+                            onClick={() => handleCloudInstance(instance.key, "/mypage/diagram/resource")}>
+                            Resource
+                          </button>
+                        ),
+                      },
+                    ];
+                    return (
+                      <CloudInstance key={instance.key}>
 
-                  <Popconfirm
-                      title="도식화 삭제"
-                      description={`${instance.title} 도식화를 삭제하시겠습니까?`}
-                      onConfirm={()=>confirm(instance.key)}
-                      cancelText="No"
-                      okText="Yes"
-                      placement="right"
-                    >
+                        <Popconfirm
+                          title="도식화 삭제"
+                          description={`${instance.title} 도식화를 삭제하시겠습니까?`}
+                          onConfirm={() => confirm(instance.key)}
+                          cancelText="No"
+                          okText="Yes"
+                          placement="right"
+                        >
                           <DeleteInstanceButton >X</DeleteInstanceButton>
-                          </Popconfirm>
+                        </Popconfirm>
 
-                      <img
-                        onClick={() => handleCloudInstance(instance.key, "/draw")}
-                        alt="diagram_img"
-                        src={`https://cm-user-file.s3.ap-northeast-2.amazonaws.com/${instance.title}_${user}.png`}
-                        style={{
-                          marginTop: "20px",
-                          width: "100%",
-                          height: "40%",
-                          objectFit: "contain",
-                          borderRadius: "5px",
-                          boxShadow: "1px 1px 1px 1px rgb(235, 235, 235)",
-                        
-                        }}
-                      />
-                      <StyledInstanceTitle>{instance.title}</StyledInstanceTitle>
+                        <img
+                          onClick={() => handleCloudInstance(instance.key, "/draw")}
+                          alt="diagram_img"
+                          src={`https://cm-user-file.s3.ap-northeast-2.amazonaws.com/${instance.title}_${user}.png`}
+                          style={{
+                            marginTop: "20px",
+                            width: "100%",
+                            height: "40%",
+                            objectFit: "contain",
+                            borderRadius: "5px",
+                            boxShadow: "1px 1px 1px 1px rgb(235, 235, 235)",
 
-                      <ButtonContainer>
-                        <StyledButton
-                          style={{ backgroundColor: "#5280DD" }}
-                          onClick={() => handleCloudInstance(instance.key, "/mypage/diagram/summary")}>
-                          Total Cost
-                        </StyledButton>
+                          }}
+                        />
+                        <StyledInstanceTitle>{instance.title}</StyledInstanceTitle>
 
-                        <Dropdown overlay={<Menu items={dropdownItems} />} placement="bottomLeft">
-                          <StyledButton style={{ backgroundColor: "#FD754A" }}>
-                            Guide
-                            <DownOutlined style={{ marginTop: "5px" }} />
+                        <ButtonContainer>
+                          <StyledButton
+                            style={{ backgroundColor: "#5280DD" }}
+                            onClick={() => handleCloudInstance(instance.key, "/mypage/diagram/summary")}>
+                            Total Cost
                           </StyledButton>
-                        </Dropdown>
-                      </ButtonContainer>
-                    </CloudInstance>
-                  );
-                })}
-              </CloudInstanceRow>
-            ))):(
-              <div style={{display: "flex", justifyContent: "center", alignItems: "center", height: "100%"}}>
+
+                          <Dropdown overlay={<Menu items={dropdownItems} />} placement="bottomLeft">
+                            <StyledButton style={{ backgroundColor: "#FD754A" }}>
+                              Guide
+                              <DownOutlined style={{ marginTop: "5px" }} />
+                            </StyledButton>
+                          </Dropdown>
+                        </ButtonContainer>
+                      </CloudInstance>
+                    );
+                  })}
+                </CloudInstanceRow>
+              ))) : (
+              <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100%" }}>
                 <p>도식화 히스토리가 없습니다.</p>
-                
+
               </div>
             )
             }

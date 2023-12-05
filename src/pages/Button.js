@@ -5,26 +5,36 @@ import { json, useNavigate } from "react-router-dom";
 
 import { rehostRequest, requirementRequest } from "../apis/fileAPI";
 import { BsGear, BsClipboard2Data, BsCloud, BsUpload, BsDownload, BsEraser, BsSave } from "react-icons/bs";
-import { Tooltip, message } from "antd";
+import { Tooltip, message, notification, Space } from "antd";
 import { BiSave } from "react-icons/bi";
 import { useData } from "../components/DataContext";
 import "../styles/App.css";
 import { summaryFile } from "../apis/fileAPI.js";
 
+
+
 const Button = ({
   diagram,
   setShowToggle,
+  handleSaveDiagram,
+  isSave,
+  setIsSave,
   setFileName,
   finalToggleValue,
   setFinalToggleValue,
   onPopupChange
 }) => {
 
+
+  
   const navigate = useNavigate();
   const hiddenFileInput = React.useRef(null);
   const handleClick = () => {
     hiddenFileInput.current.click();
   };
+
+  const [api, contextHolder] = notification.useNotification();
+
 
   const [finalToggleVal, setFinalToggleVal] = useState({});
   const [clickedLoaded, setClickedLoaded] = useState(false);
@@ -33,6 +43,10 @@ const Button = ({
   const { isSidebarOpen, setIsSidebarOpen } = useData();
 
   const handlePopup = () => {
+    if(!isSave){
+      saveBeforeOptimization();
+      return;
+    }
     setIsSidebarOpen(!isSidebarOpen);
     onPopupChange(isSidebarOpen);
   };
@@ -41,6 +55,20 @@ const Button = ({
     setFinalToggleValue(finalToggleVal);
   }, [finalToggleVal]);
 
+
+  const saveBeforeOptimization = () => {
+    api["info"]({
+      message: '최적화를 하기 위해서는 저장이 필요합니다.',
+      duration: 2,
+      style: {
+        top:100,
+        width: 410,
+        fontFamily: "Noto Sans KR",
+      },
+    });
+  };
+
+  
   const handleSave = () => {
     if (diagram) {
       let jsonCombinedArray = diagram.model.nodeDataArray;
@@ -56,9 +84,7 @@ const Button = ({
 
   const localSaveJSON = (target) => {
     const blob = new Blob([target], { type: "text/json" });
-    // make download link
     let fileName = prompt("명을 입력해주세요:", "diagram.json");
-    // 사용자가 프롬프트를 취소하거나 이름을 제공하지 않으면 함수 종료
     if (!fileName) {
       return;
     } else if (!fileName.endsWith(".json")) {
@@ -87,7 +113,7 @@ const Button = ({
       const a = document.createElement("a");
       a.href = imgData;
       a.download = fileName;
-      a.click(); // 다운로드 링크 클릭
+      a.click(); 
     }
   };
 
@@ -165,6 +191,9 @@ const Button = ({
     setData(diagram.model.nodeDataArray); // set the data in context
     setClickedLoaded(false);
     setShowToggle(false); // toggle 숨김
+    setIsRehost(false);
+    setFileName("제목 없는 다이어그램");
+    setIsSave(false);
   };
 
   const summaryRequest = async () => {
@@ -209,7 +238,7 @@ const Button = ({
         </div>
 
         <div className="button-row">
-        <Tooltip placement="right" title={"eraser"} arrow={mergedArrow}>
+        <Tooltip placement="right" title={"reset"} arrow={mergedArrow}>
 
           <button onClick={handleReset}>
             <BsEraser />
@@ -261,7 +290,7 @@ const Button = ({
           </Tooltip>
 
         </div>
-
+        {contextHolder}
       </div>
     </div>
   );

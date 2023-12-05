@@ -67,6 +67,7 @@ function Draw() {
 
   const location = useLocation();
   const info = location.state ? location.state.info : null;
+  const save = location.state ? location.state.save : false;
   const onpremise = location.state ? location.state.file : null;  
  
   useEffect(() => { }, [diagramVersion]); // Dependency on diagramVersion
@@ -78,7 +79,6 @@ function Draw() {
   }, []);
 
   const handleDiagramChange = useCallback((changedDiagram) => {
-    // console.log("다이어그램이 변경되었습니다:", changedDiagram.model.toJson());
     setmyDiagram(changedDiagram);
     setDiagramVersion((prevVersion) => prevVersion + 1);
   });
@@ -95,6 +95,7 @@ function Draw() {
   );
 
   useEffect(() => {
+    setIsSave(save);
     if (info && diagram) {
       setFileName(info.filename)
       if (info.file.result.hasOwnProperty("cost")) {
@@ -267,6 +268,9 @@ function Draw() {
                     diagram={diagram}
                     showToggle={showToggle}
                     setShowToggle={setShowToggle}
+                    isSave={isSave}
+                    handleSaveDiagram={handleSaveDiagram}
+                    setIsSave={setIsSave}
                     setFileName={setFileName}
                     finalToggleValue={finalToggleValue}
                     setFinalToggleValue={setFinalToggleValue}
