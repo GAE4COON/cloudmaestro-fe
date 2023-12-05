@@ -30,6 +30,7 @@ function MySecurity() {
     const handleSecurityList = async () => {
       try {
         const res = await getSecurityList(fileName);
+        console.log(res);
       } catch (error) {
         console.error("응답 실패 :", error.res);
       }
@@ -49,6 +50,9 @@ function MySecurity() {
     });
   });
 
+  bpArray.sort();
+
+
   return (
     <div className="main-content">
       <div className="mypage-container">
@@ -57,11 +61,18 @@ function MySecurity() {
             <Sidebar />
           </div>
           <div className="main-container">
-            <Title> 보안 권고 list </Title>
+          <StyledSideMenuTitle>
+              <div>보안 권고 리스트</div>
+              </StyledSideMenuTitle>
+              <ResourceContain>
             {
               bpArray.map((bp) => (
                 <div key={bp}>
-                  <h3>{bp}</h3>
+                        <ResourceTitleContainer>
+
+          <ResourceName>{bp}</ResourceName>
+          </ResourceTitleContainer>
+
                   <p>Checklist:</p>
                   {securityList["backup"][bp]["checklist"].map((check, index) => (
                     <p key={index}>{check}</p>
@@ -70,6 +81,8 @@ function MySecurity() {
                 </div>
               ))
             }
+     </ResourceContain>
+
           </div>
         </div>
       </div>
@@ -88,4 +101,81 @@ const Title = styled.div`
   font-weight: 700;
   line-height: normal;
   text-align: center;
+`;
+
+const StyledSideMenuTitle = styled.div`
+  position: relative;
+  /* display: flex; */
+  width: 100%;
+  height: 32px;
+  font-family: "Noto Sans KR", sans-serif !important;
+  font-weight: 500;
+  font-size: 20px;
+  margin-top: 25px;
+  padding-right: 25px;
+  padding-left: 25px;
+  /* margin-left: 30px; */
+`;
+
+const SearchContainer = styled.div`
+  position: relative;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  padding: 5px 10px;
+  margin-left: 50px;
+`;
+
+
+const ResourceContain = styled.div`
+  position: relative;
+  width: 100%;
+  height: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  margin-left: 20px;
+  padding: 25px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+`;
+
+const ResourceTitleContainer = styled.div`
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  justify-content: space-between;
+  
+`;
+
+const ResourceName = styled.div`
+    font-family: "Noto Sans KR", sans-serif !important;
+
+  font-size: 20px;
+  margin-left: 15px;
+`;
+
+const LeftSide = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const RightSide = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const Tag = styled.div`
+  width: auto;
+  height: 20px;
+  font-size: 10px;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  margin: 10px;
+  padding: 5px;
+  color: white;
+  font-weight: 500;
 `;
