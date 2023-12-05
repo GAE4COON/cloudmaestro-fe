@@ -21,7 +21,7 @@ import MyResource from "./pages/MyResource";
 import MySummary from "./pages/MySummary";
 
 import { DataProvider } from "./components/DataContext";
-import MySecurity from "./pages/Guideline";
+import MySecurity from "./pages/MySecurity";
 import useTokenExpirationChecker from "./hooks/useTokenExpirationChecker";
 import PrivateRoute from "./components/privateRoute";
 import NotFound from "./pages/NotFound";

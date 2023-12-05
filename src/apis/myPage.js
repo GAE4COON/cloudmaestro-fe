@@ -23,3 +23,17 @@ export const deleteDiagramData = async (id) =>{
     throw error; 
   }
 }
+
+export const getSecurityList = async (fileName) =>{
+  try {
+    const body = {
+      fileName: fileName
+    };
+    const response = await api.post(`/api/v1/mypage-api/architecture/securitylist`, body);
+    console.log(response)
+    return response;
+  } catch (error) {
+    console.error("getSecurityList 오류:", error);
+    throw error; 
+  }
+}
