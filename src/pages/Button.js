@@ -7,7 +7,6 @@ import { rehostRequest, requirementRequest } from "../apis/fileAPI";
 import { BsGear, BsClipboard2Data, BsCloud, BsUpload, BsDownload, BsEraser, BsSave } from "react-icons/bs";
 import { Tooltip, message } from "antd";
 import { BiSave } from "react-icons/bi";
-import { sidebarResource } from "../apis/sidebar";
 import { useData } from "../components/DataContext";
 import "../styles/App.css";
 import { summaryFile } from "../apis/fileAPI.js";
@@ -44,7 +43,7 @@ const Button = ({
 
   const handleSave = () => {
     if (diagram) {
-      let jsonCombinedArray = diagram.model.toJson();
+      let jsonCombinedArray = diagram.model.nodeDataArray;
       jsonCombinedArray = JSON.parse(jsonCombinedArray);
       jsonCombinedArray["cost"] = finalToggleValue; //ec2도 해야할 듯
       jsonCombinedArray = JSON.stringify(jsonCombinedArray);
@@ -95,6 +94,7 @@ const Button = ({
   const handleLoad = async () => {
     try {
       const jsonString = diagram.model.toJson();
+      console.log("jsonString", jsonString);
       const diagramObject = JSON.parse(jsonString);
       const types = diagramObject.nodeDataArray.map((node) => node.type);
       const otherTypes = types.filter(
@@ -118,8 +118,7 @@ const Button = ({
       console.log("rehost:", Jdata);
       diagram.model = go.Model.fromJson(Jdata);
 
-      const response1 = await sidebarResource(diagram.model.nodeDataArray);
-      setData(response1.data); // set the data in context
+      setData(diagram.model.nodeDataArray);
       setClickedLoaded(true);
       setIsRehost(true);
     } catch (error) {
@@ -148,9 +147,7 @@ const Button = ({
         }
         if (fileReader.result && diagram) {
           diagram.model = go.Model.fromJson(fileReader.result);
-          //console.log(JSON.stringify(diagram.model));
-          const response1 = await sidebarResource(diagram.model.nodeDataArray);
-          setData(response1.data); // set the data in context
+          setData(diagram.model.nodeDataArray);
           setShowToggle(true);
           setClickedLoaded(false);
         }
@@ -165,14 +162,10 @@ const Button = ({
     if (diagram) {
       diagram.startTransaction("Cleared diagram");
       setFinalToggleValue({});
-      //diagram.model.groupDataArray = [];
-      //diagram.model.nodeDataArray = [];
-      //diagram.model.linkDataArray = [];
       diagram.clear();
       diagram.commitTransaction("Cleared diagram");
     }
-    const response1 = await sidebarResource(diagram.model.nodeDataArray);
-    setData(response1.data); // set the data in context
+    setData(diagram.model.nodeDataArray); // set the data in context
     setClickedLoaded(false);
     setShowToggle(false); // toggle 숨김
   };

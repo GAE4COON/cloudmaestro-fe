@@ -3,7 +3,6 @@ import * as go from "gojs";
 import "../styles/App.css"; // contains .diagram-component CSS
 import handleChangedSelection from "../pages/toggle/toggle";
 import { alertCheck, NodeCheck, GroupCheck } from "../apis/fileAPI";
-import { sidebarResource } from "../apis/sidebar";
 import { useData } from "../components/DataContext";
 
 const useGoJS = (
@@ -73,7 +72,6 @@ const useGoJS = (
         if (e.isTransactionFinished) {
           const jsonString = e.model.toIncrementalJson(e);
           const data = JSON.parse(jsonString);
-          console.log("data", data);
           if (data.insertedLinkKeys) {
             console.log("insertedLinkKeys", data.modifiedLinkData);
             try {
@@ -538,8 +536,8 @@ const useGoJS = (
       } else {
         setShowSelectToggle({ value: false }); // 추가된 로직
       }
-      const response = await sidebarResource(diagram.model.nodeDataArray);
-      setData(response.data); // set the data in context
+      console.log("setdata", diagram.model.nodeDataArray)
+      setData(diagram.model.nodeDataArray); // set the data in context
     });
 
     setDiagram(diagram);

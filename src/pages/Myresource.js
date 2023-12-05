@@ -45,7 +45,6 @@ function MyResource() {
         title: Array.from(uniqueTexts),
       };
       console.log("ResourceData", ResourceData.title)
-      console.log("ResourceData2", ResourceData.title2)
 
 
       try {
