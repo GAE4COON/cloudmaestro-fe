@@ -32,10 +32,6 @@ import RequirementPopup from "../components/RequirementPopup";
 import { DataContext, useData } from "../components/DataContext.js"; // DataContext의 경로를 수정하세요
 import { SoundTwoTone } from "@ant-design/icons";
 
-const close = () => {
-  console.log("Notification was closed.");
-};
-
 message.config({
   top: 50,
   duration: 1,
@@ -220,10 +216,21 @@ function Draw() {
     const key = `open${Date.now()}`;
     const btn = (
       <Space>
-        <Button type="link" size="small" onClick={() => api.destroy()}>
+        <Button
+          type="link"
+          size="small"
+          onClick={() => api.destroy()}
+          style={{ fontWeight: 500 }}
+        >
           Destroy All
         </Button>
-        <Button type="primary" size="small" onClick={() => api.destroy(key)}>
+        <Button
+          type="link"
+          size="small"
+          onClick={() => api.destroy(key)}
+          style={{ fontWeight: 500 }}
+          // style={{ color: "#888888", fontWeight: 500 }}
+        >
           Confirm
         </Button>
       </Space>
@@ -266,8 +273,13 @@ function Draw() {
       description: alertMessage.message,
       btn,
       key,
-      onClose: close,
-      style: { backgroundColor, borderRadius: "8px" },
+      style: {
+        fontSize: "10px",
+        backgroundColor,
+        borderRadius: "8px",
+        width: "300px",
+      },
+      duration: 0,
     });
   };
   return (
@@ -276,7 +288,6 @@ function Draw() {
         <div className="container">
           <div className="workspace">
             {contextHolder}
-            {/* <GlobalStyle tag={alertMessage.tag} /> */}
             <div className="palette">
               <Palette
                 divClassName={paletteClassName}
