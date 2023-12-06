@@ -1,0 +1,27 @@
+{
+    "Backup":[
+        "REL09-BP01",
+        "REL09-BP03"
+    ],
+    "Elastic Disaster Recovery":[
+        "REL09-BP01"
+    ],
+    "Identity and Access Management(IAM)":[
+        "REL09-BP02"
+    ],
+    "Simple Storage Service(S3)":[
+        "REL09-BP02"
+    ],
+    "Key management Service(KMS)":[
+        "REL09-BP02",
+        "REL09-BP03"
+
+    ],
+    "RDS":[
+        "REL09-BP03",
+        "REL09-BP04"
+    ],
+    "DynamoDB":[
+        "REL09-BP04"
+    ]
+}
