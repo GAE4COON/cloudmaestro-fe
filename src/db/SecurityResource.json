@@ -1,21 +1,22 @@
 {
     "Group_dev": [
-      "ISO/IEC 27002 8.4"
+      "ISO/IEC 27002 8.4",
+      "ISO/IEC 27018 12.1.4"
     ],
     "Identity and Access Management (IAM)": [
       "ISO/IEC 27002 8.5",
-      "REL09-BP02",
+      "AWS REL09-BP02",
       "ISO/IEC 27002 5.16",
       "ISO/IEC 27002 5.17",
       "ISO/IEC 27002 5.18"
     ],
     "Security Hub": [
       "ISO/IEC 27002 8.5",
-      "SEC02-BP05",
+      "AWS SEC02-BP05",
       "ISO/IEC 27002 5.18"
     ],
     "Config": [
-      "SEC02-BP05"
+      "AWS SEC02-BP05"
     ],
     "GuardDuty": [
       "ISO/IEC 27002 8.5",
@@ -48,9 +49,9 @@
     ],
     "Secrets Manager": [
       "ISO/IEC 27002 8.5",
-      "REL09-BP02",
-      "REL09-BP03",
-      "SEC02-BP03",
+      "AWS REL09-BP02",
+      "AWS REL09-BP03",
+      "AWS SEC02-BP03",
       "ISO/IEC 27002 5.18"
     ],
     "Key Management Service": [
@@ -69,8 +70,8 @@
     ],
     "RDS": [
       "ISO/IEC 27017 9.5.2",
-      "REL09-BP03",
-      "REL09-BP04"
+      "AWS REL09-BP03",
+      "AWS REL09-BP04"
     ],
     "Group_supply": [
       "ISO/IEC 27002 5.21",
@@ -78,13 +79,13 @@
 
     ],
     "Backup": [
-      "REL09-BP03"
+      "AWS REL09-BP03"
     ],
     "Simple Storage Service (S3)": [
-      "REL09-BP02"
+      "AWS REL09-BP02"
     ],
     "DynamoDB": [
-      "REL09-BP04"
+      "AWS REL09-BP04"
     ],
     "Cognito":[
       "ISO/IEC 27002 5.16",

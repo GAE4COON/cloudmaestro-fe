@@ -12,26 +12,35 @@ function ResourceItem({ bp, resource, groupArray }) {
           <ListTitle>{resource.title}</ListTitle>
           <ResourceArray>{bp}</ResourceArray>
           </TitleContainer>
+          
           {resourceArray.filter(resource => !resource.startsWith("Group_")).map((resource, index, filteredArray) => (
             <ResourceArray key={index}>
               {resource}{index < filteredArray.length - 1 ? ', ' : ''}
             </ResourceArray>
           ))}
+          {          console.log(resourceArray, groupArray)
+}
+{
+  resourceArray.some(resource => resource.startsWith("Group_")) && (
+    groupArray
+      .filter(group => {
+        // Collect all unique group prefixes
+        const groupPrefixes = resourceArray
+          .filter(r => r.startsWith("Group_"))
+          .map(r => r.substring(6).toLowerCase())
+          .filter((value, index, self) => self.indexOf(value) === index);
 
-          {
-            resourceArray.some(resource => resource.startsWith("Group_")) &&
-            groupArray
-              .filter(group => {
-                const groupPrefix = resourceArray.find(r => r.startsWith("Group_"))?.substring(6).toLowerCase();
-                console.log(group,"/", groupPrefix, "/",resource);
-                return group.toLowerCase().startsWith(groupPrefix);
-              })
-              .map((group, index, filteredArray) => (
-                <ResourceArray key={index}>
-                  {group}{index < filteredArray.length - 1 ? ', ' : ''}
-                </ResourceArray>
-              ))
-          }
+        // Check if group starts with any of the prefixes
+        return groupPrefixes.some(prefix => group.toLowerCase().startsWith(prefix));
+      })
+      .map((group, index, filteredArray) => (
+        <ResourceArray key={index}>
+          {group}{index < filteredArray.length - 1 ? ', ' : ''}
+        </ResourceArray>
+      ))
+  )
+}
+
         </ResourceTitleContainer>
 
 

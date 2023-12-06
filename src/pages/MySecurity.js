@@ -31,20 +31,6 @@ function MySecurity() {
   const resourceList = new Set(extractedTexts);
   const groupList = new Set(extractedGroup);
 
-
-  useEffect(() => {
-    const handleSecurityList = async () => {
-      try {
-        const res = await getSecurityList(fileName);
-        console.log(res);
-      } catch (error) {
-        console.error("응답 실패 :", error.res);
-      }
-    };
-
-    handleSecurityList();
-  }, []);
-
   const bpArray = [];
   const groupArray = [];
 
@@ -69,7 +55,9 @@ function MySecurity() {
     }
 
     securityResource["Group_"+formattedGroup]?.forEach((bp) => {
-      groupArray.push(group);
+      if(!groupArray.includes(group)){
+        groupArray.push(group);
+      }
       if (!bpArray.includes(bp)) {
         bpArray.push(bp);
       }
