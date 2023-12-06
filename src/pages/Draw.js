@@ -49,7 +49,6 @@ function Draw() {
   const [selectedNodeData, setSelectedNodeData] = useState(null); // <-- 상태 변수를 추가합니다.
   const [showToggle, setShowToggle] = useState(true);
   const [alertMessage, setAlertMessage] = useState([]);
-  const [securityMessage, setSecurityMessage] = useState([]);
   const [warnMessage, setWarnMessage] = useState([]);
   const [infoMessage, setInfoMessage] = useState([]);
   const { setData } = useData();
@@ -96,7 +95,7 @@ function Draw() {
     setAlertMessage,
     setWarnMessage,
     setInfoMessage,
-    setSecurityMessage
+    //setSecurityMessage
   );
 
   useEffect(() => {
@@ -157,9 +156,6 @@ function Draw() {
   const removeInfo = (id) => {
     setInfoMessage((currentAlerts) =>
       currentAlerts.filter((alert) => alert.id !== id)
-    );
-    setSecurityMessage((currentMessages) =>
-      currentMessages.filter((_, i) => i !== id)
     );
     console.log("change AlertMessage:", alertMessage);
 
@@ -321,6 +317,7 @@ function Draw() {
                     onClose={() => removeInfo(item.key)}
                   />
                 ))}
+                 </StyleSpace>
 
                 {/* {NodeGuideLine && NodeGuideLine.key && (
                   <StyleAlert
@@ -334,20 +331,9 @@ function Draw() {
                     }}
                   />
                 )} */}
-              </StyleSpace>
+             
 
-              <StyleSpace direction="vertical">
-                {securityMessage.map((message, index) => (
-                  <StyleAlert
-                    key={index}
-                    message={message}
-                    type="info"
-                    showIcon
-                    closable
-                    onClose={() => removeAlert(index)}
-                  />
-                ))}
-              </StyleSpace>
+          
               {showToggle &&
                 showSelectToggle.value &&
                 showSelectToggle.key.includes("EC2") &&

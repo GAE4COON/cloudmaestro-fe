@@ -4,7 +4,7 @@ import "../styles/App.css"; // contains .diagram-component CSS
 import handleChangedSelection from "../pages/toggle/toggle";
 import { alertCheck, NodeCheck, GroupCheck } from "../apis/fileAPI";
 import { useData } from "../components/DataContext";
-import { handleSecurity } from './SecurityAlert';
+import { handleSecurity, checkForLog } from '../components/SecurityAlert';
 
 const useGoJS = (
   setShowToggle,
@@ -13,7 +13,7 @@ const useGoJS = (
   setAlertMessage,
   setWarnMessage,
   setInfoMessage,
-  setSecurityMessage
+  //setSecurityMessage
 
 ) => {
   const [diagram, setDiagram] = useState(null);
@@ -208,7 +208,7 @@ const useGoJS = (
             }
           }
         }
-        handleSecurity(e, diagram, setSecurityMessage);
+        handleSecurity(e, diagram, setInfoMessage);
       },
       
     
@@ -579,6 +579,7 @@ const useGoJS = (
     diagram.addModelChangedListener(function (e) {
       if (e.isTransactionFinished) {
         onDiagramChange(diagram);
+        checkForLog(diagram, setInfoMessage);
       }
     });
 
