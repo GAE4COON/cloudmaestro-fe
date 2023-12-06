@@ -1,7 +1,7 @@
 export const backupOptions = ["중앙관리", "일반"];
-export const zoneSecurityReq = ["웹 방화벽으로 보호"]
-export const zoneFrame = ["웹 서버 존재"]
-export const zoneRdsReq = ["데이터베이스 분산"]
+export const zoneSecurityReq = ["웹 방화벽으로 보호"];
+export const zoneFrame = ["웹 서버 존재"];
+export const zoneRdsReq = ["데이터베이스 분산"];
 
 export const industrial = [
   {
@@ -13,12 +13,16 @@ export const industrial = [
     label: "미디어",
   },
   {
-    value: "제조/유통",
-    label: "제조/유통",
+    value: "제조",
+    label: "제조",
   },
   {
     value: "게임",
     label: "게임",
+  },
+  {
+    value: "유통/물류",
+    label: "유통/물류",
   },
 ];
 
@@ -155,7 +159,6 @@ export const globalRequest = [
         title: "로그 시각화 (QuickSight)",
         value: "quicksight",
       },
-
     ],
   },
   {

@@ -7,22 +7,22 @@ export async function handleSecurity(e, diagram, setSecurityMessage) {
     console.log("soochandata", data);
 
     if (data.modifiedLinkData) {
-      // TODO: Implement logic for modified links
+      // TODO
     }
 
     if (data.insertedNodeKeys) {
-      // TODO: Implement logic for inserted nodes
+      // TODO
     }
 
     if (data.removedNodeKeys || data.removedLinkKeys) {
-      // TODO: Implement logic for removed nodes or links
+      // TODO
     }
 
     // Handling node modifications separately
     if (data.modifiedNodeData) {
       for (let i = 0; i < data.modifiedNodeData.length; i++) {
         if (data.modifiedNodeData[i].text === "QuickSight" ||
-            data.modifiedNodeData[i].text === "OpenSearchService" ||
+            data.modifiedNodeData[i].text ===  "OpenSearch Service" ||
             data.modifiedNodeData[i].text === "Athena" ||
             data.modifiedNodeData[i].text === "S3"
         ) {
@@ -45,8 +45,7 @@ async function handleNode(node, diagram, setSecurityMessage) {
  console.log("node1111" , node.text);
 
   try {
-      const message = node.text + "가 공개되어 있을 시, 무단 접근 및 변조 등을 통한 \
-       보안 위험이 존재할 수 있습니다.";
+      const message = node.text + " 가 암호화되지 않을 시, 무단 접근 및 변조 등을 통한 보험 위험이 존재할 수 있습니다.";
 
       setSecurityMessage((prevDiagramCheck) => {
         const isDuplicate = prevDiagramCheck.some(

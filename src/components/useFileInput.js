@@ -18,6 +18,7 @@ export const useFileUpload = () => {
       try {
         const response = await fileUpload(fd);
         if (response.data) {
+          console.log(response.data)
           navigate('/draw', {
             state: { file: response.data },
             from: "inputNet"

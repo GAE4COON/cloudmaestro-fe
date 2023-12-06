@@ -2,8 +2,7 @@ import React, { useState, useCallback, useEffect } from "react";
 import * as go from "gojs";
 import { ReactDiagram } from "gojs-react";
 import styled from "styled-components";
-import { message } from 'antd';
-
+import { message } from "antd";
 
 import useGoJS from "../hooks/useGoJS.js";
 import SelectEc2Toggle from "../components/cost/SelectEc22Toggle";
@@ -15,7 +14,6 @@ import { nodeDataArrayPalette } from "../db/Node";
 
 import { useLocation } from "react-router-dom";
 import { Alert, Space, Modal, Input } from "antd";
-import { sidebarResource } from "../apis/sidebar";
 import { saveDiagram } from "../apis/fileAPI";
 import { DrawResourceGuide } from "../apis/resource";
 import "../styles/App.css";
@@ -35,7 +33,7 @@ import { DataContext, useData } from "../components/DataContext.js"; // DataCont
 
 message.config({
   top: 50,
-  duration: 1
+  duration: 1,
 });
 
 function Draw() {
@@ -52,14 +50,15 @@ function Draw() {
   const [showToggle, setShowToggle] = useState(true);
   const [alertMessage, setAlertMessage] = useState([]);
   const [securityMessage, setSecurityMessage] = useState([]);
-
+  const [warnMessage, setWarnMessage] = useState([]);
+  const [infoMessage, setInfoMessage] = useState([]);
   const { setData } = useData();
   const [mydiagram, setmyDiagram] = useState(null);
-  const [NodeGuide, setNodeGuide] = useState(null);
-  const [NodeGuideLine, setNodeGuideLine] = useState({
-    key: null,
-    message: null,
-  });
+  // const [NodeGuide, setNodeGuide] = useState(null);
+  // const [NodeGuideLine, setNodeGuideLine] = useState({
+  //   key: null,
+  //   message: null,
+  // });
   const [fileName, setFileName] = useState("제목 없는 다이어그램");
 
   const [diagramVersion, setDiagramVersion] = useState(0);
@@ -69,9 +68,11 @@ function Draw() {
 
   const location = useLocation();
   const info = location.state ? location.state.info : null;
-  const onpremise = location.state ? location.state.file : null;  
- 
-  useEffect(() => { }, [diagramVersion]); // Dependency on diagramVersion
+
+  const onpremise = location.state ? location.state.file : null;
+
+  useEffect(() => {}, [diagramVersion]); // Dependency on diagramVersion
+
 
   const [nodeRole, setNodeRole] = useState({});
 
@@ -85,33 +86,33 @@ function Draw() {
     setDiagramVersion((prevVersion) => prevVersion + 1);
   });
 
-  const handleguide = useCallback((guide) => {
-    setNodeGuide(guide);
-  });
-
+  // const handleguide = useCallback((guide) => {
+  //   setNodeGuide(guide);
+  // });
   const { initDiagram, diagram, showSelectToggle, clickedNodeKey } = useGoJS(
     setShowToggle,
     handleDiagramChange,
-    handleguide,
+    // handleguide,
     setAlertMessage,
+    setWarnMessage,
+    setInfoMessage,
     setSecurityMessage
   );
 
   useEffect(() => {
     if (info && diagram) {
-      setFileName(info.filename)
+      setFileName(info.filename);
       if (info.file.result.hasOwnProperty("cost")) {
         setFinalToggleValue(info.file.result["cost"]);
       }
       const diagramModel = go.Model.fromJson(info.file.result);
       diagram.model = diagramModel;
     }
-    
-    if(onpremise && diagram){
+
+    if (onpremise && diagram) {
       const diagramModel = go.Model.fromJson(onpremise);
       diagram.model = diagramModel;
     }
-
   }, [info, diagram]);
 
   useEffect(() => {
@@ -121,32 +122,47 @@ function Draw() {
     setData(null);
   }, [location]);
 
-  useEffect(() => {
-    const fetchResourceGuide = () => {
-      if (NodeGuide) {
-        if (nodeRole[`${NodeGuide}`] && nodeRole[`${NodeGuide}`].role) {
-          setNodeGuideLine({ key: NodeGuide, message: nodeRole[`${NodeGuide}`].role });
-        } else {
-          setNodeGuideLine({
-            key: NodeGuide,
-            message: "추후 추가 예정",
-          });
-        }
-      }
-    };
+  // useEffect(() => {
+  //   const fetchResourceGuide = () => {
+  //     if (NodeGuide) {
+  //       if (nodeRole[`${NodeGuide}`] && nodeRole[`${NodeGuide}`].role) {
+  //         setNodeGuideLine({
+  //           key: NodeGuide,
+  //           message: nodeRole[`${NodeGuide}`].role,
+  //         });
+  //       } else {
+  //         setNodeGuideLine({
+  //           key: NodeGuide,
+  //           message: "추후 추가 예정",
+  //         });
+  //       }
+  //     }
+  //   };
 
-    fetchResourceGuide();
-  }, [NodeGuide]);
+  //   fetchResourceGuide();
+  // }, [NodeGuide]);
 
+  const removeAlert = (id) => {
+    setAlertMessage((currentAlerts) =>
+      currentAlerts.filter((alert) => alert.id !== id)
+    );
+  };
 
-  const removeAlert = (index) => {
-    setAlertMessage((currentMessages) =>
-      currentMessages.filter((_, i) => i !== index)
+  const removeWarn = (id) => {
+    setWarnMessage((currentAlerts) =>
+      currentAlerts.filter((alert) => alert.id !== id)
+    );
+  };
+
+  const removeInfo = (id) => {
+    setInfoMessage((currentAlerts) =>
+      currentAlerts.filter((alert) => alert.id !== id)
     );
     setSecurityMessage((currentMessages) =>
-      currentMessages.filter((_, i) => i !== index)
+      currentMessages.filter((_, i) => i !== id)
     );
     console.log("change AlertMessage:", alertMessage);
+
   };
 
   const handleNodeSelect = useCallback(
@@ -199,16 +215,19 @@ function Draw() {
         type: "image/png",
       });
 
-      const base64ImageContent = img.split(',')[1];
+      const base64ImageContent = img.split(",")[1];
 
-      const response = await saveDiagram(diagramData, fileName, base64ImageContent);
+      const response = await saveDiagram(
+        diagramData,
+        fileName,
+        base64ImageContent
+      );
       hideLoading();
 
       console.log(response.data);
       if (response.data === true) {
         message.success("저장되었습니다.");
-      }
-      else {
+      } else {
         message.warning("중복된 이름이 존재합니다. 다시 시도해주세요.");
       }
     } catch (error) {
@@ -229,7 +248,6 @@ function Draw() {
   const handleSaveDiagram = () => {
     showModal();
   };
-
 
   return (
     <div className="main-content">
@@ -265,20 +283,46 @@ function Draw() {
                 onOk={handleOk}
                 onCancel={handleCancel}
               >
-                <Input value={fileName} onChange={handleChange} placeholder="파일 이름" />
+                <Input
+                  value={fileName}
+                  onChange={handleChange}
+                  placeholder="파일 이름"
+                />
               </Modal>
               <StyleSpace direction="vertical">
-                {alertMessage.map((message, index) => (
+                {alertMessage.map((item) => (
                   <StyleAlert
-                    key={index}
-                    message={message}
+                    key={item.key}
+                    message={item.message}
                     type="error"
                     showIcon
                     closable
-                    onClose={() => removeAlert(index)}
+                    onClose={() => removeAlert(item.key)}
                   />
                 ))}
-                {NodeGuideLine && NodeGuideLine.key && (
+                {warnMessage.map((item) => (
+                  <StyleAlert
+                    key={item.key}
+                    message={item.message}
+                    type="warning"
+                    showIcon
+                    closable
+                    onClose={() => removeWarn(item.key)}
+                  />
+                ))}
+
+                {infoMessage.map((item) => (
+                  <StyleAlert
+                    key={item.key}
+                    message={item.message}
+                    type="info"
+                    showIcon
+                    closable
+                    onClose={() => removeInfo(item.key)}
+                  />
+                ))}
+
+                {/* {NodeGuideLine && NodeGuideLine.key && (
                   <StyleAlert
                     message={NodeGuideLine.key}
                     description={NodeGuideLine.message}
@@ -289,7 +333,7 @@ function Draw() {
                       setNodeGuideLine({ key: null, message: null });
                     }}
                   />
-                )}
+                )} */}
               </StyleSpace>
 
               <StyleSpace direction="vertical">
@@ -297,7 +341,7 @@ function Draw() {
                   <StyleAlert
                     key={index}
                     message={message}
-                    type="error"
+                    type="info"
                     showIcon
                     closable
                     onClose={() => removeAlert(index)}
@@ -383,10 +427,10 @@ const SaveButton = styled.div`
   z-index: 20;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-`
+`;
 const DiagramTop = styled.div`
   display: flex;
-`
+`;
 
 const FileName = styled.div`
   font-family: "Noto Sans KR", sans-serif !important;
@@ -397,7 +441,7 @@ const FileName = styled.div`
   margin-left: 20px;
   padding-bottom: 5px;
   border-bottom: 1px solid #d9d9d9;
-`
+`;
 
 const StyledDiagram = styled.div`
   /* float: left; */
@@ -412,6 +456,9 @@ const StyleSpace = styled(Space)`
   z-index: 100;
   left: 73%;
   top: 20%;
+  .ant-alert-message {
+    font-size: smaller; // Adjust the size as needed
+  }
 `;
 
 const StyleAlert = styled(Alert)`
