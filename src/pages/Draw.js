@@ -17,7 +17,7 @@ import { Alert, Space, Modal, Input } from "antd";
 import { saveDiagram, updateDiagram } from "../apis/fileAPI";
 import { DrawResourceGuide } from "../apis/resource";
 import "../styles/App.css";
-import jsonData from "../db/ResourceGuide.json"; // JSON 파일 경로
+import jsonData from '../db/ResourceGuide.json'; // JSON 파일 경로
 
 // 페이지
 // import useReadJSON from "./useReadJSON";
@@ -31,6 +31,7 @@ import { Link } from "react-router-dom";
 import RequirementPopup from "../components/RequirementPopup";
 import { DataContext, useData } from "../components/DataContext.js"; // DataContext의 경로를 수정하세요
 import { SoundTwoTone } from "@ant-design/icons";
+import { handleSecurity } from "../components/SecurityAlert.js";
 
 const close = () => {
   console.log("Notification was closed.");
@@ -40,6 +41,7 @@ message.config({
   top: 50,
   duration: 1,
 });
+
 
 function Draw() {
   const { data } = useFileUpload();
@@ -334,6 +336,7 @@ else {
                   placeholder="파일 이름"
                 />
               </Modal>
+
               {showToggle &&
                 showSelectToggle.value &&
                 showSelectToggle.key.includes("EC2") &&
@@ -390,10 +393,9 @@ else {
             </DiagramContainer>
             {isPopup ? (
               <RequirementPopup
-                diagram={diagram}
-                fileName={fileName}
-                handlePopup={handlePopup}
-              />
+              diagram={diagram} 
+              fileName={fileName}
+              handlePopup={handlePopup} />
             ) : (
               ""
             )}
@@ -443,6 +445,9 @@ const StyleSpace = styled(Space)`
   z-index: 100;
   left: 73%;
   top: 20%;
+  .ant-alert-message {
+    font-size: smaller; // Adjust the size as needed
+  }
 `;
 
 const StyleAlert = styled(Alert)`
