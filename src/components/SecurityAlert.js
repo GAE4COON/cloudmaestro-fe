@@ -2,7 +2,7 @@
 import { alertCheck, NodeCheck, GroupCheck } from "../apis/fileAPI";
 
 
-export async function handleSecurity(e, diagram, setInfoMessage) {
+export async function handleSecurity(e, diagram, setAlertMessage) {
   if (e.isTransactionFinished) {
     const jsonString = e.model.toIncrementalJson(e);
     const data = JSON.parse(jsonString);
@@ -29,7 +29,7 @@ export async function handleSecurity(e, diagram, setInfoMessage) {
             data.modifiedNodeData[i].text === "Athena" ||
             data.modifiedNodeData[i].text === "S3"
         ) {
-          await handleNode(data.modifiedNodeData[i], diagram, setInfoMessage);
+          await handleNode(data.modifiedNodeData[i], diagram, setAlertMessage);
         }
         }
       }
@@ -38,7 +38,7 @@ export async function handleSecurity(e, diagram, setInfoMessage) {
   }
 
 
-async function handleNode(node, diagram, setInfoMessage) {
+async function handleNode(node, diagram, setAlertMessage) {
 
 //  const PostData = {
 //   checkOption: null,
@@ -53,13 +53,11 @@ async function handleNode(node, diagram, setInfoMessage) {
       message: node.text + " 가 암호화되지 않을 시, 무단 접근 및 변조 등을 통한 보험 위험이 존재할 수 있습니다."
     };
     console.log("hello", message);
-    setInfoMessage((prevDiagramCheck) => {
-      const isDuplicate = prevDiagramCheck.some(
-        (item) => item.message === message.message
-      );
-      return isDuplicate ? prevDiagramCheck : [...prevDiagramCheck, message];
+    setAlertMessage({
+      key: Date.now(), // 현재 타임스탬프를 key로 사용
+      message: message.message,
+      tag: "Info",
     });
-
   } catch (error) {
     console.error("API Error:", error);
   }
@@ -67,7 +65,7 @@ async function handleNode(node, diagram, setInfoMessage) {
 }
 
 
-export function checkForLog(diagram, setInfoMessage) {
+export function checkForLog(diagram, setAlertMessage) {
   if (diagram.model.nodeDataArray.length > 0) {
     const hasQuickSightNode = diagram.model.nodeDataArray.some(node => node.text === "QuickSight");
     const hasOpenSearch = diagram.model.nodeDataArray.some(node => node.text === "OpenSearch Service");
@@ -77,7 +75,7 @@ export function checkForLog(diagram, setInfoMessage) {
     console.log("hasQuickSIghtNode" , hasQuickSightNode);
     console.log("hellohihi");
     if (!hasQuickSightNode && !hasOpenSearch && !hasAthena && !hasS3) {
-      setInfoMessage(prevDiagramCheck => {
+      setAlertMessage(prevDiagramCheck => {
         const isDuplicate = prevDiagramCheck.some(item => item.message === backUpGuide);
         const newMessage = { key: Date.now(), message: backUpGuide };
 

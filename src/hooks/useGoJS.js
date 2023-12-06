@@ -4,17 +4,15 @@ import "../styles/App.css"; // contains .diagram-component CSS
 import handleChangedSelection from "../pages/toggle/toggle";
 import { alertCheck, NodeCheck, GroupCheck } from "../apis/fileAPI";
 import { useData } from "../components/DataContext";
-import { handleSecurity, checkForLog } from '../components/SecurityAlert';
+import { handleSecurity } from "../components/SecurityAlert";
 
 const useGoJS = (
   setShowToggle,
   onDiagramChange,
   // handleguide,
-  setAlertMessage,
-  setWarnMessage,
-  setInfoMessage,
-  //setSecurityMessage
-
+  setAlertMessage
+  // setWarnMessage,
+  // setInfoMessage
 ) => {
   const [diagram, setDiagram] = useState(null);
   const [clickedNodeKey, setClickedNodeKey] = useState();
@@ -84,6 +82,7 @@ const useGoJS = (
         if (e.isTransactionFinished) {
           const jsonString = e.model.toIncrementalJson(e);
           const data = JSON.parse(jsonString);
+          console.log("노드 추가영: ", data);
           if (data.insertedLinkKeys) {
             console.log("insertedLinkKeys", data.modifiedLinkData);
             try {
@@ -94,7 +93,6 @@ const useGoJS = (
                 );
                 //diagram.undoManager.undo();
                 setAlertMessage((prevDiagramCheck) => {
-                  console.log("prevDiagramCheck", prevDiagramCheck);
                   const isDuplicate = prevDiagramCheck.some(
                     (item) => item === response.data.result.message
                   );
@@ -128,23 +126,14 @@ const useGoJS = (
                   ) {
                     PostData.checkOption = "VPC";
                     PostData.newData = data.modifiedNodeData[i];
-                    console.log("NodeCheck 호출");
+                    //console.log("NodeCheck 호출");
                     const response = await GroupCheck(PostData);
+                    console.log("API Response:", response.data);
                     if (response.data.result.status === "fail") {
-                      setAlertMessage((prevDiagramCheck) => {
-                        const isDuplicate = prevDiagramCheck.some(
-                          (item) => item === response.data.result.message
-                        );
-                        if (!isDuplicate) {
-                          const newMessage = {
-                            key: Date.now(), // 현재 타임스탬프를 key로 사용
-                            message: response.data.result.message,
-                          };
-
-                          return [...prevDiagramCheck, newMessage];
-                        } else {
-                          return prevDiagramCheck;
-                        }
+                      setAlertMessage({
+                        key: Date.now(), // 현재 타임스탬프를 key로 사용
+                        message: response.data.result.message,
+                        tag: "Error",
                       });
                     }
                   } else if (
@@ -157,24 +146,14 @@ const useGoJS = (
                     //   PostData.checkOption = "Database";
                     PostData.checkOption = "API Gateway";
                     PostData.newData = data.modifiedNodeData[i];
-                    console.log("NodeCheck 호출");
+                    //console.log("NodeCheck 호출");
                     const response = await NodeCheck(PostData);
                     if (response.data.result.status === "fail") {
                       console.log("API Response:", response.data);
-                      setAlertMessage((prevDiagramCheck) => {
-                        const isDuplicate = prevDiagramCheck.some(
-                          (item) => item === response.data.result.message
-                        );
-                        if (!isDuplicate) {
-                          const newMessage = {
-                            key: Date.now(), // 현재 타임스탬프를 key로 사용
-                            message: response.data.result.message,
-                          };
-
-                          return [...prevDiagramCheck, newMessage];
-                        } else {
-                          return prevDiagramCheck;
-                        }
+                      setAlertMessage({
+                        key: Date.now(), // 현재 타임스탬프를 key로 사용
+                        message: response.data.result.message,
+                        tag: "Error",
                       });
                     }
                   } else if (data.modifiedNodeData[i].type === "Database") {
@@ -184,20 +163,10 @@ const useGoJS = (
                     const response = await NodeCheck(PostData);
                     if (response.data.result.status === "fail") {
                       console.log("API Response:", response.data);
-                      setWarnMessage((prevDiagramCheck) => {
-                        const isDuplicate = prevDiagramCheck.some(
-                          (item) => item === response.data.result.message
-                        );
-                        if (!isDuplicate) {
-                          const newMessage = {
-                            key: Date.now(), // 현재 타임스탬프를 key로 사용
-                            message: response.data.result.message,
-                          };
-
-                          return [...prevDiagramCheck, newMessage];
-                        } else {
-                          return prevDiagramCheck;
-                        }
+                      setAlertMessage({
+                        key: Date.now(), // 현재 타임스탬프를 key로 사용
+                        message: response.data.result.message,
+                        tag: "Warn",
                       });
                     }
                   }
@@ -207,8 +176,8 @@ const useGoJS = (
               console.error("API Error:", error);
             }
           }
+          handleSecurity(e, diagram,setAlertMessage);
         }
-        handleSecurity(e, diagram, setInfoMessage);
       },
       
     
@@ -579,7 +548,6 @@ const useGoJS = (
     diagram.addModelChangedListener(function (e) {
       if (e.isTransactionFinished) {
         onDiagramChange(diagram);
-        checkForLog(diagram, setInfoMessage);
       }
     });
 
@@ -590,7 +558,7 @@ const useGoJS = (
       } else {
         setShowSelectToggle({ value: false }); // 추가된 로직
       }
-      console.log("setdata", diagram.model.nodeDataArray)
+      // console.log("setdata", diagram.model.nodeDataArray);
       setData(diagram.model.nodeDataArray); // set the data in context
     });
 

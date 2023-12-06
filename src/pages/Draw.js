@@ -1,9 +1,7 @@
 import React, { useState, useCallback, useEffect } from "react";
 import * as go from "gojs";
 import { ReactDiagram } from "gojs-react";
-import styled from "styled-components";
-import { message } from "antd";
-
+import styled, { createGlobalStyle } from "styled-components";
 import useGoJS from "../hooks/useGoJS.js";
 import SelectEc2Toggle from "../components/cost/SelectEc22Toggle";
 import SelectRdsToggle from "../components/cost/SelectRdsToggle";
@@ -13,6 +11,8 @@ import { useMediaQuery } from "react-responsive";
 import { nodeDataArrayPalette } from "../db/Node";
 
 import { useLocation } from "react-router-dom";
+import { message } from "antd";
+import { Button, notification } from "antd";
 import { Alert, Space, Modal, Input } from "antd";
 import { saveDiagram } from "../apis/fileAPI";
 import { DrawResourceGuide } from "../apis/resource";
@@ -21,7 +21,7 @@ import jsonData from '../db/ResourceGuide.json'; // JSON 파일 경로
 
 // 페이지
 // import useReadJSON from "./useReadJSON";
-import Button from "./Button.js";
+import ModalButton from "./Button.js";
 import Sidebar from "../components/Sidebar";
 import Palette from "../components/Palette";
 import "../styles/Draw.css";
@@ -30,6 +30,12 @@ import { summaryFile } from "../apis/fileAPI.js";
 import { Link } from "react-router-dom";
 import RequirementPopup from "../components/RequirementPopup";
 import { DataContext, useData } from "../components/DataContext.js"; // DataContext의 경로를 수정하세요
+import { SoundTwoTone } from "@ant-design/icons";
+import { handleSecurity } from "../components/SecurityAlert.js";
+
+const close = () => {
+  console.log("Notification was closed.");
+};
 
 message.config({
   top: 50,
@@ -46,11 +52,13 @@ function Draw() {
   const diagramClassName = "diagram-component";
 
   const [finalToggleValue, setFinalToggleValue] = useState({});
-  const [selectedNodeData, setSelectedNodeData] = useState(null); // <-- 상태 변수를 추가합니다.
+  const [selectedNodeData, setSelectedNodeData] = useState(null); // <- 상태 변수를 추가합니다.
   const [showToggle, setShowToggle] = useState(true);
-  const [alertMessage, setAlertMessage] = useState([]);
-  const [warnMessage, setWarnMessage] = useState([]);
-  const [infoMessage, setInfoMessage] = useState([]);
+  const [alertMessage, setAlertMessage] = useState({
+    key: null,
+    message: null,
+    tag: null,
+  });
   const { setData } = useData();
   const [mydiagram, setmyDiagram] = useState(null);
   // const [NodeGuide, setNodeGuide] = useState(null);
@@ -58,6 +66,7 @@ function Draw() {
   //   key: null,
   //   message: null,
   // });
+
   const [fileName, setFileName] = useState("제목 없는 다이어그램");
 
   const [diagramVersion, setDiagramVersion] = useState(0);
@@ -92,10 +101,7 @@ function Draw() {
     setShowToggle,
     handleDiagramChange,
     // handleguide,
-    setAlertMessage,
-    setWarnMessage,
-    setInfoMessage,
-    //setSecurityMessage
+    setAlertMessage
   );
 
   useEffect(() => {
@@ -120,46 +126,6 @@ function Draw() {
     }
     setData(null);
   }, [location]);
-
-  // useEffect(() => {
-  //   const fetchResourceGuide = () => {
-  //     if (NodeGuide) {
-  //       if (nodeRole[`${NodeGuide}`] && nodeRole[`${NodeGuide}`].role) {
-  //         setNodeGuideLine({
-  //           key: NodeGuide,
-  //           message: nodeRole[`${NodeGuide}`].role,
-  //         });
-  //       } else {
-  //         setNodeGuideLine({
-  //           key: NodeGuide,
-  //           message: "추후 추가 예정",
-  //         });
-  //       }
-  //     }
-  //   };
-
-  //   fetchResourceGuide();
-  // }, [NodeGuide]);
-
-  const removeAlert = (id) => {
-    setAlertMessage((currentAlerts) =>
-      currentAlerts.filter((alert) => alert.id !== id)
-    );
-  };
-
-  const removeWarn = (id) => {
-    setWarnMessage((currentAlerts) =>
-      currentAlerts.filter((alert) => alert.id !== id)
-    );
-  };
-
-  const removeInfo = (id) => {
-    setInfoMessage((currentAlerts) =>
-      currentAlerts.filter((alert) => alert.id !== id)
-    );
-    console.log("change AlertMessage:", alertMessage);
-
-  };
 
   const handleNodeSelect = useCallback(
     (label) => {
@@ -245,11 +211,75 @@ function Draw() {
     showModal();
   };
 
+  useEffect(() => {
+    if (alertMessage.message !== null) {
+      openNotification();
+    }
+    console.log("alertMessage", alertMessage);
+  }, [alertMessage]);
+
+  const [api, contextHolder] = notification.useNotification();
+  const openNotification = () => {
+    const key = `open${Date.now()}`;
+    const btn = (
+      <Space>
+        <Button type="link" size="small" onClick={() => api.destroy()}>
+          Destroy All
+        </Button>
+        <Button type="primary" size="small" onClick={() => api.destroy(key)}>
+          Confirm
+        </Button>
+      </Space>
+    );
+
+    let backgroundColor;
+    switch (alertMessage.tag) {
+      case "Error":
+        backgroundColor = "#FFF0F0"; // 에러 배경색
+        break;
+      case "Warn":
+        backgroundColor = "#FFF8E0"; // 경고 배경색
+        break;
+      case "Info":
+        backgroundColor = "#DFE8FF"; // 정보 배경색
+        break;
+      default:
+        backgroundColor = "#FFFFFF"; // 기본 배경색
+        break;
+    }
+
+    let backgroundTitle;
+    switch (alertMessage.tag) {
+      case "Error":
+        backgroundTitle = "❌Error!"; // 에러 배경색
+        break;
+      case "Warn":
+        backgroundTitle = "⚠️Warnning"; // 경고 배경색
+        break;
+      case "Info":
+        backgroundTitle = "✔️Info"; // 정보 배경색
+        break;
+      default:
+        backgroundTitle = "NotThing"; // 기본 배경색
+        break;
+    }
+
+    api.open({
+      message: backgroundTitle,
+      description: alertMessage.message,
+      btn,
+      key,
+      onClose: close,
+      style: { backgroundColor, borderRadius: "8px" },
+    });
+  };
   return (
     <div className="main-content">
       <div className="Draw">
         <div className="container">
           <div className="workspace">
+            {contextHolder}
+            {/* <GlobalStyle tag={alertMessage.tag} /> */}
             <div className="palette">
               <Palette
                 divClassName={paletteClassName}
@@ -261,7 +291,7 @@ function Draw() {
               <DiagramTop>
                 <FileName>파일 이름: {fileName}</FileName>
                 <SaveButton>
-                  <Button
+                  <ModalButton
                     diagram={diagram}
                     showToggle={showToggle}
                     setShowToggle={setShowToggle}
@@ -285,55 +315,7 @@ function Draw() {
                   placeholder="파일 이름"
                 />
               </Modal>
-              <StyleSpace direction="vertical">
-                {alertMessage.map((item) => (
-                  <StyleAlert
-                    key={item.key}
-                    message={item.message}
-                    type="error"
-                    showIcon
-                    closable
-                    onClose={() => removeAlert(item.key)}
-                  />
-                ))}
-                {warnMessage.map((item) => (
-                  <StyleAlert
-                    key={item.key}
-                    message={item.message}
-                    type="warning"
-                    showIcon
-                    closable
-                    onClose={() => removeWarn(item.key)}
-                  />
-                ))}
 
-                {infoMessage.map((item) => (
-                  <StyleAlert
-                    key={item.key}
-                    message={item.message}
-                    type="info"
-                    showIcon
-                    closable
-                    onClose={() => removeInfo(item.key)}
-                  />
-                ))}
-                 </StyleSpace>
-
-                {/* {NodeGuideLine && NodeGuideLine.key && (
-                  <StyleAlert
-                    message={NodeGuideLine.key}
-                    description={NodeGuideLine.message}
-                    type="info"
-                    closable
-                    onClose={() => {
-                      setNodeGuide(null);
-                      setNodeGuideLine({ key: null, message: null });
-                    }}
-                  />
-                )} */}
-             
-
-          
               {showToggle &&
                 showSelectToggle.value &&
                 showSelectToggle.key.includes("EC2") &&
