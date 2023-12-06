@@ -21,8 +21,6 @@ import { DrawResourceGuide } from "../apis/resource";
 import "../styles/App.css";
 import jsonData from '../db/ResourceGuide.json'; // JSON 파일 경로
 
-
-
 // 페이지
 // import useReadJSON from "./useReadJSON";
 import Button from "./Button.js";
@@ -69,7 +67,8 @@ function Draw() {
 
   const location = useLocation();
   const info = location.state ? location.state.info : null;
-
+  const onpremise = location.state ? location.state.file : null;  
+ 
   useEffect(() => { }, [diagramVersion]); // Dependency on diagramVersion
 
   const [nodeRole, setNodeRole] = useState({});
@@ -98,14 +97,18 @@ function Draw() {
   useEffect(() => {
     if (info && diagram) {
       setFileName(info.filename)
-      console.log(info.filename);
-      console.log(info.file.result);
       if (info.file.result.hasOwnProperty("cost")) {
         setFinalToggleValue(info.file.result["cost"]);
       }
       const diagramModel = go.Model.fromJson(info.file.result);
       diagram.model = diagramModel;
     }
+    
+    if(onpremise && diagram){
+      const diagramModel = go.Model.fromJson(onpremise);
+      diagram.model = diagramModel;
+    }
+
   }, [info, diagram]);
 
   useEffect(() => {
@@ -166,48 +169,6 @@ function Draw() {
   const handlePopupChange = (newPopupState) => {
     setIsPopup(newPopupState);
   };
-
-  // const handleSaveDiagram = async () => {
-  //   try {
-  //     let diagramData = diagram.model.toJson();
-  //     diagramData = JSON.parse(diagramData);
-  //     diagramData["cost"] = finalToggleValue; //ec2도 해야할 듯
-  //     diagramData = JSON.stringify(diagramData);
-
-
-  //     // 이미지 데이터 생성
-  //     const img = diagram.makeImageData({
-  //       scale: 0.6,
-  //       background: "white",
-  //       type: "image/png",
-  //     });
-
-  //     const fileName = window.prompt(
-  //       "저장할 파일의 이름을 입력하세요.",
-  //       "MyDiagram"
-  //     );
-
-  //     const base64ImageContent = img.split(',')[1]; // 'data:image/png;base64,' 부분 제거
-
-  //     if (fileName) {
-  //       const response = await saveDiagram(diagramData, fileName, base64ImageContent);
-  //       console.log(response.data);
-  //       if(response.data === true ){
-  //         message.success("저장되었습니다.");
-
-  //         setFileName(fileName);
-  //       }
-  //       else{
-  //         message.warning("중복된 이름이 존재합니다. 다시 시도해주세요.");
-  //         // handleSaveDiagram();
-  //       }
-  //     } else {
-  //       message.info("파일 저장이 취소되었습니다.");
-  //     }
-  //   } catch (error) {
-  //     console.error("저장 중 오류가 발생했습니다: ", error);
-  //   }
-  // };
 
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -379,7 +340,10 @@ function Draw() {
               </StyledDiagram>
             </DiagramContainer>
             {isPopup ? (
-              <RequirementPopup diagram={diagram} handlePopup={handlePopup} />
+              <RequirementPopup
+              diagram={diagram} 
+              fileName={fileName}
+              handlePopup={handlePopup} />
             ) : (
               ""
             )}

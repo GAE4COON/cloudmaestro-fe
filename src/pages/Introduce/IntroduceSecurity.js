@@ -31,12 +31,12 @@ export default function IntroduceSecurity() {
                   onClick={() =>
                     handleDownload(
                       "/assets/pdf/ManageHuman2.pdf",
-                      "인적 물류 보안 가이드라인.pdf"
+                      "유통 물류 보안 가이드라인.pdf"
                     )
                   }
                   style={{ marginRight: '30px' }}
                 >
-                human logistics industry</Button>
+          distribution logistics</Button>
           <Button type="dashed"
                   onClick={() =>
                     handleDownload(
