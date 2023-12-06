@@ -8,14 +8,16 @@ import { useData } from "../components/DataContext";
 const useGoJS = (
   setShowToggle,
   onDiagramChange,
-  handleguide,
-  setAlertMessage
+  // handleguide,
+  setAlertMessage,
+  setWarnMessage,
+  setInfoMessage
 ) => {
   const [diagram, setDiagram] = useState(null);
   const [clickedNodeKey, setClickedNodeKey] = useState();
   const [showSelectToggle, setShowSelectToggle] = useState({ value: false });
   // const [DiagramCheck, setDiagramCheck] = useState([]);
-  const [NodeGuide, setNodeGuide] = useState(null);
+  // const [NodeGuide, setNodeGuide] = useState(null);
   const { setData } = useData();
 
   // useEffect(() => {
@@ -88,7 +90,12 @@ const useGoJS = (
                     (item) => item === response.data.result.message
                   );
                   if (!isDuplicate) {
-                    return [...prevDiagramCheck, response.data.result.message];
+                    const newMessage = {
+                      key: Date.now(), // 현재 타임스탬프를 key로 사용
+                      message: response.data.result.message,
+                    };
+
+                    return [...prevDiagramCheck, newMessage];
                   } else {
                     return prevDiagramCheck;
                   }
@@ -121,16 +128,25 @@ const useGoJS = (
                           (item) => item === response.data.result.message
                         );
                         if (!isDuplicate) {
-                          return [
-                            ...prevDiagramCheck,
-                            response.data.result.message,
-                          ];
+                          const newMessage = {
+                            key: Date.now(), // 현재 타임스탬프를 key로 사용
+                            message: response.data.result.message,
+                          };
+
+                          return [...prevDiagramCheck, newMessage];
                         } else {
                           return prevDiagramCheck;
                         }
                       });
                     }
-                  } else if (data.modifiedNodeData[i].text === "API Gateway") {
+                  } else if (
+                    data.modifiedNodeData[i].text === "API Gateway"
+                    //  ||data.modifiedNodeData[i].type === "Database"
+                  ) {
+                    // if (data.modifiedNodeData[i].text === "API Gateway")
+                    //   PostData.checkOption = "API Gateway";
+                    // else if (data.modifiedNodeData[i].type === "Database")
+                    //   PostData.checkOption = "Database";
                     PostData.checkOption = "API Gateway";
                     PostData.newData = data.modifiedNodeData[i];
                     //console.log("NodeCheck 호출");
@@ -142,10 +158,35 @@ const useGoJS = (
                           (item) => item === response.data.result.message
                         );
                         if (!isDuplicate) {
-                          return [
-                            ...prevDiagramCheck,
-                            response.data.result.message,
-                          ];
+                          const newMessage = {
+                            key: Date.now(), // 현재 타임스탬프를 key로 사용
+                            message: response.data.result.message,
+                          };
+
+                          return [...prevDiagramCheck, newMessage];
+                        } else {
+                          return prevDiagramCheck;
+                        }
+                      });
+                    }
+                  } else if (data.modifiedNodeData[i].type === "Database") {
+                    PostData.checkOption = "Database";
+                    PostData.newData = data.modifiedNodeData[i];
+                    console.log("NodeCheck 호출");
+                    const response = await NodeCheck(PostData);
+                    if (response.data.result.status === "fail") {
+                      console.log("API Response:", response.data);
+                      setWarnMessage((prevDiagramCheck) => {
+                        const isDuplicate = prevDiagramCheck.some(
+                          (item) => item === response.data.result.message
+                        );
+                        if (!isDuplicate) {
+                          const newMessage = {
+                            key: Date.now(), // 현재 타임스탬프를 key로 사용
+                            message: response.data.result.message,
+                          };
+
+                          return [...prevDiagramCheck, newMessage];
                         } else {
                           return prevDiagramCheck;
                         }
@@ -289,7 +330,7 @@ const useGoJS = (
             portId: "",
             editable: true,
           },
-          new go.Binding("text", "text"),
+          new go.Binding("text", "text")
         )
       ),
 
@@ -451,50 +492,50 @@ const useGoJS = (
       })
     );
 
-    diagram.nodeTemplate.selectionAdornmentTemplate = $(
-      go.Adornment,
-      "Spot",
-      $(
-        go.Panel,
-        "Auto",
-        $(go.Shape, { fill: null, stroke: "dodgerblue", strokeWidth: 2 }),
-        $(go.Placeholder)
-      ),
-      $(
-        go.Panel,
-        "Horizontal",
-        { alignment: new go.Spot(1, 1), alignmentFocus: new go.Spot(1, 0) },
-        $(
-          go.Panel,
-          "Spot",
-          {
-            width: 20,
-            height: 20,
-            mouseEnter: function (e, panel) {
-              const node = panel.part.adornedPart;
-              if (node instanceof go.Node) {
-                handleguide(node.data.text);
-                // setNodeGuide(node.data.text);
-              }
-            },
-            // mouseLeave: function (e, panel) {
-            //   setNodeGuide(null);
-            // },
-          },
-          $(go.Shape, "Circle", {
-            fill: "rgba(82,96,208,0.7)",
-            stroke: null,
-            width: 20,
-            height: 20,
-          }),
-          $(go.TextBlock, "?", {
-            font: "10pt Noto Sans KR",
-            stroke: "white",
-            verticalAlignment: go.Spot.Center,
-          })
-        )
-      )
-    );
+    // diagram.nodeTemplate.selectionAdornmentTemplate = $(
+    //   go.Adornment,
+    //   "Spot",
+    //   $(
+    //     go.Panel,
+    //     "Auto",
+    //     $(go.Shape, { fill: null, stroke: "dodgerblue", strokeWidth: 2 }),
+    //     $(go.Placeholder)
+    //   ),
+    //   $(
+    //     go.Panel,
+    //     "Horizontal",
+    //     { alignment: new go.Spot(1, 1), alignmentFocus: new go.Spot(1, 0) },
+    //     $(
+    //       go.Panel,
+    //       "Spot",
+    //       {
+    //         width: 20,
+    //         height: 20,
+    //         mouseEnter: function (e, panel) {
+    //           const node = panel.part.adornedPart;
+    //           if (node instanceof go.Node) {
+    //             handleguide(node.data.text);
+    //             // setNodeGuide(node.data.text);
+    //           }
+    //         },
+    //         // mouseLeave: function (e, panel) {
+    //         //   setNodeGuide(null);
+    //         // },
+    //       },
+    //       $(go.Shape, "Circle", {
+    //         fill: "rgba(82,96,208,0.7)",
+    //         stroke: null,
+    //         width: 20,
+    //         height: 20,
+    //       }),
+    //       $(go.TextBlock, "?", {
+    //         font: "10pt Noto Sans KR",
+    //         stroke: "white",
+    //         verticalAlignment: go.Spot.Center,
+    //       })
+    //     )
+    //   )
+    // );
 
     diagram.addDiagramListener("ObjectSingleClicked", function (e) {
       const part = e.subject.part;

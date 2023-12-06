@@ -1,6 +1,6 @@
 import SideBar from "../components/MyPageSideBar";
 import React, { useState, useEffect } from "react";
-import { Popconfirm, message} from 'antd';
+import { Popconfirm, message } from "antd";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { DownOutlined } from "@ant-design/icons";
@@ -11,13 +11,12 @@ import { CloseButton } from "react-bootstrap";
 import { useAuth } from "../utils/auth/authContext";
 import jwtDecode from "jwt-decode";
 
-
 import styled from "styled-components";
 import { getDiagramData, myNetworkDB, deleteDiagramData } from "../apis/myPage";
 
 message.config({
-  top: 50, 
-  duration: 1
+  top: 50,
+  duration: 1,
 });
 
 const MyArchitecture = () => {
@@ -35,7 +34,7 @@ const MyArchitecture = () => {
         const decodedToken = jwtDecode(ACCESS_TOKEN);
         console.log(decodedToken.sub);
         // 주의: 실제 환경에서는 토큰이 만료되었는지 확인하는 로직도 필요합니다.
-        setUser(decodedToken.sub);
+        setUser(decodedToken);
       } catch (error) {
         console.log("Invalid token");
       }
@@ -48,7 +47,7 @@ const MyArchitecture = () => {
     const fetchMyNetwork = async () => {
       const myNetwork = await myNetworkDB();
       setCloudInstances(myNetwork.data);
-      console.log(myNetwork.data)
+      console.log(myNetwork.data);
     };
 
     fetchMyNetwork();
@@ -66,19 +65,20 @@ const MyArchitecture = () => {
 
   const handleCloudInstance = async (key, path) => {
     const response = await getDiagramData(key);
-    console.log("response.data", response.data)
+    console.log("response.data", response.data);
     navigate(`${path}`, { state: { info: response.data } });
-  }
+  };
 
   const confirm = async (key, e) => {
     const response = await deleteDiagramData(key);
     console.log("response.data", response.data);
-    setCloudInstances(cloudInstances.filter(instance => instance.key !== key));
+    setCloudInstances(
+      cloudInstances.filter((instance) => instance.key !== key)
+    );
 
-    message.success('도식화가 삭제되었습니다.');
-    
+    message.success("도식화가 삭제되었습니다.");
   };
-  
+
   return (
     <div className="main-content">
       <div className="mypage-container">
@@ -90,90 +90,119 @@ const MyArchitecture = () => {
           <div className="main-container">
             <StyledSideMenuTitle>도식화 히스토리</StyledSideMenuTitle>
             {cloudInstances.length > 0 ? (
+              getRows(cloudInstances).map((row, idx) => (
+                <CloudInstanceRow key={idx}>
+                  {row.map((instance) => {
+                    const dropdownItems = [
+                      {
+                        key: "1",
+                        label: (
+                          <button
+                            onClick={() =>
+                              handleCloudInstance(
+                                instance.key,
+                                "/mypage/diagram/security"
+                              )
+                            }
+                          >
+                            Security
+                          </button>
+                        ),
+                      },
+                      {
+                        key: "2",
+                        label: (
+                          <button
+                            onClick={() =>
+                              handleCloudInstance(
+                                instance.key,
+                                "/mypage/diagram/resource"
+                              )
+                            }
+                          >
+                            Resource
+                          </button>
+                        ),
+                      },
+                    ];
+                    return (
+                      <CloudInstance key={instance.key}>
+                        <Popconfirm
+                          title="도식화 삭제"
+                          description={`${instance.title} 도식화를 삭제하시겠습니까?`}
+                          onConfirm={() => confirm(instance.key)}
+                          cancelText="No"
+                          okText="Yes"
+                          placement="right"
+                        >
+                          <DeleteInstanceButton>X</DeleteInstanceButton>
+                        </Popconfirm>
 
-            getRows(cloudInstances).map((row, idx) => (
-              <CloudInstanceRow key={idx}>
-                {row.map((instance) => {
-                  const dropdownItems = [
-                    {
-                      key: "1",
-                      label: (
-                        <button
-                          onClick={() => handleCloudInstance(instance.key, "/mypage/diagram/security")}>
-                          Security
-                        </button>
-                      ),
-                    },
-                    {
-                      key: "2",
-                      label: (
-                        <button
-                          onClick={() => handleCloudInstance(instance.key, "/mypage/diagram/resource")}>
-                          Resource
-                        </button>
-                      ),
-                    },
-                  ];
-                  return (
-                    <CloudInstance key={instance.key}>
+                        <img
+                          onClick={() =>
+                            handleCloudInstance(instance.key, "/draw")
+                          }
+                          alt="diagram_img"
+                          src={`https://cm-user-file.s3.ap-northeast-2.amazonaws.com/${instance.title}_${user.sub}.png`}
+                          style={{
+                            marginTop: "20px",
+                            width: "100%",
+                            height: "40%",
+                            objectFit: "contain",
+                            borderRadius: "5px",
+                            boxShadow: "1px 1px 1px 1px rgb(235, 235, 235)",
+                          }}
+                        />
+                        <StyledInstanceTitle>
+                          {instance.title}
+                        </StyledInstanceTitle>
 
-                  <Popconfirm
-                      title="도식화 삭제"
-                      description={`${instance.title} 도식화를 삭제하시겠습니까?`}
-                      onConfirm={()=>confirm(instance.key)}
-                      cancelText="No"
-                      okText="Yes"
-                      placement="right"
-                    >
-                          <DeleteInstanceButton >X</DeleteInstanceButton>
-                          </Popconfirm>
-
-                      <img
-                        onClick={() => handleCloudInstance(instance.key, "/draw")}
-                        alt="diagram_img"
-                        src={`https://cm-user-file.s3.ap-northeast-2.amazonaws.com/${instance.title}_${user}.png`}
-                        style={{
-                          marginTop: "20px",
-                          width: "100%",
-                          height: "40%",
-                          objectFit: "contain",
-                          borderRadius: "5px",
-                          boxShadow: "1px 1px 1px 1px rgb(235, 235, 235)",
-                        
-                        }}
-                      />
-                      <StyledInstanceTitle>{instance.title}</StyledInstanceTitle>
-
-                      <ButtonContainer>
-                        <StyledButton
-                          style={{ backgroundColor: "#5280DD" }}
-                          onClick={() => handleCloudInstance(instance.key, "/mypage/diagram/summary")}>
-                          Total Cost
-                        </StyledButton>
-
-                        <Dropdown overlay={<Menu items={dropdownItems} />} placement="bottomLeft">
-                          <StyledButton style={{ backgroundColor: "#FD754A" }}>
-                            Guide
-                            <DownOutlined style={{ marginTop: "5px" }} />
+                        <ButtonContainer>
+                          <StyledButton
+                            style={{ backgroundColor: "#5280DD" }}
+                            onClick={() =>
+                              handleCloudInstance(
+                                instance.key,
+                                "/mypage/diagram/summary"
+                              )
+                            }
+                          >
+                            Total Cost
                           </StyledButton>
-                        </Dropdown>
-                      </ButtonContainer>
-                    </CloudInstance>
-                  );
-                })}
-              </CloudInstanceRow>
-            ))):(
-              <div style={{display: "flex", justifyContent: "center", alignItems: "center", height: "100%"}}>
+
+                          <Dropdown
+                            overlay={<Menu items={dropdownItems} />}
+                            placement="bottomLeft"
+                          >
+                            <StyledButton
+                              style={{ backgroundColor: "#FD754A" }}
+                            >
+                              Guide
+                              <DownOutlined style={{ marginTop: "5px" }} />
+                            </StyledButton>
+                          </Dropdown>
+                        </ButtonContainer>
+                      </CloudInstance>
+                    );
+                  })}
+                </CloudInstanceRow>
+              ))
+            ) : (
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  height: "100%",
+                }}
+              >
                 <p>도식화 히스토리가 없습니다.</p>
-                
               </div>
-            )
-            }
+            )}
           </div>
         </div>
       </div>
     </div>
-
   );
 };
 
@@ -189,7 +218,7 @@ const CloudInstance = styled.div`
   border-radius: 5px;
   box-shadow: 1px 1px 1px 1px rgb(235, 235, 235);
   position: relative; /* 상대적 위치 지정 */
-`
+`;
 
 const DeleteInstanceButton = styled.button`
   font-size: 15px;
@@ -197,14 +226,13 @@ const DeleteInstanceButton = styled.button`
   position: absolute; /* 절대적 위치 지정 */
   top: 0px; /* 상단에서의 위치 */
   right: 3px;
-  background-color:transparent;
-`
+  background-color: transparent;
+`;
 
 const CloudInstanceRow = styled.div`
-    display: flex;
-    width: 100%;
-`
-
+  display: flex;
+  width: 100%;
+`;
 
 const StyledButton = styled(Button)`
   min-width: 100px;
@@ -219,9 +247,9 @@ const StyledButton = styled(Button)`
 `;
 
 const ButtonContainer = styled.div`
-    align-items: end;
-    display: flex;
-    flex-direction: column;
+  align-items: end;
+  display: flex;
+  flex-direction: column;
 `;
 
 const StyledSideMenuTitle = styled.div`
