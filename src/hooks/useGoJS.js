@@ -130,8 +130,14 @@ const useGoJS = (
                         }
                       });
                     }
-                  } else if (data.modifiedNodeData[i].text === "API Gateway") {
-                    PostData.checkOption = "API Gateway";
+                  } else if (
+                    data.modifiedNodeData[i].text === "API Gateway" ||
+                    data.modifiedNodeData[i].type === "Database"
+                  ) {
+                    if (data.modifiedNodeData[i].text === "API Gateway")
+                      PostData.checkOption = "API Gateway";
+                    else if (data.modifiedNodeData[i].type === "Database")
+                      PostData.checkOption = "Database";
                     PostData.newData = data.modifiedNodeData[i];
                     console.log("NodeCheck 호출");
                     const response = await NodeCheck(PostData);
@@ -289,7 +295,7 @@ const useGoJS = (
             portId: "",
             editable: true,
           },
-          new go.Binding("text", "text"),
+          new go.Binding("text", "text")
         )
       ),
 
