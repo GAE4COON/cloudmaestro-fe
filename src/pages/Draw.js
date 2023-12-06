@@ -51,15 +51,13 @@ function Draw() {
   const diagramClassName = "diagram-component";
 
   const [finalToggleValue, setFinalToggleValue] = useState({});
-  const [selectedNodeData, setSelectedNodeData] = useState(null); // <-- 상태 변수를 추가합니다.
+  const [selectedNodeData, setSelectedNodeData] = useState(null); // <- 상태 변수를 추가합니다.
   const [showToggle, setShowToggle] = useState(true);
   const [alertMessage, setAlertMessage] = useState({
     key: null,
     message: null,
     tag: null,
   });
-  const [warnMessage, setWarnMessage] = useState([]);
-  const [infoMessage, setInfoMessage] = useState([]);
   const { setData } = useData();
   const [mydiagram, setmyDiagram] = useState(null);
   // const [NodeGuide, setNodeGuide] = useState(null);
@@ -100,9 +98,7 @@ function Draw() {
     setShowToggle,
     handleDiagramChange,
     // handleguide,
-    setAlertMessage,
-    setWarnMessage,
-    setInfoMessage
+    setAlertMessage
   );
 
   useEffect(() => {
@@ -127,44 +123,6 @@ function Draw() {
     }
     setData(null);
   }, [location]);
-
-  // useEffect(() => {
-  //   const fetchResourceGuide = () => {
-  //     if (NodeGuide) {
-  //       if (nodeRole[`${NodeGuide}`] && nodeRole[`${NodeGuide}`].role) {
-  //         setNodeGuideLine({
-  //           key: NodeGuide,
-  //           message: nodeRole[`${NodeGuide}`].role,
-  //         });
-  //       } else {
-  //         setNodeGuideLine({
-  //           key: NodeGuide,
-  //           message: "추후 추가 예정",
-  //         });
-  //       }
-  //     }
-  //   };
-
-  //   fetchResourceGuide();
-  // }, [NodeGuide]);
-
-  // const removeAlert = (id) => {
-  //   setAlertMessage((currentAlerts) =>
-  //     currentAlerts.filter((alert) => alert.id !== id)
-  //   );
-  // };
-
-  // const removeWarn = (id) => {
-  //   setWarnMessage((currentAlerts) =>
-  //     currentAlerts.filter((alert) => alert.id !== id)
-  //   );
-  // };
-
-  // const removeInfo = (id) => {
-  //   setInfoMessage((currentAlerts) =>
-  //     currentAlerts.filter((alert) => alert.id !== id)
-  //   );
-  // };
 
   const handleNodeSelect = useCallback(
     (label) => {
@@ -354,52 +312,6 @@ function Draw() {
                   placeholder="파일 이름"
                 />
               </Modal>
-              {/* <StyleSpace direction="vertical">
-                {alertMessage.map((item) => (
-                  <StyleAlert
-                    key={item.key}
-                    message={item.message}
-                    type="error"
-                    showIcon
-                    closable
-                    onClose={() => removeAlert(item.key)}
-                  />
-                ))} */}
-              {/* {warnMessage.map((item) => (
-                  <StyleAlert
-                    key={item.key}
-                    message={item.message}
-                    type="warning"
-                    showIcon
-                    closable
-                    onClose={() => removeWarn(item.key)}
-                  />
-                ))}
-
-                {infoMessage.map((item) => (
-                  <StyleAlert
-                    key={item.key}
-                    message={item.message}
-                    type="info"
-                    showIcon
-                    closable
-                    onClose={() => removeInfo(item.key)}
-                  />
-                ))} */}
-
-              {/* {NodeGuideLine && NodeGuideLine.key && (
-                  <StyleAlert
-                    message={NodeGuideLine.key}
-                    description={NodeGuideLine.message}
-                    type="info"
-                    closable
-                    onClose={() => {
-                      setNodeGuide(null);
-                      setNodeGuideLine({ key: null, message: null });
-                    }}
-                  />
-                )} */}
-              {/* </StyleSpace> */}
               {showToggle &&
                 showSelectToggle.value &&
                 showSelectToggle.key.includes("EC2") &&

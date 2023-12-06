@@ -4,14 +4,12 @@ import "../styles/App.css"; // contains .diagram-component CSS
 import handleChangedSelection from "../pages/toggle/toggle";
 import { alertCheck, NodeCheck, GroupCheck } from "../apis/fileAPI";
 import { useData } from "../components/DataContext";
-
+import { checkForBackupAndS3Nodes } from "../components/AlertBackUp";
 const useGoJS = (
   setShowToggle,
   onDiagramChange,
   // handleguide,
-  setAlertMessage,
-  setWarnMessage,
-  setInfoMessage
+  setAlertMessage
 ) => {
   const [diagram, setDiagram] = useState(null);
   const [clickedNodeKey, setClickedNodeKey] = useState();
@@ -74,6 +72,7 @@ const useGoJS = (
         if (e.isTransactionFinished) {
           const jsonString = e.model.toIncrementalJson(e);
           const data = JSON.parse(jsonString);
+          console.log("노드 추가영: ", data);
           if (data.insertedLinkKeys) {
             console.log("insertedLinkKeys", data.modifiedLinkData);
             try {
@@ -107,9 +106,9 @@ const useGoJS = (
                   ) {
                     PostData.checkOption = "VPC";
                     PostData.newData = data.modifiedNodeData[i];
-                    console.log("NodeCheck 호출");
+                    //console.log("NodeCheck 호출");
                     const response = await GroupCheck(PostData);
-                    console.log("API Response:", response.data);
+                    //console.log("API Response:", response.data);
                     if (response.data.result.status === "fail") {
                       setAlertMessage({
                         key: Date.now(), // 현재 타임스탬프를 key로 사용
@@ -127,7 +126,7 @@ const useGoJS = (
                     //   PostData.checkOption = "Database";
                     PostData.checkOption = "API Gateway";
                     PostData.newData = data.modifiedNodeData[i];
-                    console.log("NodeCheck 호출");
+                    //console.log("NodeCheck 호출");
                     const response = await NodeCheck(PostData);
                     if (response.data.result.status === "fail") {
                       console.log("API Response:", response.data);
@@ -524,11 +523,12 @@ const useGoJS = (
       });
     });
 
-    diagram.addModelChangedListener(function (e) {
-      if (e.isTransactionFinished) {
-        onDiagramChange(diagram);
-      }
-    });
+    // diagram.addModelChangedListener(function (e) {
+    //   if (e.isTransactionFinished) {
+    //     onDiagramChange(diagram);
+    //     checkForBackupAndS3Nodes(diagram, setWarnMessage);
+    //   }
+    // });
 
     diagram.addDiagramListener("ChangedSelection", async (e) => {
       const selectedNode = e.diagram.selection.first();
