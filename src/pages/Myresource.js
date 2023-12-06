@@ -20,15 +20,15 @@ function MyResource() {
   const location = useLocation();
   const file = location.state.info.file.result;
   const nodeDataArray = file["nodeDataArray"];
-  
+
   // isGroup이 true인 노드를 제외하고 text 속성만 추출
   const extractedTexts = nodeDataArray
-    .filter(node => !node.isGroup)
-    .map(node => node.text);
-  
+    .filter((node) => !node.isGroup)
+    .map((node) => node.text);
+
   // 중복을 제거하기 위해 Set을 사용
   const uniqueTexts = new Set(extractedTexts);
-  
+
   useEffect(() => {
     if (resource) {
       const filtered = resource.filter((item) =>
@@ -44,9 +44,7 @@ function MyResource() {
       const ResourceData = {
         title: Array.from(uniqueTexts),
       };
-      console.log("ResourceData", ResourceData.title)
-      console.log("ResourceData2", ResourceData.title2)
-
+      console.log("ResourceData", ResourceData.title);
 
       try {
         const res = await ResourceGuide(ResourceData);

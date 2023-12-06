@@ -38,6 +38,8 @@ function getBPIndustry(industryValue) {
 
 const RequirementPopup = (props) => {
   let diagram = props.diagram;
+  let fileName = props.fileName;
+
   const [industrialValue, setIndustrialValue] = useState(null);
   const [globalReqValue, setGlobalReqValue] = useState([]);
   const [savediagram, setSaveDiagram] = useState();
@@ -216,6 +218,7 @@ const RequirementPopup = (props) => {
           })),
       },
       diagramData: diagram.model.toJson(), // 다이어그램 데이터를 추가
+      fileName: fileName // 파일 이름을 추가
     };
 
     console.log("requestData", requestData); // 로그 출력

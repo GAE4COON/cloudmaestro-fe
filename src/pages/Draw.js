@@ -14,7 +14,6 @@ import { nodeDataArrayPalette } from "../db/Node";
 
 import { useLocation } from "react-router-dom";
 import { Alert, Space, Modal, Input } from "antd";
-import { sidebarResource } from "../apis/sidebar";
 import { saveDiagram } from "../apis/fileAPI";
 import { DrawResourceGuide } from "../apis/resource";
 import "../styles/App.css";
@@ -87,7 +86,6 @@ function Draw() {
   // const handleguide = useCallback((guide) => {
   //   setNodeGuide(guide);
   // });
-
   const { initDiagram, diagram, showSelectToggle, clickedNodeKey } = useGoJS(
     setShowToggle,
     handleDiagramChange,
