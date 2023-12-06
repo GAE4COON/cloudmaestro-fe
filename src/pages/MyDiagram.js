@@ -10,7 +10,7 @@ import { Menu } from "antd";
 import { CloseButton } from "react-bootstrap";
 import { useAuth } from "../utils/auth/authContext";
 import jwtDecode from "jwt-decode";
-import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons';
+import { CloseOutlined } from '@ant-design/icons';
 import { Avatar, Card } from 'antd';
 
 import styled from "styled-components";
@@ -20,9 +20,9 @@ message.config({
   top: 50,
   duration: 1
 });
-const { Meta } = Card;
 
 const MyArchitecture = () => {
+  const { Meta } = Card;
 
   const [cloudInstances, setCloudInstances] = useState([]);
   const [messageApi, contextHolder] = message.useMessage();
@@ -117,78 +117,51 @@ const MyArchitecture = () => {
                       },
                     ];
                     return (
-                      <>
+                      <CloudInstance key={instance.key}>
 
-                        <CloudInstance
-                          cover={
-                            <img
-                              alt="example"
-                              onClick={() => handleCloudInstance(instance.key, "/draw")}
-                              src={`https://cm-user-file.s3.ap-northeast-2.amazonaws.com/${instance.title}_${user}.png`}
-                              style={{
-                                marginTop: "20px",
-                                // width: "100%",
-                                height: "150px",
-                                objectFit: "contain",
-                                // borderRadius: "5px",
-                                // boxShadow: "1px 1px 1px 1px rgb(235, 235, 235)",
-
-                              }}
-                            />
-                          }
-                          actions={[
-                            <div
-                              style={{
-                                color: "black",
-                                fontFamily: "Noto Sans KR",
-                              }}
-                              onClick={() => handleCloudInstance(instance.key, "/mypage/diagram/summary")}>
-                              Total Cost
-                            </div>,
-                            <Dropdown
-                              overlay={(
-                                <Menu>
-                                  <Menu.Item key="1">
-                                    <a onClick={() => handleCloudInstance(instance.key, "/mypage/diagram/resource")}>Resource</a>
-                                  </Menu.Item>
-                                  <Menu.Item key="2">
-                                    <a onClick={() => handleCloudInstance(instance.key, "/mypage/diagram/security")}>Security</a>
-                                  </Menu.Item>
-                                </Menu>
-                              )} placement="bottomLeft" trigger={['hover']}>
-                              <a
-                                style={{
-                                  color: "black",
-                                  fontFamily: "Noto Sans KR",
-                                }}
-                                className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-                                Guide
-                              </a>
-                            </Dropdown>,
-
-                          ]}
+                        <Popconfirm
+                          title="도식화 삭제"
+                          description={`${instance.title} 도식화를 삭제하시겠습니까?`}
+                          onConfirm={() => confirm(instance.key)}
+                          cancelText="No"
+                          okText="Yes"
+                          placement="right"
                         >
-                          <Popconfirm
-                            title="도식화 삭제"
-                            description={`${instance.title} 도식화를 삭제하시겠습니까?`}
-                            onConfirm={() => confirm(instance.key)}
-                            cancelText="No"
-                            okText="Yes"
-                            placement="right"
-                          >
-                            <DeleteInstanceButton >X</DeleteInstanceButton>
-                          </Popconfirm>
-                          <Meta
-                            style={{
-                              fontFamily: "Noto Sans KR",
-                              textAlign: "left",
-                              marginLeft: "0px",
-                            }}
-                            title={instance.title}
-                          />
-                        </CloudInstance>
-                      </>
+                          <CloseOutlined
+                            style={{ position: "absolute", top: "10px", right: "10px" }}
+                          />                        </Popconfirm>
 
+                        <img
+                          onClick={() => handleCloudInstance(instance.key, "/draw")}
+                          alt="diagram_img"
+                          src={`https://cm-user-file.s3.ap-northeast-2.amazonaws.com/${instance.title}_${user}.png`}
+                          style={{
+                            marginTop: "20px",
+                            width: "100%",
+                            height: "40%",
+                            objectFit: "contain",
+                            // borderRadius: "5px",
+                            // boxShadow: "1px 1px 1px 1px rgb(235, 235, 235)",
+
+                          }}
+                        />
+                        <StyledInstanceTitle>{instance.title}</StyledInstanceTitle>
+
+                        <ButtonContainer>
+                          <StyledButton
+                            style={{ backgroundColor: "#5280DD" }}
+                            onClick={() => handleCloudInstance(instance.key, "/mypage/diagram/summary")}>
+                            Total Cost
+                          </StyledButton>
+
+                          <Dropdown overlay={<Menu items={dropdownItems} />} placement="bottomLeft">
+                            <StyledButton style={{ backgroundColor: "#FD754A" }}>
+                              Guide
+                              <DownOutlined style={{ marginTop: "5px" }} />
+                            </StyledButton>
+                          </Dropdown>
+                        </ButtonContainer>
+                      </CloudInstance>
                     );
                   })}
                 </CloudInstanceRow>
@@ -208,20 +181,29 @@ const MyArchitecture = () => {
 };
 
 export default MyArchitecture;
-
-const CloudInstance = styled(Card)`
-  width: 30%;
-  height: auto;
-  /* border: 1px solid gray; */
-  /* margin-left: 10px; */
-  margin: 10px;
-  /* border-radius: 5px; */
-  /* box-shadow: 1px 1px 1px 1px rgb(235, 235, 235); */
-  position: relative; /* 상대적 위치 지정 */
+const CloudInstance = styled.div`
+  width: 30%; // Adjust the width to fit 3 instances per row
+  height: 320px;
+  border: 1px solid gray;
+  border-radius: 5px;
+  box-shadow: 1px 1px 1px 1px rgb(235, 235, 235);
+  position: relative;
+  margin-top: 10px; // Keep right margin
 `
 
+const CloudInstanceRow = styled.div`
+margin-left: 10px; // Keep left margin
+margin-right: 10px; // Keep right margin
+    display: flex;
+    justify-content: flex-start; // Align items to the start of the row
+    flex-wrap: wrap; // Wrap items to the next line if they overflow
+    width: 100%;
+    gap: 10px; // You can use gap property to maintain consistent spacing
+`
+
+
 const DeleteInstanceButton = styled.button`
-  font-size: 10px;
+  font-size: 15px;
   font-weight: 500;
   position: absolute; /* 절대적 위치 지정 */
   top: 0px; /* 상단에서의 위치 */
@@ -229,18 +211,14 @@ const DeleteInstanceButton = styled.button`
   background-color:transparent;
 `
 
-const CloudInstanceRow = styled.div`
-    display: flex;
-    width: 100%;
-`
-
-
 const StyledButton = styled(Button)`
-  /* min-width: 100px;
+  min-width: 100px;
   margin: 5px;
   color: white;
   font-weight: 500;
-  display: flex; */
+  display: flex;
+  justify-content: space-between;
+  border-radius: 20px;
 
   /* text-align: left; */
 `;
@@ -257,10 +235,10 @@ const StyledSideMenuTitle = styled.div`
   font-size: 20px;
 `;
 
-const StyledInstanceTitle = styled(Meta)`
+const StyledInstanceTitle = styled.div`
   font-family: "Noto Sans KR", sans-serif !important;
   /* font-weight: 500; */
-  font-size: 13px;
+  /* font-size: 20px; */
   text-align: left;
-  /* margin: 20px; */
+  margin: 20px;
 `;

@@ -1,27 +1,68 @@
 {
-    "Backup":[
-        "REL09-BP01",
-        "REL09-BP03"
+    "Group_dev": [
+      "iso-27002.8.4"
     ],
-    "Elastic Disaster Recovery":[
-        "REL09-BP01"
+    "Identity and Access Management (IAM)": [
+      "iso-27002.8.5",
+      "REL09-BP02"
     ],
-    "Identity and Access Management(IAM)":[
-        "REL09-BP02"
+    "Security Hub": [
+      "iso-27002.8.5",
+      "SEC02-BP05"
     ],
-    "Simple Storage Service(S3)":[
-        "REL09-BP02"
+    "Config": [
+      "SEC02-BP05"
     ],
-    "Key management Service(KMS)":[
-        "REL09-BP02",
-        "REL09-BP03"
-
+    "GuardDuty": [
+      "iso-27002.8.5",
+      "iso-27017.9.5.2"
     ],
-    "RDS":[
-        "REL09-BP03",
-        "REL09-BP04"
+    "Detective": [
+      "iso-27002.8.5",
+      "iso-27017.9.5.2"
     ],
-    "DynamoDB":[
-        "REL09-BP04"
+    "Network Firewall": [
+      "iso-27002.8.5",
+      "iso-27017.9.5.2"
+    ],
+    "WAF": [
+      "iso-27002.8.5",
+      "iso-27017.9.5.2"
+    ],
+    "Shield": [
+      "iso-27002.8.5",
+      "iso-27017.9.5.2"
+    ],
+    "Secrets Manager": [
+      "iso-27002.8.5",
+      "REL09-BP02",
+      "REL09-BP03",
+      "SEC02-BP03"
+    ],
+    "Key Management Service": [
+      "iso-27002.8.5"
+    ],
+    "Group_Security Group": [
+      "iso-27017.9.5.2"
+    ],
+    "EC2": [
+      "iso-27017.9.5.2"
+    ],
+    "RDS": [
+      "iso-27017.9.5.2",
+      "REL09-BP03",
+      "REL09-BP04"
+    ],
+    "Group_supply": [
+      "iso-27002.5.21"
+    ],
+    "Backup": [
+      "REL09-BP03"
+    ],
+    "Simple Storage Service (S3)": [
+      "REL09-BP02"
+    ],
+    "DynamoDB": [
+      "REL09-BP04"
     ]
-}
+  }
