@@ -4,6 +4,7 @@ import "../styles/App.css"; // contains .diagram-component CSS
 import handleChangedSelection from "../pages/toggle/toggle";
 import { alertCheck, NodeCheck, GroupCheck } from "../apis/fileAPI";
 import { useData } from "../components/DataContext";
+import { checkForBackupAndS3Nodes, checkForMonitoringNodes } from "../components/GuideAlert";
 import { handleSecurity } from "../components/SecurityAlert";
 
 const useGoJS = (
@@ -544,10 +545,16 @@ const useGoJS = (
         }
       });
     });
-
+    
     diagram.addModelChangedListener(function (e) {
       if (e.isTransactionFinished) {
         onDiagramChange(diagram);
+        setTimeout(() => {
+          checkForBackupAndS3Nodes(diagram, setAlertMessage);
+        }, 1);
+        setTimeout(() => {
+          checkForMonitoringNodes(diagram, setAlertMessage);
+        }, 30);
       }
     });
 
