@@ -5,12 +5,14 @@ import handleChangedSelection from "../pages/toggle/toggle";
 import { alertCheck, NodeCheck, GroupCheck } from "../apis/fileAPI";
 import { sidebarResource } from "../apis/sidebar";
 import { useData } from "../components/DataContext";
+import { handleSecurity } from './SecurityAlert';
 
 const useGoJS = (
   setShowToggle,
   onDiagramChange,
   handleguide,
-  setAlertMessage
+  setAlertMessage,
+  setSecurityMessage
 ) => {
   const [diagram, setDiagram] = useState(null);
   const [clickedNodeKey, setClickedNodeKey] = useState();
@@ -37,6 +39,10 @@ const useGoJS = (
     }
     grp.isHighlighted = false;
   }
+
+  
+
+
 
   // add group via drag and drop
   function finishDrop(e, grp) {
@@ -69,6 +75,9 @@ const useGoJS = (
       ),
       "draggingTool.isGridSnapEnabled": true,
       "resizingTool.isGridSnapEnabled": true,
+      model: new go.GraphLinksModel({
+        linkKeyProperty: 'uniqueLinkId', // Replace with your actual link property
+      }),
       ModelChanged: async (e) => {
         if (e.isTransactionFinished) {
           const jsonString = e.model.toIncrementalJson(e);
@@ -84,6 +93,7 @@ const useGoJS = (
                 );
                 //diagram.undoManager.undo();
                 setAlertMessage((prevDiagramCheck) => {
+                  console.log("prevDiagramCheck", prevDiagramCheck);
                   const isDuplicate = prevDiagramCheck.some(
                     (item) => item === response.data.result.message
                   );
@@ -114,7 +124,6 @@ const useGoJS = (
                     PostData.newData = data.modifiedNodeData[i];
                     console.log("NodeCheck 호출");
                     const response = await GroupCheck(PostData);
-                    console.log("API Response:", response.data);
                     if (response.data.result.status === "fail") {
                       setAlertMessage((prevDiagramCheck) => {
                         const isDuplicate = prevDiagramCheck.some(
@@ -159,11 +168,13 @@ const useGoJS = (
             }
           }
         }
+        handleSecurity(e, diagram, setSecurityMessage);
       },
-      model: new go.GraphLinksModel({
-        linkKeyProperty: "key",
-      }),
+      
+    
     });
+    
+  
 
     // delete
     diagram.addLayerBefore(
