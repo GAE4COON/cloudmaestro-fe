@@ -232,13 +232,13 @@ function Draw() {
     let backgroundColor;
     switch (alertMessage.tag) {
       case "Error":
-        backgroundColor = "#FFE2E2"; // 에러 배경색
+        backgroundColor = "#FFF0F0"; // 에러 배경색
         break;
       case "Warn":
-        backgroundColor = "#FFF1C0"; // 경고 배경색
+        backgroundColor = "#FFF8E0"; // 경고 배경색
         break;
       case "Info":
-        backgroundColor = "#92B1FF"; // 정보 배경색
+        backgroundColor = "#DFE8FF"; // 정보 배경색
         break;
       default:
         backgroundColor = "#FFFFFF"; // 기본 배경색
