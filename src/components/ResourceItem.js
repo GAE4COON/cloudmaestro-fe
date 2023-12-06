@@ -8,7 +8,10 @@ function ResourceItem({ bp, resource, groupArray }) {
     <div>
       <ResourceContain>
         <ResourceTitleContainer>
+          <TitleContainer>
           <ListTitle>{resource.title}</ListTitle>
+          <ResourceArray>{bp}</ResourceArray>
+          </TitleContainer>
           {resourceArray.filter(resource => !resource.startsWith("Group_")).map((resource, index, filteredArray) => (
             <ResourceArray key={index}>
               {resource}{index < filteredArray.length - 1 ? ', ' : ''}
@@ -20,6 +23,7 @@ function ResourceItem({ bp, resource, groupArray }) {
             groupArray
               .filter(group => {
                 const groupPrefix = resourceArray.find(r => r.startsWith("Group_"))?.substring(6).toLowerCase();
+                console.log(group,"/", groupPrefix, "/",resource);
                 return group.toLowerCase().startsWith(groupPrefix);
               })
               .map((group, index, filteredArray) => (
@@ -51,7 +55,11 @@ function ResourceItem({ bp, resource, groupArray }) {
 }
 
 export default ResourceItem;
-
+const TitleContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: left;
+`
 
 const ResourceTitleContainer = styled.div`
 margin-bottom: 20px;

@@ -1,10 +1,7 @@
 import React, { useState, useCallback, useEffect } from "react";
 import * as go from "gojs";
 import { ReactDiagram } from "gojs-react";
-import styled from "styled-components";
-import { message } from 'antd';
-
-
+import styled, { createGlobalStyle } from "styled-components";
 import useGoJS from "../hooks/useGoJS.js";
 import SelectEc2Toggle from "../components/cost/SelectEc22Toggle";
 import SelectRdsToggle from "../components/cost/SelectRdsToggle";
@@ -14,15 +11,17 @@ import { useMediaQuery } from "react-responsive";
 import { nodeDataArrayPalette } from "../db/Node";
 
 import { useLocation } from "react-router-dom";
+import { message } from "antd";
+import { Button, notification } from "antd";
 import { Alert, Space, Modal, Input } from "antd";
 import { saveDiagram, updateDiagram } from "../apis/fileAPI";
 import { DrawResourceGuide } from "../apis/resource";
 import "../styles/App.css";
-import jsonData from '../db/ResourceGuide.json'; // JSON 파일 경로
+import jsonData from "../db/ResourceGuide.json"; // JSON 파일 경로
 
 // 페이지
 // import useReadJSON from "./useReadJSON";
-import Button from "./Button.js";
+import ModalButton from "./Button.js";
 import Sidebar from "../components/Sidebar";
 import Palette from "../components/Palette";
 import "../styles/Draw.css";
@@ -31,10 +30,15 @@ import { summaryFile } from "../apis/fileAPI.js";
 import { Link } from "react-router-dom";
 import RequirementPopup from "../components/RequirementPopup";
 import { DataContext, useData } from "../components/DataContext.js"; // DataContext의 경로를 수정하세요
+import { SoundTwoTone } from "@ant-design/icons";
+
+const close = () => {
+  console.log("Notification was closed.");
+};
 
 message.config({
   top: 50,
-  duration: 1
+  duration: 1,
 });
 
 function Draw() {
@@ -47,17 +51,18 @@ function Draw() {
   const diagramClassName = "diagram-component";
 
   const [finalToggleValue, setFinalToggleValue] = useState({});
-  const [selectedNodeData, setSelectedNodeData] = useState(null); // <-- 상태 변수를 추가합니다.
+  const [selectedNodeData, setSelectedNodeData] = useState(null); // <- 상태 변수를 추가합니다.
   const [showToggle, setShowToggle] = useState(true);
-  const [alertMessage, setAlertMessage] = useState([]);
   const { setData } = useData();
   const [mydiagram, setmyDiagram] = useState(null);
   const [NodeGuide, setNodeGuide] = useState(null);
   const [isSave, setIsSave] = useState(false); // 저장 여부 판단
-  const [NodeGuideLine, setNodeGuideLine] = useState({
+  const [alertMessage, setAlertMessage] = useState({
     key: null,
     message: null,
+    tag: null,
   });
+
   const [fileName, setFileName] = useState("제목 없는 다이어그램");
 
   const [diagramVersion, setDiagramVersion] = useState(0);
@@ -72,6 +77,7 @@ function Draw() {
  
   useEffect(() => { }, [diagramVersion]); // Dependency on diagramVersion
 
+
   const [nodeRole, setNodeRole] = useState({});
 
   useEffect(() => {
@@ -83,33 +89,31 @@ function Draw() {
     setDiagramVersion((prevVersion) => prevVersion + 1);
   });
 
-  const handleguide = useCallback((guide) => {
-    setNodeGuide(guide);
-  });
-
+  // const handleguide = useCallback((guide) => {
+  //   setNodeGuide(guide);
+  // });
   const { initDiagram, diagram, showSelectToggle, clickedNodeKey } = useGoJS(
     setShowToggle,
     handleDiagramChange,
-    handleguide,
+    // handleguide,
     setAlertMessage
   );
 
   useEffect(() => {
     setIsSave(save);
     if (info && diagram) {
-      setFileName(info.filename)
+      setFileName(info.filename);
       if (info.file.result.hasOwnProperty("cost")) {
         setFinalToggleValue(info.file.result["cost"]);
       }
       const diagramModel = go.Model.fromJson(info.file.result);
       diagram.model = diagramModel;
     }
-    
-    if(onpremise && diagram){
+
+    if (onpremise && diagram) {
       const diagramModel = go.Model.fromJson(onpremise);
       diagram.model = diagramModel;
     }
-
   }, [info, diagram]);
 
   useEffect(() => {
@@ -118,31 +122,6 @@ function Draw() {
     }
     setData(null);
   }, [location]);
-
-  useEffect(() => {
-    const fetchResourceGuide = () => {
-      if (NodeGuide) {
-        if (nodeRole[`${NodeGuide}`] && nodeRole[`${NodeGuide}`].role) {
-          setNodeGuideLine({ key: NodeGuide, message: nodeRole[`${NodeGuide}`].role });
-        } else {
-          setNodeGuideLine({
-            key: NodeGuide,
-            message: "추후 추가 예정",
-          });
-        }
-      }
-    };
-
-    fetchResourceGuide();
-  }, [NodeGuide]);
-
-
-  const removeAlert = (index) => {
-    setAlertMessage((currentMessages) =>
-      currentMessages.filter((_, i) => i !== index)
-    );
-    console.log("change AlertMessage:", alertMessage);
-  };
 
   const handleNodeSelect = useCallback(
     (label) => {
@@ -195,7 +174,7 @@ function Draw() {
         type: "image/png",
       });
 
-      const base64ImageContent = img.split(',')[1];
+      const base64ImageContent = img.split(",")[1];
 
       var response;
       if(!isSave){
@@ -209,6 +188,7 @@ function Draw() {
         console.log("base64ImageContent", base64ImageContent);
         response = await updateDiagram(diagramData, fileName, base64ImageContent);
       }
+
       hideLoading();
 
     
@@ -220,7 +200,7 @@ function Draw() {
         }
 
       }
-      else {
+else {
         message.warning("중복된 이름이 존재합니다. 다시 시도해주세요.");
       }
     } catch (error) {
@@ -247,12 +227,75 @@ function Draw() {
     }
   };
 
+  useEffect(() => {
+    if (alertMessage.message !== null) {
+      openNotification();
+    }
+    console.log("alertMessage", alertMessage);
+  }, [alertMessage]);
 
+  const [api, contextHolder] = notification.useNotification();
+  const openNotification = () => {
+    const key = `open${Date.now()}`;
+    const btn = (
+      <Space>
+        <Button type="link" size="small" onClick={() => api.destroy()}>
+          Destroy All
+        </Button>
+        <Button type="primary" size="small" onClick={() => api.destroy(key)}>
+          Confirm
+        </Button>
+      </Space>
+    );
+
+    let backgroundColor;
+    switch (alertMessage.tag) {
+      case "Error":
+        backgroundColor = "#FFF0F0"; // 에러 배경색
+        break;
+      case "Warn":
+        backgroundColor = "#FFF8E0"; // 경고 배경색
+        break;
+      case "Info":
+        backgroundColor = "#DFE8FF"; // 정보 배경색
+        break;
+      default:
+        backgroundColor = "#FFFFFF"; // 기본 배경색
+        break;
+    }
+
+    let backgroundTitle;
+    switch (alertMessage.tag) {
+      case "Error":
+        backgroundTitle = "❌Error!"; // 에러 배경색
+        break;
+      case "Warn":
+        backgroundTitle = "⚠️Warnning"; // 경고 배경색
+        break;
+      case "Info":
+        backgroundTitle = "✔️Info"; // 정보 배경색
+        break;
+      default:
+        backgroundTitle = "NotThing"; // 기본 배경색
+        break;
+    }
+
+    api.open({
+      message: backgroundTitle,
+      description: alertMessage.message,
+      btn,
+      key,
+      onClose: close,
+      style: { backgroundColor, borderRadius: "8px" },
+    });
+  };
   return (
     <div className="main-content">
       <div className="Draw">
         <div className="container">
           <div className="workspace">
+            {contextHolder}
+            {/* <GlobalStyle tag={alertMessage.tag} /> */}
             <div className="palette">
               <Palette
                 divClassName={paletteClassName}
@@ -264,7 +307,7 @@ function Draw() {
               <DiagramTop>
                 <FileName>파일 이름: {fileName}</FileName>
                 <SaveButton>
-                  <Button
+                  <ModalButton
                     diagram={diagram}
                     showToggle={showToggle}
                     setShowToggle={setShowToggle}
@@ -285,32 +328,12 @@ function Draw() {
                 onOk={handleOk}
                 onCancel={handleCancel}
               >
-                <Input value={fileName} onChange={handleChange} placeholder="파일 이름" />
+                <Input
+                  value={fileName}
+                  onChange={handleChange}
+                  placeholder="파일 이름"
+                />
               </Modal>
-              <StyleSpace direction="vertical">
-                {alertMessage.map((message, index) => (
-                  <StyleAlert
-                    key={index}
-                    message={message}
-                    type="error"
-                    showIcon
-                    closable
-                    onClose={() => removeAlert(index)}
-                  />
-                ))}
-                {NodeGuideLine && NodeGuideLine.key && (
-                  <StyleAlert
-                    message={NodeGuideLine.key}
-                    description={NodeGuideLine.message}
-                    type="info"
-                    closable
-                    onClose={() => {
-                      setNodeGuide(null);
-                      setNodeGuideLine({ key: null, message: null });
-                    }}
-                  />
-                )}
-              </StyleSpace>
               {showToggle &&
                 showSelectToggle.value &&
                 showSelectToggle.key.includes("EC2") &&
@@ -367,9 +390,10 @@ function Draw() {
             </DiagramContainer>
             {isPopup ? (
               <RequirementPopup
-              diagram={diagram} 
-              fileName={fileName}
-              handlePopup={handlePopup} />
+                diagram={diagram}
+                fileName={fileName}
+                handlePopup={handlePopup}
+              />
             ) : (
               ""
             )}
@@ -390,10 +414,10 @@ const SaveButton = styled.div`
   z-index: 20;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-`
+`;
 const DiagramTop = styled.div`
   display: flex;
-`
+`;
 
 const FileName = styled.div`
   font-family: "Noto Sans KR", sans-serif !important;
@@ -404,7 +428,7 @@ const FileName = styled.div`
   margin-left: 20px;
   padding-bottom: 5px;
   border-bottom: 1px solid #d9d9d9;
-`
+`;
 
 const StyledDiagram = styled.div`
   /* float: left; */

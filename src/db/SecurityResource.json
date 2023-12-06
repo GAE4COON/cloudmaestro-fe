@@ -1,60 +1,81 @@
 {
     "Group_dev": [
-      "iso-27002.8.4"
+      "ISO/IEC 27002 8.4"
     ],
     "Identity and Access Management (IAM)": [
-      "iso-27002.8.5",
-      "REL09-BP02"
+      "ISO/IEC 27002 8.5",
+      "REL09-BP02",
+      "ISO/IEC 27002 5.16",
+      "ISO/IEC 27002 5.17",
+      "ISO/IEC 27002 5.18"
     ],
     "Security Hub": [
-      "iso-27002.8.5",
-      "SEC02-BP05"
+      "ISO/IEC 27002 8.5",
+      "SEC02-BP05",
+      "ISO/IEC 27002 5.18"
     ],
     "Config": [
       "SEC02-BP05"
     ],
     "GuardDuty": [
-      "iso-27002.8.5",
-      "iso-27017.9.5.2"
+      "ISO/IEC 27002 8.5",
+      "ISO/IEC 27017 9.5.2",
+      "ISO/IEC 27002 5.18"
     ],
     "Detective": [
-      "iso-27002.8.5",
-      "iso-27017.9.5.2"
+      "ISO/IEC 27002 8.5",
+      "ISO/IEC 27017 9.5.2",
+      "ISO/IEC 27002 5.18"
     ],
     "Network Firewall": [
-      "iso-27002.8.5",
-      "iso-27017.9.5.2"
+      "ISO/IEC 27002 8.5",
+      "ISO/IEC 27017 9.5.2",
+      "ISO/IEC 27002 5.18"
     ],
     "WAF": [
-      "iso-27002.8.5",
-      "iso-27017.9.5.2"
+      "ISO/IEC 27002 8.5",
+      "ISO/IEC 27017 9.5.2",
+      "ISO/IEC 27002 5.18",
+      "ISO/IEC 27002 5.29"
+
     ],
     "Shield": [
-      "iso-27002.8.5",
-      "iso-27017.9.5.2"
+      "ISO/IEC 27002 8.5",
+      "ISO/IEC 27017 9.5.2",
+      "ISO/IEC 27002 5.18",
+      "ISO/IEC 27002 5.29"
+
     ],
     "Secrets Manager": [
-      "iso-27002.8.5",
+      "ISO/IEC 27002 8.5",
       "REL09-BP02",
       "REL09-BP03",
-      "SEC02-BP03"
+      "SEC02-BP03",
+      "ISO/IEC 27002 5.18"
     ],
     "Key Management Service": [
-      "iso-27002.8.5"
+      "ISO/IEC 27002 8.5",
+      "ISO/IEC 27002 5.16",
+      "ISO/IEC 27002 5.17",
+      "ISO/IEC 27002 5.18"
     ],
-    "Group_Security Group": [
-      "iso-27017.9.5.2"
+    "Group_security group": [
+      "ISO/IEC 27017 9.5.2",
+      "ISO/IEC 27002 5.29",
+      "ISO/IEC 27018 12.1.4"
     ],
     "EC2": [
-      "iso-27017.9.5.2"
+      "ISO/IEC 27017 9.5.2"
     ],
     "RDS": [
-      "iso-27017.9.5.2",
+      "ISO/IEC 27017 9.5.2",
       "REL09-BP03",
       "REL09-BP04"
     ],
     "Group_supply": [
-      "iso-27002.5.21"
+      "ISO/IEC 27002 5.21",
+      "ISO/IEC 27018 12.1.4"
+
     ],
     "Backup": [
       "REL09-BP03"
@@ -64,5 +85,26 @@
     ],
     "DynamoDB": [
       "REL09-BP04"
+    ],
+    "Cognito":[
+      "ISO/IEC 27002 5.16",
+      "ISO/IEC 27002 5.17"
+    ],
+    "CloudTrail":[
+        "ISO/IEC 27002 5.25",
+        "ISO/IEC 27018 12.4.2"
+    ],
+    "CloudWatch":[
+        "ISO/IEC 27002 5.25",
+        "ISO/IEC 27018 12.4.2"
+    ],
+    "OpenSearch Service":[
+        "ISO/IEC 27002 5.7/5.27"
+    ],
+    "Athena":[
+        "ISO/IEC 27002 5.7/5.27"
+    ],
+    "QuickSight":[
+        "ISO/IEC 27002 5.7/5.27"
     ]
   }

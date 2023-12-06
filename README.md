@@ -1,5 +1,7 @@
-# Example
-![image](https://github.com/GAE4COON/Diagram_sample/assets/112956015/4286a817-e3ab-47c3-b96a-443de2cf65fc)
+임시 readme 변경
+---
+# Getting Started with Create React App
+
 
 ## Use
 - React

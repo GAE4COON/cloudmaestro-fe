@@ -50,7 +50,7 @@ const MyArchitecture = () => {
     const fetchMyNetwork = async () => {
       const myNetwork = await myNetworkDB();
       setCloudInstances(myNetwork.data);
-      console.log(myNetwork.data)
+      console.log(myNetwork.data);
     };
 
     fetchMyNetwork();
@@ -75,11 +75,14 @@ const MyArchitecture = () => {
   const confirm = async (key, e) => {
     const response = await deleteDiagramData(key);
     console.log("response.data", response.data);
-    setCloudInstances(cloudInstances.filter(instance => instance.key !== key));
+    setCloudInstances(
+      cloudInstances.filter((instance) => instance.key !== key)
+    );
 
     message.success('도식화가 삭제되었습니다.');
 
   };
+
 
   return (
     <div className="main-content">
@@ -170,13 +173,11 @@ const MyArchitecture = () => {
                 <p>도식화 히스토리가 없습니다.</p>
 
               </div>
-            )
-            }
+            )}
           </div>
         </div>
       </div>
     </div>
-
   );
 };
 
@@ -224,9 +225,9 @@ const StyledButton = styled(Button)`
 `;
 
 const ButtonContainer = styled.div`
-    align-items: end;
-    display: flex;
-    flex-direction: column;
+  align-items: end;
+  display: flex;
+  flex-direction: column;
 `;
 
 const StyledSideMenuTitle = styled.div`
