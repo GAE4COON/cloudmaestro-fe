@@ -5,6 +5,8 @@ import handleChangedSelection from "../pages/toggle/toggle";
 import { alertCheck, NodeCheck, GroupCheck } from "../apis/fileAPI";
 import { useData } from "../components/DataContext";
 import { checkForBackupAndS3Nodes } from "../components/AlertBackUp";
+import { checkForMonitoringNodes } from "../components/AlertMonitoring"
+
 const useGoJS = (
   setShowToggle,
   onDiagramChange,
@@ -569,7 +571,10 @@ const useGoJS = (
     diagram.addModelChangedListener(function (e) {
       if (e.isTransactionFinished) {
         onDiagramChange(diagram);
+        //checkForBackupAndS3Nodes(diagram, setWarnMessage);
         checkForBackupAndS3Nodes(diagram, setWarnMessage);
+        checkForMonitoringNodes(diagram, setWarnMessage);
+
       }
     });
 
