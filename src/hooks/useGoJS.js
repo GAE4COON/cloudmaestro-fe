@@ -4,12 +4,15 @@ import "../styles/App.css"; // contains .diagram-component CSS
 import handleChangedSelection from "../pages/toggle/toggle";
 import { alertCheck, NodeCheck, GroupCheck } from "../apis/fileAPI";
 import { useData } from "../components/DataContext";
-import { checkForBackupAndS3Nodes } from "../components/AlertBackUp";
+import { handleSecurity } from "../components/SecurityAlert";
+
 const useGoJS = (
   setShowToggle,
   onDiagramChange,
   // handleguide,
   setAlertMessage
+  // setWarnMessage,
+  // setInfoMessage
 ) => {
   const [diagram, setDiagram] = useState(null);
   const [clickedNodeKey, setClickedNodeKey] = useState();
@@ -36,6 +39,10 @@ const useGoJS = (
     }
     grp.isHighlighted = false;
   }
+
+  
+
+
 
   // add group via drag and drop
   function finishDrop(e, grp) {
@@ -68,6 +75,9 @@ const useGoJS = (
       ),
       "draggingTool.isGridSnapEnabled": true,
       "resizingTool.isGridSnapEnabled": true,
+      model: new go.GraphLinksModel({
+        linkKeyProperty: 'uniqueLinkId', // Replace with your actual link property
+      }),
       ModelChanged: async (e) => {
         if (e.isTransactionFinished) {
           const jsonString = e.model.toIncrementalJson(e);
@@ -82,10 +92,20 @@ const useGoJS = (
                   "링크 취소해도 되는 부분.. 주석처리만 하니까 안 올라가서 우선 콘솔로그라도 띄움"
                 );
                 //diagram.undoManager.undo();
-                setAlertMessage({
-                  key: Date.now(), // 현재 타임스탬프를 key로 사용
-                  message: response.data.result.message,
-                  tag: "Error",
+                setAlertMessage((prevDiagramCheck) => {
+                  const isDuplicate = prevDiagramCheck.some(
+                    (item) => item === response.data.result.message
+                  );
+                  if (!isDuplicate) {
+                    const newMessage = {
+                      key: Date.now(), // 현재 타임스탬프를 key로 사용
+                      message: response.data.result.message,
+                    };
+
+                    return [...prevDiagramCheck, newMessage];
+                  } else {
+                    return prevDiagramCheck;
+                  }
                 });
               }
             } catch (error) {
@@ -108,7 +128,7 @@ const useGoJS = (
                     PostData.newData = data.modifiedNodeData[i];
                     //console.log("NodeCheck 호출");
                     const response = await GroupCheck(PostData);
-                    //console.log("API Response:", response.data);
+                    console.log("API Response:", response.data);
                     if (response.data.result.status === "fail") {
                       setAlertMessage({
                         key: Date.now(), // 현재 타임스탬프를 key로 사용
@@ -156,12 +176,14 @@ const useGoJS = (
               console.error("API Error:", error);
             }
           }
+          handleSecurity(e, diagram,setAlertMessage);
         }
       },
-      model: new go.GraphLinksModel({
-        linkKeyProperty: "key",
-      }),
+      
+    
     });
+    
+  
 
     // delete
     diagram.addLayerBefore(
@@ -523,12 +545,11 @@ const useGoJS = (
       });
     });
 
-    // diagram.addModelChangedListener(function (e) {
-    //   if (e.isTransactionFinished) {
-    //     onDiagramChange(diagram);
-    //     checkForBackupAndS3Nodes(diagram, setWarnMessage);
-    //   }
-    // });
+    diagram.addModelChangedListener(function (e) {
+      if (e.isTransactionFinished) {
+        onDiagramChange(diagram);
+      }
+    });
 
     diagram.addDiagramListener("ChangedSelection", async (e) => {
       const selectedNode = e.diagram.selection.first();
