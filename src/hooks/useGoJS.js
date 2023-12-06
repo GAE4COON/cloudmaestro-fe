@@ -23,6 +23,7 @@ const useGoJS = (
   //   console.log("DiagramCheck", DiagramCheck);
   // }, [DiagramCheck]);
 
+
   function highlightGroup(e, grp, show) {
     if (!grp) return;
     e.handled = true;
@@ -72,6 +73,7 @@ const useGoJS = (
         if (e.isTransactionFinished) {
           const jsonString = e.model.toIncrementalJson(e);
           const data = JSON.parse(jsonString);
+          console.log("노드 추가영: ",data);
           if (data.insertedLinkKeys) {
             console.log("insertedLinkKeys", data.modifiedLinkData);
             try {
@@ -110,9 +112,9 @@ const useGoJS = (
                   ) {
                     PostData.checkOption = "VPC";
                     PostData.newData = data.modifiedNodeData[i];
-                    console.log("NodeCheck 호출");
+                    //console.log("NodeCheck 호출");
                     const response = await GroupCheck(PostData);
-                    console.log("API Response:", response.data);
+                    //console.log("API Response:", response.data);
                     if (response.data.result.status === "fail") {
                       setAlertMessage((prevDiagramCheck) => {
                         const isDuplicate = prevDiagramCheck.some(
@@ -131,10 +133,10 @@ const useGoJS = (
                   } else if (data.modifiedNodeData[i].text === "API Gateway") {
                     PostData.checkOption = "API Gateway";
                     PostData.newData = data.modifiedNodeData[i];
-                    console.log("NodeCheck 호출");
+                    //console.log("NodeCheck 호출");
                     const response = await NodeCheck(PostData);
                     if (response.data.result.status === "fail") {
-                      console.log("API Response:", response.data);
+                      //console.log("API Response:", response.data);
                       setAlertMessage((prevDiagramCheck) => {
                         const isDuplicate = prevDiagramCheck.some(
                           (item) => item === response.data.result.message
@@ -526,6 +528,12 @@ const useGoJS = (
     diagram.addModelChangedListener(function (e) {
       if (e.isTransactionFinished) {
         onDiagramChange(diagram);
+        console.log("node:",diagram.model.nodeDataArray);
+        const hasS3Node = diagram.model.nodeDataArray.some(node => node.text === "Simple Storage Service (S3)");
+        const hasBackUpNode = diagram.model.nodeDataArray.some(node => node.text === "Backup");
+        if (!hasS3Node&&!hasBackUpNode){
+          
+        }
       }
     });
 
