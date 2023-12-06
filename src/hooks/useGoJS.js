@@ -4,7 +4,7 @@ import "../styles/App.css"; // contains .diagram-component CSS
 import handleChangedSelection from "../pages/toggle/toggle";
 import { alertCheck, NodeCheck, GroupCheck } from "../apis/fileAPI";
 import { useData } from "../components/DataContext";
-
+import { checkForBackupAndS3Nodes } from "../components/AlertBackUp";
 const useGoJS = (
   setShowToggle,
   onDiagramChange,
@@ -569,12 +569,7 @@ const useGoJS = (
     diagram.addModelChangedListener(function (e) {
       if (e.isTransactionFinished) {
         onDiagramChange(diagram);
-        console.log("node:",diagram.model.nodeDataArray);
-        const hasS3Node = diagram.model.nodeDataArray.some(node => node.text === "Simple Storage Service (S3)");
-        const hasBackUpNode = diagram.model.nodeDataArray.some(node => node.text === "Backup");
-        if (!hasS3Node&&!hasBackUpNode){
-          
-        }
+        checkForBackupAndS3Nodes(diagram, setWarnMessage);
       }
     });
 
