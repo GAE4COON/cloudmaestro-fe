@@ -50,13 +50,15 @@ function Draw() {
   const [selectedNodeData, setSelectedNodeData] = useState(null); // <-- 상태 변수를 추가합니다.
   const [showToggle, setShowToggle] = useState(true);
   const [alertMessage, setAlertMessage] = useState([]);
+  const [warnMessage, setWarnMessage] = useState([]);
+  const [infoMessage, setInfoMessage] = useState([]);
   const { setData } = useData();
   const [mydiagram, setmyDiagram] = useState(null);
-  const [NodeGuide, setNodeGuide] = useState(null);
-  const [NodeGuideLine, setNodeGuideLine] = useState({
-    key: null,
-    message: null,
-  });
+  // const [NodeGuide, setNodeGuide] = useState(null);
+  // const [NodeGuideLine, setNodeGuideLine] = useState({
+  //   key: null,
+  //   message: null,
+  // });
   const [fileName, setFileName] = useState("제목 없는 다이어그램");
 
   const [diagramVersion, setDiagramVersion] = useState(0);
@@ -82,15 +84,17 @@ function Draw() {
     setDiagramVersion((prevVersion) => prevVersion + 1);
   });
 
-  const handleguide = useCallback((guide) => {
-    setNodeGuide(guide);
-  });
+  // const handleguide = useCallback((guide) => {
+  //   setNodeGuide(guide);
+  // });
 
   const { initDiagram, diagram, showSelectToggle, clickedNodeKey } = useGoJS(
     setShowToggle,
     handleDiagramChange,
-    handleguide,
-    setAlertMessage
+    // handleguide,
+    setAlertMessage,
+    setWarnMessage,
+    setInfoMessage
   );
 
   useEffect(() => {
@@ -116,31 +120,42 @@ function Draw() {
     setData(null);
   }, [location]);
 
-  useEffect(() => {
-    const fetchResourceGuide = () => {
-      if (NodeGuide) {
-        if (nodeRole[`${NodeGuide}`] && nodeRole[`${NodeGuide}`].role) {
-          setNodeGuideLine({
-            key: NodeGuide,
-            message: nodeRole[`${NodeGuide}`].role,
-          });
-        } else {
-          setNodeGuideLine({
-            key: NodeGuide,
-            message: "추후 추가 예정",
-          });
-        }
-      }
-    };
+  // useEffect(() => {
+  //   const fetchResourceGuide = () => {
+  //     if (NodeGuide) {
+  //       if (nodeRole[`${NodeGuide}`] && nodeRole[`${NodeGuide}`].role) {
+  //         setNodeGuideLine({
+  //           key: NodeGuide,
+  //           message: nodeRole[`${NodeGuide}`].role,
+  //         });
+  //       } else {
+  //         setNodeGuideLine({
+  //           key: NodeGuide,
+  //           message: "추후 추가 예정",
+  //         });
+  //       }
+  //     }
+  //   };
 
-    fetchResourceGuide();
-  }, [NodeGuide]);
+  //   fetchResourceGuide();
+  // }, [NodeGuide]);
 
-  const removeAlert = (index) => {
-    setAlertMessage((currentMessages) =>
-      currentMessages.filter((_, i) => i !== index)
+  const removeAlert = (id) => {
+    setAlertMessage((currentAlerts) =>
+      currentAlerts.filter((alert) => alert.id !== id)
     );
-    console.log("change AlertMessage:", alertMessage);
+  };
+
+  const removeWarn = (id) => {
+    setWarnMessage((currentAlerts) =>
+      currentAlerts.filter((alert) => alert.id !== id)
+    );
+  };
+
+  const removeInfo = (id) => {
+    setInfoMessage((currentAlerts) =>
+      currentAlerts.filter((alert) => alert.id !== id)
+    );
   };
 
   const handleNodeSelect = useCallback(
@@ -268,17 +283,39 @@ function Draw() {
                 />
               </Modal>
               <StyleSpace direction="vertical">
-                {alertMessage.map((message, index) => (
+                {alertMessage.map((item) => (
                   <StyleAlert
-                    key={index}
-                    message={message}
+                    key={item.key}
+                    message={item.message}
                     type="error"
                     showIcon
                     closable
-                    onClose={() => removeAlert(index)}
+                    onClose={() => removeAlert(item.key)}
                   />
                 ))}
-                {NodeGuideLine && NodeGuideLine.key && (
+                {warnMessage.map((item) => (
+                  <StyleAlert
+                    key={item.key}
+                    message={item.message}
+                    type="warning"
+                    showIcon
+                    closable
+                    onClose={() => removeWarn(item.key)}
+                  />
+                ))}
+
+                {infoMessage.map((item) => (
+                  <StyleAlert
+                    key={item.key}
+                    message={item.message}
+                    type="info"
+                    showIcon
+                    closable
+                    onClose={() => removeInfo(item.key)}
+                  />
+                ))}
+
+                {/* {NodeGuideLine && NodeGuideLine.key && (
                   <StyleAlert
                     message={NodeGuideLine.key}
                     description={NodeGuideLine.message}
@@ -289,7 +326,7 @@ function Draw() {
                       setNodeGuideLine({ key: null, message: null });
                     }}
                   />
-                )}
+                )} */}
               </StyleSpace>
               {showToggle &&
                 showSelectToggle.value &&
