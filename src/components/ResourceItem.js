@@ -3,6 +3,7 @@ import data from '../db/SecurityResource.json'; // JSON 파일 경로
 
 function ResourceItem({ bp, resource, groupArray }) {
   const resourceArray = Object.keys(data).filter(key => data[key].includes(`${bp}`));
+  let isResourceArrayOutput = false;
 
   return (
     <div>
@@ -13,27 +14,30 @@ function ResourceItem({ bp, resource, groupArray }) {
             <ResourceArray>{bp}</ResourceArray>
           </TitleContainer>
 
-          {resourceArray.filter(resource => !resource.startsWith("Group_")).map((resource, index, filteredArray) => (
-            <ResourceArray key={index}>
-              {resource}{index < filteredArray.length - 1 ? ', ' : ''}
-            </ResourceArray>
-          ))}
+      
+          {resourceArray.filter(resource => !resource.startsWith("Group_")).map((resource, index, filteredArray) => {
+            isResourceArrayOutput = true;  // 요소가 출력되었음을 표시
+            return (
+              <ResourceArray key={index}>
+                {resource}{index < filteredArray.length - 1 ? ', ' : ''}
+              </ResourceArray>
+            );
+          })}
           {
             resourceArray.some(resource => resource.startsWith("Group_")) && (
               groupArray
                 .filter(group => {
-                  // Collect all unique group prefixes
+                  // 기존 필터 로직 유지
                   const groupPrefixes = resourceArray
                     .filter(r => r.startsWith("Group_"))
                     .map(r => r.substring(6).toLowerCase())
                     .filter((value, index, self) => self.indexOf(value) === index);
 
-                  // Check if group starts with any of the prefixes
                   return groupPrefixes.some(prefix => group.toLowerCase().startsWith(prefix));
                 })
                 .map((group, index, filteredArray) => (
                   <ResourceArray key={index}>
-                    {group}{index < filteredArray.length - 1 ? ', ' : ''}
+                    {index === 0 && isResourceArrayOutput ? ', ' : ''}{group}{index < filteredArray.length - 1 ? ', ' : ''}
                   </ResourceArray>
                 ))
             )
