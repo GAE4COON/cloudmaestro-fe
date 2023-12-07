@@ -136,6 +136,23 @@ const useGoJS = (
                         tag: "Error",
                       });
                     }
+                  } else if (
+                    data.insertedNodeKeys[i].startsWith("S3") ||
+                    data.insertedNodeKeys[i].startsWith("Cloud Trail") ||
+                    data.insertedNodeKeys[i].startsWith("CloudWatch")
+                  ) {
+                    PostData.checkOption = "Database";
+                    PostData.newData = data.modifiedNodeData[i];
+                    console.log("NodeCheck 호출");
+                    const response = await NodeCheck(PostData);
+                    if (response.data.result.status === "fail") {
+                      console.log("API Response:", response.data);
+                      setAlertMessage({
+                        key: Date.now(), // 현재 타임스탬프를 key로 사용
+                        message: response.data.result.message,
+                        tag: "Warn",
+                      });
+                    }
                   } else if (data.modifiedNodeData[i].type === "Database") {
                     PostData.checkOption = "Database";
                     PostData.newData = data.modifiedNodeData[i];
@@ -153,7 +170,7 @@ const useGoJS = (
                 }
               }
             } catch (error) {
-              console.error("API Error:", error);
+              console.error("API Error:", error, data.insertedLinkKeys);
             }
           }
         }

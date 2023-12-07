@@ -264,7 +264,7 @@ function Draw() {
         backgroundTitle = "✔️Info"; // 정보 배경색
         break;
       default:
-        backgroundTitle = "NotThing"; // 기본 배경색
+        backgroundTitle = "Nothing"; // 기본 배경색
         break;
     }
 

@@ -4,7 +4,15 @@ import "../styles/Button.css"; // contains .diagram-component CSS
 import { json, useNavigate } from "react-router-dom";
 
 import { rehostRequest, requirementRequest } from "../apis/fileAPI";
-import { BsGear, BsClipboard2Data, BsCloud, BsUpload, BsDownload, BsEraser, BsSave } from "react-icons/bs";
+import {
+  BsGear,
+  BsClipboard2Data,
+  BsCloud,
+  BsUpload,
+  BsDownload,
+  BsEraser,
+  BsSave,
+} from "react-icons/bs";
 import { Tooltip, message } from "antd";
 import { BiSave } from "react-icons/bi";
 import { useData } from "../components/DataContext";
@@ -17,9 +25,8 @@ const Button = ({
   setFileName,
   finalToggleValue,
   setFinalToggleValue,
-  onPopupChange
+  onPopupChange,
 }) => {
-
   const navigate = useNavigate();
   const hiddenFileInput = React.useRef(null);
   const handleClick = () => {
@@ -76,7 +83,6 @@ const Button = ({
         scale: 0.5,
         background: "white",
         type: "image/png",
-
       });
       let fileName = prompt("파일명을 입력해주세요:", "diagram.png");
       if (!fileName) {
@@ -104,7 +110,9 @@ const Button = ({
       const containsOtherTypes = otherTypes.length > 0;
 
       if (containsOtherTypes) {
-        message.warning("클라우드 아키텍처가 포함되어있으면 Rehost 하지 못합니다.");
+        message.warning(
+          "클라우드 아키텍처가 포함되어있으면 Rehost 하지 못합니다."
+        );
         return;
       }
       if (clickedLoaded) {
@@ -115,6 +123,8 @@ const Button = ({
       const response = await rehostRequest(jsonString);
       const Jdata = response.data.result;
       diagram.model = go.Model.fromJson(Jdata);
+
+      console.log("diagram.model", diagram.model.toJson());
 
       setData(diagram.model.nodeDataArray);
       setClickedLoaded(true);
@@ -137,7 +147,6 @@ const Button = ({
       let fileReader = new FileReader();
       fileReader.readAsText(file);
       fileReader.onload = async () => {
-
         let filejson = JSON.parse(fileReader.result);
         if (filejson.hasOwnProperty("cost")) {
           setFinalToggleVal(filejson["cost"]);
@@ -171,18 +180,20 @@ const Button = ({
     if (diagram) {
       console.log("summaryRequest", finalToggleValue);
       const response = await summaryFile(finalToggleValue);
-      console.log(response.data)
-      navigate("/summary", { state: { costdata: response.data, from: "draw" } });
+      console.log(response.data);
+      navigate("/summary", {
+        state: { costdata: response.data, from: "draw" },
+      });
     }
   };
-  const [arrow, setArrow] = useState('Show');
+  const [arrow, setArrow] = useState("Show");
 
   const mergedArrow = useMemo(() => {
-    if (arrow === 'Hide') {
+    if (arrow === "Hide") {
       return false;
     }
 
-    if (arrow === 'Show') {
+    if (arrow === "Show") {
       return true;
     }
 
@@ -194,74 +205,65 @@ const Button = ({
     <div>
       <div className="button-container">
         <div className="button-row">
-        <Tooltip placement="right" title={"upload"} arrow={mergedArrow}>
-
-          <button onClick={handleClick}>
-            <BsUpload />
-          </button>
-          <input
-            type="file"
-            ref={hiddenFileInput}
-            onChange={onFileChange}
-            style={{ display: "none" }}
-          />
+          <Tooltip placement="right" title={"upload"} arrow={mergedArrow}>
+            <button onClick={handleClick}>
+              <BsUpload />
+            </button>
+            <input
+              type="file"
+              ref={hiddenFileInput}
+              onChange={onFileChange}
+              style={{ display: "none" }}
+            />
           </Tooltip>
         </div>
 
         <div className="button-row">
-        <Tooltip placement="right" title={"eraser"} arrow={mergedArrow}>
-
-          <button onClick={handleReset}>
-            <BsEraser />
-          </button>
+          <Tooltip placement="right" title={"eraser"} arrow={mergedArrow}>
+            <button onClick={handleReset}>
+              <BsEraser />
+            </button>
           </Tooltip>
-
         </div>
         <div className="button-row">
-        <Tooltip placement="right" title={"download"} arrow={mergedArrow}>
-
-          <button onClick={handleSave}>
-            <BsDownload />
-          </button>
+          <Tooltip placement="right" title={"download"} arrow={mergedArrow}>
+            <button onClick={handleSave}>
+              <BsDownload />
+            </button>
           </Tooltip>
-
         </div>
         <div className="button-row">
-          <Tooltip placement="right" title={"download as png"} arrow={mergedArrow}>
+          <Tooltip
+            placement="right"
+            title={"download as png"}
+            arrow={mergedArrow}
+          >
             <button onClick={localSaveImage}>
               <BiSave />
             </button>
           </Tooltip>
-
         </div>
         <div className="button-row">
-        <Tooltip placement="right" title={"lift & shift"} arrow={mergedArrow}>
-
-          <button onClick={handleLoad}>
-            <BsCloud />
-          </button>
+          <Tooltip placement="right" title={"lift & shift"} arrow={mergedArrow}>
+            <button onClick={handleLoad}>
+              <BsCloud />
+            </button>
           </Tooltip>
-
         </div>
         <div className="button-row">
-        <Tooltip placement="right" title={"summary"} arrow={mergedArrow}>
-
-          <button onClick={summaryRequest}>
-            <BsClipboard2Data />
-          </button>
+          <Tooltip placement="right" title={"summary"} arrow={mergedArrow}>
+            <button onClick={summaryRequest}>
+              <BsClipboard2Data />
+            </button>
           </Tooltip>
-
         </div>
         <div className="button-row">
-        <Tooltip placement="right" title={"optimize"} arrow={mergedArrow}>
-
-          <button onClick={handlePopup}>
-            <BsGear />
-          </button>
+          <Tooltip placement="right" title={"optimize"} arrow={mergedArrow}>
+            <button onClick={handlePopup}>
+              <BsGear />
+            </button>
           </Tooltip>
-
         </div>
-
       </div>
     </div>
   );
