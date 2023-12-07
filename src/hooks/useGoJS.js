@@ -11,7 +11,7 @@ const useGoJS = (
   setShowToggle,
   onDiagramChange,
   // handleguide,
-  setAlertMessage
+  setAlertMessage,
   // setWarnMessage,
   // setInfoMessage
 ) => {
@@ -364,10 +364,11 @@ const useGoJS = (
     diagram.linkTemplate = $(
       go.Link,
       {
-        toShortLength: 3,
+        toShortLength: 1,
         routing: go.Link.Normal,
         // routing: go.Link.AvoidsNodes,
         curve: go.Link.JumpGap,
+        
         corner: 5,
         contextMenu: $(
           go.Adornment,
@@ -383,7 +384,7 @@ const useGoJS = (
               width: 40,
               height: 40,
             }),
-            $(go.TextBlock, "━", { font: "10pt Noto Sans KR" }),
+            $(go.TextBlock, "━", { font: "5pt Noto Sans KR" }),
             {
               row: 0,
               column: 0,
@@ -456,19 +457,13 @@ const useGoJS = (
         ),
       },
       // for link shape
-      $(go.Shape, { strokeWidth: 2, stroke: "#000", name: "LinkShape" }),
-      // for arrowhead 여기서 standaer
+      $(go.Shape, { strokeWidth: 1, stroke: "#777", name: "LinkShape" }),
       $(go.Shape, {
         toArrow: "Standard",
-        scale: 1.5,
-        stroke: null,
-        name: "ToArrow",
-      }),
-      $(go.Shape, {
-        fromArrow: "DoubleForwardSlash",
-        scale: 1.5,
-        stroke: null,
-        name: "FromArrow",
+        stroke: "#777", // Set the color of the arrowhead outline
+        fill: "#777",   // Set the color of the arrowhead fill
+        // scale: 1,
+        // name: "ToArrow",
       })
     );
 
