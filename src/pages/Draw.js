@@ -14,7 +14,7 @@ import { useLocation } from "react-router-dom";
 import { message } from "antd";
 import { Button, notification } from "antd";
 import { Alert, Space, Modal, Input } from "antd";
-import { saveDiagram } from "../apis/fileAPI";
+import { saveDiagram, updateDiagram } from "../apis/fileAPI";
 import { DrawResourceGuide } from "../apis/resource";
 import "../styles/App.css";
 import jsonData from '../db/ResourceGuide.json'; // JSON 파일 경로
@@ -55,18 +55,15 @@ function Draw() {
   const [finalToggleValue, setFinalToggleValue] = useState({});
   const [selectedNodeData, setSelectedNodeData] = useState(null); // <- 상태 변수를 추가합니다.
   const [showToggle, setShowToggle] = useState(true);
+  const { setData } = useData();
+  const [mydiagram, setmyDiagram] = useState(null);
+  const [NodeGuide, setNodeGuide] = useState(null);
+  const [isSave, setIsSave] = useState(false); // 저장 여부 판단
   const [alertMessage, setAlertMessage] = useState({
     key: null,
     message: null,
     tag: null,
   });
-  const { setData } = useData();
-  const [mydiagram, setmyDiagram] = useState(null);
-  // const [NodeGuide, setNodeGuide] = useState(null);
-  // const [NodeGuideLine, setNodeGuideLine] = useState({
-  //   key: null,
-  //   message: null,
-  // });
 
   const [fileName, setFileName] = useState("제목 없는 다이어그램");
 
@@ -77,10 +74,10 @@ function Draw() {
 
   const location = useLocation();
   const info = location.state ? location.state.info : null;
-
-  const onpremise = location.state ? location.state.file : null;
-
-  useEffect(() => {}, [diagramVersion]); // Dependency on diagramVersion
+  const save = location.state ? location.state.save : false;
+  const onpremise = location.state ? location.state.file : null;  
+ 
+  useEffect(() => { }, [diagramVersion]); // Dependency on diagramVersion
 
 
   const [nodeRole, setNodeRole] = useState({});
@@ -90,7 +87,6 @@ function Draw() {
   }, []);
 
   const handleDiagramChange = useCallback((changedDiagram) => {
-    // console.log("다이어그램이 변경되었습니다:", changedDiagram.model.toJson());
     setmyDiagram(changedDiagram);
     setDiagramVersion((prevVersion) => prevVersion + 1);
   });
@@ -106,6 +102,7 @@ function Draw() {
   );
 
   useEffect(() => {
+    setIsSave(save);
     if (info && diagram) {
       setFileName(info.filename);
       if (info.file.result.hasOwnProperty("cost")) {
@@ -162,7 +159,8 @@ function Draw() {
   };
 
   const handleOk = async () => {
-    setIsModalVisible(false);
+    console.log("isSave", isSave);
+      setIsModalVisible(false);
     const hideLoading = message.loading("저장 중...", 0);
 
     try {
@@ -180,17 +178,31 @@ function Draw() {
 
       const base64ImageContent = img.split(",")[1];
 
-      const response = await saveDiagram(
-        diagramData,
-        fileName,
-        base64ImageContent
-      );
+      var response;
+      if(!isSave){
+        console.log("save");
+        response = await saveDiagram(diagramData, fileName, base64ImageContent);
+      }
+      else{
+        console.log("update");
+        console.log("diagramData", diagramData);
+        console.log("fileName", fileName);
+        console.log("base64ImageContent", base64ImageContent);
+        response = await updateDiagram(diagramData, fileName, base64ImageContent);
+      }
+
       hideLoading();
 
+    
       console.log(response.data);
       if (response.data === true) {
         message.success("저장되었습니다.");
-      } else {
+        if(!isSave){
+          setIsSave(true);
+        }
+
+      }
+else {
         message.warning("중복된 이름이 존재합니다. 다시 시도해주세요.");
       }
     } catch (error) {
@@ -209,7 +221,12 @@ function Draw() {
   };
 
   const handleSaveDiagram = () => {
-    showModal();
+    if(!isSave){
+      showModal();
+    }
+    else{
+      handleOk();
+    }
   };
 
   useEffect(() => {
@@ -296,6 +313,9 @@ function Draw() {
                     diagram={diagram}
                     showToggle={showToggle}
                     setShowToggle={setShowToggle}
+                    isSave={isSave}
+                    handleSaveDiagram={handleSaveDiagram}
+                    setIsSave={setIsSave}
                     setFileName={setFileName}
                     finalToggleValue={finalToggleValue}
                     setFinalToggleValue={setFinalToggleValue}

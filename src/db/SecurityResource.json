@@ -1,27 +1,111 @@
 {
-    "Backup":[
-        "REL09-BP01",
-        "REL09-BP03"
+    "Group_dev": [
+      "ISO/IEC 27002 8.4",
+      "ISO/IEC 27018 12.1.4"
     ],
-    "Elastic Disaster Recovery":[
-        "REL09-BP01"
+    "Identity and Access Management (IAM)": [
+      "ISO/IEC 27002 8.5",
+      "AWS REL09-BP02",
+      "ISO/IEC 27002 5.16",
+      "ISO/IEC 27002 5.17",
+      "ISO/IEC 27002 5.18"
     ],
-    "Identity and Access Management(IAM)":[
-        "REL09-BP02"
+    "Security Hub": [
+      "ISO/IEC 27002 8.5",
+      "AWS SEC02-BP05",
+      "ISO/IEC 27002 5.18"
     ],
-    "Simple Storage Service(S3)":[
-        "REL09-BP02"
+    "Config": [
+      "AWS SEC02-BP05"
     ],
-    "Key management Service(KMS)":[
-        "REL09-BP02",
-        "REL09-BP03"
+    "GuardDuty": [
+      "ISO/IEC 27002 8.5",
+      "ISO/IEC 27017 9.5.2",
+      "ISO/IEC 27002 5.18"
+    ],
+    "Detective": [
+      "ISO/IEC 27002 8.5",
+      "ISO/IEC 27017 9.5.2",
+      "ISO/IEC 27002 5.18"
+    ],
+    "Network Firewall": [
+      "ISO/IEC 27002 8.5",
+      "ISO/IEC 27017 9.5.2",
+      "ISO/IEC 27002 5.18"
+    ],
+    "WAF": [
+      "ISO/IEC 27002 8.5",
+      "ISO/IEC 27017 9.5.2",
+      "ISO/IEC 27002 5.18",
+      "ISO/IEC 27002 5.29"
 
     ],
-    "RDS":[
-        "REL09-BP03",
-        "REL09-BP04"
+    "Shield": [
+      "ISO/IEC 27002 8.5",
+      "ISO/IEC 27017 9.5.2",
+      "ISO/IEC 27002 5.18",
+      "ISO/IEC 27002 5.29"
+
     ],
-    "DynamoDB":[
-        "REL09-BP04"
+    "Secrets Manager": [
+      "ISO/IEC 27002 8.5",
+      "AWS REL09-BP02",
+      "AWS REL09-BP03",
+      "AWS SEC02-BP03",
+      "ISO/IEC 27002 5.18"
+    ],
+    "Key Management Service": [
+      "ISO/IEC 27002 8.5",
+      "ISO/IEC 27002 5.16",
+      "ISO/IEC 27002 5.17",
+      "ISO/IEC 27002 5.18"
+    ],
+    "Group_security group": [
+      "ISO/IEC 27017 9.5.2",
+      "ISO/IEC 27002 5.29",
+      "ISO/IEC 27018 12.1.4"
+    ],
+    "EC2": [
+      "ISO/IEC 27017 9.5.2"
+    ],
+    "RDS": [
+      "ISO/IEC 27017 9.5.2",
+      "AWS REL09-BP03",
+      "AWS REL09-BP04"
+    ],
+    "Group_supply": [
+      "ISO/IEC 27002 5.21",
+      "ISO/IEC 27018 12.1.4"
+
+    ],
+    "Backup": [
+      "AWS REL09-BP03"
+    ],
+    "Simple Storage Service (S3)": [
+      "AWS REL09-BP02"
+    ],
+    "DynamoDB": [
+      "AWS REL09-BP04"
+    ],
+    "Cognito":[
+      "ISO/IEC 27002 5.16",
+      "ISO/IEC 27002 5.17"
+    ],
+    "CloudTrail":[
+        "ISO/IEC 27002 5.25",
+        "ISO/IEC 27018 12.4.2"
+    ],
+    "CloudWatch":[
+        "ISO/IEC 27002 5.25",
+        "ISO/IEC 27018 12.4.2"
+    ],
+    "OpenSearch Service":[
+        "ISO/IEC 27002 5.7/5.27"
+    ],
+    "Athena":[
+        "ISO/IEC 27002 5.7/5.27"
+    ],
+    "QuickSight":[
+        "ISO/IEC 27002 5.7/5.27"
     ]
-}
+  }
