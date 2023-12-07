@@ -10,10 +10,7 @@ import { handleSecurity } from "../components/SecurityAlert";
 const useGoJS = (
   setShowToggle,
   onDiagramChange,
-  // handleguide,
   setAlertMessage,
-  // setWarnMessage,
-  // setInfoMessage
 ) => {
   const [diagram, setDiagram] = useState(null);
   const [clickedNodeKey, setClickedNodeKey] = useState();
@@ -40,10 +37,6 @@ const useGoJS = (
     }
     grp.isHighlighted = false;
   }
-
-  
-
-
 
   // add group via drag and drop
   function finishDrop(e, grp) {

@@ -76,6 +76,17 @@ export const NodeCheck = async (data) => {
   }
 };
 
+export const DevCheck = async (data) => {
+  try {
+    const response = await api.post("/api/v1/alert-api/dev-check", data);
+    return response;
+  } catch (error) {
+    console.error("nodeCheck 오류:", error);
+    throw error;
+  }
+};
+
+
 export const requirementRequest = async (data) => {
   try {
     const response = await api.post("/api/v1/naindae-api/multiregion", data);
