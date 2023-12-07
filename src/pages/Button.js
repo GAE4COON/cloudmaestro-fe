@@ -43,13 +43,13 @@ const Button = ({
 
   const handleSave = () => {
     if (diagram) {
-      let jsonCombinedArray = diagram.model.nodeDataArray;
+      let jsonCombinedArray = diagram.model.toJson();
       jsonCombinedArray = JSON.parse(jsonCombinedArray);
       jsonCombinedArray["cost"] = finalToggleValue; //ec2도 해야할 듯
       jsonCombinedArray = JSON.stringify(jsonCombinedArray);
 
-      //setSavedDiagramJSON(jsonCombinedArray,finalToggleValue);
-      //console.log("저는 json이에요", jsonCombinedArray, finalToggleValue);
+      // setSavedDiagramJSON(jsonCombinedArray,finalToggleValue);
+      console.log("저는 json이에요", jsonCombinedArray, finalToggleValue);
       localSaveJSON(jsonCombinedArray);
     }
   };
