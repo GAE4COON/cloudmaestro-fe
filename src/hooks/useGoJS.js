@@ -4,7 +4,7 @@ import "../styles/App.css"; // contains .diagram-component CSS
 import handleChangedSelection from "../pages/toggle/toggle";
 import { alertCheck, NodeCheck, GroupCheck } from "../apis/fileAPI";
 import { useData } from "../components/DataContext";
-import { checkForBackupAndS3Nodes, checkForMonitoringNodes } from "../components/GuideAlert";
+import { checkForBackupAndS3Nodes, checkForMonitoringNodes, checkForLogAnalysisNodes } from "../components/GuideAlert";
 import { handleSecurity } from "../components/SecurityAlert";
 
 const useGoJS = (
@@ -555,6 +555,9 @@ const useGoJS = (
         setTimeout(() => {
           checkForMonitoringNodes(diagram, setAlertMessage);
         }, 30);
+        setTimeout(() => {
+          checkForLogAnalysisNodes(diagram, setAlertMessage);
+        }, 35);
       }
     });
 
