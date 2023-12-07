@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from "react";
 import * as go from "gojs";
 import { ReactDiagram } from "gojs-react";
-import styled from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 import useGoJS from "../hooks/useGoJS.js";
 import SelectEc2Toggle from "../components/cost/SelectEc22Toggle";
 import SelectRdsToggle from "../components/cost/SelectRdsToggle";
@@ -9,26 +9,29 @@ import SelectS3Toggle from "../components/cost/SelectS3Toggle";
 import SelectWafToggle from "../components/cost/SelectWafToggle";
 import { useMediaQuery } from "react-responsive";
 import { nodeDataArrayPalette } from "../db/Node";
-import { Badge, Avatar } from 'antd';
-import { BellOutlined } from '@ant-design/icons';
 
 import { useLocation } from "react-router-dom";
 import { message } from "antd";
 import { Button, notification } from "antd";
 import { Alert, Space, Modal, Input } from "antd";
 import { saveDiagram, updateDiagram } from "../apis/fileAPI";
+import { DrawResourceGuide } from "../apis/resource";
 import "../styles/App.css";
+import jsonData from '../db/ResourceGuide.json'; // JSON 파일 경로
 
 // 페이지
 // import useReadJSON from "./useReadJSON";
 import ModalButton from "./Button.js";
+import Sidebar from "../components/Sidebar";
 import Palette from "../components/Palette";
 import "../styles/Draw.css";
 import { useFileUpload } from "../components/useFileInput";
+import { summaryFile } from "../apis/fileAPI.js";
+import { Link } from "react-router-dom";
 import RequirementPopup from "../components/RequirementPopup";
-import { useData } from "../components/DataContext.js"; // DataContext의 경로를 수정하세요
-
-import { InfoCircleOutlined, WarningOutlined, CloseCircleOutlined } from '@ant-design/icons';
+import { DataContext, useData } from "../components/DataContext.js"; // DataContext의 경로를 수정하세요
+import { SoundTwoTone } from "@ant-design/icons";
+import { handleSecurity } from "../components/SecurityAlert.js";
 
 const close = () => {
   console.log("Notification was closed.");
@@ -68,22 +71,22 @@ function Draw() {
 
   const [diagramVersion, setDiagramVersion] = useState(0);
   const [isPopup, setIsPopup] = useState(false);
-  const [countAlert, setCountAlert] = useState(0);
 
   const { isSidebarOpen, setIsSidebarOpen } = useData();
 
   const location = useLocation();
   const info = location.state ? location.state.info : null;
   const save = location.state ? location.state.save : false;
-  const onpremise = location.state ? location.state.file : null;
+  const onpremise = location.state ? location.state.file : null;  
+ 
   useEffect(() => { }, [diagramVersion]); // Dependency on diagramVersion
 
 
-  // const [nodeRole, setNodeRole] = useState({});
+  const [nodeRole, setNodeRole] = useState({});
 
-  // useEffect(() => {
-  //   setNodeRole(jsonData); // JSON 파일에서 데이터 가져오기
-  // }, []);
+  useEffect(() => {
+    setNodeRole(jsonData); // JSON 파일에서 데이터 가져오기
+  }, []);
 
   const handleDiagramChange = useCallback((changedDiagram) => {
     setmyDiagram(changedDiagram);
@@ -159,7 +162,7 @@ function Draw() {
 
   const handleOk = async () => {
     console.log("isSave", isSave);
-    setIsModalVisible(false);
+      setIsModalVisible(false);
     const hideLoading = message.loading("저장 중...", 0);
 
     try {
@@ -178,11 +181,11 @@ function Draw() {
       const base64ImageContent = img.split(",")[1];
 
       var response;
-      if (!isSave) {
+      if(!isSave){
         console.log("save");
         response = await saveDiagram(diagramData, fileName, base64ImageContent);
       }
-      else {
+      else{
         console.log("update");
         console.log("diagramData", diagramData);
         console.log("fileName", fileName);
@@ -192,16 +195,16 @@ function Draw() {
 
       hideLoading();
 
-
+    
       console.log(response.data);
       if (response.data === true) {
         message.success("저장되었습니다.");
-        if (!isSave) {
+        if(!isSave){
           setIsSave(true);
         }
 
       }
-      else {
+else {
         message.warning("중복된 이름이 존재합니다. 다시 시도해주세요.");
       }
     } catch (error) {
@@ -220,132 +223,106 @@ function Draw() {
   };
 
   const handleSaveDiagram = () => {
-    if (!isSave) {
+    if(!isSave){
       showModal();
     }
-    else {
+    else{
       handleOk();
     }
   };
 
-  const [messageQueue, setMessageQueue] = useState([]);
-
-  useEffect(() => {
-    console.log("Updated messageQueue: ", messageQueue);
-  }, [messageQueue]);
-
   useEffect(() => {
     if (alertMessage.message !== null) {
-      const isMessageInQueue = messageQueue.some(queueMessage =>
-        queueMessage.message === alertMessage.message
+      // Check if handleMessageQueue already contains the alertMessage.message
+      const isMessageInQueue = handleMessageQueue.some(queueMessage => 
+        queueMessage === alertMessage.message
       );
+  
+      // Update handleMessageQueue with the new message
+      setHandleMessageQueue(currentQueue => {
+        // Add the new message only if it's not already in the queue
+        if (!isMessageInQueue) {
+          return [...currentQueue, alertMessage.message];
+        } else {
+          return currentQueue; // Return the current queue unchanged
+        }
+      });
+  
+      // Only call openNotification if the message is not already in handleMessageQueue
       if (!isMessageInQueue) {
-        queueMessage(alertMessage);
+        openNotification();
       }
     }
-  }, [alertMessage, setMessageQueue]);
+  
+    
+  
+    console.log("alertMessage", alertMessage);
+    console.log("handleMessageQueue", handleMessageQueue);
+  }, [alertMessage, setHandleMessageQueue]);
 
   const [api, contextHolder] = notification.useNotification();
-  const [areNotificationsShown, setAreNotificationsShown] = useState(false);
+  const openNotification = () => {
+    const key = `open${Date.now()}`;
+    const btn = (
+      <Space>
+        <Button type="link" size="small" onClick={() => api.destroy()}>
+          Destroy All
+        </Button>
+        <Button type="primary" size="small" onClick={() => api.destroy(key)}>
+          Confirm
+        </Button>
+      </Space>
+    );
 
-  const queueMessage = (message) => {
-    setMessageQueue(prevQueue => [...prevQueue, message]);
-  };
-  
+    let backgroundColor;
+    switch (alertMessage.tag) {
+      case "Error":
+        backgroundColor = "#FFF0F0"; // 에러 배경색
+        break;
+      case "Warn":
+        backgroundColor = "#FFF8E0"; // 경고 배경색
+        break;
+      case "Info":
+        backgroundColor = "#DFE8FF"; // 정보 배경색
+        break;
+      default:
+        backgroundColor = "#FFFFFF"; // 기본 배경색
+        break;
+    }
 
-  const showAlertMessages = () => {
-    if (areNotificationsShown) {
-      // Hide notifications
-      api.destroy();
-      setAreNotificationsShown(false);
-    } else {
-    messageQueue.forEach((alertMessage, index) => {
-      setTimeout(() => {
-        const key = `open${Date.now()}`;
+    let backgroundTitle;
+    switch (alertMessage.tag) {
+      case "Error":
+        backgroundTitle = "❌Error!"; // 에러 배경색
+        break;
+      case "Warn":
+        backgroundTitle = "⚠️Warnning"; // 경고 배경색
+        break;
+      case "Info":
+        backgroundTitle = "✔️Info"; // 정보 배경색
+        break;
+      default:
+        backgroundTitle = "Nothing"; // 기본 배경색
+        break;
+    }
 
-        const removeMessageFromQueue = (keyToRemove) => {
-          console.log(keyToRemove)
-          if (keyToRemove === -1) {
-            setMessageQueue([]);
-          } else {
-            setMessageQueue(currentQueue => 
-              currentQueue.filter(message => message.key !== keyToRemove)
-            );
-          }
-        };
-        
-
-        const btn = (
-          <Space>
-            <Button type="link" size="small" onClick={() => { api.destroy(); setAreNotificationsShown(false) }}>
-              모두 숨기기
-            </Button>
-            <Button type="link" size="small" onClick={() => { api.destroy(key); removeMessageFromQueue(alertMessage.key); }}>
-              지우기
-            </Button>
-            <Button type="link" size="small" onClick={() => { api.destroy(key);}}>
-              숨기기
-            </Button>
-          </Space>
-        );
-
-        let backgroundColor;
-        switch (alertMessage.tag) {
-          case "Error":
-            backgroundColor = "#FFF0F0"; // 에러 배경색
-            break;
-          case "Warn":
-            backgroundColor = "#FFF8E0"; // 경고 배경색
-            break;
-          case "Info":
-            backgroundColor = "#DFE8FF"; // 정보 배경색
-            break;
-          default:
-            backgroundColor = "#FFFFFF"; // 기본 배경색
-            break;
-        }
-
-        let backgroundTitle;
-        switch (alertMessage.tag) {
-          case "Error":
-            backgroundTitle = <><CloseCircleOutlined style={{ color: 'red' }} />  Error!</>; // 에러 배경색
-            break;
-          case "Warn":
-            backgroundTitle = <><WarningOutlined style={{ color: 'orange' }} />  Warning</>; // 경고 배경색
-            break;
-          case "Info":
-            backgroundTitle = <><InfoCircleOutlined style={{ color: 'blue' }} />  Info</>; // 정보 배경색
-            break;
-          default:
-            backgroundTitle = "Nothing"; // 기본 배경색
-            break;
-        }
-
-        api.open({
-          message: backgroundTitle,
-          description: alertMessage.message,
-          btn,
-          key,
-          onClose: close,
-          style: { backgroundColor, borderRadius: "8px", fontFamily: "Noto Sans KR" },
-          duration: 0
-        });
-      }, index * 200); // Delay each message to stagger their appearance
+    api.open({
+      message: backgroundTitle,
+      description: alertMessage.message,
+      btn,
+      key,
+      onClose: close,
+      style: { backgroundColor, borderRadius: "8px" },
+      duration:0
     });
-    setAreNotificationsShown(true);
-  }
-    // setMessageQueue([]);
   };
-
-
   return (
     <div className="main-content">
       <div className="Draw">
         <div className="container">
           <div className="workspace">
             {contextHolder}
-
-
+            {/* <GlobalStyle tag={alertMessage.tag} /> */}
             <div className="palette">
               <Palette
                 divClassName={paletteClassName}
@@ -355,21 +332,7 @@ function Draw() {
             </div>
             <DiagramContainer>
               <DiagramTop>
-                <DiagramTopLeft>
                 <FileName>파일 이름: {fileName}</FileName>
-                <AlertBadge count={messageQueue.length} onClick={showAlertMessages}>
-              <Avatar
-                style={{
-                  backgroundColor: "transparent",
-                  verticalAlign: 'middle',
-                }}
-                icon={<BellOutlined
-                  style={{
-                    color: "black"
-                  }}
-                />} size="middle" />
-            </AlertBadge>
-            </DiagramTopLeft>
                 <SaveButton>
                   <ModalButton
                     diagram={diagram}
@@ -384,9 +347,8 @@ function Draw() {
                     onPopupChange={handlePopupChange}
                   />
                 </SaveButton>
-                <StyledButton onClick={handleSaveDiagram}>Save</StyledButton>
-
               </DiagramTop>
+              <StyledButton onClick={handleSaveDiagram}>Save</StyledButton>
               <Modal
                 title="저장할 파일의 이름을 입력하세요."
                 visible={isModalVisible}
@@ -456,9 +418,9 @@ function Draw() {
             </DiagramContainer>
             {isPopup ? (
               <RequirementPopup
-                diagram={diagram}
-                fileName={fileName}
-                handlePopup={handlePopup} />
+              diagram={diagram} 
+              fileName={fileName}
+              handlePopup={handlePopup} />
             ) : (
               ""
             )}
@@ -470,15 +432,6 @@ function Draw() {
 }
 
 export default Draw;
-
-const AlertBadge = styled(Badge)`
-  text-align: center;
-  align-items: center;
-  margin-top: 20px;
-  margin-left: 10px;
-  padding-bottom: 10px;
-  z-index: 21;
-`
 
 const SaveButton = styled.div`
   background-color: white;
@@ -497,21 +450,58 @@ const FileName = styled.div`
   font-family: "Noto Sans KR", sans-serif !important;
   font-weight: 500;
   font-size: 15px;
+  position: absolute;
   margin-top: 20px;
   margin-left: 20px;
-  padding-top: 5px;
-  padding-bottom: 10px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #d9d9d9;
 `;
 
-const DiagramTopLeft = styled.div`
-  display: flex;
-  /* border: 10px solid #d9d9d9; */
-`
 const StyledDiagram = styled.div`
   /* float: left; */
-  /* margin-top: 3?0px; */
+  margin-top: 60px;
   width: 100%;
   height: 80vh; // 원하는 높이로 설정
+`;
+
+const StyleSpace = styled(Space)`
+  position: absolute;
+  width: 25%;
+  z-index: 100;
+  left: 73%;
+  top: 20%;
+  .ant-alert-message {
+    font-size: smaller; // Adjust the size as needed
+  }
+`;
+
+const StyleAlert = styled(Alert)`
+  position: relative;
+  width: 100%;
+  max-height: 100px; // Adjust as needed
+  overflow-y: scroll;
+  overflow-x: hidden;
+  &::-webkit-scrollbar {
+    width: 7px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #d9d9d9;
+    border-radius: 10px;
+    margin-top: 10px; // 상단 마진
+    margin-bottom: 10px; // 하단 마진
+  }
+
+  .ant-alert-close-icon {
+    position: absolute;
+    right: 5px; // 오른쪽에서부터의 위치 조정
+    top: 10px; // 상단에서부터의 위치 조정
+  }
+`;
+
+const ButtonContainer = styled.div`
+  position: relative;
+  display: flex;
+  justify-content: center;
 `;
 
 const StyledButton = styled.div`
