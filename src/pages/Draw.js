@@ -80,11 +80,11 @@ function Draw() {
   useEffect(() => { }, [diagramVersion]); // Dependency on diagramVersion
 
 
-  const [nodeRole, setNodeRole] = useState({});
+  // const [nodeRole, setNodeRole] = useState({});
 
-  useEffect(() => {
-    setNodeRole(jsonData); // JSON 파일에서 데이터 가져오기
-  }, []);
+  // useEffect(() => {
+  //   setNodeRole(jsonData); // JSON 파일에서 데이터 가져오기
+  // }, []);
 
   const handleDiagramChange = useCallback((changedDiagram) => {
     setmyDiagram(changedDiagram);
