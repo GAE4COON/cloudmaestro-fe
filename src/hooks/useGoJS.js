@@ -11,7 +11,7 @@ const useGoJS = (
   setShowToggle,
   onDiagramChange,
   // handleguide,
-  setAlertMessage
+  setAlertMessage,
   // setWarnMessage,
   // setInfoMessage
 ) => {
