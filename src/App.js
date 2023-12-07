@@ -27,6 +27,7 @@ import PrivateRoute from "./components/privateRoute";
 import NotFound from "./pages/NotFound";
 // import { PublicRoute } from "./components/publicRoute";
 import DataComponent from "./pages/DataComponent";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   useTokenExpirationChecker();
