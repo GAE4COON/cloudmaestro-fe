@@ -4,12 +4,19 @@ import "../styles/App.css"; // contains .diagram-component CSS
 import handleChangedSelection from "../pages/toggle/toggle";
 import { alertCheck, NodeCheck, GroupCheck } from "../apis/fileAPI";
 import { useData } from "../components/DataContext";
-import { checkForBackupAndS3Nodes } from "../components/AlertBackUp";
+import {
+  checkForBackupAndS3Nodes,
+  checkForMonitoringNodes,
+} from "../components/GuideAlert";
+import { handleSecurity } from "../components/SecurityAlert";
+
 const useGoJS = (
   setShowToggle,
   onDiagramChange,
   // handleguide,
   setAlertMessage
+  // setWarnMessage,
+  // setInfoMessage
 ) => {
   const [diagram, setDiagram] = useState(null);
   const [clickedNodeKey, setClickedNodeKey] = useState();
@@ -68,6 +75,9 @@ const useGoJS = (
       ),
       "draggingTool.isGridSnapEnabled": true,
       "resizingTool.isGridSnapEnabled": true,
+      model: new go.GraphLinksModel({
+        linkKeyProperty: "uniqueLinkId", // Replace with your actual link property
+      }),
       ModelChanged: async (e) => {
         if (e.isTransactionFinished) {
           const jsonString = e.model.toIncrementalJson(e);
@@ -82,10 +92,20 @@ const useGoJS = (
                   "링크 취소해도 되는 부분.. 주석처리만 하니까 안 올라가서 우선 콘솔로그라도 띄움"
                 );
                 //diagram.undoManager.undo();
-                setAlertMessage({
-                  key: Date.now(), // 현재 타임스탬프를 key로 사용
-                  message: response.data.result.message,
-                  tag: "Error",
+                setAlertMessage((prevDiagramCheck) => {
+                  const isDuplicate = prevDiagramCheck.some(
+                    (item) => item === response.data.result.message
+                  );
+                  if (!isDuplicate) {
+                    const newMessage = {
+                      key: Date.now(), // 현재 타임스탬프를 key로 사용
+                      message: response.data.result.message,
+                    };
+
+                    return [...prevDiagramCheck, newMessage];
+                  } else {
+                    return prevDiagramCheck;
+                  }
                 });
               }
             } catch (error) {
@@ -108,7 +128,7 @@ const useGoJS = (
                     PostData.newData = data.modifiedNodeData[i];
                     //console.log("NodeCheck 호출");
                     const response = await GroupCheck(PostData);
-                    //console.log("API Response:", response.data);
+                    console.log("API Response:", response.data);
                     if (response.data.result.status === "fail") {
                       setAlertMessage({
                         key: Date.now(), // 현재 타임스탬프를 key로 사용
@@ -138,22 +158,40 @@ const useGoJS = (
                     }
                   } else if (
                     data.insertedNodeKeys[i].startsWith("S3") ||
-                    data.insertedNodeKeys[i].startsWith("Cloud Trail") ||
+                    data.insertedNodeKeys[i].startsWith("CloudTrail") ||
                     data.insertedNodeKeys[i].startsWith("CloudWatch")
                   ) {
-                    PostData.checkOption = "Database";
+                    PostData.checkOption = "Logging";
                     PostData.newData = data.modifiedNodeData[i];
-                    console.log("NodeCheck 호출");
+                    console.log("Logging 호출");
                     const response = await NodeCheck(PostData);
                     if (response.data.result.status === "fail") {
                       console.log("API Response:", response.data);
                       setAlertMessage({
                         key: Date.now(), // 현재 타임스탬프를 key로 사용
                         message: response.data.result.message,
-                        tag: "Warn",
+                        tag: "Info",
                       });
                     }
-                  } else if (data.modifiedNodeData[i].type === "Database") {
+                  }
+                  if (
+                    data.insertedNodeKeys[i].startsWith("Backup") ||
+                    data.insertedNodeKeys[i].startsWith("S3")
+                  ) {
+                    PostData.checkOption = "Backup";
+                    PostData.newData = data.modifiedNodeData[i];
+                    console.log("Backup 호출");
+                    const response = await NodeCheck(PostData);
+                    if (response.data.result.status === "fail") {
+                      console.log("API Response:", response.data);
+                      setAlertMessage({
+                        key: Date.now(), // 현재 타임스탬프를 key로 사용
+                        message: response.data.result.message,
+                        tag: "Info",
+                      });
+                    }
+                  }
+                  if (data.modifiedNodeData[i].type === "Database") {
                     PostData.checkOption = "Database";
                     PostData.newData = data.modifiedNodeData[i];
                     console.log("NodeCheck 호출");
@@ -173,11 +211,9 @@ const useGoJS = (
               console.error("API Error:", error, data.insertedLinkKeys);
             }
           }
+          handleSecurity(e, diagram, setAlertMessage);
         }
       },
-      model: new go.GraphLinksModel({
-        linkKeyProperty: "key",
-      }),
     });
 
     // delete
@@ -358,10 +394,11 @@ const useGoJS = (
     diagram.linkTemplate = $(
       go.Link,
       {
-        toShortLength: 3,
+        toShortLength: 1,
         routing: go.Link.Normal,
         // routing: go.Link.AvoidsNodes,
         curve: go.Link.JumpGap,
+
         corner: 5,
         contextMenu: $(
           go.Adornment,
@@ -377,7 +414,7 @@ const useGoJS = (
               width: 40,
               height: 40,
             }),
-            $(go.TextBlock, "━", { font: "10pt Noto Sans KR" }),
+            $(go.TextBlock, "━", { font: "5pt Noto Sans KR" }),
             {
               row: 0,
               column: 0,
@@ -450,19 +487,13 @@ const useGoJS = (
         ),
       },
       // for link shape
-      $(go.Shape, { strokeWidth: 2, stroke: "#000", name: "LinkShape" }),
-      // for arrowhead 여기서 standaer
+      $(go.Shape, { strokeWidth: 1, stroke: "#777", name: "LinkShape" }),
       $(go.Shape, {
         toArrow: "Standard",
-        scale: 1.5,
-        stroke: null,
-        name: "ToArrow",
-      }),
-      $(go.Shape, {
-        fromArrow: "DoubleForwardSlash",
-        scale: 1.5,
-        stroke: null,
-        name: "FromArrow",
+        stroke: "#777", // Set the color of the arrowhead outline
+        fill: "#777", // Set the color of the arrowhead fill
+        // scale: 1,
+        // name: "ToArrow",
       })
     );
 
@@ -540,12 +571,17 @@ const useGoJS = (
       });
     });
 
-    // diagram.addModelChangedListener(function (e) {
-    //   if (e.isTransactionFinished) {
-    //     onDiagramChange(diagram);
-    //     checkForBackupAndS3Nodes(diagram, setWarnMessage);
-    //   }
-    // });
+    diagram.addModelChangedListener(function (e) {
+      if (e.isTransactionFinished) {
+        onDiagramChange(diagram);
+        setTimeout(() => {
+          checkForBackupAndS3Nodes(diagram, setAlertMessage);
+        }, 1);
+        setTimeout(() => {
+          checkForMonitoringNodes(diagram, setAlertMessage);
+        }, 30);
+      }
+    });
 
     diagram.addDiagramListener("ChangedSelection", async (e) => {
       const selectedNode = e.diagram.selection.first();

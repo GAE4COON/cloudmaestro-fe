@@ -1,6 +1,6 @@
 import SideBar from "../components/MyPageSideBar";
 import React, { useState, useEffect } from "react";
-import { Popconfirm, message } from "antd";
+import { Popconfirm, message } from 'antd';
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { DownOutlined } from "@ant-design/icons";
@@ -10,16 +10,20 @@ import { Menu } from "antd";
 import { CloseButton } from "react-bootstrap";
 import { useAuth } from "../utils/auth/authContext";
 import jwtDecode from "jwt-decode";
+import { CloseOutlined } from '@ant-design/icons';
+import { Avatar, Card } from 'antd';
 
 import styled from "styled-components";
 import { getDiagramData, myNetworkDB, deleteDiagramData } from "../apis/myPage";
 
 message.config({
   top: 50,
-  duration: 1,
+  duration: 1
 });
 
 const MyArchitecture = () => {
+  const { Meta } = Card;
+
   const [cloudInstances, setCloudInstances] = useState([]);
   const [messageApi, contextHolder] = message.useMessage();
 
@@ -33,8 +37,7 @@ const MyArchitecture = () => {
       try {
         const decodedToken = jwtDecode(ACCESS_TOKEN);
         console.log(decodedToken.sub);
-        // 주의: 실제 환경에서는 토큰이 만료되었는지 확인하는 로직도 필요합니다.
-        setUser(decodedToken);
+        setUser(decodedToken.sub);
       } catch (error) {
         console.log("Invalid token");
       }
@@ -65,9 +68,9 @@ const MyArchitecture = () => {
 
   const handleCloudInstance = async (key, path) => {
     const response = await getDiagramData(key);
-    console.log("response.data", response.data);
-    navigate(`${path}`, { state: { info: response.data } });
-  };
+    console.log("response.data", response.data)
+    navigate(`${path}`, { state: { info: response.data, save: true } });
+  }
 
   const confirm = async (key, e) => {
     const response = await deleteDiagramData(key);
@@ -76,8 +79,10 @@ const MyArchitecture = () => {
       cloudInstances.filter((instance) => instance.key !== key)
     );
 
-    message.success("도식화가 삭제되었습니다.");
+    message.success('도식화가 삭제되었습니다.');
+
   };
+
 
   return (
     <div className="main-content">
@@ -90,6 +95,7 @@ const MyArchitecture = () => {
           <div className="main-container">
             <StyledSideMenuTitle>도식화 히스토리</StyledSideMenuTitle>
             {cloudInstances.length > 0 ? (
+
               getRows(cloudInstances).map((row, idx) => (
                 <CloudInstanceRow key={idx}>
                   {row.map((instance) => {
@@ -98,13 +104,7 @@ const MyArchitecture = () => {
                         key: "1",
                         label: (
                           <button
-                            onClick={() =>
-                              handleCloudInstance(
-                                instance.key,
-                                "/mypage/diagram/security"
-                              )
-                            }
-                          >
+                            onClick={() => handleCloudInstance(instance.key, "/mypage/diagram/security")}>
                             Security
                           </button>
                         ),
@@ -113,13 +113,7 @@ const MyArchitecture = () => {
                         key: "2",
                         label: (
                           <button
-                            onClick={() =>
-                              handleCloudInstance(
-                                instance.key,
-                                "/mypage/diagram/resource"
-                              )
-                            }
-                          >
+                            onClick={() => handleCloudInstance(instance.key, "/mypage/diagram/resource")}>
                             Resource
                           </button>
                         ),
@@ -127,6 +121,7 @@ const MyArchitecture = () => {
                     ];
                     return (
                       <CloudInstance key={instance.key}>
+
                         <Popconfirm
                           title="도식화 삭제"
                           description={`${instance.title} 도식화를 삭제하시겠습니까?`}
@@ -135,48 +130,35 @@ const MyArchitecture = () => {
                           okText="Yes"
                           placement="right"
                         >
-                          <DeleteInstanceButton>X</DeleteInstanceButton>
-                        </Popconfirm>
+                          <CloseOutlined
+                            style={{ position: "absolute", top: "10px", right: "10px" }}
+                          />                        </Popconfirm>
 
                         <img
-                          onClick={() =>
-                            handleCloudInstance(instance.key, "/draw")
-                          }
+                          onClick={() => handleCloudInstance(instance.key, "/draw")}
                           alt="diagram_img"
-                          src={`https://cm-user-file.s3.ap-northeast-2.amazonaws.com/${instance.title}_${user.sub}.png`}
+                          src={`https://cm-user-file.s3.ap-northeast-2.amazonaws.com/${instance.title}_${user}.png`}
                           style={{
                             marginTop: "20px",
                             width: "100%",
                             height: "40%",
                             objectFit: "contain",
-                            borderRadius: "5px",
-                            boxShadow: "1px 1px 1px 1px rgb(235, 235, 235)",
+                            // borderRadius: "5px",
+                            // boxShadow: "1px 1px 1px 1px rgb(235, 235, 235)",
+
                           }}
                         />
-                        <StyledInstanceTitle>
-                          {instance.title}
-                        </StyledInstanceTitle>
+                        <StyledInstanceTitle>{instance.title}</StyledInstanceTitle>
 
                         <ButtonContainer>
                           <StyledButton
                             style={{ backgroundColor: "#5280DD" }}
-                            onClick={() =>
-                              handleCloudInstance(
-                                instance.key,
-                                "/mypage/diagram/summary"
-                              )
-                            }
-                          >
+                            onClick={() => handleCloudInstance(instance.key, "/mypage/diagram/summary")}>
                             Total Cost
                           </StyledButton>
 
-                          <Dropdown
-                            overlay={<Menu items={dropdownItems} />}
-                            placement="bottomLeft"
-                          >
-                            <StyledButton
-                              style={{ backgroundColor: "#FD754A" }}
-                            >
+                          <Dropdown overlay={<Menu items={dropdownItems} />} placement="bottomLeft">
+                            <StyledButton style={{ backgroundColor: "#FD754A" }}>
                               Guide
                               <DownOutlined style={{ marginTop: "5px" }} />
                             </StyledButton>
@@ -186,17 +168,10 @@ const MyArchitecture = () => {
                     );
                   })}
                 </CloudInstanceRow>
-              ))
-            ) : (
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  height: "100%",
-                }}
-              >
+              ))) : (
+              <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100%" }}>
                 <p>도식화 히스토리가 없습니다.</p>
+
               </div>
             )}
           </div>
@@ -207,18 +182,26 @@ const MyArchitecture = () => {
 };
 
 export default MyArchitecture;
-
 const CloudInstance = styled.div`
-  width: 26%;
+  width: 30%; // Adjust the width to fit 3 instances per row
   height: 320px;
-  padding: 10px;
   border: 1px solid gray;
-  margin-left: 10px;
-  margin: 10px;
   border-radius: 5px;
   box-shadow: 1px 1px 1px 1px rgb(235, 235, 235);
-  position: relative; /* 상대적 위치 지정 */
-`;
+  position: relative;
+  margin-top: 10px; // Keep right margin
+`
+
+const CloudInstanceRow = styled.div`
+margin-left: 10px; // Keep left margin
+margin-right: 10px; // Keep right margin
+    display: flex;
+    justify-content: flex-start; // Align items to the start of the row
+    flex-wrap: wrap; // Wrap items to the next line if they overflow
+    width: 100%;
+    gap: 10px; // You can use gap property to maintain consistent spacing
+`
+
 
 const DeleteInstanceButton = styled.button`
   font-size: 15px;
@@ -226,13 +209,8 @@ const DeleteInstanceButton = styled.button`
   position: absolute; /* 절대적 위치 지정 */
   top: 0px; /* 상단에서의 위치 */
   right: 3px;
-  background-color: transparent;
-`;
-
-const CloudInstanceRow = styled.div`
-  display: flex;
-  width: 100%;
-`;
+  background-color:transparent;
+`
 
 const StyledButton = styled(Button)`
   min-width: 100px;
