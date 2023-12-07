@@ -8,4 +8,4 @@ export const guideAlert = async (data) => {
       console.error("guideAlert 오류:", error);
       throw error;
     }
-  };
+};
