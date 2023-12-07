@@ -1,5 +1,5 @@
 
-import { alertCheck, NodeCheck, GroupCheck } from "../apis/fileAPI";
+import { DevCheck } from "../apis/fileAPI";
 
 
 export async function handleSecurity(e, diagram, setAlertMessage) {
@@ -7,18 +7,6 @@ export async function handleSecurity(e, diagram, setAlertMessage) {
     const jsonString = e.model.toIncrementalJson(e);
     const data = JSON.parse(jsonString);
     checkForLog(diagram, setAlertMessage)
-
-    if (data.modifiedLinkData) {
-      // TODO
-    }
-
-    if (data.insertedNodeKeys) {
-      // TODO
-    }
-
-    if (data.removedNodeKeys || data.removedLinkKeys) {
-      // TODO
-    }
 
     // Handling node modifications separately
     if (data.modifiedNodeData) {
@@ -32,25 +20,18 @@ export async function handleSecurity(e, diagram, setAlertMessage) {
         }
         }
       }
-      //checkForLog(diagram, setInfoMessage)
+      
     }
   }
 
 
 async function handleNode(node, diagram, setAlertMessage) {
 
-//  const PostData = {
-//   checkOption: null,
-//   newData: null,
-//   diagramData: diagram.model.toJson(),
-// };
-
-
   try {
     const message = {
       key: Date.now().toString(), // Unique key for each message
-      message: node.text + " 가 암호화되지 않을 시, 무단 접근 및 변조 등을 통한 보험 위험이 존재할 수 있습니다.\
-      " + node.text + "를 암호화해주시기를 바랍니다."
+      message: node.text + " 가(이) 암호화되지 않을 시, 무단 접근 및 변조 등을 통한 보험 위험이 존재할 수 있습니다.\
+      " + node.text + "을(를) 암호화해주시기를 바랍니다."
     };
     console.log("hello", message);
     setAlertMessage({
@@ -66,7 +47,7 @@ async function handleNode(node, diagram, setAlertMessage) {
 }
 
 
-export function checkForLog(diagram, setAlertMessage,handleMessageQueue) {
+export async function checkForLog(diagram, setAlertMessage) {
   if (diagram.model.nodeDataArray.length > 0) {
     const hasQuickSightNode = diagram.model.nodeDataArray.some(node => node.text === "QuickSight");
     const hasOpenSearch = diagram.model.nodeDataArray.some(node => node.text === "OpenSearch Service");
@@ -86,28 +67,30 @@ export function checkForLog(diagram, setAlertMessage,handleMessageQueue) {
         tag: "Info",
       });
     }
-  //   if (hasOpenSearch) {
-  //     setAlertMessage({
-  //       key: Date.now()+1, // 현재 타임스탬프를 key로 사용
-  //       message: message.hasOpenSearch,
-  //       tag: "Info",
-  //     });
-  //   }
-  //   if (hasAthena) {
-  //     setAlertMessage({
-  //       key: Date.now()+2, // 현재 타임스탬프를 key로 사용
-  //       message: message.hasAthena,
-  //       tag: "Info",
-  //     });
-  //   }
-  //   if (hasS3) {
-  //     setAlertMessage({
-  //       key: Date.now()+3, // 현재 타임스탬프를 key로 사용
-  //       message: message.hasS3,
-  //       tag: "Info",
-  //     });
-  //   }
-    
-  // }
+
+    /// dev 망이 있을 때 메세지 띄우기 
+
+    const devMessage = {
+      key: Date.now().toString(), // Unique key for each message
+      hasmessage: "개발, 테스트 및 운영 환경은 분리되어야 하며 보호되어야 합니다."
+    };
+
+    try {
+      const jsonString = diagram.model.toJson();
+      const response = await DevCheck(jsonString);
+      console.log("response ", response);
+      if ( response.data.status) {
+        console.log("API Response:", response.data);
+        setAlertMessage({
+          key: Date.now(), // Use current timestamp as key
+          message: devMessage.hasmessage,
+          tag: "Info",
+        });
+      }
+    } catch (error) {
+      console.error("Error in DevCheck:", error);
+      // Handle error appropriately (e.g., set an error message)
+    }
   }
 }
+

@@ -254,10 +254,6 @@ else {
       }
     }
   
-    
-  
-    console.log("alertMessage", alertMessage);
-    console.log("handleMessageQueue", handleMessageQueue);
   }, [alertMessage, setHandleMessageQueue]);
 
   const [api, contextHolder] = notification.useNotification();
