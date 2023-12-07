@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import react, { useState, useEffect, startTransition } from "react";
 import * as go from "gojs";
 import "../styles/App.css"; // contains .diagram-component CSS
 import handleChangedSelection from "../pages/toggle/toggle";
@@ -156,7 +156,8 @@ const useGoJS = (
                         tag: "Error",
                       });
                     }
-                  } else if (
+                  }
+                  if (
                     data.insertedNodeKeys[i].startsWith("S3") ||
                     data.insertedNodeKeys[i].startsWith("CloudTrail") ||
                     data.insertedNodeKeys[i].startsWith("CloudWatch")
@@ -167,11 +168,13 @@ const useGoJS = (
                     const response = await NodeCheck(PostData);
                     if (response.data.result.status === "fail") {
                       console.log("API Response:", response.data);
-                      setAlertMessage({
-                        key: Date.now(), // 현재 타임스탬프를 key로 사용
-                        message: response.data.result.message,
-                        tag: "Info",
-                      });
+                      setTimeout(() => {
+                        setAlertMessage((prevAlert) => ({
+                          key: Date.now(),
+                          message: response.data.result.message,
+                          tag: "Info",
+                        }));
+                      }, 0);
                     }
                   }
                   if (
@@ -184,11 +187,13 @@ const useGoJS = (
                     const response = await NodeCheck(PostData);
                     if (response.data.result.status === "fail") {
                       console.log("API Response:", response.data);
-                      setAlertMessage({
-                        key: Date.now(), // 현재 타임스탬프를 key로 사용
-                        message: response.data.result.message,
-                        tag: "Info",
-                      });
+                      setTimeout(() => {
+                        setAlertMessage((prevAlert) => ({
+                          key: Date.now(),
+                          message: response.data.result.message,
+                          tag: "Info",
+                        }));
+                      }, 30);
                     }
                   }
                   if (data.modifiedNodeData[i].type === "Database") {
@@ -198,11 +203,11 @@ const useGoJS = (
                     const response = await NodeCheck(PostData);
                     if (response.data.result.status === "fail") {
                       console.log("API Response:", response.data);
-                      setAlertMessage({
-                        key: Date.now(), // 현재 타임스탬프를 key로 사용
+                      setAlertMessage((prevAlert) => ({
+                        key: Date.now(),
                         message: response.data.result.message,
-                        tag: "Warn",
-                      });
+                        tag: "Info",
+                      }));
                     }
                   }
                 }

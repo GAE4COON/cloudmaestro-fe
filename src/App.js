@@ -54,9 +54,13 @@ function App() {
 
                 <Route path="/mypage" element={<MyArchitecture />} />
                 <Route path="/mypage/diagram" element={<MyArchitecture />} />
-                <Route path="/mypage/diagram/resource" element={<MyResource />}
+                <Route
+                  path="/mypage/diagram/resource"
+                  element={<MyResource />}
                 />
-                <Route path="/mypage/diagram/security" element={<MySecurity />}
+                <Route
+                  path="/mypage/diagram/security"
+                  element={<MySecurity />}
                 />
                 <Route path="/mypage/diagram/summary" element={<MySummary />} />
               </Route>

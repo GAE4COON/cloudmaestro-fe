@@ -64,6 +64,8 @@ function Draw() {
     tag: null,
   });
 
+  const [handleMessageQueue, setHandleMessageQueue] = useState([]);
+
   const [fileName, setFileName] = useState("제목 없는 다이어그램");
 
   const [diagramVersion, setDiagramVersion] = useState(0);
@@ -228,10 +230,32 @@ function Draw() {
 
   useEffect(() => {
     if (alertMessage.message !== null) {
-      openNotification();
+      // Check if handleMessageQueue already contains the alertMessage.message
+      const isMessageInQueue = handleMessageQueue.some(
+        (queueMessage) => queueMessage === alertMessage.message
+      );
+
+      // Update handleMessageQueue with the new message
+      setHandleMessageQueue((currentQueue) => {
+        // Add the new message only if it's not already in the queue
+        if (!isMessageInQueue) {
+          return [...currentQueue, alertMessage.message];
+        } else {
+          return currentQueue; // Return the current queue unchanged
+        }
+      });
+
+      // Only call openNotification if the message is not already in handleMessageQueue
+      if (!isMessageInQueue) {
+        setTimeout(() => {
+          openNotification();
+        }, 0);
+      }
     }
+
     console.log("alertMessage", alertMessage);
-  }, [alertMessage]);
+    console.log("handleMessageQueue", handleMessageQueue);
+  }, [alertMessage, setHandleMessageQueue]);
 
   const [api, contextHolder] = notification.useNotification();
   const openNotification = () => {
@@ -275,7 +299,7 @@ function Draw() {
         backgroundTitle = "✔️Info"; // 정보 배경색
         break;
       default:
-        backgroundTitle = "NotThing"; // 기본 배경색
+        backgroundTitle = "Nothing"; // 기본 배경색
         break;
     }
 

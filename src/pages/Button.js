@@ -200,6 +200,8 @@ const Button = ({
 
   const summaryRequest = async () => {
     if (diagram) {
+      // localStorage.setItem("tokenType", grantType);
+
       console.log("summaryRequest", finalToggleValue);
       const response = await summaryFile(finalToggleValue);
       console.log(response.data);
