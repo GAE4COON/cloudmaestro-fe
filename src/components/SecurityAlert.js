@@ -30,8 +30,8 @@ async function handleNode(node, diagram, setAlertMessage) {
   try {
     const message = {
       key: Date.now().toString(), // Unique key for each message
-      message: node.text + " 가(이) 암호화되지 않을 시, 무단 접근 및 변조 등을 통한 보험 위험이 존재할 수 있습니다.\
-      " + node.text + "을(를) 암호화해주시기를 바랍니다."
+      message: node.text + " (이)가 암호화되지 않을 시, 무단 접근 및 변조 등을 통한 보험 위험이 존재할 수 있습니다.\
+      " + node.text + "(을)를 암호화해주시기를 바랍니다."
     };
     console.log("hello", message);
     setAlertMessage({
@@ -78,7 +78,6 @@ export async function checkForLog(diagram, setAlertMessage) {
     try {
       const jsonString = diagram.model.toJson();
       const response = await DevCheck(jsonString);
-      console.log("response ", response);
       if ( response.data.status) {
         console.log("API Response:", response.data);
         setAlertMessage({
