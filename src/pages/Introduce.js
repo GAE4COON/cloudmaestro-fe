@@ -47,30 +47,30 @@ const tabs = [
   },
 ];
 
-function StyledTabs({ items, activeTab, onTabClick }) {
-  return (
-    <StyledTabsContainer>
-    {items.map((item) => (
-      <StyledTab
-        key={item.id}
-        onClick={() => {
-          if (activeTab !== item.id) {
-            onTabClick(item.id);
-          } else {
-            const labelRef = document.getElementById(item.id);
-            if (labelRef) {
-              labelRef.scrollIntoView({ behavior: "smooth", block: "start" });
-            }
-          }
-        }}
-        active={activeTab === item.id}
-      >
-        <h2>{item.label}</h2>
-      </StyledTab>
-    ))}
-  </StyledTabsContainer>
-  );
-}
+// function StyledTabs({ items, activeTab, onTabClick }) {
+//   return (
+//     <StyledTabsContainer>
+//     {items.map((item) => (
+//       <StyledTab
+//         key={item.id}
+//         onClick={() => {
+//           if (activeTab !== item.id) {
+//             onTabClick(item.id);
+//           } else {
+//             const labelRef = document.getElementById(item.id);
+//             if (labelRef) {
+//               labelRef.scrollIntoView({ behavior: "smooth", block: "start" });
+//             }
+//           }
+//         }}
+//         active={activeTab === item.id}
+//       >
+//         <h2>{item.label}</h2>
+//       </StyledTab>
+//     ))}
+//   </StyledTabsContainer>
+//   );
+// }
 
 const StyledTabsContainer = styled.div`
   margin-top:20%;
@@ -105,9 +105,6 @@ height:20vh;
 font-size: 17px;
 `;
 
-
-
-
 const Home = () => {
   const [activeTab, setActiveTab] = useState(null);
   const section1Ref = useRef(null);
@@ -139,11 +136,12 @@ const Home = () => {
     }
   };
 
-  useEffect(() => {
-    // Scroll to the active section when the activeTab changes
-    const sectionRef = activeTab === "section1" ? section1Ref.current : activeTab === "section2" ? section2Ref.current : section3Ref.current;
-    scrollTo(sectionRef);
-  }, [activeTab]);
+  // scroll 문제
+  // useEffect(() => {
+  //   // Scroll to the active section when the activeTab changes
+  //   const sectionRef = activeTab === "section1" ? section1Ref.current : activeTab === "section2" ? section2Ref.current : section3Ref.current;
+  //   scrollTo(sectionRef);
+  // }, [activeTab]);
   
   useEffect(() => {
     ref.current.forEach((el) => {
@@ -306,21 +304,19 @@ const Home = () => {
       <div  ref={addtoRefs}>
         <ImageSection/>
       </div>
-      <div>
-        <div>
-          <StyledTabs items={tabs} activeTab={activeTab} onTabClick={handleTabClick} />
-          {/* Add your sections with corresponding IDs */}
-          <div ref={section1Ref} id="section1">
-            {activeTab === "section1" && <First />}
-          </div>
-          <div ref={section2Ref} id="section2">
-            {activeTab === "section2" && <Second />}
-          </div>
-          <div ref={section3Ref} id="section3">
-            {activeTab === "section3" && <Third />}
-          </div>
-        </div>
-      </div>
+      <TabsContainer>
+        <StyledAntTabs defaultActiveKey="1" activeKey={activeTab} onChange={handleTabClick}>
+        <TabPane tab="Cloud Migration이란?" key="1">
+          <First />
+        </TabPane>
+        <TabPane tab="클라우드 보안, 꼭 필요할까?" key="2">
+          <Second />
+        </TabPane>
+        <TabPane tab="ISO/IEC 27001이란?" key="3">
+          <Third />
+        </TabPane>
+      </StyledAntTabs>
+      </TabsContainer>
     <div ref={addtoRefs}>
         <Flow />
       </div>
@@ -332,10 +328,41 @@ const Home = () => {
 };
 
 export default Home;
+const TabsContainer = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+const StyledAntTabs = styled(Tabs)`
+font-family: 'Noto Sans KR', sans-serif;
+/* background-color: #222; */
+.ant-tabs-nav-wrap {
+  justify-content: center;
+}
+.ant-tabs-nav {
+    justify-content: center;
+    margin-top: 20%;
+  }
 
+  .ant-tabs-tab {
+    font-size: 20px;
 
+    color: black;
+    font-weight: bold;
+    /* margin-left: 10px; */
+  }
+
+  .ant-tabs-content {
+    /* width: 80%; // Set the width of the tab content */
+    margin: 0 auto; // Center the content
+    text-align: left;
+  }
+
+  // Add more custom styles as needed
+`;
 
 const FlexContainer = styled.div`
+font-family: 'Noto Sans KR', sans-serif;
+
   display: flex;
   justify-content: space-between;
   height: 20vh;

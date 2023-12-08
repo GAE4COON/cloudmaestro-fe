@@ -10,7 +10,7 @@
   position: fixed;
   transition: 0.5s ease;
   overflow-y: auto;
-  margin-top: 2px;
+  margin-top: 20px;
   font-family: "Noto Sans KR", sans-serif;
   box-shadow: -2px 2px 5px rgba(109, 109, 109, 0.05);
 }

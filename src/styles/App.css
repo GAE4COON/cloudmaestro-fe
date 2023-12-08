@@ -17,16 +17,10 @@
 .home-content {
   display: flex;
   flex-direction: column;
-  /* margin-top: 35px; */
+  margin-top: 35px;
   min-height: 100vh;
 }
 
-@media (max-width: 768px) {
-  .main-content {
-    padding-left:0;
-    padding-right:0;
-  }
-}
 
 
 

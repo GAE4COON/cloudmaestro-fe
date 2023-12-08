@@ -178,7 +178,7 @@ const NavStyled = styled(Header)`
   justify-content: space-around;
   padding: 0.5rem calc(0.125 * ((100vw - 1000px) / 2));
   z-index: 999;
-  position: relative;
+  position: fixed;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   font-family: "Noto Sans KR", sans-serif !important;
 
