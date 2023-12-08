@@ -7,7 +7,7 @@
 .main-content {
   display: flex;
   flex-direction: column;
-  margin-top: 50px;
+  /* margin-top: 50px; */
   min-height: 100vh;
   padding-left:10%;
   padding-right: 10%;
@@ -17,7 +17,7 @@
 .home-content {
   display: flex;
   flex-direction: column;
-  margin-top: 35px;
+  /* margin-top: 35px; */
   min-height: 100vh;
 }
 
