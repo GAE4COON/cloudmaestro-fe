@@ -4,13 +4,21 @@ import "../styles/Button.css"; // contains .diagram-component CSS
 import { json, useNavigate } from "react-router-dom";
 
 import { rehostRequest, requirementRequest } from "../apis/fileAPI";
-import { BsGear, BsClipboard2Data, BsCloud, BsUpload, BsDownload, BsEraser, BsSave } from "react-icons/bs";
+import {
+  BsGear,
+  BsClipboard2Data,
+  BsCloud,
+  BsUpload,
+  BsDownload,
+  BsEraser,
+  BsSave,
+} from "react-icons/bs";
 import { Tooltip, message, notification, Space } from "antd";
 import { BsFillImageFill } from "react-icons/bs";
 import { useData } from "../components/DataContext";
 import "../styles/App.css";
 import { summaryFile } from "../apis/fileAPI.js";
-import { Modal, Input } from 'antd';
+import { Modal, Input } from "antd";
 
 const Button = ({
   diagram,
@@ -22,9 +30,8 @@ const Button = ({
   fileName,
   finalToggleValue,
   setFinalToggleValue,
-  onPopupChange
+  onPopupChange,
 }) => {
-
   const navigate = useNavigate();
   const hiddenFileInput = React.useRef(null);
   const handleUpload = () => {
@@ -32,7 +39,6 @@ const Button = ({
   };
 
   const [api, contextHolder] = notification.useNotification();
-
 
   const [finalToggleVal, setFinalToggleVal] = useState({});
   const [clickedLoaded, setClickedLoaded] = useState(false);
@@ -45,7 +51,6 @@ const Button = ({
   const [tmpFileName, setTmpFileName] = useState(fileName);
 
   const showModal = (saveFunc) => {
-
     setIsModalVisible(true);
     setSaveFunction(() => saveFunc);
   };
@@ -75,15 +80,18 @@ const Button = ({
     onPopupChange(isSidebarOpen);
   };
 
-  useEffect(() => {
-    setFinalToggleValue(finalToggleVal);
-    setTmpFileName(tmpFileName)
-  }, [finalToggleVal], [tmpFileName]);
-
+  useEffect(
+    () => {
+      setFinalToggleValue(finalToggleVal);
+      setTmpFileName(tmpFileName);
+    },
+    [finalToggleVal],
+    [tmpFileName]
+  );
 
   const saveBeforeOptimization = () => {
     api["info"]({
-      message: '최적화를 하기 위해서는 저장이 필요합니다.',
+      message: "최적화를 하기 위해서는 저장이 필요합니다.",
       duration: 2,
       style: {
         top: 100,
@@ -92,7 +100,6 @@ const Button = ({
       },
     });
   };
-
 
   const handleSaveJSON = () => {
     if (diagram) {
@@ -119,8 +126,8 @@ const Button = ({
       a.href = URL.createObjectURL(blob);
       a.download = tmpFileName;
       a.click();
-      message.info("저장되었습니다.")
-    })
+      message.info("저장되었습니다.");
+    });
   };
 
   const handleSaveImage = () => {
@@ -129,7 +136,6 @@ const Button = ({
         const imgData = diagram.makeImageData({
           scale: 0.5,
           background: "white",
-
         });
         if (!tmpFileName) {
           return;
@@ -140,10 +146,9 @@ const Button = ({
         a.href = imgData;
         a.download = tmpFileName;
         a.click();
-        message.info("저장되었습니다.")
-
+        message.info("저장되었습니다.");
       }
-    })
+    });
   };
 
   const handleLiftNShift = async () => {
@@ -159,7 +164,9 @@ const Button = ({
       const containsOtherTypes = otherTypes.length > 0;
 
       if (containsOtherTypes) {
-        message.warning("클라우드 아키텍처가 포함되어있으면 Rehost 하지 못합니다.");
+        message.warning(
+          "클라우드 아키텍처가 포함되어있으면 Rehost 하지 못합니다."
+        );
         return;
       }
       if (clickedLoaded) {
@@ -170,6 +177,8 @@ const Button = ({
       const response = await rehostRequest(jsonString);
       const Jdata = response.data.result;
       diagram.model = go.Model.fromJson(Jdata);
+
+      console.log("diagram.model", diagram.model.toJson());
 
       setData(diagram.model.nodeDataArray);
       setClickedLoaded(true);
@@ -192,7 +201,6 @@ const Button = ({
       let fileReader = new FileReader();
       fileReader.readAsText(file);
       fileReader.onload = async () => {
-
         let filejson = JSON.parse(fileReader.result);
         if (filejson.hasOwnProperty("cost")) {
           setFinalToggleVal(filejson["cost"]);
@@ -222,25 +230,27 @@ const Button = ({
     setShowToggle(false); // toggle 숨김
     setIsRehost(false);
     setFileName("제목 없는 다이어그램");
-    setIsSave(false);
+    setIsSave(true);
   };
 
   const handleSummary = async () => {
     if (diagram) {
       console.log("handleSummary", finalToggleValue);
       const response = await summaryFile(finalToggleValue);
-      console.log(response.data)
-      navigate("/summary", { state: { costdata: response.data, from: "draw" } });
+      console.log(response.data);
+      navigate("/summary", {
+        state: { costdata: response.data, from: "draw" },
+      });
     }
   };
-  const [arrow, setArrow] = useState('Show');
+  const [arrow, setArrow] = useState("Show");
 
   const mergedArrow = useMemo(() => {
-    if (arrow === 'Hide') {
+    if (arrow === "Hide") {
       return false;
     }
 
-    if (arrow === 'Show') {
+    if (arrow === "Show") {
       return true;
     }
 
@@ -253,8 +263,17 @@ const Button = ({
       <div className="button-container">
         <div className="button-row">
           <Tooltip placement="right" title={"upload"} arrow={mergedArrow}>
-            <Modal title="Enter file name" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
-              <Input placeholder="File name" value={tmpFileName} onChange={onChangeFileName} />
+            <Modal
+              title="Enter file name"
+              visible={isModalVisible}
+              onOk={handleOk}
+              onCancel={handleCancel}
+            >
+              <Input
+                placeholder="File name"
+                value={tmpFileName}
+                onChange={onChangeFileName}
+              />
             </Modal>
             <button onClick={handleUpload}>
               <BsUpload />
@@ -270,37 +289,41 @@ const Button = ({
 
         <div className="button-row">
           <Tooltip placement="right" title={"reset"} arrow={mergedArrow}>
-
             <button onClick={handleReset}>
               <BsEraser />
             </button>
           </Tooltip>
-
         </div>
         <div className="button-row">
           <Tooltip placement="right" title={"download"} arrow={mergedArrow}>
-
             <button onClick={handleSaveJSON}>
               <BsDownload />
             </button>
           </Tooltip>
-
         </div>
         <div className="button-row">
-          <Tooltip placement="right" title={"download image"} arrow={mergedArrow}>
+          <Tooltip
+            placement="right"
+            title={"download image"}
+            arrow={mergedArrow}
+          >
             <button onClick={handleSaveImage}>
               <BsFillImageFill />
             </button>
           </Tooltip>
-
         </div>
         <div className="button-row">
           <Tooltip
             placement="right"
             title={
               <>
-                <div><strong>Lift & Shift</strong></div>
-                <div>on-premise 정보 자산을 cloud 자산으로 1:1 대응해주는 기능입니다.</div>
+                <div>
+                  <strong>Lift & Shift</strong>
+                </div>
+                <div>
+                  on-premise 정보 자산을 cloud 자산으로 1:1 대응해주는
+                  기능입니다.
+                </div>
               </>
             }
             arrow={mergedArrow}
@@ -309,15 +332,19 @@ const Button = ({
               <BsCloud />
             </button>
           </Tooltip>
-
         </div>
         <div className="button-row">
-        <Tooltip
+          <Tooltip
             placement="right"
             title={
               <>
-                <div><strong>Summary</strong></div>
-                <div>EC2, RDS, S3 및 기타 서비스의 예상 비용을 한 눈에 확인할 수 있습니다.</div>
+                <div>
+                  <strong>Summary</strong>
+                </div>
+                <div>
+                  EC2, RDS, S3 및 기타 서비스의 예상 비용을 한 눈에 확인할 수
+                  있습니다.
+                </div>
               </>
             }
             arrow={mergedArrow}
@@ -326,15 +353,19 @@ const Button = ({
               <BsClipboard2Data />
             </button>
           </Tooltip>
-
         </div>
         <div className="button-row">
-        <Tooltip
+          <Tooltip
             placement="right"
             title={
               <>
-                <div><strong>Optimize</strong></div>
-                <div>현재 클라우드 아키텍처 기반으로 보안/로깅/고가용성 측면으로 추천하는 아키텍처를 볼 수 있습니다.</div>
+                <div>
+                  <strong>Optimize</strong>
+                </div>
+                <div>
+                  현재 클라우드 아키텍처 기반으로 보안/로깅/고가용성 측면으로
+                  추천하는 아키텍처를 볼 수 있습니다.
+                </div>
               </>
             }
             arrow={mergedArrow}
@@ -343,7 +374,6 @@ const Button = ({
               <BsGear />
             </button>
           </Tooltip>
-
         </div>
         {contextHolder}
       </div>
