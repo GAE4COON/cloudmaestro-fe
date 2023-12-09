@@ -51,7 +51,7 @@ async function handleNode(node, diagram, setAlertMessage) {
   }
 }
 
-export function checkForLog(diagram, setAlertMessage) {
+async function checkForLog(diagram, setAlertMessage) {
   if (diagram.model.nodeDataArray.length > 0) {
     const hasQuickSightNode = diagram.model.nodeDataArray.some(
       (node) => node.text === "QuickSight"
@@ -69,19 +69,13 @@ export function checkForLog(diagram, setAlertMessage) {
     // console.log("hellohihi");
     const message = {
       key: Date.now().toString(), // Unique key for each message
-      hasQuickmessage:
-        " QuickSight가 암호화되지 않을 시, 무단 접근 및 변조 등을 통한 보험 위험이 존재할 수 있습니다.",
-      hasOpenSearch:
-        " OpenSearch 암호화되지 않을 시, 무단 접근 및 변조 등을 통한 보험 위험이 존재할 수 있습니다.",
-      hasAthena:
-        " Athena가 암호화되지 않을 시, 무단 접근 및 변조 등을 통한 보험 위험이 존재할 수 있습니다.",
-      hasS3:
-        " S3가 암호화되지 않을 시, 무단 접근 및 변조 등을 통한 보험 위험이 존재할 수 있습니다.",
+      hasmessage:
+        " 로그저장매체가 암호화되지 않을 시, 무단 접근 및 변조 등을 통한 보험 위험이 존재할 수 있습니다."
     };
-    if (hasQuickSightNode) {
+    if (hasQuickSightNode || hasOpenSearch || hasAthena || hasS3) {
       setAlertMessage({
         key: Date.now(), // 현재 타임스탬프를 key로 사용
-        message: message.hasQuickmessage,
+        message: message.hasmessage,
         tag: "Info",
       });
     }
