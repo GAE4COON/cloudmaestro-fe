@@ -8,12 +8,7 @@ export default function Introduce(){
             <span style={{ fontWeight: 'bold' }}>ISO 27001</span>을 기반으로 <br />
             <span style={{ fontWeight: 'bold' }}>보안성을 고려한 아키텍처 도식화</span>를
             제공합니다.
-          </p>
-
-      <span style={{ textShadow: '2px 2px lightgray',fontWeight: 'bold',color: '#4D6295' ,fontSize: '50px' }}>
-          Cloud Maestro
-        </span>
-  
+          </p>  
     </div>
     )
   }
