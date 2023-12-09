@@ -35,7 +35,7 @@ async function handleNode(node, diagram, setAlertMessage) {
       message: node.text + " (이)가 암호화되지 않을 시, 무단 접근 및 변조 등을 통한 보험 위험이 존재할 수 있습니다.\
       " + node.text + "(을)를 암호화해주시기를 바랍니다."
     };
-    console.log("hello", message);
+
     setAlertMessage({
       key: Date.now(), // 현재 타임스탬프를 key로 사용
       message: message.message,
@@ -81,7 +81,6 @@ export async function checkForLog(diagram, setAlertMessage) {
       const jsonString = diagram.model.toJson();
       const response = await DevCheck(jsonString);
       if ( response.data.status) {
-        console.log("API Response:", response.data);
         setAlertMessage({
           key: Date.now(), // Use current timestamp as key
           message: devMessage.hasmessage,
@@ -95,7 +94,6 @@ export async function checkForLog(diagram, setAlertMessage) {
       };
     
       if ( response.data.gatewayapi) {
-        console.log("API Response22:", response.data);
         setAlertMessage({
           key: Date.now(), // Use current timestamp as key
           message: apiMessage.hasmessage,
