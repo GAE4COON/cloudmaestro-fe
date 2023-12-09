@@ -13,6 +13,7 @@ import First from "./Introduce/First";
 import Second from "./Introduce/Second";
 import Third from "./Introduce/Third";
 import Introduce from "./Introduce/intro";
+import { Container } from "react-bootstrap";
 const { TabPane } = Tabs;
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
@@ -26,39 +27,6 @@ const LogoSection = () => {
     </div>
   );
 };
-
-const StyledTabsContainer = styled.div`
-  margin-top: 20%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const StyledTab = styled.div`
-  .ant-tabs-nav {
-    justify-content: center;
-  }
-
-  .ant-tabs-tab {
-    font-size: 20px;
-    width: 30%;
-    justify-content: center;
-    color: black;
-    font-weight: bold;
-    margin-left: 10px;
-  }
-  .ant-tabs-content {
-    width: 80%; // Set the width of the tab content to 50%
-    margin: 0 auto; // Center the content
-    text-align: left;
-  }
-
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  height: 20vh;
-  font-size: 17px;
-`;
 
 const Home = () => {
   const [activeTab, setActiveTab] = useState("1");
@@ -153,7 +121,7 @@ const Home = () => {
   const ImageSection = () => {
     return (
       <>
-        <span
+        {/* <span
           style={{
             fontFamily: "Noto Sans KR",
             textShadow: "2px 2px lightgray",
@@ -163,7 +131,7 @@ const Home = () => {
           }}
         >
           Cloud Maestro는..
-        </span>
+        </span> */}
         <FlexContainer>
           <ImageContainer>
             <img
@@ -283,7 +251,6 @@ const Home = () => {
     <div className="about-container">
       <div className="section" ref={addtoRefs}>
         <LogoSection />
-
         <Introduce />
       </div>
       <div className="section" ref={addtoRefs}>
@@ -345,7 +312,6 @@ const FlexContainer = styled.div`
   height: 20vh;
   margin-right: 13%;
   margin-left: 13%;
-  margin-top: 10%;
 `;
 
 const ImageContainer = styled.div`
