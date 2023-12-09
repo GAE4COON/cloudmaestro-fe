@@ -18,14 +18,6 @@ const Learn = () => {
 
     console.log("type:", type);
 
-    if (type) {
-      if (type === "excel") {
-        window.scrollTo(0, 300);
-      }
-      if (type === "json") {
-        window.scrollTo(0, 1570);
-      }
-    }
   }, [location]);
 
   const animateText = (fullText, setter, speed) => {

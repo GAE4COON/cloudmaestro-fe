@@ -401,6 +401,7 @@ function Draw() {
                     handleSaveDiagram={handleSaveDiagram}
                     setIsSave={setIsSave}
                     setFileName={setFileName}
+                    fileName={fileName}
                     finalToggleValue={finalToggleValue}
                     setFinalToggleValue={setFinalToggleValue}
                     onPopupChange={handlePopupChange}
