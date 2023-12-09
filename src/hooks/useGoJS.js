@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import react, { useState, useEffect, startTransition } from "react";
 import * as go from "gojs";
 import "../styles/App.css"; // contains .diagram-component CSS
 import handleChangedSelection from "../pages/toggle/toggle";
@@ -10,7 +10,10 @@ import { handleSecurity } from "../components/SecurityAlert";
 const useGoJS = (
   setShowToggle,
   onDiagramChange,
-  setAlertMessage,
+  // handleguide,
+  setAlertMessage
+  // setWarnMessage,
+  // setInfoMessage
 ) => {
   const [diagram, setDiagram] = useState(null);
   const [clickedNodeKey, setClickedNodeKey] = useState();
@@ -70,7 +73,7 @@ const useGoJS = (
       "draggingTool.isGridSnapEnabled": true,
       "resizingTool.isGridSnapEnabled": true,
       model: new go.GraphLinksModel({
-        linkKeyProperty: 'uniqueLinkId', // Replace with your actual link property
+        linkKeyProperty: "uniqueLinkId", // Replace with your actual link property
       }),
       ModelChanged: async (e) => {
         if (e.isTransactionFinished) {
@@ -150,34 +153,70 @@ const useGoJS = (
                         tag: "Error",
                       });
                     }
-                  } else if (data.modifiedNodeData[i].type === "Database") {
+                  }
+                  if (
+                    data.insertedNodeKeys[i].startsWith("S3") ||
+                    data.insertedNodeKeys[i].startsWith("CloudTrail") ||
+                    data.insertedNodeKeys[i].startsWith("CloudWatch")
+                  ) {
+                    PostData.checkOption = "Logging";
+                    PostData.newData = data.modifiedNodeData[i];
+                    console.log("Logging 호출");
+                    const response = await NodeCheck(PostData);
+                    if (response.data.result.status === "fail") {
+                      console.log("API Response:", response.data);
+                      setTimeout(() => {
+                        setAlertMessage((prevAlert) => ({
+                          key: Date.now(),
+                          message: response.data.result.message,
+                          tag: "Info",
+                        }));
+                      }, 0);
+                    }
+                  }
+                  if (
+                    data.insertedNodeKeys[i].startsWith("Backup") ||
+                    data.insertedNodeKeys[i].startsWith("S3")
+                  ) {
+                    PostData.checkOption = "Backup";
+                    PostData.newData = data.modifiedNodeData[i];
+                    console.log("Backup 호출");
+                    const response = await NodeCheck(PostData);
+                    if (response.data.result.status === "fail") {
+                      console.log("API Response:", response.data);
+                      setTimeout(() => {
+                        setAlertMessage((prevAlert) => ({
+                          key: Date.now(),
+                          message: response.data.result.message,
+                          tag: "Info",
+                        }));
+                      }, 30);
+                    }
+                  }
+                  if (data.modifiedNodeData[i].type === "Database") {
                     PostData.checkOption = "Database";
                     PostData.newData = data.modifiedNodeData[i];
                     console.log("NodeCheck 호출");
                     const response = await NodeCheck(PostData);
                     if (response.data.result.status === "fail") {
                       console.log("API Response:", response.data);
-                      setAlertMessage({
-                        key: Date.now(), // 현재 타임스탬프를 key로 사용
+                      setAlertMessage((prevAlert) => ({
+                        key: Date.now(),
                         message: response.data.result.message,
-                        tag: "Warn",
-                      });
+                        tag: "Info",
+                      }));
                     }
                   }
                 }
               }
             } catch (error) {
-              console.error("API Error:", error);
+              console.error("API Error:", error, data.insertedLinkKeys);
             }
           }
-          handleSecurity(e, diagram,setAlertMessage);
+          handleSecurity(e, diagram, setAlertMessage);
         }
       },
-      
-    
     });
-    
-  
 
     // delete
     diagram.addLayerBefore(
@@ -361,7 +400,7 @@ const useGoJS = (
         routing: go.Link.Normal,
         // routing: go.Link.AvoidsNodes,
         curve: go.Link.JumpGap,
-        
+
         corner: 5,
         contextMenu: $(
           go.Adornment,
@@ -454,7 +493,7 @@ const useGoJS = (
       $(go.Shape, {
         toArrow: "Standard",
         stroke: "#777", // Set the color of the arrowhead outline
-        fill: "#777",   // Set the color of the arrowhead fill
+        fill: "#777", // Set the color of the arrowhead fill
         // scale: 1,
         // name: "ToArrow",
       })
@@ -533,7 +572,7 @@ const useGoJS = (
         }
       });
     });
-    
+
     diagram.addModelChangedListener(function (e) {
       if (e.isTransactionFinished) {
         onDiagramChange(diagram);
