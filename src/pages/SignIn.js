@@ -6,6 +6,12 @@ import { useAuth } from "../utils/auth/authContext";
 import jwt_decode from "jwt-decode";
 import "../styles/App.css";
 import "../styles/signin.css";
+import { message } from "antd";
+
+message.config({
+  top: 50,
+  duration: 3,
+});
 
 function SignIn() {
   const [id, setId] = useState("");
@@ -33,7 +39,8 @@ function SignIn() {
 
       window.location.href = "/home";
     } catch (error) {
-      console.error("로그인 실패:", error.message);
+      console.error("로그인 실패!!:", error.message);
+      message.warning("로그인에 실패했습니다. 아이디 및 비밀번호를 확인해주세요.");
       if (error.response) {
         console.error("응답 상태:", error.response.status);
         console.error("응답 데이터:", error.response.data);
