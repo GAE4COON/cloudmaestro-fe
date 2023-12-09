@@ -1,22 +1,15 @@
+<<<<<<< HEAD
 import { alertCheck, NodeCheck, GroupCheck } from "../apis/fileAPI";
+=======
+
+import { DevCheck } from "../apis/fileAPI";
+>>>>>>> 0d3140a4a4b9f9caaa70cb4851f90534465c28a3
 
 export async function handleSecurity(e, diagram, setAlertMessage) {
   if (e.isTransactionFinished) {
     const jsonString = e.model.toIncrementalJson(e);
     const data = JSON.parse(jsonString);
     checkForLog(diagram, setAlertMessage);
-
-    if (data.modifiedLinkData) {
-      // TODO
-    }
-
-    if (data.insertedNodeKeys) {
-      // TODO
-    }
-
-    if (data.removedNodeKeys || data.removedLinkKeys) {
-      // TODO
-    }
 
     // Handling node modifications separately
     if (data.modifiedNodeData) {
@@ -30,24 +23,36 @@ export async function handleSecurity(e, diagram, setAlertMessage) {
           await handleNode(data.modifiedNodeData[i], diagram, setAlertMessage);
         }
       }
+<<<<<<< HEAD
+=======
+      
+>>>>>>> 0d3140a4a4b9f9caaa70cb4851f90534465c28a3
     }
     //checkForLog(diagram, setInfoMessage)
   }
 }
 
 async function handleNode(node, diagram, setAlertMessage) {
+<<<<<<< HEAD
   //  const PostData = {
   //   checkOption: null,
   //   newData: null,
   //   diagramData: diagram.model.toJson(),
   // };
+=======
+>>>>>>> 0d3140a4a4b9f9caaa70cb4851f90534465c28a3
 
   try {
     const message = {
       key: Date.now().toString(), // Unique key for each message
+<<<<<<< HEAD
       message:
         node.text +
         " 가 암호화되지 않을 시, 무단 접근 및 변조 등을 통한 보험 위험이 존재할 수 있습니다.",
+=======
+      message: node.text + " (이)가 암호화되지 않을 시, 무단 접근 및 변조 등을 통한 보험 위험이 존재할 수 있습니다.\
+      " + node.text + "(을)를 암호화해주시기를 바랍니다."
+>>>>>>> 0d3140a4a4b9f9caaa70cb4851f90534465c28a3
     };
     console.log("hello", message);
     setAlertMessage({
@@ -60,7 +65,12 @@ async function handleNode(node, diagram, setAlertMessage) {
   }
 }
 
+<<<<<<< HEAD
 export function checkForLog(diagram, setAlertMessage) {
+=======
+
+export async function checkForLog(diagram, setAlertMessage) {
+>>>>>>> 0d3140a4a4b9f9caaa70cb4851f90534465c28a3
   if (diagram.model.nodeDataArray.length > 0) {
     const hasQuickSightNode = diagram.model.nodeDataArray.some(
       (node) => node.text === "QuickSight"
@@ -115,5 +125,34 @@ export function checkForLog(diagram, setAlertMessage) {
         tag: "Info",
       });
     }
+<<<<<<< HEAD
   }
 }
+=======
+
+    /// dev 망이 있을 때 메세지 띄우기 
+
+    const devMessage = {
+      key: Date.now().toString(), // Unique key for each message
+      hasmessage: "개발, 테스트 및 운영 환경은 분리되어야 하며 보호되어야 합니다."
+    };
+
+    try {
+      const jsonString = diagram.model.toJson();
+      const response = await DevCheck(jsonString);
+      if ( response.data.status) {
+        console.log("API Response:", response.data);
+        setAlertMessage({
+          key: Date.now(), // Use current timestamp as key
+          message: devMessage.hasmessage,
+          tag: "Info",
+        });
+      }
+    } catch (error) {
+      console.error("Error in DevCheck:", error);
+      // Handle error appropriately (e.g., set an error message)
+    }
+  }
+}
+
+>>>>>>> 0d3140a4a4b9f9caaa70cb4851f90534465c28a3

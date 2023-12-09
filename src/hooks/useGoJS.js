@@ -7,6 +7,7 @@ import { useData } from "../components/DataContext";
 import {
   checkForBackupAndS3Nodes,
   checkForMonitoringNodes,
+  checkForLogAnalysisNodes,
 } from "../components/GuideAlert";
 import { handleSecurity } from "../components/SecurityAlert";
 
@@ -585,6 +586,9 @@ const useGoJS = (
         setTimeout(() => {
           checkForMonitoringNodes(diagram, setAlertMessage);
         }, 30);
+        setTimeout(() => {
+          checkForLogAnalysisNodes(diagram, setAlertMessage);
+        }, 35);
       }
     });
 
