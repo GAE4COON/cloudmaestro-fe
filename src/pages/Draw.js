@@ -390,6 +390,23 @@ function Draw() {
               <DiagramTop>
                 <DiagramTopLeft>
                   <FileName>파일 이름: {fileName}</FileName>
+                </DiagramTopLeft>
+
+                <SaveButton>
+                  <ModalButton
+                    diagram={diagram}
+                    showToggle={showToggle}
+                    setShowToggle={setShowToggle}
+                    isSave={isSave}
+                    handleSaveDiagram={handleSaveDiagram}
+                    setIsSave={setIsSave}
+                    setFileName={setFileName}
+                    finalToggleValue={finalToggleValue}
+                    setFinalToggleValue={setFinalToggleValue}
+                    onPopupChange={handlePopupChange}
+                  />
+                </SaveButton>
+                <DiagramTopRight>
                   <AlertBadge
                     count={messageQueue.length}
                     onClick={showAlertMessages}
@@ -409,23 +426,10 @@ function Draw() {
                       size="middle"
                     />
                   </AlertBadge>
-                </DiagramTopLeft>
-                <SaveButton>
-                  <ModalButton
-                    diagram={diagram}
-                    showToggle={showToggle}
-                    setShowToggle={setShowToggle}
-                    isSave={isSave}
-                    handleSaveDiagram={handleSaveDiagram}
-                    setIsSave={setIsSave}
-                    setFileName={setFileName}
-                    finalToggleValue={finalToggleValue}
-                    setFinalToggleValue={setFinalToggleValue}
-                    onPopupChange={handlePopupChange}
-                  />
-                </SaveButton>
-                <StyledButton onClick={handleSaveDiagram}>Save</StyledButton>
+                  <StyledButton onClick={handleSaveDiagram}>Save</StyledButton>
+                </DiagramTopRight>
               </DiagramTop>
+
               <Modal
                 title="저장할 파일의 이름을 입력하세요."
                 visible={isModalVisible}
@@ -531,6 +535,8 @@ const SaveButton = styled.div`
 `;
 const DiagramTop = styled.div`
   display: flex;
+  position: relative;
+  width: 100%;
 `;
 
 const FileName = styled.div`
@@ -545,7 +551,15 @@ const FileName = styled.div`
 
 const DiagramTopLeft = styled.div`
   display: flex;
+  position: relative;
+  width: 87%;
   /* border: 10px solid #d9d9d9; */
+`;
+
+const DiagramTopRight = styled.div`
+  display: flex;
+  position: relative;
+  width: 13%;
 `;
 const StyledDiagram = styled.div`
   /* float: left; */
