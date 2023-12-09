@@ -11,8 +11,6 @@ import { useData } from "../components/DataContext";
 import "../styles/App.css";
 import { summaryFile } from "../apis/fileAPI.js";
 
-
-
 const Button = ({
   diagram,
   setShowToggle,
@@ -25,8 +23,6 @@ const Button = ({
   onPopupChange
 }) => {
 
-
-  
   const navigate = useNavigate();
   const hiddenFileInput = React.useRef(null);
   const handleClick = () => {
@@ -83,6 +79,7 @@ const Button = ({
   };
 
   const localSaveJSON = (target) => {
+
     const blob = new Blob([target], { type: "text/json" });
     let fileName = prompt("명을 입력해주세요:", "diagram.json");
     if (!fileName) {
@@ -101,9 +98,9 @@ const Button = ({
       const imgData = diagram.makeImageData({
         scale: 0.5,
         background: "white",
-        type: "image/png",
 
       });
+      console.log("imgData", imgData)
       let fileName = prompt("파일명을 입력해주세요:", "diagram.png");
       if (!fileName) {
         return;

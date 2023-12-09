@@ -97,7 +97,9 @@
     ],
     "CloudWatch":[
         "ISO/IEC 27002 5.25",
-        "ISO/IEC 27018 12.4.2"
+        "ISO/IEC 27018 12.4.2",
+        "AWS PERF02-BP01",
+        "AWS PERF03-BP02"
     ],
     "OpenSearch Service":[
         "ISO/IEC 27002 5.7/5.27"
@@ -107,5 +109,34 @@
     ],
     "QuickSight":[
         "ISO/IEC 27002 5.7/5.27"
+    ],
+    "commom":[
+      "AWS PERF01-BP02",
+      "AWS PERF01-BP07",
+      "AWS PERF02-BP05",
+      "AWS PERF03-BP01",
+      "AWS PERF03-BP05",
+      "AWS PERF04-BP03"
+    ],
+    "Cost Explorer":[
+      "AWS PERF01-BP03"
+    ],
+    "Compute Optimizer":[
+      "AWS PERF02-BP01"
+    ],
+    "S3 Storage Lens":[
+      "AWS PERF02-BP02"
+    ],
+    "Group_vpc":[
+      "AWS PERF04-BP01"
+    ],
+    "Direct Connect":[
+      "AWS PERF04-BP01"
+    ],
+    "Elastic Load Balancing":[
+      "AWS PERF04-BP01"
+    ],
+    "Route 53":[
+      "AWS PERF04-BP01"
     ]
   }
