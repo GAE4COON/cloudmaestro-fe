@@ -18,11 +18,13 @@ export async function handleSecurity(e, diagram, setAlertMessage) {
         ) {
           await handleNode(data.modifiedNodeData[i], diagram, setAlertMessage);
         }
+      
         }
       }
       
     }
   }
+
 
 
 async function handleNode(node, diagram, setAlertMessage) {
@@ -83,6 +85,20 @@ export async function checkForLog(diagram, setAlertMessage) {
         setAlertMessage({
           key: Date.now(), // Use current timestamp as key
           message: devMessage.hasmessage,
+          tag: "Info",
+        });
+      }
+
+      const apiMessage = {
+        key: Date.now().toString(), // Unique key for each message
+        hasmessage: "Amazon API Gateway 뒤에 Lambda 함수와 같은 서버리스 워크로드를 배포한다."
+      };
+    
+      if ( response.data.gatewayapi) {
+        console.log("API Response22:", response.data);
+        setAlertMessage({
+          key: Date.now(), // Use current timestamp as key
+          message: apiMessage.hasmessage,
           tag: "Info",
         });
       }
