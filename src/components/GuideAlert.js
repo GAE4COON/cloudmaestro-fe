@@ -33,13 +33,14 @@ export function checkForMonitoringNodes(diagram, setAlertMessage) {
 }
 
 export async function checkForLogAnalysisNodes(diagram, setAlertMessage) {
-  const analysisGuide = "활동, 예외, 결함 및 기타 관련 이벤트를 기록하는 로그는 생성되고 저장되며 보호되고 분석되어야 함. 로그 분석 서비스와 로깅 서비스와 연결하세요.";
+  const analysisGuide = "활동, 예외, 결함 및 기타 관련 이벤트를 기록하는 로그는 생성되고 저장되며 보호되고 분석되어야 함. 로그 분석 서비스와 로깅 서비스(S3)와 연결하세요.";
   const hasAthena = diagram.model.nodeDataArray.some(node => node.text === "Athena");
   const hasOpenSearchService = diagram.model.nodeDataArray.some(node => node.text === "OpenSearch Service");
   const hasQuickSight = diagram.model.nodeDataArray.some(node => node.text === "QuickSight");
   if(hasAthena || hasOpenSearchService || hasQuickSight){
     try {
       const response = await logGuideAlert(diagram.model.linkDataArray);
+      console.log("리스폰스 왔음",response.data.result);
       if(response.data.result=="false"){
         setAlertMessage({
           key: Date.now(),
