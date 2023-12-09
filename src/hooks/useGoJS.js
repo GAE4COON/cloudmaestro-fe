@@ -4,7 +4,7 @@ import "../styles/App.css"; // contains .diagram-component CSS
 import handleChangedSelection from "../pages/toggle/toggle";
 import { alertCheck, NodeCheck, GroupCheck } from "../apis/fileAPI";
 import { useData } from "../components/DataContext";
-import { checkForBackupAndS3Nodes, checkForMonitoringNodes, checkForLogAnalysisNodes } from "../components/GuideAlert";
+import { checkForBackupAndS3Nodes, checkForMonitoringNodes, checkForLogAnalysisNodes, checkForKmsNodes, checkForDbAccess } from "../components/GuideAlert";
 import { handleSecurity } from "../components/SecurityAlert";
 
 const useGoJS = (
@@ -544,15 +544,19 @@ const useGoJS = (
     diagram.addModelChangedListener(function (e) {
       if (e.isTransactionFinished) {
         onDiagramChange(diagram);
-        setTimeout(() => {
-          checkForBackupAndS3Nodes(diagram, setAlertMessage);
-        }, 1);
-        setTimeout(() => {
-          checkForMonitoringNodes(diagram, setAlertMessage);
-        }, 30);
-        setTimeout(() => {
-          checkForLogAnalysisNodes(diagram, setAlertMessage);
-        }, 35);
+        // setTimeout(() => {
+        //   checkForBackupAndS3Nodes(diagram, setAlertMessage);
+        // }, 1);
+        // setTimeout(() => {
+        //   checkForMonitoringNodes(diagram, setAlertMessage);
+        // }, 30);
+        // setTimeout(() => {
+        //   checkForLogAnalysisNodes(diagram, setAlertMessage);
+        // }, 30);
+        // setTimeout(() => {
+        //   checkForKmsNodes(diagram, setAlertMessage);
+        // }, 30);
+        checkForDbAccess(diagram, setAlertMessage);
       }
     });
 
