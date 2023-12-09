@@ -18,7 +18,6 @@ import { Button, notification } from "antd";
 import { Alert, Space, Modal, Input } from "antd";
 import { saveDiagram, updateDiagram } from "../apis/fileAPI";
 import "../styles/App.css";
-import jsonData from "../db/ResourceGuide.json"; // JSON 파일 경로
 
 // 페이지
 // import useReadJSON from "./useReadJSON";
@@ -80,7 +79,6 @@ function Draw() {
   const info = location.state ? location.state.info : null;
   const save = location.state ? location.state.save : false;
   const onpremise = location.state ? location.state.file : null;
-
   useEffect(() => {}, [diagramVersion]); // Dependency on diagramVersion
 
   // const [nodeRole, setNodeRole] = useState({});
@@ -239,78 +237,21 @@ function Draw() {
 
   useEffect(() => {
     if (alertMessage.message !== null) {
-      // Check if handleMessageQueue already contains the alertMessage.message
-      const isMessageInQueue = handleMessageQueue.some(
-        (queueMessage) => queueMessage === alertMessage.message
+      const isMessageInQueue = messageQueue.some(
+        (queueMessage) => queueMessage.message === alertMessage.message
       );
-
-      // Update handleMessageQueue with the new message
-      setHandleMessageQueue((currentQueue) => {
-        // Add the new message only if it's not already in the queue
-        if (!isMessageInQueue) {
-          return [...currentQueue, alertMessage.message];
-        } else {
-          return currentQueue; // Return the current queue unchanged
-        }
-      });
-
-      // Only call openNotification if the message is not already in handleMessageQueue
       if (!isMessageInQueue) {
-        setTimeout(() => {
-          openNotification();
-        }, 0);
+        queueMessage(alertMessage);
       }
     }
-
-    console.log("alertMessage", alertMessage);
-    console.log("handleMessageQueue", handleMessageQueue);
-  }, [alertMessage, setHandleMessageQueue]);
+  }, [alertMessage, setMessageQueue]);
 
   const [api, contextHolder] = notification.useNotification();
   const [areNotificationsShown, setAreNotificationsShown] = useState(false);
 
-  //   let backgroundColor;
-  //   switch (alertMessage.tag) {
-  //     case "Error":
-  //       backgroundColor = "#FFF0F0"; // 에러 배경색
-  //       break;
-  //     case "Warn":
-  //       backgroundColor = "#FFF8E0"; // 경고 배경색
-  //       break;
-  //     case "Info":
-  //       backgroundColor = "#DFE8FF"; // 정보 배경색
-  //       break;
-  //     default:
-  //       backgroundColor = "#FFFFFF"; // 기본 배경색
-  //       break;
-  //   }
-
-  //   let backgroundTitle;
-  //   switch (alertMessage.tag) {
-  //     case "Error":
-  //       backgroundTitle = "❌Error!"; // 에러 배경색
-  //       break;
-  //     case "Warn":
-  //       backgroundTitle = "⚠️Warnning"; // 경고 배경색
-  //       break;
-  //     case "Info":
-  //       backgroundTitle = "✔️Info"; // 정보 배경색
-  //       break;
-  //     default:
-  //       backgroundTitle = "Nothing"; // 기본 배경색
-  //       break;
-  //   }
-
-  //   api.open({
-  //     message: backgroundTitle,
-  //     description: alertMessage.message,
-  //     btn,
-  //     key,
-  //     onClose: close,
-  //     style: { backgroundColor, borderRadius: "8px" },
-  //     duration: 0,
-  //   });
-  // }
+  const queueMessage = (message) => {
+    setMessageQueue((prevQueue) => [...prevQueue, message]);
+  };
 
   const showAlertMessages = () => {
     if (areNotificationsShown) {
@@ -474,7 +415,7 @@ function Draw() {
                     diagram={diagram}
                     showToggle={showToggle}
                     setShowToggle={setShowToggle}
-                    isSave={true}
+                    isSave={isSave}
                     handleSaveDiagram={handleSaveDiagram}
                     setIsSave={setIsSave}
                     setFileName={setFileName}
