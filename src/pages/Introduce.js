@@ -26,54 +26,42 @@ const LogoSection = () => {
     </div>
   );
 };
-const tabs = [
-  {
-    key: "1",
-    label: "Cloud Migration이란?",
-    id: "section1",
-    content: <First />,
-  },
-  {
-    key: "2",
-    label: "클라우드 보안, 꼭 필요할까?",
-    id: "section2",
-    content: <Second />,
-  },
-  {
-    key: "3",
-    label: "ISO/IEC 27001이란?",
-    id: "section3",
-    content: <Third />,
-  },
-];
 
-// function StyledTabs({ items, activeTab, onTabClick }) {
-//   return (
-//     <StyledTabsContainer>
-//     {items.map((item) => (
-//       <StyledTab
-//         key={item.id}
-//         onClick={() => {
-//           if (activeTab !== item.id) {
-//             onTabClick(item.id);
-//           } else {
-//             const labelRef = document.getElementById(item.id);
-//             if (labelRef) {
-//               labelRef.scrollIntoView({ behavior: "smooth", block: "start" });
-//             }
-//           }
-//         }}
-//         active={activeTab === item.id}
-//       >
-//         <h2>{item.label}</h2>
-//       </StyledTab>
-//     ))}
-//   </StyledTabsContainer>
-//   );
-// }
+const StyledTabsContainer = styled.div`
+  margin-top: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const StyledTab = styled.div`
+  .ant-tabs-nav {
+    justify-content: center;
+  }
+
+  .ant-tabs-tab {
+    font-size: 20px;
+    width: 30%;
+    justify-content: center;
+    color: black;
+    font-weight: bold;
+    margin-left: 10px;
+  }
+  .ant-tabs-content {
+    width: 80%; // Set the width of the tab content to 50%
+    margin: 0 auto; // Center the content
+    text-align: left;
+  }
+
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 20vh;
+  font-size: 17px;
+`;
 
 const Home = () => {
-  const [activeTab, setActiveTab] = useState(null);
+  const [activeTab, setActiveTab] = useState("1");
   const section1Ref = useRef(null);
   const section2Ref = useRef(null);
   const section3Ref = useRef(null);
@@ -83,7 +71,6 @@ const Home = () => {
   let isScrolling = false;
 
   const handleTabClick = (id) => {
-    // Scroll to the clicked section
     const sectionRef =
       id === "section1"
         ? section1Ref
@@ -91,8 +78,6 @@ const Home = () => {
         ? section2Ref
         : section3Ref;
     scrollTo(sectionRef.current);
-
-    // Set the active tab
     setActiveTab(id);
   };
 
@@ -107,7 +92,6 @@ const Home = () => {
       });
     }
   };
-
   useEffect(() => {
     ref.current.forEach((el) => {
       gsap.fromTo(
@@ -168,44 +152,79 @@ const Home = () => {
 
   const ImageSection = () => {
     return (
-      <FlexContainer>
-        <ImageContainer>
-          <img
-            src="assets/img/icon1.png"
-            alt="logo"
-            style={{ width: "100px" }}
-          />
-          <ButtonContainer>
-            <h2>Architecture</h2>
-            <p>클라우드 최적화 아키텍처 도식화</p>
-            <div style={{ marginTop: "5%" }}></div>
-          </ButtonContainer>
-        </ImageContainer>
-        <ImageContainer>
-          <img
-            src="assets/img/icon3.png"
-            alt="logo"
-            style={{ width: "100px" }}
-          />
-          <ButtonContainer>
-            <h2>Cost</h2>
-            <p>서비스, 인스턴스를 고려한 정확한 비용 산정</p>
-            <div style={{ marginTop: "5%" }}></div>
-          </ButtonContainer>
-        </ImageContainer>
-        <ImageContainer>
-          <img
-            src="assets/img/icon2.png"
-            alt="logo"
-            style={{ width: "100px" }}
-          />
-          <ButtonContainer>
-            <h2>Security</h2>
-            <p>사전 보안성 점검 보안 권고 및 가이드 기능</p>
-            <div style={{ marginTop: "5%" }}></div>
-          </ButtonContainer>
-        </ImageContainer>
-      </FlexContainer>
+      <>
+        <span
+          style={{
+            fontFamily: "Noto Sans KR",
+            textShadow: "2px 2px lightgray",
+            fontWeight: "bold",
+            color: "#4D6295",
+            fontSize: "50px",
+          }}
+        >
+          Cloud Maestro는..
+        </span>
+        <FlexContainer>
+          <ImageContainer>
+            <img
+              src="assets/img/icon1.png"
+              alt="logo"
+              style={{ width: "100px" }}
+            />
+            <ButtonContainer>
+              <h2>Architecture</h2>
+              <p>클라우드 최적화 아키텍처 도식화</p>
+              <div style={{ marginTop: "5%" }}></div>
+            </ButtonContainer>
+          </ImageContainer>
+          <ImageContainer>
+            <img
+              src="assets/img/icon3.png"
+              alt="logo"
+              style={{ width: "100px" }}
+            />
+            <ButtonContainer>
+              <h2>Cost</h2>
+              <p>서비스, 인스턴스를 고려한 정확한 비용 산정</p>
+              <div style={{ marginTop: "5%" }}></div>
+            </ButtonContainer>
+          </ImageContainer>
+          <ImageContainer>
+            <img
+              src="assets/img/icon2.png"
+              alt="logo"
+              style={{ width: "100px" }}
+            />
+            <ButtonContainer>
+              <h2>Security</h2>
+              <p>사전 보안성 점검 보안 권고 및 가이드 기능</p>
+              <div style={{ marginTop: "5%" }}></div>
+            </ButtonContainer>
+          </ImageContainer>
+        </FlexContainer>
+      </>
+    );
+  };
+
+  const TabSection = () => {
+    return (
+      <TabsContainer>
+        <StyledAntTabs
+          defaultActiveKey="1"
+          activeKey={activeTab}
+          onChange={handleTabClick}
+        >
+          <TabPane tab="Cloud Migration이란?" key="1">
+            <First />
+          </TabPane>
+          <TabPane tab="클라우드 보안, 꼭 필요할까?" key="2">
+            <Second />
+          </TabPane>
+          <TabPane tab="ISO/IEC 27001이란?" key="3">
+            <Third />
+          </TabPane>
+        </StyledAntTabs>
+      </TabsContainer>
     );
   };
 
@@ -259,45 +278,26 @@ const Home = () => {
     );
   };
 
+  // final return (page)
   return (
-    <div className="about-container" ref={containerRef} onWheel={handleScroll}>
-      <div ref={addtoRefs}>
-        <Continer>
-          <LogoSection />
-          <Introduce />
-        </Continer>
+    <div className="about-container">
+      <div className="section" ref={addtoRefs}>
+        <LogoSection />
+
+        <Introduce />
       </div>
-      <div ref={addtoRefs}>
-        <Continer>
-          <ImageSection />
-        </Continer>
+      <div className="section" ref={addtoRefs}>
+        <ImageSection />
       </div>
-      <TabsContainer>
-        <StyledAntTabs
-          defaultActiveKey="1"
-          activeKey={activeTab}
-          onChange={handleTabClick}
-        >
-          <TabPane tab="Cloud Migration이란?" key="1">
-            <First />
-          </TabPane>
-          <TabPane tab="클라우드 보안, 꼭 필요할까?" key="2">
-            <Second />
-          </TabPane>
-          <TabPane tab="ISO/IEC 27001이란?" key="3">
-            <Third />
-          </TabPane>
-        </StyledAntTabs>
-      </TabsContainer>
-      <div ref={addtoRefs}>
-        <Continer>
-          <Flow />
-        </Continer>
+      <div className="section" ref={addtoRefs}>
+        <TabSection />
       </div>
-      <div ref={addtoRefs}>
-        <Continer>
-          <IntroduceSecurity />
-        </Continer>
+
+      <div className="section" ref={addtoRefs}>
+        <Flow />
+      </div>
+      <div className="section" ref={addtoRefs}>
+        <IntroduceSecurity />
       </div>
     </div>
   );
@@ -305,18 +305,10 @@ const Home = () => {
 
 export default Home;
 
-const Continer = styled.div`
-  display: flex;
-  width: 100%;
-  height: 100vh;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  flex-direction: column;
-`;
-
 const TabsContainer = styled.div`
   display: flex;
+  flex-direction: column; /* if flex */
+
   justify-content: center;
 `;
 const StyledAntTabs = styled(Tabs)`
@@ -327,7 +319,7 @@ const StyledAntTabs = styled(Tabs)`
   }
   .ant-tabs-nav {
     justify-content: center;
-    margin-top: 20%;
+    /* margin-top: 20%; */
   }
 
   .ant-tabs-tab {
@@ -339,12 +331,10 @@ const StyledAntTabs = styled(Tabs)`
   }
 
   .ant-tabs-content {
-    /* width: 80%; // Set the width of the tab content */
-    margin: 0 auto; // Center the content
+    width: 100%; // Set the width of the tab content
+    /* margin: 0 auto; // Center the content */
     text-align: left;
   }
-
-  // Add more custom styles as needed
 `;
 
 const FlexContainer = styled.div`

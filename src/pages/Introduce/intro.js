@@ -11,10 +11,6 @@ export default function Introduce() {
         </span>
         를 제공합니다.
       </p>
-
-      {/* <span style={{ textShadow: '2px 2px lightgray',fontWeight: 'bold',color: '#4D6295' ,fontSize: '50px' }}>
-          Cloud Maestro
-        </span> */}
     </div>
   );
 }

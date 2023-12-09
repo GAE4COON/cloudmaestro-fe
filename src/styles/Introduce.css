@@ -8,6 +8,11 @@
   align-items: center;
 }
 
+.section{
+  width: 100%;
+  min-height: 100vh;
+
+}
 
 .img{
   height: 100vh;
