@@ -71,13 +71,16 @@ export function checkForKmsNodes(diagram, setAlertMessage) {
 export async function checkForDbAccess(diagram, setAlertMessage) {
   if (diagram.model.nodeDataArray.length > 0) {
     const hasDb = diagram.model.nodeDataArray.some(node => node.type === "Database");
-    const dbGuide = "비즈니스 로직 또는 웹 서버만 데이터베이스에 직접 액세스할 수 있어야 한다.";
-
+    const dbGuide = "웹 서버만 데이터베이스에 직접 액세스할 수 있어야 한다.";
     if (hasDb) { //db
       try {
         const response = await dbGuideAlert(diagram.model.toJSON());
-        if(response.data.result=="false"){
-          console.log("일로 왔음다");
+        if(response.data.result=="true"){
+          setAlertMessage({
+            key: Date.now(),
+            message: dbGuide,
+            tag: "Warn",
+          });
         }
       } catch (error) {
           console.error("checkForDbAccess 오류:", error);

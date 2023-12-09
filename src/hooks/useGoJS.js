@@ -537,19 +537,21 @@ const useGoJS = (
     diagram.addModelChangedListener(function (e) {
       if (e.isTransactionFinished) {
         onDiagramChange(diagram);
-        // setTimeout(() => {
-        //   checkForBackupAndS3Nodes(diagram, setAlertMessage);
-        // }, 1);
-        // setTimeout(() => {
-        //   checkForMonitoringNodes(diagram, setAlertMessage);
-        // }, 30);
-        // setTimeout(() => {
-        //   checkForLogAnalysisNodes(diagram, setAlertMessage);
-        // }, 30);
-        // setTimeout(() => {
-        //   checkForKmsNodes(diagram, setAlertMessage);
-        // }, 30);
-        checkForDbAccess(diagram, setAlertMessage);
+        setTimeout(() => {
+          checkForBackupAndS3Nodes(diagram, setAlertMessage);
+        }, 1);
+        setTimeout(() => {
+          checkForMonitoringNodes(diagram, setAlertMessage);
+        }, 30);
+        setTimeout(() => {
+          checkForLogAnalysisNodes(diagram, setAlertMessage);
+        }, 30);
+        setTimeout(() => {
+          checkForKmsNodes(diagram, setAlertMessage);
+        }, 30);
+        setTimeout(() => {
+          checkForDbAccess(diagram, setAlertMessage);
+        }, 30);
       }
     });
 
