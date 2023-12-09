@@ -1,4 +1,4 @@
-import { alertCheck, NodeCheck, GroupCheck } from "../apis/fileAPI";
+import {DevCheck} from "../apis/fileAPI";
 
 export async function handleSecurity(e, diagram, setAlertMessage) {
   if (e.isTransactionFinished) {
