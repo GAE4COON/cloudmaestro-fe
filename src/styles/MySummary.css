@@ -154,27 +154,3 @@ table tbody tr.disabled_row:hover {
   background-color: transparent;
   cursor: default;
 }
-
-.export-button {
-    margin-top: 10px;
-    box-sizing: border-box;
-    position: relative;
-    width: 100px;
-    height: 40px;
-
-    background: #FFFFFF;
-    border: 1px solid #BABABA;
-    border-radius: 7px;
-
-    font-family: "Noto Sans KR", sans-serif !important;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 30px;
-    display: flex;
-    align-items: center;
-    text-align: center;
-
-    color: #809CDA;
-    margin-left: auto;
-    margin-right: auto;
-}

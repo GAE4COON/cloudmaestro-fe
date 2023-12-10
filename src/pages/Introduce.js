@@ -239,7 +239,6 @@ const Home = () => {
     );
   };
 
-  // final return (page)
   return (
     <div className="about-container">
       <div className="section" ref={addtoRefs}>
