@@ -1,4 +1,4 @@
-import { alertCheck, NodeCheck, GroupCheck } from "../apis/fileAPI";
+import {DevCheck} from "../apis/fileAPI";
 
 export async function handleSecurity(e, diagram, setAlertMessage) {
   if (e.isTransactionFinished) {
@@ -17,11 +17,14 @@ export async function handleSecurity(e, diagram, setAlertMessage) {
         ) {
           await handleNode(data.modifiedNodeData[i], diagram, setAlertMessage);
         }
+
+    
       }
     }
     //checkForLog(diagram, setInfoMessage)
   }
 }
+
 
 async function handleNode(node, diagram, setAlertMessage) {
   //  const PostData = {
@@ -37,7 +40,7 @@ async function handleNode(node, diagram, setAlertMessage) {
         node.text +
         " 가 암호화되지 않을 시, 무단 접근 및 변조 등을 통한 보험 위험이 존재할 수 있습니다.",
     };
-    console.log("hello", message);
+
     setAlertMessage({
       key: Date.now(), // 현재 타임스탬프를 key로 사용
       message: message.message,
@@ -48,7 +51,7 @@ async function handleNode(node, diagram, setAlertMessage) {
   }
 }
 
-export function checkForLog(diagram, setAlertMessage) {
+async function checkForLog(diagram, setAlertMessage) {
   if (diagram.model.nodeDataArray.length > 0) {
     const hasQuickSightNode = diagram.model.nodeDataArray.some(
       (node) => node.text === "QuickSight"
@@ -66,42 +69,49 @@ export function checkForLog(diagram, setAlertMessage) {
     // console.log("hellohihi");
     const message = {
       key: Date.now().toString(), // Unique key for each message
-      hasQuickmessage:
-        " QuickSight가 암호화되지 않을 시, 무단 접근 및 변조 등을 통한 보험 위험이 존재할 수 있습니다.",
-      hasOpenSearch:
-        " OpenSearch 암호화되지 않을 시, 무단 접근 및 변조 등을 통한 보험 위험이 존재할 수 있습니다.",
-      hasAthena:
-        " Athena가 암호화되지 않을 시, 무단 접근 및 변조 등을 통한 보험 위험이 존재할 수 있습니다.",
-      hasS3:
-        " S3가 암호화되지 않을 시, 무단 접근 및 변조 등을 통한 보험 위험이 존재할 수 있습니다.",
+      hasmessage:
+        " 로그저장매체가 암호화되지 않을 시, 무단 접근 및 변조 등을 통한 보험 위험이 존재할 수 있습니다."
     };
-    if (hasQuickSightNode) {
+    if (hasQuickSightNode || hasOpenSearch || hasAthena || hasS3) {
       setAlertMessage({
         key: Date.now(), // 현재 타임스탬프를 key로 사용
-        message: message.hasQuickmessage,
+        message: message.hasmessage,
         tag: "Info",
       });
     }
-    if (hasOpenSearch) {
-      setAlertMessage({
-        key: Date.now() + 1, // 현재 타임스탬프를 key로 사용
-        message: message.hasOpenSearch,
-        tag: "Info",
-      });
-    }
-    if (hasAthena) {
-      setAlertMessage({
-        key: Date.now() + 2, // 현재 타임스탬프를 key로 사용
-        message: message.hasAthena,
-        tag: "Info",
-      });
-    }
-    if (hasS3) {
-      setAlertMessage({
-        key: Date.now() + 3, // 현재 타임스탬프를 key로 사용
-        message: message.hasS3,
-        tag: "Info",
-      });
+    /// dev 망이 있을 때 메세지 띄우기 
+
+    const devMessage = {
+      key: Date.now().toString(), // Unique key for each message
+      hasmessage: "개발, 테스트 및 운영 환경은 분리되어야 하며 보호되어야 합니다."
+    };
+
+    try {
+      const jsonString = diagram.model.toJson();
+      const response = await DevCheck(jsonString);
+      if ( response.data.status) {
+        setAlertMessage({
+          key: Date.now(), // Use current timestamp as key
+          message: devMessage.hasmessage,
+          tag: "Info",
+        });
+      }
+
+      const apiMessage = {
+        key: Date.now().toString(), // Unique key for each message
+        hasmessage: "Amazon API Gateway 뒤에 Lambda 함수와 같은 서버리스 워크로드를 배포한다."
+      };
+    
+      if ( response.data.gatewayapi) {
+        setAlertMessage({
+          key: Date.now(), // Use current timestamp as key
+          message: apiMessage.hasmessage,
+          tag: "Info",
+        });
+      }
+    } catch (error) {
+      console.error("Error in DevCheck:", error);
+      // Handle error appropriately (e.g., set an error message)
     }
   }
 }

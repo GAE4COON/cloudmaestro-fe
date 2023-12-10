@@ -164,13 +164,12 @@ const Button = ({
       const containsOtherTypes = otherTypes.length > 0;
 
       if (containsOtherTypes) {
-        message.warning(
-          "클라우드 아키텍처가 포함되어있으면 Rehost 하지 못합니다."
-        );
+        message.warning("클라우드 아키텍처가 포함되어있으면 Lift&Shift를 실행할 수 없습니다.");
+
         return;
       }
       if (clickedLoaded) {
-        message.warning("클라우드 아키텍처는 Rehost 하지 못합니다.");
+        message.warning("클라우드 아키텍처는 Lift&Shift를 할 수 없습니다.");
         return;
       }
 
