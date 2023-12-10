@@ -222,7 +222,7 @@ const Button = ({
       const response = await summaryFile(finalToggleValue);
       console.log(response.data);
       navigate("/summary", {
-        state: { costdata: response.data, from: "draw" },
+        state: { costdata: response.data, from: "draw", fileName: fileName },
       });
     }
   };

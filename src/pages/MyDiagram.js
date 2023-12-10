@@ -91,11 +91,10 @@ const MyArchitecture = () => {
           </div>
 
           <div className="main-container">
-            <StyledSideMenuTitle>도식화 히스토리</StyledSideMenuTitle>
-            {cloudInstances.length > 0 ? (
-              getRows(cloudInstances).map((row, idx) => (
-                <CloudInstanceRow key={idx}>
-                  {row.map((instance) => {
+      <StyledSideMenuTitle>도식화 히스토리</StyledSideMenuTitle>
+      <CloudInstanceRow>
+        {cloudInstances.length > 0 ? (
+          cloudInstances.map((instance) => {
                     const dropdownItems = [
                       {
                         key: "1",
@@ -197,9 +196,7 @@ const MyArchitecture = () => {
 
                       </CloudInstance>
                     );
-                  })}
-                </CloudInstanceRow>
-              ))
+                  })
             ) : (
               <div
                 style={{
@@ -212,6 +209,8 @@ const MyArchitecture = () => {
                 <p>도식화 히스토리가 없습니다.</p>
               </div>
             )}
+                            </CloudInstanceRow>
+
           </div>
         </div>
       </div>
@@ -242,11 +241,11 @@ const CloudInstanceImg = styled.img`
 
 const CloudInstance = styled.div`
   width: 30%; // Adjust the width to fit 3 instances per row
-  height: 280px;
+  height: 300px;
   /* border: 1px solid gray; */
   border-radius: 5px;
   flex-direction: column; // 화면이 작을 때 세로 방향으로 쌓음
-  @media (min-width: 600px) {
+  @media (min-width: 720px) {
     flex-direction: row; // 화면이 600px 이상일 때 가로 방향으로 배치
   }
   box-shadow: 1px 1px 1px 1px rgb(235, 235, 235);
@@ -257,13 +256,11 @@ const CloudInstance = styled.div`
 `;
 
 const CloudInstanceRow = styled.div`
-  margin-left: 20px; // Keep left margin
-  margin-right: 20px; // Keep right margin
+  margin: 20px;
   display: flex;
-  justify-content: flex-start; // Align items to the start of the row
-  flex-wrap: wrap; // Wrap items to the next line if they overflow
-  width: 100%;
-  gap: 10px; // You can use gap property to maintain consistent spacing
+  justify-content: flex-start; // 시작 부분부터 아이템 배치
+  flex-wrap: wrap; // 화면 크기에 따라 아이템을 줄바꿈
+  gap: 10px; // 아이템 간 간격
 `;
 
 const StyledButton = styled(Button)`

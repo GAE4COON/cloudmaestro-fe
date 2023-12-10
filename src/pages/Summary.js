@@ -37,11 +37,11 @@ const chartOptions = {
   },
 };
 
-const Summary = ({ costdata }) => {
-  console.log("costdata", costdata)
+const Summary = ({ costdata, fileName }) => {
 
   const location = useLocation();
   const costData = costdata ? costdata : location.state?.costdata;
+  const filename = fileName ? fileName : location.state?.fileName;
   const from = location.state.from;
 
 
@@ -80,12 +80,10 @@ const Summary = ({ costdata }) => {
     .toFixed(2);
 
   return (
-    <div id="export-container">
-
     <SummaryContainer style={{
       marginLeft: from === 'draw' ? '0px' : '20px',
       marginRight: from === 'draw' ? '0px' : '20px',
-      marginTop: from === 'draw' ? '30px' : '',
+      // marginTop: from === 'draw' ? '30px' : '',
 
       width: from === 'draw' ? '' : "100%",
       paddingLeft: from === 'draw' ? '20%' : "0%",
@@ -93,7 +91,7 @@ const Summary = ({ costdata }) => {
 
     }}>
       <div className="title1">도식화 히스토리</div>
-      <div className="file-name">MyCompany_Cloud1</div>
+      <div className="file-name">{filename} total cost</div>
       <div className="price-container">
         <div className="middle-bar"></div>
 
@@ -102,6 +100,7 @@ const Summary = ({ costdata }) => {
           console.log(index, category, cost)
 
           return (
+            <div id="export-container">
               <div key={index} className="instance">
                 <div
                   className="instance-price-container"
@@ -124,6 +123,7 @@ const Summary = ({ costdata }) => {
                   </div>
                 )}
               </div>
+            </div>
           );
         })}
         <div className="total-container">
@@ -137,12 +137,10 @@ const Summary = ({ costdata }) => {
           />
         </div>
         <div className="download-container">
-        <DownloadPDF onClick={() => setIsExporting(true)} onExport={setIsExporting} />
+          <DownloadPDF onClick={() => setIsExporting(true)} onExport={setIsExporting} />
         </div>
-        </div>
+      </div>
     </SummaryContainer>
-    </div>
-
   );
 }
 
