@@ -104,6 +104,7 @@ function MyPage() {
                   value={id}
                   // onChange={handleIdChange}
                 />
+                <div></div>
               </div>
 
               <div className="my-input-group">
@@ -119,6 +120,7 @@ function MyPage() {
                   value={email}
                   // onChange={handleEmailChange}
                 />
+                <div></div>
               </div>
               <div className="my-input-group">
                 <h4>

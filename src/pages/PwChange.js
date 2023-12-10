@@ -144,15 +144,16 @@ function PwChange() {
             {/* mypage id, email imformation */}
             <div className="mypage-info-container">
               <div className="my-input-group">
-                <label>현재 패스워드</label>
+                <label>현재 PW</label>
                 <input
                   type="password"
                   value={curpw}
                   onChange={handleCurPwChange}
                 />
+                <div></div>
               </div>
               <div className="my-input-group">
-                <label>현재 패스워드 확인</label>
+                <label>현재 PW 확인</label>
                 <input
                   type="password"
                   value={curpwcheck}
@@ -166,15 +167,16 @@ function PwChange() {
               {PwConfirmed ? (
                 <>
                   <div className="my-input-group">
-                    <label>변경 패스워드</label>
+                    <label>새 PW</label>
                     <input
                       type="password"
                       value={newpw}
                       onChange={handleNewPwChange}
                     />
+                    <div></div>
                   </div>
                   <div className="my-input-group">
-                    <label>변경 패스워드 확인</label>
+                    <label>새 PW 확인</label>
                     <input
                       type="password"
                       value={newpwcheck}
