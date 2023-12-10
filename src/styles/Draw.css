@@ -19,12 +19,13 @@ transition: opacity 0.3s ease;  */
   opacity: 1;
 } */
 
+
 /* Draw */
 .Draw {
   width: 100%;
   position: relative;
   z-index: 1;
-  margin-top: 20px;
+  /* margin-top: 80px; */
 }
 
 .container {

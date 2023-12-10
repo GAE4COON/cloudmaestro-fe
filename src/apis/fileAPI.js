@@ -76,6 +76,17 @@ export const NodeCheck = async (data) => {
   }
 };
 
+export const DevCheck = async (data) => {
+  try {
+    const response = await api.post("/api/v1/alert-api/dev-check", data);
+    return response;
+  } catch (error) {
+    console.error("nodeCheck 오류:", error);
+    throw error;
+  }
+};
+
+
 export const requirementRequest = async (data) => {
   try {
     const response = await api.post("/api/v1/naindae-api/multiregion", data);
@@ -97,6 +108,21 @@ export const saveDiagram = async (data, fileName, img) => {
     return response;
   } catch (error) {
     console.error("save-diagram 오류:", error);
+    throw error;
+  }
+};
+
+export const updateDiagram = async (data, fileName, img) => {
+  try {
+    const body = {
+      diagramData: data,
+      fileName: fileName,
+      fileImg: img
+    };
+    const response = await api.post("/api/v1/file-api/update-diagram", body);
+    return response;
+  } catch (error) {
+    console.error("update-diagram 오류:", error);
     throw error;
   }
 };

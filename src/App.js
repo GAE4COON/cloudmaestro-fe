@@ -19,14 +19,17 @@ import SidebarController from "./components/SidebarController";
 import MyArchitecture from "./pages/MyDiagram";
 import MyResource from "./pages/MyResource";
 import MySummary from "./pages/MySummary";
+import MyPage from "./pages/MyPage";
+import PwChange from "./pages/PwChange";
 
 import { DataProvider } from "./components/DataContext";
-import MySecurity from "./pages/Guideline";
+import MySecurity from "./pages/MySecurity";
 import useTokenExpirationChecker from "./hooks/useTokenExpirationChecker";
 import PrivateRoute from "./components/privateRoute";
 import NotFound from "./pages/NotFound";
 // import { PublicRoute } from "./components/publicRoute";
 import DataComponent from "./pages/DataComponent";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   useTokenExpirationChecker();
@@ -35,6 +38,7 @@ function App() {
       <AuthProvider>
         <DataProvider>
           <BrowserRouter>
+            <ScrollToTop />
             <SidebarController />
             <Navbar />
             <Routes>
@@ -54,10 +58,24 @@ function App() {
 
                 <Route path="/mypage" element={<MyArchitecture />} />
                 <Route path="/mypage/diagram" element={<MyArchitecture />} />
-                <Route path="/mypage/diagram/resource" element={<MyResource />}
+                <Route
+                  path="/mypage/diagram/resource"
+                  element={<MyResource />}
                 />
-                <Route path="/mypage/diagram/security" element={<MySecurity />}
+                <Route
+                  path="/mypage/diagram/security"
+                  element={<MySecurity />}
                 />
+                <Route
+                  path="/mypage/diagram/resource"
+                  element={<MyResource />}
+                />
+                <Route
+                  path="/mypage/diagram/security"
+                  element={<MySecurity />}
+                />
+                <Route path="/mypage/user" element={<MyPage />} />
+                <Route path="/mypage/change/pw" element={<PwChange />} />
                 <Route path="/mypage/diagram/summary" element={<MySummary />} />
               </Route>
               <Route path="*" element={<NotFound />} />

@@ -4,13 +4,20 @@ import Sidebar from "../components/MyPageSideBar";
 import styled from "styled-components";
 import "../styles/myresource.css";
 import "../styles/App.css";
-import { useAuth } from "./../utils/auth/authContext";
+import { useAuth } from "../utils/auth/authContext";
 import jwtDecode from "jwt-decode";
 import "../styles/mypageInfo.css";
+import { message, Button } from "antd";
+import { myuser, myNameModify, myPwModify } from "../apis/auth";
+import userEvent from "@testing-library/user-event";
 
-function Mypage() {
+function MyPage() {
   const { user, setUser } = useAuth();
   const ACCESS_TOKEN = localStorage.getItem("accessToken");
+  const [id, setId] = useState("");
+  // const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
 
   useEffect(() => {
     if (ACCESS_TOKEN) {
@@ -26,7 +33,56 @@ function Mypage() {
       setUser(null);
     }
   }, [ACCESS_TOKEN]);
-  // 필터링된 리소스를 기반으로 resourceItems 상태 업데이트
+
+  // window.location.href = "/mypage";/
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = {
+        user_id: user.sub,
+      };
+      try {
+        const response = await myuser(data);
+        if (response.data) {
+          console.log("response.data", response.data);
+          setId(response.data.user_id);
+          setName(response.data.name);
+          setEmail(response.data.email);
+        }
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+
+    fetchData();
+  }, []); // 의존성 배열에 user.sub를 추가하는 것을 고려하세요
+
+  const handleNameChange = (e) => {
+    setName(e.target.value);
+  };
+
+  const handleSignOut = () => {
+    setUser(null);
+    localStorage.clear();
+    window.location.href = "/home";
+  };
+
+  const handleNameModify = async () => {
+    const data = {
+      user_id: user.sub,
+      name: name,
+    };
+    try {
+      const response = await myNameModify(data);
+      if (response.data.result === "success") {
+        console.log("res: ", response.data.result);
+        message.success("닉네임이 변경되었습니다.");
+        handleSignOut();
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
   return (
     <div className="main-content">
@@ -45,35 +101,31 @@ function Mypage() {
                 <label>아이디</label>
                 <input
                   type="text"
-                  // value={id}
+                  value={id}
                   // onChange={handleIdChange}
                 />
-              </div>
-              <div className="my-input-group">
-                <label>비밀번호</label>
-                <input
-                  type="password"
-                  // value={password}
-                  // onChange={handlePasswordChange}
-                />
+                <div></div>
               </div>
 
               <div className="my-input-group">
                 <label>닉네임</label>
-                <input
-                  type="text"
-                  // value={name}
-                  // onChange={handleNameChange}
-                />
+                <input type="text" value={name} onChange={handleNameChange} />
+                <Button onClick={handleNameModify}>변경</Button>
               </div>
 
               <div className="my-input-group">
                 <label>이메일</label>
                 <input
                   type="email"
-                  // value={email}
+                  value={email}
                   // onChange={handleEmailChange}
                 />
+                <div></div>
+              </div>
+              <div className="my-input-group">
+                <h4>
+                  <a href="/mypage/change/pw">비밀번호 변경</a>
+                </h4>
               </div>
             </div>
           </div>
@@ -108,4 +160,4 @@ const SearchContainer = styled.div`
   margin-left: 50px;
 `;
 
-export default Mypage;
+export default MyPage;

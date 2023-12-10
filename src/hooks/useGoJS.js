@@ -1,22 +1,25 @@
-import { useState, useEffect } from "react";
+import react, { useState, useEffect, startTransition } from "react";
 import * as go from "gojs";
 import "../styles/App.css"; // contains .diagram-component CSS
 import handleChangedSelection from "../pages/toggle/toggle";
 import { alertCheck, NodeCheck, GroupCheck } from "../apis/fileAPI";
-import { sidebarResource } from "../apis/sidebar";
 import { useData } from "../components/DataContext";
+import { checkForBackupAndS3Nodes, checkForMonitoringNodes, checkForLogAnalysisNodes, checkForKmsNodes, checkForDbAccess } from "../components/GuideAlert";
+import { handleSecurity } from "../components/SecurityAlert";
 
 const useGoJS = (
   setShowToggle,
   onDiagramChange,
-  handleguide,
+  // handleguide,
   setAlertMessage
+  // setWarnMessage,
+  // setInfoMessage
 ) => {
   const [diagram, setDiagram] = useState(null);
   const [clickedNodeKey, setClickedNodeKey] = useState();
   const [showSelectToggle, setShowSelectToggle] = useState({ value: false });
   // const [DiagramCheck, setDiagramCheck] = useState([]);
-  const [NodeGuide, setNodeGuide] = useState(null);
+  // const [NodeGuide, setNodeGuide] = useState(null);
   const { setData } = useData();
 
   // useEffect(() => {
@@ -69,11 +72,14 @@ const useGoJS = (
       ),
       "draggingTool.isGridSnapEnabled": true,
       "resizingTool.isGridSnapEnabled": true,
+      model: new go.GraphLinksModel({
+        linkKeyProperty: "uniqueLinkId", // Replace with your actual link property
+      }),
       ModelChanged: async (e) => {
         if (e.isTransactionFinished) {
           const jsonString = e.model.toIncrementalJson(e);
           const data = JSON.parse(jsonString);
-          console.log("data", data);
+          console.log("노드 추가영: ", data);
           if (data.insertedLinkKeys) {
             console.log("insertedLinkKeys", data.modifiedLinkData);
             try {
@@ -88,7 +94,12 @@ const useGoJS = (
                     (item) => item === response.data.result.message
                   );
                   if (!isDuplicate) {
-                    return [...prevDiagramCheck, response.data.result.message];
+                    const newMessage = {
+                      key: Date.now(), // 현재 타임스탬프를 key로 사용
+                      message: response.data.result.message,
+                    };
+
+                    return [...prevDiagramCheck, newMessage];
                   } else {
                     return prevDiagramCheck;
                   }
@@ -112,57 +123,99 @@ const useGoJS = (
                   ) {
                     PostData.checkOption = "VPC";
                     PostData.newData = data.modifiedNodeData[i];
-                    console.log("NodeCheck 호출");
+                    //console.log("NodeCheck 호출");
                     const response = await GroupCheck(PostData);
                     console.log("API Response:", response.data);
                     if (response.data.result.status === "fail") {
-                      setAlertMessage((prevDiagramCheck) => {
-                        const isDuplicate = prevDiagramCheck.some(
-                          (item) => item === response.data.result.message
-                        );
-                        if (!isDuplicate) {
-                          return [
-                            ...prevDiagramCheck,
-                            response.data.result.message,
-                          ];
-                        } else {
-                          return prevDiagramCheck;
-                        }
+                      setAlertMessage({
+                        key: Date.now(), // 현재 타임스탬프를 key로 사용
+                        message: response.data.result.message,
+                        tag: "Error",
                       });
                     }
-                  } else if (data.modifiedNodeData[i].text === "API Gateway") {
+                  } else if (
+                    data.modifiedNodeData[i].text === "API Gateway"
+                    //  ||data.modifiedNodeData[i].type === "Database"
+                  ) {
+                    // if (data.modifiedNodeData[i].text === "API Gateway")
+                    //   PostData.checkOption = "API Gateway";
+                    // else if (data.modifiedNodeData[i].type === "Database")
+                    //   PostData.checkOption = "Database";
                     PostData.checkOption = "API Gateway";
+                    PostData.newData = data.modifiedNodeData[i];
+                    //console.log("NodeCheck 호출");
+                    const response = await NodeCheck(PostData);
+                    if (response.data.result.status === "fail") {
+                      console.log("API Response:", response.data);
+                      setAlertMessage({
+                        key: Date.now(), // 현재 타임스탬프를 key로 사용
+                        message: response.data.result.message,
+                        tag: "Error",
+                      });
+                    }
+                  }
+                  if (
+                    data.insertedNodeKeys[i].startsWith("S3") ||
+                    data.insertedNodeKeys[i].startsWith("CloudTrail") ||
+                    data.insertedNodeKeys[i].startsWith("CloudWatch")
+                  ) {
+                    PostData.checkOption = "Logging";
+                    PostData.newData = data.modifiedNodeData[i];
+                    console.log("Logging 호출");
+                    const response = await NodeCheck(PostData);
+                    if (response.data.result.status === "fail") {
+                      console.log("API Response:", response.data);
+                      setTimeout(() => {
+                        setAlertMessage((prevAlert) => ({
+                          key: Date.now(),
+                          message: response.data.result.message,
+                          tag: "Info",
+                        }));
+                      }, 0);
+                    }
+                  }
+                  if (
+                    data.insertedNodeKeys[i].startsWith("Backup") ||
+                    data.insertedNodeKeys[i].startsWith("S3")
+                  ) {
+                    PostData.checkOption = "Backup";
+                    PostData.newData = data.modifiedNodeData[i];
+                    console.log("Backup 호출");
+                    const response = await NodeCheck(PostData);
+                    if (response.data.result.status === "fail") {
+                      console.log("API Response:", response.data);
+                      setTimeout(() => {
+                        setAlertMessage((prevAlert) => ({
+                          key: Date.now(),
+                          message: response.data.result.message,
+                          tag: "Info",
+                        }));
+                      }, 30);
+                    }
+                  }
+                  if (data.modifiedNodeData[i].type === "Database") {
+                    PostData.checkOption = "Database";
                     PostData.newData = data.modifiedNodeData[i];
                     console.log("NodeCheck 호출");
                     const response = await NodeCheck(PostData);
                     if (response.data.result.status === "fail") {
                       console.log("API Response:", response.data);
-                      setAlertMessage((prevDiagramCheck) => {
-                        const isDuplicate = prevDiagramCheck.some(
-                          (item) => item === response.data.result.message
-                        );
-                        if (!isDuplicate) {
-                          return [
-                            ...prevDiagramCheck,
-                            response.data.result.message,
-                          ];
-                        } else {
-                          return prevDiagramCheck;
-                        }
-                      });
+                      setAlertMessage((prevAlert) => ({
+                        key: Date.now(),
+                        message: response.data.result.message,
+                        tag: "Info",
+                      }));
                     }
                   }
                 }
               }
             } catch (error) {
-              console.error("API Error:", error);
+              console.error("API Error:", error, data.insertedLinkKeys);
             }
           }
+          handleSecurity(e, diagram, setAlertMessage);
         }
       },
-      model: new go.GraphLinksModel({
-        linkKeyProperty: "key",
-      }),
     });
 
     // delete
@@ -289,7 +342,7 @@ const useGoJS = (
             portId: "",
             editable: true,
           },
-          new go.Binding("text", "text"),
+          new go.Binding("text", "text")
         )
       ),
 
@@ -343,10 +396,11 @@ const useGoJS = (
     diagram.linkTemplate = $(
       go.Link,
       {
-        toShortLength: 3,
+        toShortLength: 1,
         routing: go.Link.Normal,
         // routing: go.Link.AvoidsNodes,
         curve: go.Link.JumpGap,
+
         corner: 5,
         contextMenu: $(
           go.Adornment,
@@ -362,7 +416,7 @@ const useGoJS = (
               width: 40,
               height: 40,
             }),
-            $(go.TextBlock, "━", { font: "10pt Noto Sans KR" }),
+            $(go.TextBlock, "━", { font: "5pt Noto Sans KR" }),
             {
               row: 0,
               column: 0,
@@ -435,66 +489,60 @@ const useGoJS = (
         ),
       },
       // for link shape
-      $(go.Shape, { strokeWidth: 2, stroke: "#000", name: "LinkShape" }),
-      // for arrowhead 여기서 standaer
+      $(go.Shape, { strokeWidth: 1, stroke: "#777", name: "LinkShape" }),
       $(go.Shape, {
         toArrow: "Standard",
-        scale: 1.5,
-        stroke: null,
-        name: "ToArrow",
-      }),
-      $(go.Shape, {
-        fromArrow: "DoubleForwardSlash",
-        scale: 1.5,
-        stroke: null,
-        name: "FromArrow",
+        stroke: "#777", // Set the color of the arrowhead outline
+        fill: "#777", // Set the color of the arrowhead fill
+        // scale: 1,
+        // name: "ToArrow",
       })
     );
 
-    diagram.nodeTemplate.selectionAdornmentTemplate = $(
-      go.Adornment,
-      "Spot",
-      $(
-        go.Panel,
-        "Auto",
-        $(go.Shape, { fill: null, stroke: "dodgerblue", strokeWidth: 2 }),
-        $(go.Placeholder)
-      ),
-      $(
-        go.Panel,
-        "Horizontal",
-        { alignment: new go.Spot(1, 1), alignmentFocus: new go.Spot(1, 0) },
-        $(
-          go.Panel,
-          "Spot",
-          {
-            width: 20,
-            height: 20,
-            mouseEnter: function (e, panel) {
-              const node = panel.part.adornedPart;
-              if (node instanceof go.Node) {
-                handleguide(node.data.text);
-                // setNodeGuide(node.data.text);
-              }
-            },
-            // mouseLeave: function (e, panel) {
-            //   setNodeGuide(null);
-            // },
-          },
-          $(go.Shape, "Circle", {
-            fill: "rgba(82,96,208,0.7)",
-            stroke: null,
-            width: 20,
-            height: 20,
-          }),
-          $(go.TextBlock, "?", {
-            font: "10pt Noto Sans KR",
-            stroke: "white",
-            verticalAlignment: go.Spot.Center,
-          })
-        )
-      )
-    );
+    // diagram.nodeTemplate.selectionAdornmentTemplate = $(
+    //   go.Adornment,
+    //   "Spot",
+    //   $(
+    //     go.Panel,
+    //     "Auto",
+    //     $(go.Shape, { fill: null, stroke: "dodgerblue", strokeWidth: 2 }),
+    //     $(go.Placeholder)
+    //   ),
+    //   $(
+    //     go.Panel,
+    //     "Horizontal",
+    //     { alignment: new go.Spot(1, 1), alignmentFocus: new go.Spot(1, 0) },
+    //     $(
+    //       go.Panel,
+    //       "Spot",
+    //       {
+    //         width: 20,
+    //         height: 20,
+    //         mouseEnter: function (e, panel) {
+    //           const node = panel.part.adornedPart;
+    //           if (node instanceof go.Node) {
+    //             handleguide(node.data.text);
+    //             // setNodeGuide(node.data.text);
+    //           }
+    //         },
+    //         // mouseLeave: function (e, panel) {
+    //         //   setNodeGuide(null);
+    //         // },
+    //       },
+    //       $(go.Shape, "Circle", {
+    //         fill: "rgba(82,96,208,0.7)",
+    //         stroke: null,
+    //         width: 20,
+    //         height: 20,
+    //       }),
+    //       $(go.TextBlock, "?", {
+    //         font: "10pt Noto Sans KR",
+    //         stroke: "white",
+    //         verticalAlignment: go.Spot.Center,
+    //       })
+    //     )
+    //   )
+    // );
 
     diagram.addDiagramListener("ObjectSingleClicked", function (e) {
       const part = e.subject.part;
@@ -528,6 +576,21 @@ const useGoJS = (
     diagram.addModelChangedListener(function (e) {
       if (e.isTransactionFinished) {
         onDiagramChange(diagram);
+        setTimeout(() => {
+          checkForBackupAndS3Nodes(diagram, setAlertMessage);
+        }, 1);
+        setTimeout(() => {
+          checkForMonitoringNodes(diagram, setAlertMessage);
+        }, 30);
+        setTimeout(() => {
+          checkForLogAnalysisNodes(diagram, setAlertMessage);
+        }, 30);
+        setTimeout(() => {
+          checkForKmsNodes(diagram, setAlertMessage);
+        }, 30);
+        setTimeout(() => {
+          checkForDbAccess(diagram, setAlertMessage);
+        }, 30);
       }
     });
 
@@ -538,8 +601,8 @@ const useGoJS = (
       } else {
         setShowSelectToggle({ value: false }); // 추가된 로직
       }
-      const response = await sidebarResource(diagram.model.nodeDataArray);
-      setData(response.data); // set the data in context
+      // console.log("setdata", diagram.model.nodeDataArray);
+      setData(diagram.model.nodeDataArray); // set the data in context
     });
 
     setDiagram(diagram);

@@ -12,8 +12,7 @@ const Footer = () => {
               <h2>Gae4coon</h2>
               <h4>Office: 서울 금천구 가산디지털1로 145</h4>
               <h4>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;에이스하이엔드
-                타워 3차 제1004호, 1004-2 (08506)
+                에이스하이엔드타워 3차 제1004호, 1004-2 (08506)
               </h4>
               <h4>Belong: Kitri, BoB 12th</h4>
               <h4>Email: gae4coon@gmail.com</h4>

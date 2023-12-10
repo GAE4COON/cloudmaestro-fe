@@ -74,9 +74,17 @@ function ZoneComponent({
         //security 그룹 추출
         for (let i = 0; i < GroupData.length; i++) {
           if (typeof GroupData[i].group === "string") {
-            if (GroupData[i].group.includes(resultList[idx].label)) {
-              backupgroupNode[resultList[idx].label].push(GroupData[i].key);
+            const parts = GroupData[i].group.split(" "); // 공백을 기준으로 문자열 나누기
+            if (parts.length > 0) {
+                const firstElement = parts[0]; // 첫 번째 요소 가져오기
+                console.log("첫 번째 요소:", firstElement);
+                if (firstElement  === (resultList[idx].label)) {
+                  backupgroupNode[resultList[idx].label].push(GroupData[i].key);
+                }
+            } else {
+                console.log("문자열에 공백이 없습니다.");
             }
+            
           }
         }
         // console.log("backupgroupNode: ", backupgroupNode);
@@ -238,7 +246,7 @@ function ZoneComponent({
       </SelectContainer>
 
       <SelectContainer>
-        <SelectTitle>트래픽 조절</SelectTitle>
+        <SelectTitle>트래픽 분산(ALB)</SelectTitle>
         <StyledBackupSelect
           mode="tags"
           showSearch
@@ -259,7 +267,7 @@ function ZoneComponent({
       </SelectContainer>
 
       <SelectContainer>
-        <SelectTitle>서버 수 조절</SelectTitle>
+        <SelectTitle>서버 수 조절 (AutoScaling)</SelectTitle>
           <StyledBackupSelect
             mode="tags"
             showSearch
