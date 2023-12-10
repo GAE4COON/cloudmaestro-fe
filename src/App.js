@@ -19,6 +19,8 @@ import SidebarController from "./components/SidebarController";
 import MyArchitecture from "./pages/MyDiagram";
 import MyResource from "./pages/MyResource";
 import MySummary from "./pages/MySummary";
+import MyPage from "./pages/MyPage";
+import PwChange from "./pages/PwChange";
 
 import { DataProvider } from "./components/DataContext";
 import MySecurity from "./pages/MySecurity";
@@ -72,6 +74,8 @@ function App() {
                   path="/mypage/diagram/security"
                   element={<MySecurity />}
                 />
+                <Route path="/mypage/user" element={<MyPage />} />
+                <Route path="/mypage/change/pw" element={<PwChange />} />
                 <Route path="/mypage/diagram/summary" element={<MySummary />} />
               </Route>
               <Route path="*" element={<NotFound />} />
