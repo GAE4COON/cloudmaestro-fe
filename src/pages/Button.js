@@ -72,10 +72,6 @@ const Button = ({
     setTmpFileName(e.target.value);
   };
   const handleOptimize = () => {
-    if (!isSave) {
-      saveBeforeOptimization();
-      return;
-    }
     setIsSidebarOpen(!isSidebarOpen);
     onPopupChange(isSidebarOpen);
   };
@@ -88,18 +84,6 @@ const Button = ({
     [finalToggleVal],
     [tmpFileName]
   );
-
-  const saveBeforeOptimization = () => {
-    api["info"]({
-      message: "최적화를 하기 위해서는 저장이 필요합니다.",
-      duration: 2,
-      style: {
-        top: 100,
-        width: 410,
-        fontFamily: "Noto Sans KR",
-      },
-    });
-  };
 
   const handleSaveJSON = () => {
     if (diagram) {
