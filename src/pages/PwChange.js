@@ -8,16 +8,19 @@ import { useAuth } from "../utils/auth/authContext";
 import jwtDecode from "jwt-decode";
 import "../styles/mypageInfo.css";
 import { message, Button } from "antd";
-import { myuser, myNameModify, myPwModify } from "../apis/auth";
+import { myuser, myPwModify, myPwCheck } from "../apis/auth";
 import userEvent from "@testing-library/user-event";
 
-function MyPage() {
+function PwChange() {
   const { user, setUser } = useAuth();
   const ACCESS_TOKEN = localStorage.getItem("accessToken");
-  const [id, setId] = useState("");
-  // const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const [curpw, setcurpw] = useState("");
+  const [curpwcheck, setcurpwcheck] = useState("");
+  const [newpw, setnewpw] = useState("");
+  const [newpwcheck, setnewpwcheck] = useState("");
+  const [PwConfirmed, setPwConfirmed] = useState(false);
+  const [PwVerified, setPwVerified] = useState(false);
+  const [NewPwVerified, setNewPwVerified] = useState(false);
 
   useEffect(() => {
     if (ACCESS_TOKEN) {
@@ -45,9 +48,6 @@ function MyPage() {
         const response = await myuser(data);
         if (response.data) {
           console.log("response.data", response.data);
-          setId(response.data.user_id);
-          setName(response.data.name);
-          setEmail(response.data.email);
         }
       } catch (error) {
         console.error("Error:", error);
@@ -57,8 +57,36 @@ function MyPage() {
     fetchData();
   }, []); // 의존성 배열에 user.sub를 추가하는 것을 고려하세요
 
-  const handleNameChange = (e) => {
-    setName(e.target.value);
+  useEffect(() => {
+    if (curpw === curpwcheck && curpw !== "") {
+      setPwVerified(false);
+    } else {
+      setPwVerified(true);
+    }
+  }, [curpw, curpwcheck]);
+
+  useEffect(() => {
+    if (newpw === newpwcheck && newpw !== "") {
+      setNewPwVerified(false);
+    } else {
+      setNewPwVerified(true);
+    }
+  }, [newpw, newpwcheck]);
+
+  const handleCurPwChange = (e) => {
+    setcurpw(e.target.value);
+  };
+
+  const handleCurPwCheckChange = (e) => {
+    setcurpwcheck(e.target.value);
+  };
+
+  const handleNewPwChange = (e) => {
+    setnewpw(e.target.value);
+  };
+
+  const handleNewPwCheckChange = (e) => {
+    setnewpwcheck(e.target.value);
   };
 
   const handleSignOut = () => {
@@ -67,16 +95,34 @@ function MyPage() {
     window.location.href = "/home";
   };
 
-  const handleNameModify = async () => {
+  const handleCurPwCheck = async () => {
     const data = {
       user_id: user.sub,
-      name: name,
+      user_pw: curpw,
     };
     try {
-      const response = await myNameModify(data);
+      const response = await myPwCheck(data);
       if (response.data.result === "success") {
         console.log("res: ", response.data.result);
-        message.success("닉네임이 변경되었습니다.");
+        setPwConfirmed(true);
+        setPwVerified(true);
+        message.success("패스워스를 확인했습니다.");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const handleNewPwCheck = async () => {
+    const data = {
+      user_id: user.sub,
+      user_pw: newpw,
+    };
+    try {
+      const response = await myPwModify(data);
+      if (response.data.result === "success") {
+        console.log("res: ", response.data.result);
+        message.success("패스워드가 변경되었습니다.");
         handleSignOut();
       }
     } catch (error) {
@@ -98,33 +144,48 @@ function MyPage() {
             {/* mypage id, email imformation */}
             <div className="mypage-info-container">
               <div className="my-input-group">
-                <label>아이디</label>
+                <label>현재 패스워드</label>
                 <input
-                  type="text"
-                  value={id}
-                  // onChange={handleIdChange}
-                />
-              </div>
-
-              <div className="my-input-group">
-                <label>닉네임</label>
-                <input type="text" value={name} onChange={handleNameChange} />
-                <Button onClick={handleNameModify}>변경</Button>
-              </div>
-
-              <div className="my-input-group">
-                <label>이메일</label>
-                <input
-                  type="email"
-                  value={email}
-                  // onChange={handleEmailChange}
+                  type="password"
+                  value={curpw}
+                  onChange={handleCurPwChange}
                 />
               </div>
               <div className="my-input-group">
-                <h4>
-                  <a href="/mypage/change/pw">비밀번호 변경</a>
-                </h4>
+                <label>현재 패스워드 확인</label>
+                <input
+                  type="password"
+                  value={curpwcheck}
+                  onChange={handleCurPwCheckChange}
+                />
+                <Button onClick={handleCurPwCheck} disabled={PwVerified}>
+                  확인
+                </Button>
               </div>
+
+              {PwConfirmed ? (
+                <>
+                  <div className="my-input-group">
+                    <label>변경 패스워드</label>
+                    <input
+                      type="password"
+                      value={newpw}
+                      onChange={handleNewPwChange}
+                    />
+                  </div>
+                  <div className="my-input-group">
+                    <label>변경 패스워드 확인</label>
+                    <input
+                      type="password"
+                      value={newpwcheck}
+                      onChange={handleNewPwCheckChange}
+                    />
+                    <Button onClick={handleNewPwCheck} disabled={NewPwVerified}>
+                      확인
+                    </Button>
+                  </div>
+                </>
+              ) : null}
             </div>
           </div>
         </div>
@@ -158,4 +219,4 @@ const SearchContainer = styled.div`
   margin-left: 50px;
 `;
 
-export default MyPage;
+export default PwChange;
