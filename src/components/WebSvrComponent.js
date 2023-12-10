@@ -273,7 +273,7 @@ function WebSvrComponent({
         <Checkbox.Group options={zoneSecurityReq} onChange={handleZoneReqValueChange} />
       </SelectContainer>
       <SelectContainer>
-        <SelectTitle>트래픽 조절</SelectTitle>
+        <SelectTitle>트래픽 분산 ( ALB )</SelectTitle>
         <StyledBackupSelect
           mode="tags"
           showSearch
@@ -294,7 +294,7 @@ function WebSvrComponent({
       </SelectContainer>
 
       <SelectContainer>
-        <SelectTitle>서버 수 조절</SelectTitle>
+        <SelectTitle>서버 수 자동조절 (AutoScaling)</SelectTitle>
         <StyledBackupSelect
           mode="tags"
           showSearch

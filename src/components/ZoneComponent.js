@@ -246,7 +246,7 @@ function ZoneComponent({
       </SelectContainer>
 
       <SelectContainer>
-        <SelectTitle>트래픽 조절</SelectTitle>
+        <SelectTitle>트래픽 분산(ALB)</SelectTitle>
         <StyledBackupSelect
           mode="tags"
           showSearch
@@ -267,7 +267,7 @@ function ZoneComponent({
       </SelectContainer>
 
       <SelectContainer>
-        <SelectTitle>서버 수 조절</SelectTitle>
+        <SelectTitle>서버 수 조절 (AutoScaling)</SelectTitle>
           <StyledBackupSelect
             mode="tags"
             showSearch
