@@ -548,6 +548,10 @@ const FileName = styled.div`
   margin-left: 20px;
   padding-top: 5px;
   padding-bottom: 10px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 200px;
 `;
 
 const DiagramTopLeft = styled.div`
