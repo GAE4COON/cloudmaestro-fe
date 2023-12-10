@@ -5,14 +5,15 @@ import styled from "styled-components";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
-import { Button, Flex } from 'antd';
+import { Button, Flex } from "antd";
 import IntroduceSecurity from "./Introduce/IntroduceSecurity";
-// PAGE 
+// PAGE
 
 import First from "./Introduce/First";
 import Second from "./Introduce/Second";
-import Third from "./Introduce/Third"
+import Third from "./Introduce/Third";
 import Introduce from "./Introduce/intro";
+import { Container } from "react-bootstrap";
 const { TabPane } = Tabs;
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
@@ -27,39 +28,6 @@ const LogoSection = () => {
   );
 };
 
-const StyledTabsContainer = styled.div`
-  margin-top:20%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const StyledTab = styled.div`
-.ant-tabs-nav {
-  justify-content: center;
-}
-
-.ant-tabs-tab {
-  font-size: 20px;
-  width: 30%;
-  justify-content: center;
-  color: black;
-  font-weight: bold;
-  margin-left:10px;
-}
-.ant-tabs-content {
-  width: 80%; // Set the width of the tab content to 50%
-  margin: 0 auto; // Center the content
-  text-align:left;
-}
-
-display: flex;
-justify-content: center;
-width: 100%;
-height:20vh;
-font-size: 17px;
-`;
-
 const Home = () => {
   const [activeTab, setActiveTab] = useState("1");
   const section1Ref = useRef(null);
@@ -71,7 +39,12 @@ const Home = () => {
   let isScrolling = false;
 
   const handleTabClick = (id) => {
-    const sectionRef = id === "section1" ? section1Ref : id === "section2" ? section2Ref : section3Ref;
+    const sectionRef =
+      id === "section1"
+        ? section1Ref
+        : id === "section2"
+        ? section2Ref
+        : section3Ref;
     scrollTo(sectionRef.current);
     setActiveTab(id);
   };
@@ -148,133 +121,145 @@ const Home = () => {
   const ImageSection = () => {
     return (
       <>
-      <span style={{ fontFamily:'Noto Sans KR',textShadow: '2px 2px lightgray',fontWeight: 'bold',color: '#4D6295' ,fontSize: '50px' }}>
-      Cloud Maestro는..
-    </span>
-      <FlexContainer>
-        <ImageContainer>
-          <img src="assets/img/icon1.png" alt="logo" style={{ width: "100px" }} />
-          <ButtonContainer>
-            <h2>Architecture</h2>
-            <p>
-              클라우드 최적화 아키텍처 도식화
-            </p>
-            <div style={{ marginTop: '5%' }}>
-            </div>
-          </ButtonContainer>
-        </ImageContainer>
-        <ImageContainer>
-          <img src="assets/img/icon3.png" alt="logo" style={{ width: "100px" }} />
-          <ButtonContainer>
-            <h2>Cost</h2>
-            <p>
-              서비스, 인스턴스를 고려한 정확한 비용 산정
-            </p>
-            <div style={{ marginTop: '5%' }}>
-            </div>
-          </ButtonContainer>
-        </ImageContainer>
-        <ImageContainer>
-          <img src="assets/img/icon2.png" alt="logo" style={{ width: "100px" }} />
-          <ButtonContainer>
-            <h2>Security</h2>
-            <p>
-              사전 보안성 점검 보안 권고 및 가이드 기능
-            </p>
-            <div style={{ marginTop: '5%' }}>
-            </div>
-          </ButtonContainer>
-        </ImageContainer>
-      </FlexContainer>
+        {/* <span
+          style={{
+            fontFamily: "Noto Sans KR",
+            textShadow: "2px 2px lightgray",
+            fontWeight: "bold",
+            color: "#4D6295",
+            fontSize: "50px",
+          }}
+        >
+          Cloud Maestro는..
+        </span> */}
+        <FlexContainer>
+          <ImageContainer>
+            <img
+              src="assets/img/icon1.png"
+              alt="logo"
+              style={{ width: "100px" }}
+            />
+            <ButtonContainer>
+              <h2>Architecture</h2>
+              <p>클라우드 최적화 아키텍처 도식화</p>
+              <div style={{ marginTop: "5%" }}></div>
+            </ButtonContainer>
+          </ImageContainer>
+          <ImageContainer>
+            <img
+              src="assets/img/icon3.png"
+              alt="logo"
+              style={{ width: "100px" }}
+            />
+            <ButtonContainer>
+              <h2>Cost</h2>
+              <p>서비스, 인스턴스를 고려한 정확한 비용 산정</p>
+              <div style={{ marginTop: "5%" }}></div>
+            </ButtonContainer>
+          </ImageContainer>
+          <ImageContainer>
+            <img
+              src="assets/img/icon2.png"
+              alt="logo"
+              style={{ width: "100px" }}
+            />
+            <ButtonContainer>
+              <h2>Security</h2>
+              <p>사전 보안성 점검 보안 권고 및 가이드 기능</p>
+              <div style={{ marginTop: "5%" }}></div>
+            </ButtonContainer>
+          </ImageContainer>
+        </FlexContainer>
       </>
-    )
-  }
+    );
+  };
 
   const TabSection = () => {
-
     return (
-    <TabsContainer>
-      <StyledAntTabs defaultActiveKey="1" activeKey={activeTab} onChange={handleTabClick}>
-        <TabPane tab="Cloud Migration이란?" key="1">
-          <First />
-        </TabPane>
-        <TabPane tab="클라우드 보안, 꼭 필요할까?" key="2">
-          <Second />
-        </TabPane>
-        <TabPane tab="ISO/IEC 27001이란?" key="3">
-          <Third />
-        </TabPane>
-      </StyledAntTabs>
-    </TabsContainer>)
-  }
+      <TabsContainer>
+        <StyledAntTabs
+          defaultActiveKey="1"
+          activeKey={activeTab}
+          onChange={handleTabClick}
+        >
+          <TabPane tab="Cloud Migration이란?" key="1">
+            <First />
+          </TabPane>
+          <TabPane tab="클라우드 보안, 꼭 필요할까?" key="2">
+            <Second />
+          </TabPane>
+          <TabPane tab="ISO/IEC 27001이란?" key="3">
+            <Third />
+          </TabPane>
+        </StyledAntTabs>
+      </TabsContainer>
+    );
+  };
 
   const Flow = () => {
     return (
       <SecurityContainer>
         <ButtonContainer>
           <h2>Lift and Shift</h2>
-          <p>
-            네트워크 기반 클라우드 도식화 (일대일 대응)
-          </p>
+          <p>네트워크 기반 클라우드 도식화 (일대일 대응)</p>
         </ButtonContainer>
         <div style={{ marginTop: "100px" }}>
-          <img src="/assets/img/arrow.png" width="30px" height="30px" alt="Arrow" />
+          <img
+            src="/assets/img/arrow.png"
+            width="30px"
+            height="30px"
+            alt="Arrow"
+          />
         </div>
         <ButtonContainer>
           <h2>Security</h2>
-          <p>
-            리소스 사용 상의 보안 가이드 라인
-          </p>
-          <p>
-            아키텍처 설계 상의 보안 권고
-          </p>
-          <p>
-            운영 상의 보안
-          </p>
+          <p>리소스 사용 상의 보안 가이드 라인</p>
+          <p>아키텍처 설계 상의 보안 권고</p>
+          <p>운영 상의 보안</p>
         </ButtonContainer>
         <div style={{ marginTop: "100px" }}>
-          <img src="/assets/img/arrow.png" width="30px" height="30px" alt="Arrow" />
+          <img
+            src="/assets/img/arrow.png"
+            width="30px"
+            height="30px"
+            alt="Arrow"
+          />
         </div>
 
         <ButtonContainer>
           <h2>Optimize</h2>
-          <p>
-            사용자 요구사항을 기반으로 한
-            최적화 아키텍처 도출
-          </p>
+          <p>사용자 요구사항을 기반으로 한 최적화 아키텍처 도출</p>
         </ButtonContainer>
         <div style={{ marginTop: "100px" }}>
-          <img src="/assets/img/arrow.png" width="30px" height="30px" alt="Arrow" />
+          <img
+            src="/assets/img/arrow.png"
+            width="30px"
+            height="30px"
+            alt="Arrow"
+          />
         </div>
         <ButtonContainer>
           <h2>Cost</h2>
-          <p>
-            정확한 예상 비용 산정 결과 도출
-          </p>
+          <p>정확한 예상 비용 산정 결과 도출</p>
         </ButtonContainer>
       </SecurityContainer>
-    )
-  }
-
-
-
-
+    );
+  };
 
   // final return (page)
   return (
     <div className="about-container">
       <div className="section" ref={addtoRefs}>
         <LogoSection />
-
         <Introduce />
       </div>
       <div className="section" ref={addtoRefs}>
         <ImageSection />
       </div>
       <div className="section" ref={addtoRefs}>
-      <TabSection />
+        <TabSection />
       </div>
-      
+
       <div className="section" ref={addtoRefs}>
         <Flow />
       </div>
@@ -294,12 +279,12 @@ const TabsContainer = styled.div`
   justify-content: center;
 `;
 const StyledAntTabs = styled(Tabs)`
-font-family: 'Noto Sans KR', sans-serif;
-/* background-color: #222; */
-.ant-tabs-nav-wrap {
-  justify-content: center;
-}
-.ant-tabs-nav {
+  font-family: "Noto Sans KR", sans-serif;
+  /* background-color: #222; */
+  .ant-tabs-nav-wrap {
+    justify-content: center;
+  }
+  .ant-tabs-nav {
     justify-content: center;
     /* margin-top: 20%; */
   }
@@ -317,50 +302,40 @@ font-family: 'Noto Sans KR', sans-serif;
     /* margin: 0 auto; // Center the content */
     text-align: left;
   }
-
 `;
 
 const FlexContainer = styled.div`
-font-family: 'Noto Sans KR', sans-serif;
+  font-family: "Noto Sans KR", sans-serif;
 
   display: flex;
   justify-content: space-between;
   height: 20vh;
   margin-right: 13%;
-  margin-left : 13%;
-  margin-top :10%;
+  margin-left: 13%;
 `;
 
 const ImageContainer = styled.div`
-img {
-  margin-top: 10%;
-  width:70px;
-  height:auto;
-}
-
+  img {
+    margin-top: 10%;
+    width: 70px;
+    height: auto;
+  }
 `;
 const ButtonContainer = styled.div`
   text-align: left;
-  h2{
-    font-size:32px;
-    color:(0,0,0,.65);
-    font-weight:400;
-    white-space:nowrap;
-    
+  h2 {
+    font-size: 32px;
+    color: (0, 0, 0, 0.65);
+    font-weight: 400;
+    white-space: nowrap;
   }
-  
 `;
 
 const SecurityContainer = styled.div`
   display: flex;
   justify-content: space-between;
   height: 40vh;
-  margin-top:5%;
-  margin-left:5%;
-  margin-right:5%;
+  margin-top: 5%;
+  margin-left: 5%;
+  margin-right: 5%;
 `;
-
-
-
-
-

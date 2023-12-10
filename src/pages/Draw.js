@@ -390,24 +390,6 @@ function Draw() {
               <DiagramTop>
                 <DiagramTopLeft>
                   <FileName>파일 이름: {fileName}</FileName>
-                </DiagramTopLeft>
-
-                <SaveButton>
-                  <ModalButton
-                    diagram={diagram}
-                    showToggle={showToggle}
-                    setShowToggle={setShowToggle}
-                    isSave={isSave}
-                    handleSaveDiagram={handleSaveDiagram}
-                    setIsSave={setIsSave}
-                    setFileName={setFileName}
-                    fileName={fileName}
-                    finalToggleValue={finalToggleValue}
-                    setFinalToggleValue={setFinalToggleValue}
-                    onPopupChange={handlePopupChange}
-                  />
-                </SaveButton>
-                <DiagramTopRight>
                   <AlertBadge
                     count={messageQueue.length}
                     onClick={showAlertMessages}
@@ -427,6 +409,24 @@ function Draw() {
                       size="middle"
                     />
                   </AlertBadge>
+                </DiagramTopLeft>
+
+                <SaveButton>
+                  <ModalButton
+                    diagram={diagram}
+                    showToggle={showToggle}
+                    setShowToggle={setShowToggle}
+                    isSave={isSave}
+                    handleSaveDiagram={handleSaveDiagram}
+                    setIsSave={setIsSave}
+                    setFileName={setFileName}
+                    fileName={fileName}
+                    finalToggleValue={finalToggleValue}
+                    setFinalToggleValue={setFinalToggleValue}
+                    onPopupChange={handlePopupChange}
+                  />
+                </SaveButton>
+                <DiagramTopRight>
                   <StyledButton onClick={handleSaveDiagram}>Save</StyledButton>
                 </DiagramTopRight>
               </DiagramTop>
@@ -548,6 +548,10 @@ const FileName = styled.div`
   margin-left: 20px;
   padding-top: 5px;
   padding-bottom: 10px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 200px;
 `;
 
 const DiagramTopLeft = styled.div`
