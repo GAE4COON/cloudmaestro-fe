@@ -373,13 +373,13 @@ function Draw() {
   };
 
   return (
-    <div className="main-content">
+    <DrawMainContent>
       <div className="Draw">
         <div className="container">
-          <div className="workspace">
+          <DrawWorkSpace>
             {contextHolder}
 
-            <div className="palette">
+            <div className="palette" > 
               <Palette
                 divClassName={paletteClassName}
                 diagram={mydiagram}
@@ -507,14 +507,36 @@ function Draw() {
             ) : (
               ""
             )}
-          </div>
+          </DrawWorkSpace>
         </div>
       </div>
-    </div>
+    </DrawMainContent>
   );
 }
 
 export default Draw;
+
+const DrawWorkSpace = styled.div`
+  position: relative;
+  display: flex;
+  align-items: stretch;  
+  flex-grow: 1;
+  width: 100%; /* Optional: 부모 요소의 너비를 100%로 설정 */
+  /* height: 800px; */
+  /* height: 90vh;  Optional: 뷰포트 높이를 기준으로 높이 설정 */
+`
+
+const DrawMainContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding-top: 70px;
+  /* min-height: 100vh; */
+  padding-left:10%;
+  /* height: 100vh; */
+  padding-right: 10%;
+  /* margin-bottom: 30px; */
+  /* border: 1px solid red; */
+`
 
 const AlertBadge = styled(Badge)`
   text-align: center;
@@ -603,5 +625,5 @@ const DiagramContainer = styled.div`
   position: relative;
   display: inline;
   width: 75%;
-  height: 75%;
+  height: calc(100% - 70px);
 `;
