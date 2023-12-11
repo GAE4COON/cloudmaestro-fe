@@ -8,6 +8,7 @@ import Resource from "../components/Resource";
 import { ResourceGuide } from "../apis/resource";
 import { Input } from "antd";
 import { useLocation } from "react-router-dom";
+import DownloadPDF from "../components/DownloadPDF";
 
 const { Search } = Input;
 
@@ -16,6 +17,8 @@ function MyResource() {
   const [resource, setResource] = useState(null);
   const [filteredResource, setFilteredResource] = useState([]);
   const [resourceItems, setResourceItems] = useState([]);
+  const [isExporting, setIsExporting] = useState(false);
+  const [collapseActiveKeys, setCollapseActiveKeys] = useState([]);
 
   const location = useLocation();
   const file = location.state.info.file.result;
@@ -102,6 +105,7 @@ function MyResource() {
                 />
               </SearchContainer>
             </StyledSideMenuTitle>
+            <div id="export-container">
             {resourceItems.map(
               (
                 item,
@@ -119,9 +123,16 @@ function MyResource() {
                 />
               )
             )}
-          </div>
+            </div>
+            <div className="download-container">
+          <DownloadPDF onClick={() => setIsExporting(true)} onExport={setIsExporting} />
         </div>
+          </div>
+
+        </div>
+
       </div>
+      
     </div>
   );
 }

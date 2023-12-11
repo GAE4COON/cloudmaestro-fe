@@ -78,10 +78,11 @@ function Resource({ title_img, title, tags, guide1, guide2, guide3, guide4 }) {
           {tags.map((tag, index) => (
             <Tag
               key={index}
-              style={{ backgroundColor: tagColors[tag] || "#fbb1d5", 
-                        fontFamily: "Noto Sans KR",
-                        fontSize: "14px",
-            }}
+              style={{
+                backgroundColor: tagColors[tag] || "#fbb1d5",
+                fontFamily: "Noto Sans KR",
+                fontSize: "14px",
+              }}
             >
               #{tag}
             </Tag> // key를 index로 주고 tag 내용을 표시합니다.

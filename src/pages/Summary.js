@@ -10,6 +10,7 @@ import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
 import "../styles/App.css";
 import styled from "styled-components";
+import DownloadPDF from "../components/DownloadPDF";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -36,53 +37,15 @@ const chartOptions = {
   },
 };
 
-const Summary = ({ costdata }) => {
-  console.log("costdata",costdata)
+const Summary = ({ costdata, fileName }) => {
 
   const location = useLocation();
   const costData = costdata ? costdata : location.state?.costdata;
+  const filename = fileName ? fileName : location.state?.fileName;
   const from = location.state.from;
 
-  console.log("location?", location.state)
 
   const [isExporting, setIsExporting] = useState(false);
-
-  console.log("costdata!!!!!!",costData)
-
-  function exportToPDF() {
-    setIsExporting(true); // Open all dropdowns
-
-    // Small delay to ensure React re-renders with open dropdowns before capturing
-    setTimeout(() => {
-      const input = document.getElementById("export-container");
-      html2canvas(input).then((canvas) => {
-        const imgData = canvas.toDataURL("image/png");
-        // const pdf = new jsPDF();
-
-        var imgWidth = 210; // 이미지 가로 길이(mm) A4 기준
-        var pageHeight = imgWidth * 1.414; // 출력 페이지 세로 길이 계산 A4 기준
-        var imgHeight = (canvas.height * imgWidth) / canvas.width;
-        var heightLeft = imgHeight;
-
-        var doc = new jsPDF("p", "mm");
-        var position = 0;
-
-        // 첫 페이지 출력
-        doc.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
-
-        // 한 페이지 이상일 경우 루프 돌면서 출력
-        while (heightLeft >= 20) {
-          position = heightLeft - imgHeight;
-          doc.addPage();
-          doc.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-          heightLeft -= pageHeight;
-        }
-        doc.save("sample.pdf");
-        setIsExporting(false); // Close all dropdowns after export
-      });
-    }, 100);
-  }
 
   const [activeDropdown, setActiveDropdown] = useState(null);
 
@@ -117,67 +80,67 @@ const Summary = ({ costdata }) => {
     .toFixed(2);
 
   return (
-<SummaryContainer style={{ 
-  marginLeft: from === 'draw' ? '0px' : '20px' ,
-  marginRight: from === 'draw' ? '0px' : '20px' ,
-  marginTop: from === 'draw' ? '30px' : '' ,
-  
-  width: from === 'draw' ? '' : "100%",
-  paddingLeft: from === 'draw' ? '20%' : "0%",
-  paddingRight: from === 'draw' ? '20%' : "0%"
+    <SummaryContainer style={{
+      marginLeft: from === 'draw' ? '0px' : '20px',
+      marginRight: from === 'draw' ? '0px' : '20px',
+      // marginTop: from === 'draw' ? '30px' : '',
 
-}}>
-        <div className="title1">도식화 히스토리</div>
-        <div className="file-name">MyCompany_Cloud1</div>
-        <div className="price-container">
-          <div className="middle-bar"></div>
+      width: from === 'draw' ? '' : "100%",
+      paddingLeft: from === 'draw' ? '20%' : "0%",
+      paddingRight: from === 'draw' ? '20%' : "0%"
 
-          {instanceNameArr.map((instanceObj, index) => {
-            const [category, cost] = Object.entries(instanceObj)[0];
-            console.log(index, category, cost)
+    }}>
+      <div className="title1">도식화 히스토리</div>
+      <div className="file-name">{filename} total cost</div>
+      <div className="price-container">
+        <div className="middle-bar"></div>
 
-            return (
-              <>
-                <div key={index} className="instance">
-                  <div
-                    className="instance-price-container"
-                    onClick={() => handleInstanceClick(index)}
-                  >
-                    <div className="instance-title">{category}</div>
-                    <div className="instance-price">
-                      ${cost}/mo
-                      <div className="dropdown-icon">
-                        <BsChevronDown color="#cdcdcd" />
-                      </div>
+        {instanceNameArr.map((instanceObj, index) => {
+          const [category, cost] = Object.entries(instanceObj)[0];
+          console.log(index, category, cost)
+
+          return (
+            <div id="export-container">
+              <div key={index} className="instance">
+                <div
+                  className="instance-price-container"
+                  onClick={() => handleInstanceClick(index)}
+                >
+                  <div className="instance-title">{category}</div>
+                  <div className="instance-price">
+                    ${cost}/mo
+                    <div className="dropdown-icon">
+                      <BsChevronDown color="#cdcdcd" />
                     </div>
                   </div>
-                  {(isExporting || activeDropdown === index) && (
-                    <div className="instance-dropdown">
-                      <DataTable
-                        headers={headers[category]}
-                        items={filteredItems[category]}
-                      />
-                    </div>
-                  )}
                 </div>
-              </>
-            );
-          })}
-          <div className="total-container">
-            <div className="total-price-title">total</div>
-            <div className="total-price">${totalCost}/mo</div>
-          </div>
-          <div className="pie-chart">
-            <Doughnut
-              data={createChart(instanceNameArr)}
-              options={chartOptions}
-            />
-          </div>
-          <button className="export-button" onClick={exportToPDF}>
-            EXPORT
-          </button>
+                {(isExporting || activeDropdown === index) && (
+                  <div className="instance-dropdown">
+                    <DataTable
+                      headers={headers[category]}
+                      items={filteredItems[category]}
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
+          );
+        })}
+        <div className="total-container">
+          <div className="total-price-title">total</div>
+          <div className="total-price">${totalCost}/mo</div>
         </div>
-      </SummaryContainer>
+        <div className="pie-chart">
+          <Doughnut
+            data={createChart(instanceNameArr)}
+            options={chartOptions}
+          />
+        </div>
+        <div className="download-container">
+          <DownloadPDF onClick={() => setIsExporting(true)} onExport={setIsExporting} />
+        </div>
+      </div>
+    </SummaryContainer>
   );
 }
 

@@ -79,6 +79,8 @@ const StyledSideMenu = styled.div`
   padding-top: 50px;
   width: 256px;
   flex: 1;
+  font-family: "Noto Sans KR", sans-serif !important;
+
 `;
 
 const StyledSideMenuTitle = styled.div`
@@ -89,14 +91,16 @@ const StyledSideMenuTitle = styled.div`
 
 const StyledMenu = styled(Menu)`
   text-align: left;
-  background: #edf3ff;
+  background: #E2edff;
   border-radius: 10px;
   margin-top: 10px;
+  font-family: "Noto Sans KR", sans-serif !important;
+    font-weight: 500;
 
   .ant-menu-submenu-title {
     color: #333; // 글자 색상 변경
-    font-weight: bold; // 글자 두께 변경
     font-size: 18px;
     font-family: "Noto Sans KR", sans-serif !important;
+    font-weight: 600;
   }
 `;

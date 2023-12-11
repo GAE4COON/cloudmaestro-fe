@@ -7,10 +7,13 @@ import { getSecurityList } from "../apis/myPage";
 import securityResource from '../db/SecurityResource.json'; // JSON 파일 경로
 import securityList from '../db/SecurityList.json'; // JSON 파일 경로
 import ResourceItem from "../components/ResourceItem";
+import DownloadPDF from "../components/DownloadPDF";
 
 //import { PDFViewer } from '@react-pdf/renderer';
 
 function MySecurity() {
+
+  const [isExporting, setIsExporting] = useState(false);
 
   const location = useLocation();
   console.log("location", location.state.info);
@@ -74,7 +77,8 @@ function MySecurity() {
           <div className="menu-container">
             <Sidebar />
           </div>
-          <div className="main-container">
+          <MainContainer>
+          <div className="main-container" id="export-container">
             <StyledSideMenuTitle>
               <div>보안 권고 리스트</div>
             </StyledSideMenuTitle>
@@ -91,20 +95,34 @@ function MySecurity() {
             }
             <div style={{  borderTop: "1px solid #666", marginBottom:"20px"}}/>
             </ResourceListContainer>
+            </div>
 
+            <div className="download-container">
+              <DownloadPDF onClick={() => setIsExporting(true)} onExport={setIsExporting} />
+           </div>
+           </MainContainer>
           </div>
-        </div>
+
+
       </div>
+
     </div>
+    
 
   );
 }
 
 export default MySecurity;
 
+const MainContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  `
+
 const ResourceListContainer = styled.div`
-  margin-left: 50px;
-  margin-right: 50px;
+  /* margin-left: 50px;
+  margin-right: 50px; */
   justify-content: space-between;
   /* background-color: #555; */
 `
@@ -128,8 +146,8 @@ const StyledSideMenuTitle = styled.div`
   font-weight: 500;
   font-size: 20px;
   margin-top: 25px;
-  padding-right: 25px;
-  padding-left: 25px;
+  /* padding-right: 25px;
+  padding-left: 25px; */
   /* margin-left: 30px; */
 `;
 

@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
 import "./styles/App.css";
 import Home from "./pages/Home";
 import Draw from "./pages/Draw";
@@ -41,7 +41,22 @@ function App() {
             <ScrollToTop />
             <SidebarController />
             <Navbar />
-            <Routes>
+            <RoutesWithFooter />
+
+          </BrowserRouter>
+        </DataProvider>
+      </AuthProvider>
+    </div>
+  );
+}
+
+const RoutesWithFooter = () => {
+  const location = useLocation();
+
+  return (
+    <>
+      
+      <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/home" element={<Home />} />
               <Route path="/about" element={<Introduce />} />
@@ -52,7 +67,7 @@ function App() {
 
               <Route element={<PrivateRoute />}>
                 <Route path="/draw" element={<Draw />} />
-                <Route path="/home/auto" element={<AutoDraw />} />
+                <Route path="/draw/auto" element={<AutoDraw />} />
                 <Route path="/input/aws" element={<InputAWS />} />
                 <Route path="/summary" element={<Summary />} />
 
@@ -80,12 +95,9 @@ function App() {
               </Route>
               <Route path="*" element={<NotFound />} />
             </Routes>
-            <Footer />
-          </BrowserRouter>
-        </DataProvider>
-      </AuthProvider>
-    </div>
+      {location.pathname !== '/draw' && <Footer />}
+    </>
   );
-}
+};
 
 export default App;

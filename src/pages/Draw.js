@@ -72,6 +72,7 @@ function Draw() {
   const [diagramVersion, setDiagramVersion] = useState(0);
   const [isPopup, setIsPopup] = useState(false);
   const [countAlert, setCountAlert] = useState(0);
+  const [isReset, setIsReset] = useState(false);
 
   const { isSidebarOpen, setIsSidebarOpen } = useData();
 
@@ -246,6 +247,26 @@ function Draw() {
     }
   }, [alertMessage, setMessageQueue]);
 
+  useEffect(()=>{
+    if(isReset){
+      api.destroy();
+      removeMessageFromQueue(-1);
+    }
+    setIsReset(false);
+  })
+
+  const removeMessageFromQueue = (keyToRemove) => {
+    console.log(keyToRemove);
+    if (keyToRemove === -1) {
+      setMessageQueue([]);
+    } else {
+      setMessageQueue((currentQueue) =>
+        currentQueue.filter((message) => message.key !== keyToRemove)
+      );
+    }
+  };
+
+
   const [api, contextHolder] = notification.useNotification();
   const [areNotificationsShown, setAreNotificationsShown] = useState(false);
 
@@ -263,19 +284,21 @@ function Draw() {
         setTimeout(() => {
           const key = `open${Date.now()}`;
 
-          const removeMessageFromQueue = (keyToRemove) => {
-            console.log(keyToRemove);
-            if (keyToRemove === -1) {
-              setMessageQueue([]);
-            } else {
-              setMessageQueue((currentQueue) =>
-                currentQueue.filter((message) => message.key !== keyToRemove)
-              );
-            }
-          };
+
+          
 
           const btn = (
             <Space>
+              <Button
+                type="link"
+                size="small"
+                onClick={() => {
+                  api.destroy();
+                  removeMessageFromQueue(-1);
+                }}
+              >
+                모두 지우기
+              </Button>
               <Button
                 type="link"
                 size="small"
@@ -373,13 +396,13 @@ function Draw() {
   };
 
   return (
-    <div className="main-content">
+    <DrawMainContent>
       <div className="Draw">
         <div className="container">
-          <div className="workspace">
+          <DrawWorkSpace>
             {contextHolder}
 
-            <div className="palette">
+            <div className="palette" > 
               <Palette
                 divClassName={paletteClassName}
                 diagram={mydiagram}
@@ -413,6 +436,7 @@ function Draw() {
 
                 <SaveButton>
                   <ModalButton
+                  setIsReset={setIsReset}
                     diagram={diagram}
                     showToggle={showToggle}
                     setShowToggle={setShowToggle}
@@ -507,14 +531,36 @@ function Draw() {
             ) : (
               ""
             )}
-          </div>
+          </DrawWorkSpace>
         </div>
       </div>
-    </div>
+    </DrawMainContent>
   );
 }
 
 export default Draw;
+
+const DrawWorkSpace = styled.div`
+  position: relative;
+  display: flex;
+  align-items: stretch;  
+  flex-grow: 1;
+  width: 100%; /* Optional: 부모 요소의 너비를 100%로 설정 */
+  /* height: 800px; */
+  /* height: 90vh;  Optional: 뷰포트 높이를 기준으로 높이 설정 */
+`
+
+const DrawMainContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding-top: 70px;
+  /* min-height: 100vh; */
+  padding-left:10%;
+  /* height: 100vh; */
+  padding-right: 10%;
+  /* margin-bottom: 30px; */
+  /* border: 1px solid red; */
+`
 
 const AlertBadge = styled(Badge)`
   text-align: center;
@@ -603,5 +649,5 @@ const DiagramContainer = styled.div`
   position: relative;
   display: inline;
   width: 75%;
-  height: 75%;
+  height: calc(100% - 70px);
 `;
