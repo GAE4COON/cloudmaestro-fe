@@ -342,7 +342,7 @@ const useGoJS = (
             portId: "",
             editable: true,
           },
-          new go.Binding("text", "text")
+          new go.Binding("text", "key")
         )
       ),
 

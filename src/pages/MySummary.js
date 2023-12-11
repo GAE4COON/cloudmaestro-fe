@@ -19,11 +19,13 @@ const MySummary = () => {
 
   const [costData, setCostData] = useState({});
   const location = useLocation();
+  const [fileName, setFileName] = useState("");
 
   useEffect(() => {
     const fetchCostData = async () => {
-      if (location.state && location.state.file && location.state.file.result) {
-        requestSummary(location.state.file.result.cost);
+      if (location.state && location.state.info && location.state.info.file) {
+        requestSummary(location.state.info.file.result.cost);
+        setFileName(location.state.info.filename);
       }
     };
    
@@ -44,10 +46,11 @@ const MySummary = () => {
           <div className="menu-container">
             <SideBar />
           </div>
-          <Summary costdata={costData} style={{
-            margin:"0px",
-            padding: "0px"
-          }}/>
+          <Summary 
+          costdata={costData} 
+          fileName={fileName}
+          
+          />
 
         </div>
       </div>
