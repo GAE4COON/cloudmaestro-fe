@@ -52,7 +52,7 @@ function App() {
 
               <Route element={<PrivateRoute />}>
                 <Route path="/draw" element={<Draw />} />
-                <Route path="/home/auto" element={<AutoDraw />} />
+                <Route path="/draw/auto" element={<AutoDraw />} />
                 <Route path="/input/aws" element={<InputAWS />} />
                 <Route path="/summary" element={<Summary />} />
 

@@ -52,7 +52,10 @@ const Navbar = () => {
   const homeMenu = (
     <Menu>
       <Menu.Item key="autodraw">
-        <Link to="/home/auto">AutoDraw</Link>
+        <Link to="/draw/auto">Use Template</Link>
+      </Menu.Item>
+      <Menu.Item key="draw">
+        <Link to="/draw">Just Draw</Link>
       </Menu.Item>
     </Menu>
   );
@@ -65,19 +68,21 @@ const Navbar = () => {
       </NavLink>
       <Menu mode="horizontal" selectedKeys={[location.pathname]} style={{ flex: 1 }}>
       <Menu.Item key="/home">
-          <Dropdown
+
+            <NavLink to="/home">
+              Home
+            </NavLink>
+        </Menu.Item>
+        <Menu.Item key="/draw">
+        <Dropdown
             overlay={homeMenu}
             trigger={['hover']}
             visible={isDropdownVisible}
             onVisibleChange={setIsDropdownVisible}
           >
-            <NavLink to="/home" className="ant-dropdown-link" onClick={toggleDropdown}>
-              Home
-            </NavLink>
+          <NavLink to="/draw" className="ant-dropdown-link" onClick={toggleDropdown}>Draw</NavLink>
           </Dropdown>
-        </Menu.Item>
-        <Menu.Item key="/draw">
-          <NavLink to="/draw">Draw</NavLink>
+
         </Menu.Item>
         <Menu.Item key="/about">
           <NavLink to="/about">Introduce</NavLink>
