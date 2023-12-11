@@ -247,7 +247,6 @@ function Draw() {
     }
   }, [alertMessage, setMessageQueue]);
 
-  
   useEffect(()=>{
     if(isReset){
       api.destroy();
