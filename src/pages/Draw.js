@@ -72,6 +72,7 @@ function Draw() {
   const [diagramVersion, setDiagramVersion] = useState(0);
   const [isPopup, setIsPopup] = useState(false);
   const [countAlert, setCountAlert] = useState(0);
+  const [isReset, setIsReset] = useState(false);
 
   const { isSidebarOpen, setIsSidebarOpen } = useData();
 
@@ -246,6 +247,27 @@ function Draw() {
     }
   }, [alertMessage, setMessageQueue]);
 
+  
+  useEffect(()=>{
+    if(isReset){
+      api.destroy();
+      removeMessageFromQueue(-1);
+    }
+    setIsReset(false);
+  })
+
+  const removeMessageFromQueue = (keyToRemove) => {
+    console.log(keyToRemove);
+    if (keyToRemove === -1) {
+      setMessageQueue([]);
+    } else {
+      setMessageQueue((currentQueue) =>
+        currentQueue.filter((message) => message.key !== keyToRemove)
+      );
+    }
+  };
+
+
   const [api, contextHolder] = notification.useNotification();
   const [areNotificationsShown, setAreNotificationsShown] = useState(false);
 
@@ -263,19 +285,21 @@ function Draw() {
         setTimeout(() => {
           const key = `open${Date.now()}`;
 
-          const removeMessageFromQueue = (keyToRemove) => {
-            console.log(keyToRemove);
-            if (keyToRemove === -1) {
-              setMessageQueue([]);
-            } else {
-              setMessageQueue((currentQueue) =>
-                currentQueue.filter((message) => message.key !== keyToRemove)
-              );
-            }
-          };
+
+          
 
           const btn = (
             <Space>
+              <Button
+                type="link"
+                size="small"
+                onClick={() => {
+                  api.destroy();
+                  removeMessageFromQueue(-1);
+                }}
+              >
+                모두 지우기
+              </Button>
               <Button
                 type="link"
                 size="small"
@@ -413,6 +437,7 @@ function Draw() {
 
                 <SaveButton>
                   <ModalButton
+                  setIsReset={setIsReset}
                     diagram={diagram}
                     showToggle={showToggle}
                     setShowToggle={setShowToggle}

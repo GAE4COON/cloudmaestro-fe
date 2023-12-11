@@ -21,6 +21,7 @@ import { summaryFile } from "../apis/fileAPI.js";
 import { Modal, Input } from "antd";
 
 const Button = ({
+  setIsReset,
   diagram,
   setShowToggle,
   handleSaveDiagram,
@@ -214,6 +215,7 @@ const Button = ({
     setIsRehost(false);
     setFileName("제목 없는 다이어그램");
     setIsSave(true);
+    setIsReset(true);
   };
 
   const handleSummary = async () => {
