@@ -84,10 +84,13 @@ const useGoJS = (
           const jsonString = e.model.toIncrementalJson(e);
           const data = JSON.parse(jsonString);
           console.log("노드 추가영: ", data);
+          // console.log("노드 추가영2: ", e.model.toJson());
           if (data.insertedLinkKeys) {
             console.log("insertedLinkKeys", data.modifiedLinkData);
             try {
               const response = await alertCheck(data.modifiedLinkData[0]);
+              console.log("alertCheck request: ", data.modifiedLinkData[0]); // API 요청 데이터
+              console.log("alertCheck response: ", response);
               if (response.data.result.status === "fail") {
                 console.log(
                   "링크 취소해도 되는 부분.. 주석처리만 하니까 안 올라가서 우선 콘솔로그라도 띄움"
@@ -112,17 +115,21 @@ const useGoJS = (
             } catch (error) {
               console.error("API Error:", error);
             }
-          } else if (data.insertedNodeKeys || data.modifiedNodeData) {
+          } else if (data.modifiedNodeData) {
             try {
               const PostData = {
                 checkOption: null,
                 newData: null,
                 diagramData: diagram.model.toJson(),
               };
-              if (data.insertedNodeKeys || data.modifiedNodeData) {
+              if (data.modifiedNodeData) {
                 for (let i = 0; i < data.modifiedNodeData.length; i++) {
+                  // console.log(
+                  //   "현재 modifiedNodeData 요소:",
+                  //   data.modifiedNodeData[i]
+                  // );
                   if (
-                    data.modifiedNodeData[i].text === "VPC" &&
+                    data.modifiedNodeData[i]?.text === "VPC" &&
                     data.modifiedNodeData[i].isGroup === true
                   ) {
                     PostData.checkOption = "VPC";
@@ -138,7 +145,7 @@ const useGoJS = (
                       });
                     }
                   } else if (
-                    data.modifiedNodeData[i].text === "API Gateway"
+                    data.modifiedNodeData[i]?.text === "API Gateway"
                     //  ||data.modifiedNodeData[i].type === "Database"
                   ) {
                     // if (data.modifiedNodeData[i].text === "API Gateway")
@@ -159,9 +166,9 @@ const useGoJS = (
                     }
                   }
                   if (
-                    data.insertedNodeKeys[i].startsWith("S3") ||
-                    data.insertedNodeKeys[i].startsWith("CloudTrail") ||
-                    data.insertedNodeKeys[i].startsWith("CloudWatch")
+                    data.modifiedNodeData[i]?.text === "S3" ||
+                    data.modifiedNodeData[i]?.text === "CloudTrail" ||
+                    data.modifiedNodeData[i]?.text === "CloudWatch"
                   ) {
                     PostData.checkOption = "Logging";
                     PostData.newData = data.modifiedNodeData[i];
@@ -169,18 +176,18 @@ const useGoJS = (
                     const response = await NodeCheck(PostData);
                     if (response.data.result.status === "fail") {
                       console.log("API Response:", response.data);
-                      setTimeout(() => {
-                        setAlertMessage((prevAlert) => ({
-                          key: Date.now(),
-                          message: response.data.result.message,
-                          tag: "Info",
-                        }));
-                      }, 0);
+
+                      setAlertMessage((prevAlert) => ({
+                        key: Date.now(),
+                        message: response.data.result.message,
+                        tag: "Info",
+                      }));
+                      // }, 0);
                     }
                   }
                   if (
-                    data.insertedNodeKeys[i].startsWith("Backup") ||
-                    data.insertedNodeKeys[i].startsWith("S3")
+                    data.modifiedNodeData[i]?.text === "Backup" ||
+                    data.modifiedNodeData[i]?.text === "S3"
                   ) {
                     PostData.checkOption = "Backup";
                     PostData.newData = data.modifiedNodeData[i];
@@ -188,16 +195,28 @@ const useGoJS = (
                     const response = await NodeCheck(PostData);
                     if (response.data.result.status === "fail") {
                       console.log("API Response:", response.data);
-                      setTimeout(() => {
-                        setAlertMessage((prevAlert) => ({
-                          key: Date.now(),
-                          message: response.data.result.message,
-                          tag: "Info",
-                        }));
-                      }, 30);
+                      setAlertMessage((prevAlert) => ({
+                        key: Date.now(),
+                        message: response.data.result.message,
+                        tag: "Info",
+                      }));
                     }
                   }
-                  if (data.modifiedNodeData[i].type === "Database") {
+                  if (data.modifiedNodeData[i]?.text === "EC2") {
+                    PostData.checkOption = "EC2";
+                    PostData.newData = data.modifiedNodeData[i];
+                    console.log("EC2 호출");
+                    const response = await NodeCheck(PostData);
+                    if (response.data.result.status === "fail") {
+                      console.log("API Response:", response.data);
+                      setAlertMessage((prevAlert) => ({
+                        key: Date.now(),
+                        message: response.data.result.message,
+                        tag: "Info",
+                      }));
+                    }
+                  }
+                  if (data.modifiedNodeData[i]?.text === "Database") {
                     PostData.checkOption = "Database";
                     PostData.newData = data.modifiedNodeData[i];
                     console.log("NodeCheck 호출");
