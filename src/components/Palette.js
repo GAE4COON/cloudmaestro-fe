@@ -42,10 +42,9 @@ const tabs = [
   "Security-Identity-Compliance",
   "Storage",
   "AWS_Groups",
-  // Add more tabs here
 ];
 
-const Palette = memo(({ divClassName, diagram, diagramVersion }) => {
+const Palette = memo(({ diagram, diagramVersion }) => {
   const [nodeDataArray, setNodeDataArray] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedTab, setSelectedTab] = useState("Storage");
@@ -308,7 +307,7 @@ const Palette = memo(({ divClassName, diagram, diagramVersion }) => {
   }, [selectedTab, searchTerm, modulePaletteData]);
 
   return (
-    <div className={divClassName}>
+    <PaletteContainer>
       <div id="allSampleContent">
         <SearchContainer>
           <StyledSearch
@@ -386,11 +385,17 @@ const Palette = memo(({ divClassName, diagram, diagramVersion }) => {
           </ScrollableTabsContainer>
         )}
       </div>
-    </div>
+      </PaletteContainer>
+
   );
 });
 
 export default Palette;
+
+const PaletteContainer = styled.div`
+  width: 100%;
+  border-color: aqua;
+`;
 
 // Styled component for the tabs container
 const Tabs = styled.div`
@@ -425,7 +430,7 @@ const RadioInput = styled.input.attrs({ type: "radio" })`
 const TabLabel = styled.label`
   border-radius: 5px;
   box-shadow: 0 2px 8px #f0f1f2;
-  margin-bottom: 5px;
+  margin-bottom: 3px;
 
   padding: 12px 16px;
   display: flex;
@@ -468,8 +473,8 @@ const ScrollableTabsContainer = styled.div`
 
 // Styled component for the search container
 const SearchContainer = styled.div`
-  margin-bottom: 10px;
-  padding: 10px;
+  /* margin-bottom: 10px; */
+  padding-bottom: 5px;
 
   display: flex;
   align-items: center;

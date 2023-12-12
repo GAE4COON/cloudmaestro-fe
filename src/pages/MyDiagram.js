@@ -48,23 +48,17 @@ const MyArchitecture = () => {
   useEffect(() => {
     const fetchMyNetwork = async () => {
       const myNetwork = await myNetworkDB();
-      setCloudInstances(myNetwork.data);
-      console.log(myNetwork.data);
-    };
+      const sortedData = myNetwork.data.sort((a, b) => {
+        return new Date(a.modifiedDate) - new Date(b.modifiedDate);
+      });
 
+      setCloudInstances(sortedData);
+      console.log(sortedData);
+    };
+  
     fetchMyNetwork();
   }, []);
-
-  // This function splits the cloudInstances array into chunks of 3
-  const getRows = (instances) => {
-    const rows = [];
-    instances.forEach((instance, idx) => {
-      if (idx % 3 === 0) rows.push([]);
-      rows[rows.length - 1].push(instance);
-    });
-    return rows;
-  };
-
+  
   const handleCloudInstance = async (key, path) => {
     const response = await getDiagramData(key);
     console.log("response.data", response.data);
@@ -82,14 +76,13 @@ const MyArchitecture = () => {
   };
 
   return (
-    <div className="main-content">
-      <div className="mypage-container">
-        <div className="flex-container">
-          <div className="menu-container">
+    <MainContainer>
+        <FlexContainer>
+          <SidebarContainer>
             <SideBar />
-          </div>
+          </SidebarContainer>
 
-          <div className="main-container">
+          <MainContent>
             <StyledSideMenuTitle>도식화 히스토리</StyledSideMenuTitle>
             <CloudInstanceRow>
               {cloudInstances.length > 0 ? (
@@ -167,8 +160,10 @@ const MyArchitecture = () => {
                         <StyledInstanceTitle>
                           {instance.title}
                         </StyledInstanceTitle>
-
+                        
                         <ButtonContainer>
+                        {instance.modifiedDate}
+
                           <StyledButton
                             style={{ backgroundColor: "#5280DD" }}
                             onClick={() =>
@@ -182,7 +177,7 @@ const MyArchitecture = () => {
                           </StyledButton>
 
                           <Dropdown
-                            menu={<Menu items={dropdownItems} />}
+                            overlay={<Menu items={dropdownItems} />}
                             placement="bottomLeft"
                           >
                             <StyledButton
@@ -210,14 +205,23 @@ const MyArchitecture = () => {
                 </div>
               )}
             </CloudInstanceRow>
-          </div>
-        </div>
-      </div>
-    </div>
+          </MainContent>
+        </FlexContainer>
+    </MainContainer>
   );
 };
 
 export default MyArchitecture;
+const SidebarContainer = styled.div`
+`;
+const MainContent = styled.div`
+    margin-top: 10px;
+    flex:1;
+    `;
+const FlexContainer = styled.div`
+  display: flex;
+  `;
+
 const CloudInstanceETC = styled.div`
   display: flex;
   flex-direction: row; // 가로 방향으로 요소를 배열
@@ -299,3 +303,16 @@ const StyledInstanceTitle = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
 `;
+
+const MainContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding-top: 70px;
+  min-height: 100vh;
+  padding-left:10%;
+  padding-right: 10%;
+  margin-bottom: 30px;
+`;
+
+const MyPageContainer = styled.div`
+`
