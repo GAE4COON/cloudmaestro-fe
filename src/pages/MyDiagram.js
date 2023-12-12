@@ -12,7 +12,6 @@ import jwtDecode from "jwt-decode";
 import { CloseOutlined } from "@ant-design/icons";
 import { Avatar, Card, Tooltip } from "antd";
 
-
 import styled from "styled-components";
 import { getDiagramData, myNetworkDB, deleteDiagramData } from "../apis/myPage";
 
@@ -91,53 +90,53 @@ const MyArchitecture = () => {
           </div>
 
           <div className="main-container">
-      <StyledSideMenuTitle>도식화 히스토리</StyledSideMenuTitle>
-      <CloudInstanceRow>
-        {cloudInstances.length > 0 ? (
-          cloudInstances.map((instance) => {
-                    const dropdownItems = [
-                      {
-                        key: "1",
-                        label: (
-                          <button
-                            onClick={() =>
-                              handleCloudInstance(
-                                instance.key,
-                                "/mypage/diagram/security"
-                              )
-                            }
-                          >
-                            Security
-                          </button>
-                        ),
-                      },
-                      {
-                        key: "2",
-                        label: (
-                          <button
-                            onClick={() =>
-                              handleCloudInstance(
-                                instance.key,
-                                "/mypage/diagram/resource"
-                              )
-                            }
-                          >
-                            Resource
-                          </button>
-                        ),
-                      },
-                    ];
-                    return (
-                      <CloudInstance key={instance.key}>
-                        <Popconfirm
-                          title="도식화 삭제"
-                          description={`${instance.title} 도식화를 삭제하시겠습니까?`}
-                          onConfirm={() => confirm(instance.key)}
-                          cancelText="No"
-                          okText="Yes"
-                          placement="right"
+            <StyledSideMenuTitle>도식화 히스토리</StyledSideMenuTitle>
+            <CloudInstanceRow>
+              {cloudInstances.length > 0 ? (
+                cloudInstances.map((instance) => {
+                  const dropdownItems = [
+                    {
+                      key: "1",
+                      label: (
+                        <button
+                          onClick={() =>
+                            handleCloudInstance(
+                              instance.key,
+                              "/mypage/diagram/security"
+                            )
+                          }
                         >
-                          {/* <CloseOutlined
+                          Security
+                        </button>
+                      ),
+                    },
+                    {
+                      key: "2",
+                      label: (
+                        <button
+                          onClick={() =>
+                            handleCloudInstance(
+                              instance.key,
+                              "/mypage/diagram/resource"
+                            )
+                          }
+                        >
+                          Resource
+                        </button>
+                      ),
+                    },
+                  ];
+                  return (
+                    <CloudInstance key={instance.key}>
+                      <Popconfirm
+                        title="도식화 삭제"
+                        description={`${instance.title} 도식화를 삭제하시겠습니까?`}
+                        onConfirm={() => confirm(instance.key)}
+                        cancelText="No"
+                        okText="Yes"
+                        placement="right"
+                      >
+                        {/* <CloseOutlined
                             style={{
                               position: "absolute",
                               top: "10px",
@@ -145,25 +144,27 @@ const MyArchitecture = () => {
                             }}
                           />{" "} */}
 
-                          <Button style={{
+                        <Button
+                          style={{
                             position: "absolute",
                             top: "5px",
                             right: "5px",
                           }}
-                            type="text"
-                            shape="circle" icon={<CloseOutlined />} />
-                        </Popconfirm>
-
-                        <CloudInstanceImg
-                          onClick={() =>
-                            handleCloudInstance(instance.key, "/draw")
-                          }
-                          alt="diagram_img"
-                          src={`https://cm-user-file.s3.ap-northeast-2.amazonaws.com/${instance.title}_${user.sub}.png`}
-
+                          type="text"
+                          shape="circle"
+                          icon={<CloseOutlined />}
                         />
-                        <CloudInstanceETC>
-                          <StyledInstanceTitle>
+                      </Popconfirm>
+
+                      <CloudInstanceImg
+                        onClick={() =>
+                          handleCloudInstance(instance.key, "/draw")
+                        }
+                        alt="diagram_img"
+                        src={`https://cm-user-file.s3.ap-northeast-2.amazonaws.com/${instance.title}_${user.sub}.png`}
+                      />
+                      <CloudInstanceETC>
+                        <StyledInstanceTitle>
                           {instance.title}
                         </StyledInstanceTitle>
 
@@ -181,7 +182,7 @@ const MyArchitecture = () => {
                           </StyledButton>
 
                           <Dropdown
-                            overlay={<Menu items={dropdownItems} />}
+                            menu={<Menu items={dropdownItems} />}
                             placement="bottomLeft"
                           >
                             <StyledButton
@@ -192,25 +193,23 @@ const MyArchitecture = () => {
                             </StyledButton>
                           </Dropdown>
                         </ButtonContainer>
-                        </CloudInstanceETC>
-
-                      </CloudInstance>
-                    );
-                  })
-            ) : (
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  height: "100%",
-                }}
-              >
-                <p>도식화 히스토리가 없습니다.</p>
-              </div>
-            )}
-                            </CloudInstanceRow>
-
+                      </CloudInstanceETC>
+                    </CloudInstance>
+                  );
+                })
+              ) : (
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: "100%",
+                  }}
+                >
+                  <p>도식화 히스토리가 없습니다.</p>
+                </div>
+              )}
+            </CloudInstanceRow>
           </div>
         </div>
       </div>
@@ -237,7 +236,7 @@ const CloudInstanceImg = styled.img`
   cursor: "pointer";
   border-radius: 5px 5px 0px 0px;
   border: 1px solid #e8e8e8;
-`
+`;
 
 const CloudInstance = styled.div`
   width: 30%; // Adjust the width to fit 3 instances per row
@@ -276,13 +275,12 @@ const StyledButton = styled(Button)`
 `;
 
 const ButtonContainer = styled.div`
-
   /* align-items: end; */
   display: flex;
   flex-direction: column;
   align-items: flex-end; // 오른쪽 정렬
   flex-grow: 0;
-  flex:0;
+  flex: 0;
 `;
 
 const StyledSideMenuTitle = styled.div`
@@ -290,15 +288,14 @@ const StyledSideMenuTitle = styled.div`
   font-weight: 500;
   font-size: 20px;
   margin-top: 30px;
-
 `;
 
 const StyledInstanceTitle = styled.div`
   font-family: "Noto Sans KR", sans-serif !important;
   text-align: left;
-  flex-grow: 1; 
+  flex-grow: 1;
   flex: 1;
-  white-space: nowrap; 
-  overflow: hidden; 
+  white-space: nowrap;
+  overflow: hidden;
   text-overflow: ellipsis;
 `;
