@@ -28,16 +28,16 @@ function SignIn() {
 
     try {
       const response = await login(userData);
-      console.log(response.data);
+      console.log("response: ", response.data);
       if (response.data.status === "success") {
-        const { grantType, accessToken, refreshToken } = response.data;
+        const { grantType, accessToken, refreshToken } = response.data.result;
 
         localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("refreshToken", refreshToken);
         localStorage.setItem("tokenType", grantType);
 
         console.log("Local check :", localStorage.getItem("accessToken"));
-        message.warning("로그인 성공.");
+        message.warning("로그인 성공");
 
         window.location.href = "/home";
       } else {
