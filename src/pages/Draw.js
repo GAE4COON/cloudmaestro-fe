@@ -247,13 +247,13 @@ function Draw() {
     }
   }, [alertMessage, setMessageQueue]);
 
-  useEffect(()=>{
-    if(isReset){
+  useEffect(() => {
+    if (isReset) {
       api.destroy();
       removeMessageFromQueue(-1);
     }
     setIsReset(false);
-  })
+  });
 
   const removeMessageFromQueue = (keyToRemove) => {
     console.log(keyToRemove);
@@ -265,7 +265,6 @@ function Draw() {
       );
     }
   };
-
 
   const [api, contextHolder] = notification.useNotification();
   const [areNotificationsShown, setAreNotificationsShown] = useState(false);
@@ -283,9 +282,6 @@ function Draw() {
       messageQueue.forEach((alertMessage, index) => {
         setTimeout(() => {
           const key = `open${Date.now()}`;
-
-
-          
 
           const btn = (
             <Space>
@@ -402,7 +398,7 @@ function Draw() {
           <DrawWorkSpace>
             {contextHolder}
 
-            <div className="palette" > 
+            <div className="palette">
               <Palette
                 divClassName={paletteClassName}
                 diagram={mydiagram}
@@ -436,7 +432,7 @@ function Draw() {
 
                 <SaveButton>
                   <ModalButton
-                  setIsReset={setIsReset}
+                    setIsReset={setIsReset}
                     diagram={diagram}
                     showToggle={showToggle}
                     setShowToggle={setShowToggle}
@@ -457,7 +453,7 @@ function Draw() {
 
               <Modal
                 title="저장할 파일의 이름을 입력하세요."
-                visible={isModalVisible}
+                open={isModalVisible}
                 onOk={handleOk}
                 onCancel={handleCancel}
               >
@@ -543,24 +539,24 @@ export default Draw;
 const DrawWorkSpace = styled.div`
   position: relative;
   display: flex;
-  align-items: stretch;  
+  align-items: stretch;
   flex-grow: 1;
   width: 100%; /* Optional: 부모 요소의 너비를 100%로 설정 */
   /* height: 800px; */
   /* height: 90vh;  Optional: 뷰포트 높이를 기준으로 높이 설정 */
-`
+`;
 
 const DrawMainContent = styled.div`
   display: flex;
   flex-direction: column;
   padding-top: 70px;
   /* min-height: 100vh; */
-  padding-left:10%;
+  padding-left: 10%;
   /* height: 100vh; */
   padding-right: 10%;
   /* margin-bottom: 30px; */
   /* border: 1px solid red; */
-`
+`;
 
 const AlertBadge = styled(Badge)`
   text-align: center;

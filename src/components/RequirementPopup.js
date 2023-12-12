@@ -2,9 +2,8 @@ import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import { Select, Modal } from "antd";
 import { TreeSelect, Checkbox } from "antd";
-import Draggable from 'react-draggable';
+import Draggable from "react-draggable";
 import { sendRequirement } from "../apis/requirementAPI";
-
 
 import { Button } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
@@ -177,7 +176,7 @@ const RequirementPopup = (props) => {
   };
   const addWebZone = () => {
     // Check if a webzone already exists
-    const webZoneExists = zones.some(zone => zone.id === "webzone");
+    const webZoneExists = zones.some((zone) => zone.id === "webzone");
 
     if (!webZoneExists) {
       setZones([
@@ -195,7 +194,6 @@ const RequirementPopup = (props) => {
     }
   };
 
-
   // Zone 선택을 업데이트하는 함수
 
   const handleOptimize = async () => {
@@ -206,16 +204,19 @@ const RequirementPopup = (props) => {
         zoneFrame: zoneFrameValue,
         backup: selectBackup,
 
-        zones: zones.map((zone) => (
-          console.log("zones", zone),
-          {
-            // console.log("zones",zone);
-            name: zone.zoneName,
-            function: zone.zoneFunc,
-            availableNode: zone.availableNode,
-            serverNode: zone.serverNode,
-            zoneRequirements: zone.zoneReqValue,
-          })),
+        zones: zones.map(
+          (zone) => (
+            console.log("zones", zone),
+            {
+              // console.log("zones",zone);
+              name: zone.zoneName,
+              function: zone.zoneFunc,
+              availableNode: zone.availableNode,
+              serverNode: zone.serverNode,
+              zoneRequirements: zone.zoneReqValue,
+            }
+          )
+        ),
       },
       diagramData: diagram.model.toJson(), // 다이어그램 데이터를 추가
     };
@@ -265,8 +266,6 @@ const RequirementPopup = (props) => {
     });
   };
 
-
-
   const handleDataChange = (zoneId, updatedData) => {
     const formattedUpdatedData = {
       zoneName: updatedData.SelectZone,
@@ -286,9 +285,8 @@ const RequirementPopup = (props) => {
   };
 
   const removeZone = (zoneId) => {
-    setZones(zones.filter(zone => zone.id !== zoneId));
+    setZones(zones.filter((zone) => zone.id !== zoneId));
   };
-
 
   return (
     <>
@@ -297,8 +295,8 @@ const RequirementPopup = (props) => {
         title={
           <div
             style={{
-              width: '100%',
-              cursor: 'move',
+              width: "100%",
+              cursor: "move",
             }}
             onMouseOver={() => {
               if (disabled) {
@@ -308,9 +306,8 @@ const RequirementPopup = (props) => {
             onMouseOut={() => {
               setDisabled(true);
             }}
-            onFocus={() => { }}
-            onBlur={() => { }}
-
+            onFocus={() => {}}
+            onBlur={() => {}}
           >
             Optimization input
           </div>
@@ -327,23 +324,24 @@ const RequirementPopup = (props) => {
             <div ref={draggleRef}>{modal}</div>
           </Draggable>
         )}
-
         footer={[
-          <Button key="back"
-          onClick={addZone}
-          disabled={zones.length >= zoneCount}>
+          <Button
+            key="back"
+            onClick={addZone}
+            disabled={zones.length >= zoneCount}
+          >
             망 추가하기
           </Button>,
-              <Button
-              type="primary"
-              shape="round"
-              size={"medium"}
-              onClick={handleOptimize}
-              disabled={!isOptimizeEnabled}
-              style={{ marginBottom: "20px" }}
-            >
-              Optimize
-            </Button>
+          <Button
+            type="primary"
+            shape="round"
+            size={"medium"}
+            onClick={handleOptimize}
+            disabled={!isOptimizeEnabled}
+            style={{ marginBottom: "20px" }}
+          >
+            Optimize
+          </Button>,
         ]}
       >
         <ScrollableContent>
@@ -381,35 +379,42 @@ const RequirementPopup = (props) => {
           <SelectContainer>
             <SelectTitle>망 구조</SelectTitle>
             <BackupContainer>
-              <Checkbox.Group options={zoneFrame} onClick={addWebZone} onChange={handleZoneFrame} />
+              <Checkbox.Group
+                options={zoneFrame}
+                onClick={addWebZone}
+                onChange={handleZoneFrame}
+              />
             </BackupContainer>
           </SelectContainer>
 
           <div className="망 모음">
-            {zones.map((zone) =>
-              (showWebSvrComponent && zone.id == "webzone") && (
-                <WebSvrComponent
-                  key={"webzone"}
-                  diagram={savediagram}
-                  industrial_BP={industrial_BP}
-                  zone={zone}
-                  onDataChange={handleDataChange}
-                  onRemoveZone={removeZone}
-                />
-
-              ))}
-            {zones.map((zone) =>
-              (zone.id != "webzone") && (
-                <ZoneComponent
-                  key={zone.id}
-                  diagram={savediagram}
-                  industrial_BP={industrial_BP}
-                  zone={zone}
-                  onDataChange={handleDataChange}
-                  onRemoveZone={removeZone}
-                />
-
-              ))}
+            {zones.map(
+              (zone) =>
+                showWebSvrComponent &&
+                zone.id == "webzone" && (
+                  <WebSvrComponent
+                    key={zone.id}
+                    diagram={savediagram}
+                    industrial_BP={industrial_BP}
+                    zone={zone}
+                    onDataChange={handleDataChange}
+                    onRemoveZone={removeZone}
+                  />
+                )
+            )}
+            {zones.map(
+              (zone) =>
+                zone.id != "webzone" && (
+                  <ZoneComponent
+                    key={zone.id}
+                    diagram={savediagram}
+                    industrial_BP={industrial_BP}
+                    zone={zone}
+                    onDataChange={handleDataChange}
+                    onRemoveZone={removeZone}
+                  />
+                )
+            )}
 
             <div
               style={{
@@ -418,16 +423,13 @@ const RequirementPopup = (props) => {
                 alignItems: "center", // 버튼들을 중앙 정렬
                 gap: "10px", // 버튼 사이의 간격
               }}
-            >
-
-            </div>
+            ></div>
           </div>
         </ScrollableContent>
       </Modal>
     </>
   );
 };
-
 
 const SelectContainer = styled.div`
   display: flex;

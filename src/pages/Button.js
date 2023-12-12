@@ -149,7 +149,9 @@ const Button = ({
       const containsOtherTypes = otherTypes.length > 0;
 
       if (containsOtherTypes) {
-        message.warning("클라우드 아키텍처가 포함되어있으면 Lift&Shift를 실행할 수 없습니다.");
+        message.warning(
+          "클라우드 아키텍처가 포함되어있으면 Lift&Shift를 실행할 수 없습니다."
+        );
 
         return;
       }
@@ -250,7 +252,7 @@ const Button = ({
           <Tooltip placement="right" title={"upload"} arrow={mergedArrow}>
             <Modal
               title="Enter file name"
-              visible={isModalVisible}
+              open={isModalVisible}
               onOk={handleOk}
               onCancel={handleCancel}
             >
