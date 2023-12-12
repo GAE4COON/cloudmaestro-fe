@@ -79,7 +79,6 @@ const useGoJS = (
         if (e.isTransactionFinished) {
           const jsonString = e.model.toIncrementalJson(e);
           const data = JSON.parse(jsonString);
-          console.log("노드 추가영: ", data);
           // console.log("노드 추가영2: ", e.model.toJson());
           if (data.insertedLinkKeys) {
             console.log("insertedLinkKeys", data.modifiedLinkData);

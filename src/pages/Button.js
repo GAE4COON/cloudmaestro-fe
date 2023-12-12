@@ -11,12 +11,12 @@ import {
   BsUpload,
   BsDownload,
   BsEraser,
+  BsPalette, 
   BsSave,
 } from "react-icons/bs";
 import { Tooltip, message, notification, Space } from "antd";
 import { BsFillImageFill } from "react-icons/bs";
 import { useData } from "../components/DataContext";
-import "../styles/App.css";
 import { summaryFile } from "../apis/fileAPI.js";
 import { Modal, Input } from "antd";
 
@@ -25,6 +25,8 @@ const Button = ({
   diagram,
   setShowToggle,
   handleSaveDiagram,
+  setPalette,
+  palette,
   isSave,
   setIsSave,
   setFileName,
@@ -114,6 +116,15 @@ const Button = ({
       message.info("저장되었습니다.");
     });
   };
+
+  const handlePalette = () => {
+    if(palette){
+      setPalette(false);
+    }
+    else{
+      setPalette(true);
+    }
+  }
 
   const handleSaveImage = () => {
     showModal((tmpFileName) => {
@@ -245,9 +256,22 @@ const Button = ({
       pointAtCenter: true,
     };
   }, [arrow]);
+
+  const buttonStyle = {
+    backgroundColor: palette ? 'aliceblue' : 'initial', // palette가 true일 때 파란색 배경
+  
+  };
   return (
     <div>
       <div className="button-container">
+        
+      <div className="button-row">
+          <Tooltip placement="right" title={"show palette"} arrow={mergedArrow}>
+            <button onClick={handlePalette} style={buttonStyle}>
+              <BsPalette  />
+            </button>
+          </Tooltip>
+        </div>
         <div className="button-row">
           <Tooltip placement="right" title={"upload"} arrow={mergedArrow}>
             <Modal

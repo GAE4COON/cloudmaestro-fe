@@ -33,6 +33,7 @@ import {
   WarningOutlined,
   CloseCircleOutlined,
 } from "@ant-design/icons";
+import Sidebar from "../components/Sidebar.js";
 
 const close = () => {
   console.log("Notification was closed.");
@@ -46,10 +47,6 @@ message.config({
 function Draw() {
   const { data } = useFileUpload();
   //console.log("draw data ", data);
-  const isDesktopOrLaptop = useMediaQuery({ query: "(min-width: 700px)" });
-  const paletteClassName = isDesktopOrLaptop
-    ? "palette-component"
-    : "palette-component-small";
   const diagramClassName = "diagram-component";
 
   const [finalToggleValue, setFinalToggleValue] = useState({});
@@ -73,6 +70,15 @@ function Draw() {
   const [isPopup, setIsPopup] = useState(false);
   const [countAlert, setCountAlert] = useState(0);
   const [isReset, setIsReset] = useState(false);
+  const [palette, setPalette] = useState(true);
+  const [isExiting, setIsExiting] = useState(false);
+
+  useEffect(() => {
+    if (!palette) {
+      setIsExiting(true);
+      setTimeout(() => setIsExiting(false), 500); // 애니메이션 지속 시간과 동일하게 설정
+    }
+  }, [palette]);
 
   const { isSidebarOpen, setIsSidebarOpen } = useData();
 
@@ -149,6 +155,7 @@ function Draw() {
     setIsSidebarOpen(!isSidebarOpen);
     return setIsPopup(!isPopup);
   };
+
 
   const handlePopupChange = (newPopupState) => {
     setIsPopup(newPopupState);
@@ -392,22 +399,39 @@ function Draw() {
   };
 
   return (
-    <DrawMainContent>
           <DrawWorkSpace>
             {contextHolder}
-
-            <PaletteContainer>
-              <Palette
-                divClassName={paletteClassName}
-                diagram={mydiagram}
-                diagramVersion={diagramVersion}
-              />
-            </PaletteContainer>
-            <DiagramContainer>
+            {palette && !isExiting && (
+        <PaletteContainer>
+          <Palette
+            diagram={mydiagram}
+            diagramVersion={diagramVersion}
+          />
+        </PaletteContainer>
+            )}
+                          <ButtonContainer  palette={palette}>
+                  <ModalButton
+                    setIsReset={setIsReset}
+                    diagram={diagram}
+                    showToggle={showToggle}
+                    setShowToggle={setShowToggle}
+                    isSave={isSave}
+                    handleSaveDiagram={handleSaveDiagram}
+                    setIsSave={setIsSave}
+                    setFileName={setFileName}
+                    fileName={fileName}
+                    finalToggleValue={finalToggleValue}
+                    setFinalToggleValue={setFinalToggleValue}
+                    onPopupChange={handlePopupChange}
+                    setPalette={setPalette}
+                    palette={palette}
+                  />
+                </ButtonContainer>
+            <DiagramContainer  palette={palette}>
               <DiagramTop>
                 <DiagramTopLeft>
                   <FileName>파일 이름: {fileName}</FileName>
-                  <AlertBadge
+                  <StyledAlertBadge
                     count={messageQueue.length}
                     onClick={showAlertMessages}
                   >
@@ -425,29 +449,13 @@ function Draw() {
                       }
                       size="middle"
                     />
-                  </AlertBadge>
+                  </StyledAlertBadge>
                 </DiagramTopLeft>
-
-                <SaveButton>
-                  <ModalButton
-                    setIsReset={setIsReset}
-                    diagram={diagram}
-                    showToggle={showToggle}
-                    setShowToggle={setShowToggle}
-                    isSave={isSave}
-                    handleSaveDiagram={handleSaveDiagram}
-                    setIsSave={setIsSave}
-                    setFileName={setFileName}
-                    fileName={fileName}
-                    finalToggleValue={finalToggleValue}
-                    setFinalToggleValue={setFinalToggleValue}
-                    onPopupChange={handlePopupChange}
-                  />
-                </SaveButton>
                 <DiagramTopRight>
                   <StyledButton onClick={handleSaveDiagram}>Save</StyledButton>
                 </DiagramTopRight>
               </DiagramTop>
+              
 
               <Modal
                 title="저장할 파일의 이름을 입력하세요."
@@ -525,75 +533,81 @@ function Draw() {
             ) : (
               ""
             )}
-          </DrawWorkSpace>
+         <SidebarContainer>
+              <Sidebar/>
+              </SidebarContainer>
 
-    </DrawMainContent>
+         </DrawWorkSpace>
+
   );
 }
 
 export default Draw;
 
+const SidebarContainer = styled.div`
+  /* background-color: red; */
+  /* position: relative; */
+  /* width: 20%; */
+  flex: 0.25;
+  height: 100%;
+  z-index: 20;
+  height: 100%;
+  height: 89vh;
+`
+
 const PaletteContainer = styled.div`
   float: left;
-  width: 25%;
-  height: 100%;
+flex: 1;
   `;
 
 const DrawWorkSpace = styled.div`
-  position: relative;
-  display: flex;
-  align-items: stretch;
-  flex-grow: 1;
-  width: 100%; /* Optional: 부모 요소의 너비를 100%로 설정 */
-  /* height: 800px; */
-  /* height: 90vh;  Optional: 뷰포트 높이를 기준으로 높이 설정 */
-`;
-
-const DrawMainContent = styled.div`
 margin-left: 10px;
   display: flex;
-  flex-direction: column;
-  padding-top: 70px;
-  /* min-height: 100vh; */
-  /* padding-left: 10%; */
-  /* height: 100vh; */
-  /* padding-right: 10%; */
-  /* margin-bottom: 30px; */
-  /* border: 1px solid red; */
+  padding-top: 80px;
+  align-items: stretch;
+  width: 100%;
 `;
 
-const AlertBadge = styled(Badge)`
+const StyledAlertBadge = styled(Badge)`
   text-align: center;
   align-items: center;
-  margin-top: 20px;
+  /* margin-top: 20px; */
   margin-left: 10px;
-  padding-bottom: 10px;
+  /* padding-bottom: 10px; */
   z-index: 21;
 `;
 
-const SaveButton = styled.div`
+const ButtonContainer = styled.div`
   background-color: white;
+  /* width: 100%; */
   position: absolute;
+  /* height: 100%; */
+  /* position: absolute; */
   margin-top: 40px;
-  margin-left: 10px;
+  margin-left: 1%;
   z-index: 20;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  /* border: 10px solid #bbbbda; */
+  ${props => props.palette && `
+  margin-left: 20%;
+  `}
+  ${props => !props.palette && `
+  `}
+
 `;
 const DiagramTop = styled.div`
   display: flex;
-  position: relative;
   width: 100%;
+  align-items: center;
+
 `;
 
 const FileName = styled.div`
   font-family: "Noto Sans KR", sans-serif !important;
   font-weight: 500;
   font-size: 15px;
-  margin-top: 20px;
   margin-left: 20px;
-  padding-top: 5px;
-  padding-bottom: 10px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -602,40 +616,39 @@ const FileName = styled.div`
 
 const DiagramTopLeft = styled.div`
   display: flex;
-  position: relative;
-  width: 87%;
-  /* border: 10px solid #d9d9d9; */
+  align-items: center;
+  flex: 1;
 `;
 
 const DiagramTopRight = styled.div`
-  display: flex;
-  position: relative;
-  width: 13%;
+  z-index: 20;  
 `;
 const StyledDiagram = styled.div`
+/* border: 1px solid red; */
   /* float: left; */
   /* margin-top: 3?0px; */
-  width: 100%;
-  height: 80vh; // 원하는 높이로 설정
+  /* width: 100%; */
+  /* height: 100%; */
+  height: 80vh; 
 `;
 
 const StyledButton = styled.div`
-  margin-top: 20px;
-  position: absolute;
-  right: 0;
+  /* margin-top: 20px; */
+  /* position: absolute; */
+  /* right: 0; */
   box-sizing: border-box;
   width: 70px;
   /* margin: 10px; */
   color: #809cda;
 
   border: 2px solid #bbbbda;
-  border-radius: 7px;
+  border-radius: 10px;
 
   font-family: "Noto Sans KR", sans-serif;
   font-style: normal;
   font-weight: 700;
 
-  line-height: 30px;
+  line-height: 25px;
   align-items: center;
   text-align: center;
 
@@ -646,9 +659,16 @@ const StyledButton = styled.div`
   }
 `;
 const DiagramContainer = styled.div`
-  position: relative;
-  display: inline;
-  width: 100%;
-  padding-right: 5%;
+  /* position: relative; */
+  /* display: inline; */
+  flex: 4;
   height: calc(100% - 70px);
+
+  
+  ${props => props.palette && `
+  `}
+  ${props => !props.palette && `
+    margin-left: 5%;
+
+  `}
 `;

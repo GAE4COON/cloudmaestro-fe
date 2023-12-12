@@ -44,7 +44,7 @@ const tabs = [
   "AWS_Groups",
 ];
 
-const Palette = memo(({ divClassName, diagram, diagramVersion }) => {
+const Palette = memo(({ diagram, diagramVersion }) => {
   const [nodeDataArray, setNodeDataArray] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedTab, setSelectedTab] = useState("Storage");
@@ -307,7 +307,7 @@ const Palette = memo(({ divClassName, diagram, diagramVersion }) => {
   }, [selectedTab, searchTerm, modulePaletteData]);
 
   return (
-    <div className={divClassName}>
+    <PaletteContainer>
       <div id="allSampleContent">
         <SearchContainer>
           <StyledSearch
@@ -385,11 +385,17 @@ const Palette = memo(({ divClassName, diagram, diagramVersion }) => {
           </ScrollableTabsContainer>
         )}
       </div>
-    </div>
+      </PaletteContainer>
+
   );
 });
 
 export default Palette;
+
+const PaletteContainer = styled.div`
+  width: 100%;
+  border-color: aqua;
+`;
 
 // Styled component for the tabs container
 const Tabs = styled.div`
