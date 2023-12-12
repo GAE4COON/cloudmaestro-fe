@@ -27,6 +27,8 @@ const useGoJS = (
   //   console.log("DiagramCheck", DiagramCheck);
   // }, [DiagramCheck]);
 
+
+
   function highlightGroup(e, grp, show) {
     if (!grp) return;
     e.handled = true;
@@ -55,6 +57,8 @@ const useGoJS = (
     const diagram = $(go.Diagram, {
       "undoManager.isEnabled": true,
       "resizingTool.isGridSnapEnabled": true,
+      initialAutoScale: go.Diagram.Uniform, // Automatically scale the diagram
+      initialContentAlignment: go.Spot.Center,
       "commandHandler.archetypeGroupData": {
         key: "Group",
         text: "Group",
@@ -74,7 +78,11 @@ const useGoJS = (
       "resizingTool.isGridSnapEnabled": true,
       model: new go.GraphLinksModel({
         linkKeyProperty: "uniqueLinkId", // Replace with your actual link property
-      }),
+        
+      }
+      
+      ),
+
       ModelChanged: async (e) => {
         if (e.isTransactionFinished) {
           const jsonString = e.model.toIncrementalJson(e);
@@ -576,6 +584,10 @@ const useGoJS = (
           }
         }
       }
+    });
+
+    diagram.addDiagramListener("InitialLayoutCompleted", e => {
+      e.diagram.zoomToFit();
     });
 
     diagram.addDiagramListener("ExternalObjectsDropped", (e) => {
