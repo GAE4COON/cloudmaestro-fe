@@ -184,7 +184,6 @@ const Button = ({
       console.error("rehost error: ", error);
     }
   };
-
   const onUploadFileChange = (e) => {
     if (e.target.files[0] && e.target.files[0].name.includes("json")) {
       let file = e.target.files[0];
@@ -193,24 +192,35 @@ const Button = ({
       if (lastIndex > 0) {
         fileName = fileName.substring(0, lastIndex);
       }
-      setFileName(fileName);
 
       let fileReader = new FileReader();
       fileReader.readAsText(file);
       fileReader.onload = async () => {
-        let filejson = JSON.parse(fileReader.result);
+        
+      let filejson;  
+      
+        try{
+        filejson = JSON.parse(fileReader.result);
+        }catch(e){
+          message.error("올바른 JSON 파일 형식이 아닙니다.")
+          return;
+          
+        }
+        setFileName(fileName);
+
         if (filejson.hasOwnProperty("cost")) {
           setFinalToggleVal(filejson["cost"]);
         }
         if (fileReader.result && diagram) {
           diagram.model = go.Model.fromJson(fileReader.result);
+          console.log("diagram.model", diagram.model);
           setData(diagram.model.nodeDataArray);
           setShowToggle(true);
           setClickedLoaded(false);
         }
       };
     } else if (e.target.files[0] && !e.target.files[0].name.includes("json")) {
-      message.warning("Json형식의 파일을 넣어주세요.");
+      message.warning("JSON형식의 파일을 넣어주세요.");
     }
     e.target.value = null;
   };
