@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useAuth } from "./../utils/auth/authContext";
 import { useLocation, Link } from "react-router-dom";
 import jwtDecode from "jwt-decode";
-import { Layout, Menu, Dropdown, Button, Avatar } from "antd";
-import { LogoutOutlined } from "@ant-design/icons";
+import { Layout, Menu, Dropdown, Button, Avatar } from 'antd';
+import { LogoutOutlined } from '@ant-design/icons';
 import styled from "styled-components";
 
 const { Header } = Layout;
@@ -59,58 +59,45 @@ const Navbar = () => {
       </Menu.Item>
     </Menu>
   );
+  
 
   return (
-    <NavStyled
-      style={{
-        fontFamily: "Noto Sans KR",
-        backgroundColor: "white",
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-      }}
-    >
+    <NavStyled style={{ fontFamily: "Noto Sans KR", backgroundColor:"white", display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
       <NavLink to="/">
         <img src="/assets/img/logo.png" alt="logo" />
       </NavLink>
-      <Menu
-        mode="horizontal"
-        selectedKeys={[location.pathname]}
-        style={{ flex: 1 }}
-      >
-        <Menu.Item key="/home">
-          <NavLink to="/home">Home</NavLink>
+      <Menu mode="horizontal" selectedKeys={[location.pathname]} style={{ flex: 1 }}>
+      <Menu.Item key="/home">
+
+            <NavLink to="/home">
+              Home
+            </NavLink>
         </Menu.Item>
         <Menu.Item key="/draw">
-          <Dropdown
-            menu={homeMenu}
-            trigger={["hover"]}
-            open={isDropdownVisible}
-            onOpenChange={setIsDropdownVisible}
+        <Dropdown
+            overlay={homeMenu}
+            trigger={['hover']}
+            visible={isDropdownVisible}
+            onVisibleChange={setIsDropdownVisible}
           >
-            <NavLink
-              to="/draw"
-              className="ant-dropdown-link"
-              onClick={toggleDropdown}
-            >
-              Draw
-            </NavLink>
+          <NavLink to="/draw" className="ant-dropdown-link" onClick={toggleDropdown}>Draw</NavLink>
           </Dropdown>
+
         </Menu.Item>
         <Menu.Item key="/about">
           <NavLink to="/about">Introduce</NavLink>
         </Menu.Item>
       </Menu>
       {user ? (
-        <Dropdown overlay={userDropdownMenu} trigger={["hover"]}>
+        <Dropdown overlay={userDropdownMenu} trigger={['hover']}>
           <a onClick={(e) => e.preventDefault()}>
-            <Username>{user.name}님</Username>
+            <Username>{user.name}님</Username> 
           </a>
         </Dropdown>
       ) : (
         <Button.Group>
-          <NavBtnLink to="/sign-in">로그인</NavBtnLink>
-          <NavBtnLink to="/sign-up">회원가입</NavBtnLink>
+            <NavBtnLink to="/sign-in">로그인</NavBtnLink>
+            <NavBtnLink to="/sign-up">회원가입</NavBtnLink>
         </Button.Group>
       )}
     </NavStyled>
@@ -156,6 +143,7 @@ const NavBtnLink = styled(Link)`
   }
 `;
 
+
 const NavLink = styled(Link)`
   position: relative;
   color: #000;
@@ -198,4 +186,6 @@ const NavStyled = styled(Header)`
   position: fixed;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   font-family: "Noto Sans KR", sans-serif !important;
+
+
 `;
