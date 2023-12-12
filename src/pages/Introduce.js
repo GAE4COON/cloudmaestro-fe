@@ -39,13 +39,6 @@ const Home = () => {
   let isScrolling = false;
 
   const handleTabClick = (id) => {
-    const sectionRef =
-      id === "section1"
-        ? section1Ref
-        : id === "section2"
-        ? section2Ref
-        : section3Ref;
-    scrollTo(sectionRef.current);
     setActiveTab(id);
   };
 
@@ -246,7 +239,6 @@ const Home = () => {
     );
   };
 
-  // final return (page)
   return (
     <div className="about-container">
       <div className="section" ref={addtoRefs}>
