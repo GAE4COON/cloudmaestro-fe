@@ -393,18 +393,16 @@ function Draw() {
 
   return (
     <DrawMainContent>
-      <div className="Draw">
-        <div className="container">
           <DrawWorkSpace>
             {contextHolder}
 
-            <div className="palette">
+            <PaletteContainer>
               <Palette
                 divClassName={paletteClassName}
                 diagram={mydiagram}
                 diagramVersion={diagramVersion}
               />
-            </div>
+            </PaletteContainer>
             <DiagramContainer>
               <DiagramTop>
                 <DiagramTopLeft>
@@ -528,13 +526,18 @@ function Draw() {
               ""
             )}
           </DrawWorkSpace>
-        </div>
-      </div>
+
     </DrawMainContent>
   );
 }
 
 export default Draw;
+
+const PaletteContainer = styled.div`
+  float: left;
+  width: 25%;
+  height: 100%;
+  `;
 
 const DrawWorkSpace = styled.div`
   position: relative;
@@ -547,13 +550,14 @@ const DrawWorkSpace = styled.div`
 `;
 
 const DrawMainContent = styled.div`
+margin-left: 10px;
   display: flex;
   flex-direction: column;
   padding-top: 70px;
   /* min-height: 100vh; */
-  padding-left: 10%;
+  /* padding-left: 10%; */
   /* height: 100vh; */
-  padding-right: 10%;
+  /* padding-right: 10%; */
   /* margin-bottom: 30px; */
   /* border: 1px solid red; */
 `;
@@ -644,6 +648,7 @@ const StyledButton = styled.div`
 const DiagramContainer = styled.div`
   position: relative;
   display: inline;
-  width: 75%;
+  width: 100%;
+  padding-right: 5%;
   height: calc(100% - 70px);
 `;

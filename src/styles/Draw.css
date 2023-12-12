@@ -22,15 +22,15 @@ transition: opacity 0.3s ease;  */
 
 /* Draw */
 .Draw {
-  width: 100%;
+  /* width: 100%;
   position: relative;
-  z-index: 1;
+  z-index: 1; */
   /* margin-top: 80px; */
 }
 
 .container {
-  display: flex;
-  flex-direction: column;
+  /* display: flex;
+  flex-direction: column; */
 }
 
 .clicked_key {
@@ -56,9 +56,7 @@ transition: opacity 0.3s ease;  */
 
 
 .palette {
-  float: left;
-  width: 25%;
-  height: 100%;
+
 }
 
 .palette-component{
