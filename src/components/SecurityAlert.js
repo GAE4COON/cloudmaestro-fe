@@ -1,4 +1,4 @@
-import {DevCheck} from "../apis/fileAPI";
+import { DevCheck } from "../apis/fileAPI";
 
 export async function handleSecurity(e, diagram, setAlertMessage) {
   if (e.isTransactionFinished) {
@@ -17,14 +17,11 @@ export async function handleSecurity(e, diagram, setAlertMessage) {
         ) {
           await handleNode(data.modifiedNodeData[i], diagram, setAlertMessage);
         }
-
-    
       }
     }
     //checkForLog(diagram, setInfoMessage)
   }
 }
-
 
 async function handleNode(node, diagram, setAlertMessage) {
   //  const PostData = {
@@ -70,7 +67,7 @@ async function checkForLog(diagram, setAlertMessage) {
     const message = {
       key: Date.now().toString(), // Unique key for each message
       hasmessage:
-        " 로그저장매체가 암호화되지 않을 시, 무단 접근 및 변조 등을 통한 보험 위험이 존재할 수 있습니다."
+        " 로그저장매체가 암호화되지 않을 시, 무단 접근 및 변조 등을 통한 보험 위험이 존재할 수 있습니다.",
     };
     if (hasQuickSightNode || hasOpenSearch || hasAthena || hasS3) {
       setAlertMessage({
@@ -79,17 +76,18 @@ async function checkForLog(diagram, setAlertMessage) {
         tag: "Info",
       });
     }
-    /// dev 망이 있을 때 메세지 띄우기 
+    /// dev 망이 있을 때 메세지 띄우기
 
     const devMessage = {
       key: Date.now().toString(), // Unique key for each message
-      hasmessage: "개발, 테스트 및 운영 환경은 분리되어야 하며 보호되어야 합니다."
+      hasmessage:
+        "개발, 테스트 및 운영 환경은 분리되어야 하며 보호되어야 합니다.",
     };
 
     try {
       const jsonString = diagram.model.toJson();
       const response = await DevCheck(jsonString);
-      if ( response.data.status) {
+      if (response.data.status) {
         setAlertMessage({
           key: Date.now(), // Use current timestamp as key
           message: devMessage.hasmessage,
@@ -99,10 +97,11 @@ async function checkForLog(diagram, setAlertMessage) {
 
       const apiMessage = {
         key: Date.now().toString(), // Unique key for each message
-        hasmessage: "Amazon API Gateway 뒤에 Lambda 함수와 같은 서버리스 워크로드를 배포한다."
+        hasmessage:
+          "Amazon API Gateway 뒤에 Lambda 함수와 같은 서버리스 워크로드를 배포한다.",
       };
-    
-      if ( response.data.gatewayapi) {
+
+      if (response.data.gatewayapi) {
         setAlertMessage({
           key: Date.now(), // Use current timestamp as key
           message: apiMessage.hasmessage,

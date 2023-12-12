@@ -43,21 +43,11 @@ const AutoDraw = () => {
               <button className="template_button" onClick={downloadExcel}>
                 템플릿 받으러가기
               </button>
-              <div className="example">
-                잘 모르겠다면?
-                <Link
-                  to={"/learn"}
-                  state={{ type: "excel" }}
-                  className="example_link"
-                >
-                  예시 보기
-                </Link>
-              </div>
             </div>
           </div>
           <div className="upper_type">
             <div className="json_type">
-              <div className="title_type">Json</div>
+              <div className="title_type">JSON</div>
               <div className="description">
                 <p>온디맨드 정보 자산을 업로드 해주세요.</p>
                 <br />
@@ -76,16 +66,6 @@ const AutoDraw = () => {
               <button className="template_button" onClick={downloadJson}>
                 템플릿 받으러가기
               </button>
-              <div className="example">
-                잘 모르겠다면?
-                <Link
-                  to={"/learn"}
-                  state={{ type: "json" }}
-                  className="example_link"
-                >
-                  예시 보기
-                </Link>
-              </div>
             </div>
           </div>
         </div>

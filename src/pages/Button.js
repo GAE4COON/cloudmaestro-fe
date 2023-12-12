@@ -11,12 +11,12 @@ import {
   BsUpload,
   BsDownload,
   BsEraser,
+  BsPalette, 
   BsSave,
 } from "react-icons/bs";
 import { Tooltip, message, notification, Space } from "antd";
 import { BsFillImageFill } from "react-icons/bs";
 import { useData } from "../components/DataContext";
-import "../styles/App.css";
 import { summaryFile } from "../apis/fileAPI.js";
 import { Modal, Input } from "antd";
 
@@ -25,6 +25,8 @@ const Button = ({
   diagram,
   setShowToggle,
   handleSaveDiagram,
+  setPalette,
+  palette,
   isSave,
   setIsSave,
   setFileName,
@@ -115,6 +117,15 @@ const Button = ({
     });
   };
 
+  const handlePalette = () => {
+    if(palette){
+      setPalette(false);
+    }
+    else{
+      setPalette(true);
+    }
+  }
+
   const handleSaveImage = () => {
     showModal((tmpFileName) => {
       if (diagram) {
@@ -149,7 +160,9 @@ const Button = ({
       const containsOtherTypes = otherTypes.length > 0;
 
       if (containsOtherTypes) {
-        message.warning("클라우드 아키텍처가 포함되어있으면 Lift&Shift를 실행할 수 없습니다.");
+        message.warning(
+          "클라우드 아키텍처가 포함되어있으면 Lift&Shift를 실행할 수 없습니다."
+        );
 
         return;
       }
@@ -243,14 +256,27 @@ const Button = ({
       pointAtCenter: true,
     };
   }, [arrow]);
+
+  const buttonStyle = {
+    backgroundColor: palette ? 'aliceblue' : 'initial', // palette가 true일 때 파란색 배경
+  
+  };
   return (
     <div>
       <div className="button-container">
+        
+      <div className="button-row">
+          <Tooltip placement="right" title={"show palette"} arrow={mergedArrow}>
+            <button onClick={handlePalette} style={buttonStyle}>
+              <BsPalette  />
+            </button>
+          </Tooltip>
+        </div>
         <div className="button-row">
           <Tooltip placement="right" title={"upload"} arrow={mergedArrow}>
             <Modal
               title="Enter file name"
-              visible={isModalVisible}
+              open={isModalVisible}
               onOk={handleOk}
               onCancel={handleCancel}
             >
@@ -348,8 +374,7 @@ const Button = ({
                   <strong>Optimize</strong>
                 </div>
                 <div>
-                  현재 클라우드 아키텍처 기반으로 보안/로깅/고가용성 측면으로
-                  추천하는 아키텍처를 볼 수 있습니다.
+                현재 아키텍처에 대한 요구사항을 입력받아, 이를 기반으로 최적화하여 클라우드 아키텍처를 제시합니다.
                 </div>
               </>
             }
