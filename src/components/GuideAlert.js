@@ -1,4 +1,4 @@
-import {logGuideAlert, dbGuideAlert} from "../apis/GuideAlert";
+import { logGuideAlert, dbGuideAlert } from "../apis/GuideAlert";
 
 export function checkForBackupAndS3Nodes(diagram, setAlertMessage) {
     if (diagram.model.nodeDataArray.length > 0) {
@@ -14,8 +14,10 @@ export function checkForBackupAndS3Nodes(diagram, setAlertMessage) {
           });
           
       }
+
     }
-}
+  }
+
 
 export function checkForMonitoringNodes(diagram, setAlertMessage) {
     if (diagram.model.nodeDataArray.length > 0) {
@@ -30,8 +32,11 @@ export function checkForMonitoringNodes(diagram, setAlertMessage) {
             tag: "Warn",
           });
         }
+
     }
-}
+  }
+
+
 
 export async function checkForLogAnalysisNodes(diagram, setAlertMessage) {
   const analysisGuide = "로그는 분석 서비스를 통해 분석되고 위협 인텔리전스를 생성하는 데에 활용되어야 합니다. 로그 분석 서비스와 로깅 서비스(S3)와 연결하세요.";
@@ -42,6 +47,7 @@ export async function checkForLogAnalysisNodes(diagram, setAlertMessage) {
     try {
       const response = await logGuideAlert(diagram.model.linkDataArray);
       if(response.data.result=="false"){
+
         setAlertMessage({
           key: Date.now(),
           message: analysisGuide,
@@ -49,23 +55,26 @@ export async function checkForLogAnalysisNodes(diagram, setAlertMessage) {
         });
       }
     } catch (error) {
-        console.error("checkForLogAnalysisNodes 오류:", error);
+      console.error("checkForLogAnalysisNodes 오류:", error);
     }
   }
 }
 
 export function checkForKmsNodes(diagram, setAlertMessage) {
   if (diagram.model.nodeDataArray.length > 0) {
-    const hasKms = diagram.model.nodeDataArray.some(node => node.text === "Key Management Service");
-    const kmsGuide = "KMS 외에 별개의 키 관리 서비스를 사용하는 경우, CSP 제공의 키관리 서비스와 분리되어야 합니다.";
+    const hasKms = diagram.model.nodeDataArray.some(
+      (node) => node.text === "Key Management Service"
+    );
+    const kmsGuide =
+      "KMS 외에 별개의 키 관리 서비스를 사용하는 경우, CSP 제공의 키관리 서비스와 분리되어야 합니다.";
 
     if (hasKms) {
       setAlertMessage({
-          key: Date.now(),
-          message: kmsGuide,
-          tag: "Warn",
-        });
-      }
+        key: Date.now(),
+        message: kmsGuide,
+        tag: "Warn",
+      });
+    }
   }
 }
 
@@ -74,9 +83,10 @@ export async function checkForDbAccess(diagram, setAlertMessage) {
     const hasDb = diagram.model.nodeDataArray.some(node => node.type === "Database");
     const dbGuide = "웹 서버만 데이터베이스에 직접 액세스할 수 있어야 합니다.";
     if (hasDb) { //db
+
       try {
         const response = await dbGuideAlert(diagram.model.toJSON());
-        if(response.data.result=="true"){
+        if (response.data.result == "true") {
           setAlertMessage({
             key: Date.now(),
             message: dbGuide,
@@ -84,7 +94,7 @@ export async function checkForDbAccess(diagram, setAlertMessage) {
           });
         }
       } catch (error) {
-          console.error("checkForDbAccess 오류:", error);
+        console.error("checkForDbAccess 오류:", error);
       }
     }
   }
