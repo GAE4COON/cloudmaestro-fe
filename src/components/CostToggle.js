@@ -12,6 +12,7 @@ const costToggle = (props) => {
         showSelectToggle.key.includes("EC2") &&
         !showSelectToggle.key.includes(" ") && (
           <SelectEc2Toggle
+            resourceKey={showSelectToggle.key}
             diagram={diagram}
             uniquekey={showSelectToggle.key}
             finalToggleValue={finalToggleValue}
@@ -24,6 +25,8 @@ const costToggle = (props) => {
         showSelectToggle.value &&
         showSelectToggle.key.includes("RDS") && (
           <SelectRdsToggle
+          resourceKey={showSelectToggle.key}
+
             diagram={diagram}
             uniquekey={showSelectToggle.key}
             finalToggleValue={finalToggleValue}
@@ -35,6 +38,8 @@ const costToggle = (props) => {
         showSelectToggle.value &&
         showSelectToggle.key.includes("Simple Storage Service") && (
           <SelectS3Toggle
+          resourceKey={showSelectToggle.key}
+
             diagram={diagram}
             uniquekey={showSelectToggle.key}
             finalToggleValue={finalToggleValue}
@@ -46,6 +51,8 @@ const costToggle = (props) => {
         showSelectToggle.value &&
         showSelectToggle.key.includes("AWS_WAF") && (
           <SelectWafToggle
+          resourceKey={showSelectToggle.key}
+
             diagram={diagram}
             uniquekey={showSelectToggle.key}
             finalToggleValue={finalToggleValue}

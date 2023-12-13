@@ -81,7 +81,7 @@ function fetchEngineData(dbengine, instanceType, setData, setLoading, setError){
 }
 
 
-const SelectRdsToggle = ({ diagram, uniquekey, finalToggleValue, setFinalToggleValue}) => {
+const SelectRdsToggle = ({ diagram, uniquekey, finalToggleValue, setFinalToggleValue, resourceKey}) => {
   
   const [toggle1Value, setToggle1Value] = useState(null);
   const [toggle2Value, setToggle2Value] = useState(null);
@@ -333,6 +333,7 @@ const SelectRdsToggle = ({ diagram, uniquekey, finalToggleValue, setFinalToggleV
   return (
     <ResourceComponent>
       <ToggleComponent>
+      <ResourceKey>{resourceKey} 비용산정</ResourceKey>
 
         <div className="toggle">
         {renderToggle(0,label[0], select[0], toggle1Value, baseOptions)}
@@ -350,7 +351,12 @@ const SelectRdsToggle = ({ diagram, uniquekey, finalToggleValue, setFinalToggleV
 };
 
 export default React.memo(SelectRdsToggle);
-
+const ResourceKey = styled.p`
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 5px;
+  font-family: "Noto Sans KR", sans-serif;
+`;
 const ResourceComponent = styled.div`
   z-index: 100;
   align-items: center;

@@ -4,8 +4,8 @@ import { Button, Divider, Space, Tour } from 'antd';
 import { wait } from '@testing-library/user-event/dist/utils';
 const TourDraw = (props) => {
   const {setIsPopup} = props;
-  const { open, setOpen, showAlertMessages, setAlertMessage, setDiagram, resetAlertMessage, setClickedTab,  refLS, refSummary, refOptimize, refNetworkPalette, refCloudPalette } = props;
-  const {refPalette, refDiagram, refButton, refAlert, refPopup} = props;
+  const { open, setOpen, showAlertMessages, setAlertMessage, setDiagram, resetAlertMessage, setClickedTab } = props;
+  const {refPalette, refDiagram, refButton, refAlert, refPopup, refCost, setShowToggle, refLS, refSummary, refOptimize, refNetworkPalette, refCloudPalette, setShowSelectToggle } = props;
   
 useEffect(() => {
   console.log("TourDraw.js useEffect");
@@ -13,26 +13,95 @@ useEffect(() => {
 })
 
   const steps = [
+    //0
+    {
+      title: 'Upload File',
+      description: 'Put your files here.',
+      target: () => refDiagram.current,
+    },
+    //1
+    {
+      title: 'Upload File',
+      description: 'Put your files here.',
+      target: () => refAlert.current,
+    },
+    //2
+    {
+      title: 'Upload File',
+      description: 'Put your files here.',
+      // target: () => refDiagram.current,
+    },
+    //4
+    {
+      title: 'Upload File',
+      description: 'Put your files here.',
+      target: () => refButton.current,
+    },
+    //5
+    {
+      title: 'Upload File',
+      description: 'Put your files here.',
+      target: () => refLS.current,
+    },
+    //6
+    {
+      title: 'Upload File',
+      description: 'Put your files here.',
+      target: () => refSummary.current,
+    },
+    //7
+    {
+      title: 'Upload File',
+      description: 'Put your files here.',
+      target: () => refOptimize.current,
+    },
+    //8
     {
       title: 'Upload File',
       description: 'Put your files here.',
       target: () => refPopup.current,
     },
+    //9
+    {
+      title: 'Upload File',
+      description: 'Put your files here.',
+      target: () => refPalette.current,
+    },
+    //10
+    {
+      title: 'Upload File',
+      description: 'Put your files here.',
+      target: () => refNetworkPalette.current,
+    },
+    //11
+    {
+      title: 'Network Diagram',
+      description: 'Put your files here.',
+      target: () => refDiagram.current,
+    },
+    //12
     {
       title: 'network',
       description: 'Save your changes.',
 
-      target: () => refPopup.current,
+      target: () => refCloudPalette.current,
     },
+    //13
     {
       title: 'reghost',
       description: 'Click to see other actions.',
-      target: () => refPopup.current,
+      target: () => refDiagram.current,
+    },
+    //14
+    {
+      title: 'Other Actions',
+      description: 'Click to see other actions.',
+      target: () => refDiagram.current,
     },
     {
       title: 'Other Actions',
       description: 'Click to see other actions.',
-      target: () => refCloudPalette.current,
+      target: () => refCost.current,
     },
   ];
 
@@ -62,17 +131,48 @@ useEffect(() => {
 
   };
 
+  const ec2Cost = () => {
+    setShowToggle(true);
+    setShowSelectToggle({value: true, key: "EC2"});
+  };
+
   const handleStepChange = async (currentStep) => {
     if(currentStep === 0){
 
     }
     if(currentStep === 1){
-
+      addAlertMessage();      
     }
     if(currentStep === 2){
-      
+      showAlertMessages();
+    }
+    if(currentStep === 3){
+      resetAlertMessage();
+    }
+    if(currentStep === 7){
+      setIsPopup(true);
+    }
+    if(currentStep === 8){
+      setIsPopup(false);
+      setClickedTab(["Network_icon", "Compute"]);
+    }
+    if(currentStep === 10){
+      setDiagram("/assets/json/network.json");
+    }
+    if(currentStep === 12){
+      setDiagram("/assets/json/rehost.json");
+      setClickedTab(["Network_icon", "Compute"]);
 
     }
+    if(currentStep === 13){
+      setDiagram("/assets/json/cost.json");
+
+    }
+    if(currentStep === 14){
+      ec2Cost();
+    }
+
+
     // if (currentStep === 1) {  // 예를 들어, 두 번째 스텝에서 함수를 실행
     //   // 여기에 원하는 함수 또는 로직을 추가
     //   addAlertMessage();

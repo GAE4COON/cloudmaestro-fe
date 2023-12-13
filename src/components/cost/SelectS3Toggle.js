@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import '../../styles/SelectS3Toggle.css';
 import styled from "styled-components";
 
-const SeclectS3Toggle = ({diagram, uniquekey, finalToggleValue, setFinalToggleValue}) => {
+const SeclectS3Toggle = ({diagram, uniquekey, finalToggleValue, setFinalToggleValue, resourceKey}) => {
     const [text, setText] = useState("");
     const [s3Cost, setS3Cost] = useState("");
 
@@ -59,7 +59,11 @@ const SeclectS3Toggle = ({diagram, uniquekey, finalToggleValue, setFinalToggleVa
     }
 
     return (
+        <Resource>
+        <ResourceKey>{resourceKey} 비용산정</ResourceKey>
+
         <ResourceComponent>
+
            <S3Input 
             type="text"
             onChange={onChange}
@@ -68,10 +72,16 @@ const SeclectS3Toggle = ({diagram, uniquekey, finalToggleValue, setFinalToggleVa
             />
             <S3Cost>${s3Cost}</S3Cost><p>/Hour</p>
         </ResourceComponent>
+        </Resource>
     )
 
 };
-
+const ResourceKey = styled.p`
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 5px;
+  font-family: "Noto Sans KR", sans-serif;
+`;
 const S3Input = styled.input`
 
     width: 100px;
@@ -86,16 +96,31 @@ const S3Cost = styled.p`
 `
 
 const ResourceComponent = styled.div`
-  z-index: 100;
+  /* z-index: 100; */
   align-items: center;
   justify-content: center;
   display: flex;
+  /* background-color: #fff; */
+  /* box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); */
+  /* border-radius: 5px;   */
+/* padding-right: 10px; */
+/* padding-left: 10px; */
+font-family: 'Noto Sans KR', sans-serif;
+`;
+
+const Resource = styled.div`
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+  /* display: flex; */
   background-color: #fff;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
   border-radius: 5px;  
-padding-right: 10px;
-padding-left: 10px;
+padding: 5px;
+padding-right: 15px;
+padding-left: 15px;
 font-family: 'Noto Sans KR', sans-serif;
 `;
+
 
 export default SeclectS3Toggle;

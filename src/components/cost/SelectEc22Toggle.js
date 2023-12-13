@@ -41,7 +41,7 @@ function fetchEngineData(platform, instanceType, setData, setLoading, setError) 
   });
 }
 
-const SelectEc22Toggle = ({ diagram, uniquekey, finalToggleValue, setFinalToggleValue}) => {
+const SelectEc22Toggle = ({ diagram, uniquekey, finalToggleValue, setFinalToggleValue, resourceKey}) => {
   
   const [toggle1Value, setToggle1Value] = useState(null);
   const [toggle2Value, setToggle2Value] = useState(null);
@@ -290,6 +290,7 @@ const SelectEc22Toggle = ({ diagram, uniquekey, finalToggleValue, setFinalToggle
   return (
     <ResourceComponent>
         <ToggleComponent>
+          <ResourceKey>{resourceKey} 비용산정</ResourceKey>
             <div className="toggle">
               {renderToggle(0, label[0], select[0], toggle1Value, baseOptions)}
               {renderToggle(1,  label[1], select[1], toggle2Value, toggle2Options)}
@@ -306,9 +307,14 @@ const SelectEc22Toggle = ({ diagram, uniquekey, finalToggleValue, setFinalToggle
     </ResourceComponent>
   );
 };
-
+const ResourceKey = styled.p`
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 5px;
+  font-family: "Noto Sans KR", sans-serif;
+`;
 const ResourceComponent = styled.div`
-  z-index: 100;
+  z-index: 145;
   align-items: center;
   justify-content: center;
 `;

@@ -104,7 +104,7 @@ function Draw() {
   // const handleguide = useCallback((guide) => {
   //   setNodeGuide(guide);
   // });
-  const { initDiagram, diagram, showSelectToggle, clickedNodeKey } = useGoJS(
+  const { initDiagram, diagram, showSelectToggle,setShowSelectToggle, clickedNodeKey } = useGoJS(
     setShowToggle,
     handleDiagramChange,
     // handleguide,
@@ -431,6 +431,11 @@ function Draw() {
       const filejson = await response.json();
       console.log("filejson", filejson);
       diagram.model = go.Model.fromJson(filejson);
+      if (filejson.hasOwnProperty("cost")) {
+        console.log("filejson cost", filejson["cost"])
+        setFinalToggleValue(filejson["cost"]);
+      }
+
     } catch (error) {
       console.error("Error fetching file:", error);
     } 
@@ -448,10 +453,10 @@ function Draw() {
   const refNetworkPalette = useRef(null);
   const refCloudPalette = useRef(null);
   const refPopup = useRef(null);
+  const refCost = useRef(null);
 
-
-  const funcProps = {setClickedTab, showAlertMessages, setAlertMessage, resetAlertMessage, setDiagram, setIsPopup};
-  const refProps = {refPalette, refDiagram, refButton, refAlert, refLS, refSummary, refOptimize, refNetworkPalette, refCloudPalette, refPopup};
+  const funcProps = {setClickedTab, showAlertMessages, setAlertMessage, resetAlertMessage, setDiagram, setIsPopup, setShowSelectToggle, setShowToggle};
+  const refProps = {refPalette, refDiagram, refButton, refAlert, refLS, refSummary, refOptimize, refNetworkPalette, refCloudPalette, refPopup, refCost};
 
 
   return (
@@ -508,9 +513,9 @@ function Draw() {
 
       
       <DiagramContainer palette={palette}>
-      <CostContainer>
+      <CostContainer ref={refCost}>
         <CostToggle
-
+  
           diagram={diagram}
           showToggle={showToggle}
           showSelectToggle={showSelectToggle}
@@ -600,7 +605,7 @@ function Draw() {
 export default Draw;
 const CostContainer = styled.div`
   position: fixed;
-  z-index: 20000;
+  z-index: 23;
   left: 50%; 
   transform: translateX(-22%); 
   align-items: center;
