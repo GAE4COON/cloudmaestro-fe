@@ -4,7 +4,13 @@ import "../styles/App.css"; // contains .diagram-component CSS
 import handleChangedSelection from "../pages/toggle/toggle";
 import { alertCheck, NodeCheck, GroupCheck } from "../apis/fileAPI";
 import { useData } from "../components/DataContext";
-import { checkForBackupAndS3Nodes, checkForMonitoringNodes, checkForLogAnalysisNodes, checkForKmsNodes, checkForDbAccess } from "../components/GuideAlert";
+import {
+  checkForBackupAndS3Nodes,
+  checkForMonitoringNodes,
+  checkForLogAnalysisNodes,
+  checkForKmsNodes,
+  checkForDbAccess,
+} from "../components/GuideAlert";
 import { handleSecurity } from "../components/SecurityAlert";
 
 const useGoJS = (
@@ -26,8 +32,6 @@ const useGoJS = (
   //   handleAlertGuide(DiagramCheck);
   //   console.log("DiagramCheck", DiagramCheck);
   // }, [DiagramCheck]);
-
-
 
   function highlightGroup(e, grp, show) {
     if (!grp) return;
@@ -78,10 +82,7 @@ const useGoJS = (
       "resizingTool.isGridSnapEnabled": true,
       model: new go.GraphLinksModel({
         linkKeyProperty: "uniqueLinkId", // Replace with your actual link property
-        
-      }
-      
-      ),
+      }),
 
       ModelChanged: async (e) => {
         if (e.isTransactionFinished) {
@@ -127,10 +128,10 @@ const useGoJS = (
               };
               if (data.modifiedNodeData) {
                 for (let i = 0; i < data.modifiedNodeData.length; i++) {
-                  // console.log(
-                  //   "현재 modifiedNodeData 요소:",
-                  //   data.modifiedNodeData[i]
-                  // );
+                  console.log(
+                    "현재 modifiedNodeData 요소:",
+                    data.modifiedNodeData[i]
+                  );
                   if (
                     data.modifiedNodeData[i]?.text === "VPC" &&
                     data.modifiedNodeData[i].isGroup === true
@@ -147,7 +148,8 @@ const useGoJS = (
                         tag: "Error",
                       });
                     }
-                  } else if (
+                  }
+                  if (
                     data.modifiedNodeData[i]?.text === "API Gateway"
                     //  ||data.modifiedNodeData[i].type === "Database"
                   ) {
@@ -219,7 +221,8 @@ const useGoJS = (
                       }));
                     }
                   }
-                  if (data.modifiedNodeData[i]?.text === "Database") {
+                  if (data.modifiedNodeData[i]?.type === "Database") {
+                    console.log("Database 호출", data.modifiedNodeData[i]);
                     PostData.checkOption = "Database";
                     PostData.newData = data.modifiedNodeData[i];
                     console.log("NodeCheck 호출");
@@ -229,7 +232,7 @@ const useGoJS = (
                       setAlertMessage((prevAlert) => ({
                         key: Date.now(),
                         message: response.data.result.message,
-                        tag: "Info",
+                        tag: "Warn",
                       }));
                     }
                   }
@@ -586,7 +589,7 @@ const useGoJS = (
       }
     });
 
-    diagram.addDiagramListener("InitialLayoutCompleted", e => {
+    diagram.addDiagramListener("InitialLayoutCompleted", (e) => {
       e.diagram.zoomToFit();
     });
 

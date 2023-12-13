@@ -27,7 +27,10 @@ export const fileUpload = async (file) => {
 
 export const summaryFile = async (file) => {
   try {
-    const response = await api.post("/api/v1/file-api/summary", JSON.stringify(file));
+    const response = await api.post(
+      "/api/v1/file-api/summary",
+      JSON.stringify(file)
+    );
     return response;
   } catch (error) {
     console.error("summaryFile 오류:", error);
@@ -54,7 +57,6 @@ export const alertCheck = async (data) => {
     throw error;
   }
 };
-
 
 export const GroupCheck = async (data) => {
   try {
@@ -86,7 +88,6 @@ export const DevCheck = async (data) => {
   }
 };
 
-
 export const requirementRequest = async (data) => {
   try {
     const response = await api.post("/api/v1/naindae-api/multiregion", data);
@@ -102,7 +103,7 @@ export const saveDiagram = async (data, fileName, img) => {
     const body = {
       diagramData: data,
       fileName: fileName,
-      fileImg: img
+      fileImg: img,
     };
     const response = await api.post("/api/v1/file-api/save-diagram", body);
     return response;
@@ -117,7 +118,7 @@ export const updateDiagram = async (data, fileName, img) => {
     const body = {
       diagramData: data,
       fileName: fileName,
-      fileImg: img
+      fileImg: img,
     };
     const response = await api.post("/api/v1/file-api/update-diagram", body);
     return response;
