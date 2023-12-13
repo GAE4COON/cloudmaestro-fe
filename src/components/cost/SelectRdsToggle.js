@@ -263,35 +263,71 @@ const SelectRdsToggle = ({ diagram, uniquekey, finalToggleValue, setFinalToggleV
       });
     } 
   };
+  let label = ["Engine", "Instance Type","Size"];
 
-
-  const renderToggle = (index, Select, value, options) => {
+  const renderToggle = (index, label, Select, value, options) => {
     return (
-      <select
-        value={value || ""}
-        onChange={(e) => handleChange(index, e)}
-      >
-        <option value="" >{Select}</option>
-      {options.map((option, idx) => (
-        <option key={idx}>
-          {option}
-        </option>
-      ))}
-    </select>
-      );
-    };
+      <div className="toggle-wrapper">
+        <label>{label}</label>
+        <select
+            className="custom-select"
+            value={value || ""}
+            onChange={(e) => handleChange(index, e)}
+        >
+            <option value="" disabled>{Select}</option>
+            {options.map((option, idx) => (
+                <option key={idx}>
+                    {option}
+                </option>
+            ))}
+        </select>
+      </div>
+    );
+};
+
+  // const renderToggle = (index, label, Select, value, options) => {
+  //   return (
+  //     <div className="toggle-wrapper">
+  //     <label>{label}</label>
+  //     <select
+  //       value={value || ""}
+  //       onChange={(e) => handleChange(index, e)}
+  //     >
+  //       <option value="" >{Select}</option>
+  //     {options.map((option, idx) => (
+  //       <option key={idx}>
+  //         {option}
+  //       </option>
+  //     ))}
+  //   </select>
+  //   </div>
+  //     );
+  //   };
 
   const Item = ({price}) =>{
+    
 
     if(!price || price.length < 1) {
       return null;
     }
     
-    return (
-      <div>
-        {price+"USD / Hour"}
-      </div>
-    );
+    // return (
+    //   <div>
+    //     {price+"USD / Hour"}
+    //   </div>
+    // );
+
+    // 되면 짱
+
+    if(!price || price!="Loading") {
+      const formattedPrice = Number(price).toFixed(3);
+
+      return (
+        <div>
+          ${formattedPrice+"/ Hour"}
+        </div>
+      );
+    }
     
   }
   return (
@@ -299,9 +335,9 @@ const SelectRdsToggle = ({ diagram, uniquekey, finalToggleValue, setFinalToggleV
       <ToggleComponent>
 
         <div className="toggle">
-        {renderToggle(0, select[0], toggle1Value, baseOptions)}
-        {renderToggle(1, select[1], toggle2Value, toggle2Options)}
-        {renderToggle(2, select[2], toggle3Value, toggle3Options)}
+        {renderToggle(0,label[0], select[0], toggle1Value, baseOptions)}
+        {renderToggle(1,label[1],  select[1], toggle2Value, toggle2Options)}
+        {renderToggle(2,label[2], select[2], toggle3Value, toggle3Options)}
               
               <div className="price">
                 <Item price={price} />
