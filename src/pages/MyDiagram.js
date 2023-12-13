@@ -81,10 +81,10 @@ const MyArchitecture = () => {
 
     // Extracting year, month, day, hours, and minutes
     const year = date.getFullYear().toString().slice(-2); // Extracting the last two digits
-    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // getMonth() is zero-based
-    const day = date.getDate().toString().padStart(2, '0');
-    const hours = date.getHours().toString().padStart(2, '0');
-    const minutes = date.getMinutes().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, "0"); // getMonth() is zero-based
+    const day = date.getDate().toString().padStart(2, "0");
+    const hours = date.getHours().toString().padStart(2, "0");
+    const minutes = date.getMinutes().toString().padStart(2, "0");
 
     // Formatting to "YYYY/MM/DD HH:mm"
     return `${year}.${month}.${day} ${hours}:${minutes}`;
@@ -165,33 +165,37 @@ const MyArchitecture = () => {
                     </Popconfirm>
 
                     <CloudInstanceImg
-                      onClick={() =>
-                        handleCloudInstance(instance.key, "/draw")
-                      }
+                      onClick={() => handleCloudInstance(instance.key, "/draw")}
                       alt="diagram_img"
-                      src={`https://cm-user-file.s3.ap-northeast-2.amazonaws.com/${instance.title}_${user.sub}.png?version=${new Date().getTime()}`}
+                      src={`https://cm-user-file.s3.ap-northeast-2.amazonaws.com/${
+                        instance.title
+                      }_${user.sub}.png?version=${new Date().getTime()}`}
                     />
                     <CloudInstanceETC>
                       <InstanceInformation>
-                        <Tooltip placement="right" title={instance.title} showArrow={false} overlayStyle={{ maxWidth: '500px' }}>
-
+                        <Tooltip
+                          placement="right"
+                          title={instance.title}
+                          showArrow={false}
+                          overlayStyle={{ maxWidth: "500px" }}
+                        >
                           <StyledInstanceTitle>
                             {instance.title}
                           </StyledInstanceTitle>
                         </Tooltip>
 
                         <StyledInstanceDate>
-                          {instance.modifiedDate != instance.createdDate &&
-                            <>수정 시간: {formatLocalDateTime(instance.modifiedDate)}</>
-
-                          }
+                          {instance.modifiedDate != instance.createdDate && (
+                            <>
+                              수정 시간:{" "}
+                              {formatLocalDateTime(instance.modifiedDate)}
+                            </>
+                          )}
                           <br />
                           생성 시간: {formatLocalDateTime(instance.createdDate)}
                         </StyledInstanceDate>
                       </InstanceInformation>
                       <ButtonContainer>
-
-
                         <StyledButton
                           style={{ backgroundColor: "#5280DD" }}
                           onClick={() =>
@@ -208,9 +212,7 @@ const MyArchitecture = () => {
                           overlay={<Menu items={dropdownItems} />}
                           placement="bottomLeft"
                         >
-                          <StyledButton
-                            style={{ backgroundColor: "#FD754A" }}
-                          >
+                          <StyledButton style={{ backgroundColor: "#FD754A" }}>
                             Guide
                             <DownOutlined style={{ marginTop: "5px" }} />
                           </StyledButton>
@@ -241,21 +243,19 @@ const MyArchitecture = () => {
 
 export default MyArchitecture;
 const StyledInstanceDate = styled.div`
-
   font-family: "Noto Sans KR", sans-serif !important;
   text-align: left;
   font-size: 11px;
-  `;
-
-const SidebarContainer = styled.div`
 `;
+
+const SidebarContainer = styled.div``;
 const MainContent = styled.div`
-    margin-top: 10px;
-    flex:1;
-    `;
+  margin-top: 10px;
+  flex: 1;
+`;
 const FlexContainer = styled.div`
   display: flex;
-  `;
+`;
 
 const CloudInstanceETC = styled.div`
   display: flex;
@@ -302,6 +302,7 @@ const CloudInstanceRow = styled.div`
 `;
 
 const StyledButton = styled(Button)`
+  position: relative;
   min-width: 80px;
   align-items: center;
   font-size: 12px;
@@ -334,17 +335,14 @@ const StyledSideMenuTitle = styled.div`
 const StyledInstanceTitle = styled.div`
   font-family: "Noto Sans KR", sans-serif !important;
   white-space: nowrap;
-  max-width: 150px;
+  max-width: 140px;
   overflow: hidden;
   text-overflow: ellipsis;
   padding-bottom: 10px;
   position: relative;
   z-index: 2;
   background-color: white;
-
 `;
-
-
 
 const InstanceInformation = styled.div`
   font-family: "Noto Sans KR", sans-serif !important;
@@ -360,10 +358,9 @@ const MainContainer = styled.div`
   flex-direction: column;
   padding-top: 70px;
   min-height: 100vh;
-  padding-left:10%;
+  padding-left: 10%;
   padding-right: 10%;
   margin-bottom: 30px;
 `;
 
-const MyPageContainer = styled.div`
-`
+const MyPageContainer = styled.div``;
