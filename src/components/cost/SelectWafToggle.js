@@ -97,29 +97,50 @@ const SelectWafToggle = ({diagram, uniquekey, finalToggleValue, setFinalToggleVa
     }
 
     return (
-        <div className="select-waf-toggle">
-            <Input 
+        <ResourceComponent>
+            <S3Input 
                 type="text"
                 onChange={onChange1}
                 value={text1}
                 placeholder="Rule"
             />
-            <Input 
+            <S3Input 
                 type="text"
                 onChange={onChange2}
                 value={text2}
                 placeholder="Request"
             />
-            <div><p>${wafCost}/Mo</p></div>
-        </div>
+            <S3Cost>${wafCost}</S3Cost><p>/Mo</p>
+
+        </ResourceComponent>
     )
 
 };
 
 export default SelectWafToggle;
+const S3Input = styled.input`
 
-const StyledInput = styled(Input)`
-  &&::placeholder {
-    background-image: none;
-  }
+    width: 100px;
+    border-radius: 3px;
+    border: 2px solid #999; 
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    margin: 3px;
+    `;
+const S3Cost = styled.p`
+    margin-left: 10px;
+    color: #5a842d;
+    font-weight: bold;
+`
+
+const ResourceComponent = styled.div`
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  background-color: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  border-radius: 5px;  
+padding-right: 10px;
+padding-left: 10px;
+font-family: 'Noto Sans KR', sans-serif;
 `;

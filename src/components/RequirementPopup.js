@@ -38,6 +38,7 @@ function getBPIndustry(industryValue) {
 
 const RequirementPopup = (props) => {
   let diagram = props.diagram;
+  const {refPopup} = props;
 
   const [industrialValue, setIndustrialValue] = useState(null);
   const [globalReqValue, setGlobalReqValue] = useState([]);
@@ -289,8 +290,10 @@ const RequirementPopup = (props) => {
   };
 
   return (
-    <>
-      <Modal
+    <div >
+      <ModalContainer ref={refPopup}>
+      <Modal 
+     
         width={1000}
         title={
           <div
@@ -427,11 +430,23 @@ const RequirementPopup = (props) => {
           </div>
         </ScrollableContent>
       </Modal>
-    </>
+      </ModalContainer>
+    </div>
   );
 };
+const ModalContainer = styled.div`
+min-width: 66%;
+min-height: 63%;
+left: 16.9%;
+top: 13%;
+/* border: 1px solid #000000; */
+position: absolute;
+  `;
 
-const SelectContainer = styled.div`
+
+
+
+  const SelectContainer = styled.div`
   display: flex;
   padding: 20px;
   margin-left: 50px;

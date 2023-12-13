@@ -62,22 +62,6 @@ async function checkForLog(diagram, setAlertMessage) {
     const hasS3 = diagram.model.nodeDataArray.some(
       (node) => node.text === "S3"
     );
-    // console.log("hasQuickSIghtNode" , hasQuickSightNode);
-    // console.log("hellohihi");
-    const message = {
-      key: Date.now().toString(), // Unique key for each message
-      hasmessage:
-        " 로그저장매체가 암호화되지 않을 시, 무단 접근 및 변조 등을 통한 보험 위험이 존재할 수 있습니다.",
-    };
-    if (hasQuickSightNode || hasOpenSearch || hasAthena || hasS3) {
-      setAlertMessage({
-        key: Date.now(), // 현재 타임스탬프를 key로 사용
-        message: message.hasmessage,
-        tag: "Info",
-      });
-    }
-    /// dev 망이 있을 때 메세지 띄우기
-
     const devMessage = {
       key: Date.now().toString(), // Unique key for each message
       hasmessage:

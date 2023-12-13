@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import '../../styles/SelectS3Toggle.css';
+import styled from "styled-components";
 
 const SeclectS3Toggle = ({diagram, uniquekey, finalToggleValue, setFinalToggleValue}) => {
     const [text, setText] = useState("");
@@ -58,17 +59,43 @@ const SeclectS3Toggle = ({diagram, uniquekey, finalToggleValue, setFinalToggleVa
     }
 
     return (
-        <div className="select-s3-toggle">
-           <input 
+        <ResourceComponent>
+           <S3Input 
             type="text"
             onChange={onChange}
             value={text}
             placeholder="Storage(GB)"
             />
-            <div><p>${s3Cost}/Hour</p></div> 
-        </div>
+            <S3Cost>${s3Cost}</S3Cost><p>/Hour</p>
+        </ResourceComponent>
     )
 
 };
+
+const S3Input = styled.input`
+
+    width: 100px;
+    border-radius: 3px;
+    border: 2px solid #999; 
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    `;
+const S3Cost = styled.p`
+    margin-left: 10px;
+    color: #5a842d;
+    font-weight: bold;
+`
+
+const ResourceComponent = styled.div`
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  background-color: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  border-radius: 5px;  
+padding-right: 10px;
+padding-left: 10px;
+font-family: 'Noto Sans KR', sans-serif;
+`;
 
 export default SeclectS3Toggle;

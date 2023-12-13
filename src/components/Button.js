@@ -1,9 +1,10 @@
-import React, { useCallback, useState, useEffect, useMemo } from "react";
+import React, { useCallback, useState, useEffect, useMemo, useRef } from "react";
 import * as go from "gojs";
 import "../styles/Button.css"; // contains .diagram-component CSS
 import { json, useNavigate } from "react-router-dom";
+import TourDraw from "../components/TourDraw.js";
 
-import { rehostRequest, requirementRequest } from "../apis/fileAPI";
+import { rehostRequest, requirementRequest } from "../apis/fileAPI.js";
 import {
   BsGear,
   BsClipboard2Data,
@@ -12,15 +13,17 @@ import {
   BsDownload,
   BsEraser,
   BsPalette, 
-  BsSave,
 } from "react-icons/bs";
 import { Tooltip, message, notification, Space } from "antd";
 import { BsFillImageFill } from "react-icons/bs";
-import { useData } from "../components/DataContext";
+import { useData } from "./DataContext.js";
 import { summaryFile } from "../apis/fileAPI.js";
 import { Modal, Input } from "antd";
 
 const Button = ({
+  refLS,
+  refSummary,
+  refOptimize,
   setIsReset,
   diagram,
   setShowToggle,
@@ -271,10 +274,10 @@ const Button = ({
     backgroundColor: palette ? 'aliceblue' : 'initial', // palette가 true일 때 파란색 배경
   
   };
+
   return (
     <div>
       <div className="button-container">
-        
       <div className="button-row">
           <Tooltip placement="right" title={"show palette"} arrow={mergedArrow}>
             <button onClick={handlePalette} style={buttonStyle}>
@@ -349,7 +352,7 @@ const Button = ({
             }
             arrow={mergedArrow}
           >
-            <button onClick={handleLiftNShift}>
+            <button onClick={handleLiftNShift} ref={refLS}>
               <BsCloud />
             </button>
           </Tooltip>
@@ -370,8 +373,8 @@ const Button = ({
             }
             arrow={mergedArrow}
           >
-            <button onClick={handleSummary}>
-              <BsClipboard2Data />
+            <button onClick={handleSummary} ref={refSummary} >
+              <BsClipboard2Data/>
             </button>
           </Tooltip>
         </div>
@@ -390,8 +393,8 @@ const Button = ({
             }
             arrow={mergedArrow}
           >
-            <button onClick={handleOptimize}>
-              <BsGear />
+            <button onClick={handleOptimize}  ref={refOptimize}>
+              <BsGear/>
             </button>
           </Tooltip>
         </div>

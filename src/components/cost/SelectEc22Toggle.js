@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../../styles/SelectToggle.css";
 import axios from 'axios';
 import { searchEc2 } from "../../apis/price.js";
+import styled from "styled-components";
 
 
 const baseOptions = [
@@ -287,15 +288,13 @@ const SelectEc22Toggle = ({ diagram, uniquekey, finalToggleValue, setFinalToggle
 
 
   return (
-    <div className ="ec2">
-        <div className="toggle-component">
-    
+    <ResourceComponent>
+        <ToggleComponent>
             <div className="toggle">
               {renderToggle(0, label[0], select[0], toggle1Value, baseOptions)}
               {renderToggle(1,  label[1], select[1], toggle2Value, toggle2Options)}
               {renderToggle(2, label[2], select[2], toggle3Value, toggle3Options)}
               
-              {/* Price */}
               <div className="price">
                 <Item price={price} />
               </div>
@@ -303,9 +302,22 @@ const SelectEc22Toggle = ({ diagram, uniquekey, finalToggleValue, setFinalToggle
             <div className="element">
               <Item price={element} />
             </div>
-        </div>
-    </div>
+        </ToggleComponent>
+    </ResourceComponent>
   );
 };
 
+const ResourceComponent = styled.div`
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+`;
+
+const ToggleComponent = styled.div`
+  padding: 3px 0 3px 5px;
+  background-color: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  border-radius: 5px;  
+  padding: 10px;
+`;
 export default React.memo(SelectEc22Toggle);

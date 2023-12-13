@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../../styles/SelectToggle.css";
 import axios from 'axios';
 import { searchDb, searchPrice } from "../../apis/price.js";
+import styled from "styled-components";
 
 const baseOptions = [
     "PostgreSQL",
@@ -294,19 +295,36 @@ const SelectRdsToggle = ({ diagram, uniquekey, finalToggleValue, setFinalToggleV
     
   }
   return (
-    <div className ="ec2">
-      <div className="toggle-component">
+    <ResourceComponent>
+      <ToggleComponent>
+
+        <div className="toggle">
         {renderToggle(0, select[0], toggle1Value, baseOptions)}
         {renderToggle(1, select[1], toggle2Value, toggle2Options)}
         {renderToggle(2, select[2], toggle3Value, toggle3Options)}
-        
-        <div className="price">
-          <Item price={price} />
-        </div>
-      </div>
+              
+              <div className="price">
+                <Item price={price} />
+              </div>
+            </div>
+      </ToggleComponent>
       
-    </div>
+    </ResourceComponent>
   );
 };
 
 export default React.memo(SelectRdsToggle);
+
+const ResourceComponent = styled.div`
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+`;
+
+const ToggleComponent = styled.div`
+  padding: 3px 0 3px 5px;
+  background-color: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  border-radius: 5px;  
+  padding: 10px;
+`;

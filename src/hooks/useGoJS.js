@@ -10,10 +10,7 @@ import { handleSecurity } from "../components/SecurityAlert";
 const useGoJS = (
   setShowToggle,
   onDiagramChange,
-  // handleguide,
   setAlertMessage
-  // setWarnMessage,
-  // setInfoMessage
 ) => {
   const [diagram, setDiagram] = useState(null);
   const [clickedNodeKey, setClickedNodeKey] = useState();
@@ -608,7 +605,7 @@ const useGoJS = (
         onDiagramChange(diagram);
         setTimeout(() => {
           checkForBackupAndS3Nodes(diagram, setAlertMessage);
-        }, 1);
+        }, 30);
         setTimeout(() => {
           checkForMonitoringNodes(diagram, setAlertMessage);
         }, 30);

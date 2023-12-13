@@ -4,7 +4,7 @@ export function checkForBackupAndS3Nodes(diagram, setAlertMessage) {
     if (diagram.model.nodeDataArray.length > 0) {
       const hasS3Node = diagram.model.nodeDataArray.some(node => node.text === "Simple Storage Service (S3)");
       const hasBackUpNode = diagram.model.nodeDataArray.some(node => node.text === "Backup");
-      const backUpGuide = "정보, 소프트웨어 및 시스템의 백업 사본은 합의된 백업 주제의 정책에 따라 유지되고 정기적으로 테스트되어야 함. S3, Backup 사용 권장.";
+      const backUpGuide = "정보, 소프트웨어 및 시스템의 백업 사본을 저장하고 테스트하기 위한 백업 서버가 존재해야 합니다. S3, Backup 사용을 권장합니다.";
   
       if (!hasS3Node && !hasBackUpNode) {
         setAlertMessage({
@@ -12,6 +12,7 @@ export function checkForBackupAndS3Nodes(diagram, setAlertMessage) {
             message: backUpGuide,
             tag: "Warn",
           });
+          
       }
     }
 }
@@ -20,7 +21,7 @@ export function checkForMonitoringNodes(diagram, setAlertMessage) {
     if (diagram.model.nodeDataArray.length > 0) {
       const hasCloudWatch = diagram.model.nodeDataArray.some(node => node.text === "CloudWatch");
       const hasCloudTrail = diagram.model.nodeDataArray.some(node => node.text === "CloudTrail");
-      const monitoringGuide = "네트워크, 시스템 및 애플리케이션은 비정상적인 동작을 모니터링하고, 잠재적인 정보 보안 사건을 평가하기 위한 적절한 조치를 취해야 함. CloudWatch, CloudTrail 사용 권장.";
+      const monitoringGuide = "비정상적인 동작을 모니터랑하고, 보안 사고 식별, 위협 인텔리전스 형성을 위한 로깅 서비스가 필요합니다. CloudWatch, CloudTrail 사용을 권장합니다.";
   
       if (!hasCloudWatch && !hasCloudTrail) {
         setAlertMessage({
@@ -33,14 +34,13 @@ export function checkForMonitoringNodes(diagram, setAlertMessage) {
 }
 
 export async function checkForLogAnalysisNodes(diagram, setAlertMessage) {
-  const analysisGuide = "활동, 예외, 결함 및 기타 관련 이벤트를 기록하는 로그는 생성되고 저장되며 보호되고 분석되어야 함. 로그 분석 서비스와 로깅 서비스(S3)와 연결하세요.";
+  const analysisGuide = "로그는 분석 서비스를 통해 분석되고 위협 인텔리전스를 생성하는 데에 활용되어야 합니다. 로그 분석 서비스와 로깅 서비스(S3)와 연결하세요.";
   const hasAthena = diagram.model.nodeDataArray.some(node => node.text === "Athena");
   const hasOpenSearchService = diagram.model.nodeDataArray.some(node => node.text === "OpenSearch Service");
   const hasQuickSight = diagram.model.nodeDataArray.some(node => node.text === "QuickSight");
   if(hasAthena || hasOpenSearchService || hasQuickSight){
     try {
       const response = await logGuideAlert(diagram.model.linkDataArray);
-      console.log("리스폰스 왔음",response.data.result);
       if(response.data.result=="false"){
         setAlertMessage({
           key: Date.now(),
@@ -72,7 +72,7 @@ export function checkForKmsNodes(diagram, setAlertMessage) {
 export async function checkForDbAccess(diagram, setAlertMessage) {
   if (diagram.model.nodeDataArray.length > 0) {
     const hasDb = diagram.model.nodeDataArray.some(node => node.type === "Database");
-    const dbGuide = "웹 서버만 데이터베이스에 직접 액세스할 수 있어야 한다.";
+    const dbGuide = "웹 서버만 데이터베이스에 직접 액세스할 수 있어야 합니다.";
     if (hasDb) { //db
       try {
         const response = await dbGuideAlert(diagram.model.toJSON());
