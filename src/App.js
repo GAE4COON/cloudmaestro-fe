@@ -14,7 +14,6 @@ import Example from "./pages/Example";
 import AutoDraw from "./pages/AutoDraw";
 import InputAWS from "./pages/InputAWS";
 import Summary from "./pages/Summary";
-import SidebarController from "./components/SidebarController";
 
 import MyArchitecture from "./pages/MyDiagram";
 import MyResource from "./pages/MyResource";
@@ -39,7 +38,6 @@ function App() {
         <DataProvider>
           <BrowserRouter>
             <ScrollToTop />
-            <SidebarController />
             <Navbar />
             <RoutesWithFooter />
 

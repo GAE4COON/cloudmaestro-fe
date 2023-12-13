@@ -6,10 +6,11 @@ import { nodeDataArrayPalette } from "../db/Node";
 import jsonData from '../db/ResourceGuide.json'; // JSON 파일 경로
 
 
-function Sidebar({ isOpen, setIsOpen }) {
+function Sidebar() {
   const outside = useRef();
   const { data } = useData();
   const [nodeRole, setNodeRole] = useState({});
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     setNodeRole(jsonData); // JSON 파일에서 데이터 가져오기

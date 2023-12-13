@@ -11,12 +11,12 @@ import {
   BsUpload,
   BsDownload,
   BsEraser,
+  BsPalette, 
   BsSave,
 } from "react-icons/bs";
 import { Tooltip, message, notification, Space } from "antd";
 import { BsFillImageFill } from "react-icons/bs";
 import { useData } from "../components/DataContext";
-import "../styles/App.css";
 import { summaryFile } from "../apis/fileAPI.js";
 import { Modal, Input } from "antd";
 
@@ -25,6 +25,8 @@ const Button = ({
   diagram,
   setShowToggle,
   handleSaveDiagram,
+  setPalette,
+  palette,
   isSave,
   setIsSave,
   setFileName,
@@ -115,6 +117,15 @@ const Button = ({
     });
   };
 
+  const handlePalette = () => {
+    if(palette){
+      setPalette(false);
+    }
+    else{
+      setPalette(true);
+    }
+  }
+
   const handleSaveImage = () => {
     showModal((tmpFileName) => {
       if (diagram) {
@@ -173,7 +184,6 @@ const Button = ({
       console.error("rehost error: ", error);
     }
   };
-
   const onUploadFileChange = (e) => {
     if (e.target.files[0] && e.target.files[0].name.includes("json")) {
       let file = e.target.files[0];
@@ -182,24 +192,35 @@ const Button = ({
       if (lastIndex > 0) {
         fileName = fileName.substring(0, lastIndex);
       }
-      setFileName(fileName);
 
       let fileReader = new FileReader();
       fileReader.readAsText(file);
       fileReader.onload = async () => {
-        let filejson = JSON.parse(fileReader.result);
+        
+      let filejson;  
+      
+        try{
+        filejson = JSON.parse(fileReader.result);
+        }catch(e){
+          message.error("올바른 JSON 파일 형식이 아닙니다.")
+          return;
+          
+        }
+        setFileName(fileName);
+
         if (filejson.hasOwnProperty("cost")) {
           setFinalToggleVal(filejson["cost"]);
         }
         if (fileReader.result && diagram) {
           diagram.model = go.Model.fromJson(fileReader.result);
+          console.log("diagram.model", diagram.model);
           setData(diagram.model.nodeDataArray);
           setShowToggle(true);
           setClickedLoaded(false);
         }
       };
     } else if (e.target.files[0] && !e.target.files[0].name.includes("json")) {
-      message.warning("Json형식의 파일을 넣어주세요.");
+      message.warning("JSON형식의 파일을 넣어주세요.");
     }
     e.target.value = null;
   };
@@ -245,9 +266,22 @@ const Button = ({
       pointAtCenter: true,
     };
   }, [arrow]);
+
+  const buttonStyle = {
+    backgroundColor: palette ? 'aliceblue' : 'initial', // palette가 true일 때 파란색 배경
+  
+  };
   return (
     <div>
       <div className="button-container">
+        
+      <div className="button-row">
+          <Tooltip placement="right" title={"show palette"} arrow={mergedArrow}>
+            <button onClick={handlePalette} style={buttonStyle}>
+              <BsPalette  />
+            </button>
+          </Tooltip>
+        </div>
         <div className="button-row">
           <Tooltip placement="right" title={"upload"} arrow={mergedArrow}>
             <Modal
@@ -350,8 +384,7 @@ const Button = ({
                   <strong>Optimize</strong>
                 </div>
                 <div>
-                  현재 클라우드 아키텍처 기반으로 보안/로깅/고가용성 측면으로
-                  추천하는 아키텍처를 볼 수 있습니다.
+                현재 아키텍처에 대한 요구사항을 입력받아, 이를 기반으로 최적화하여 클라우드 아키텍처를 제시합니다.
                 </div>
               </>
             }
