@@ -7,6 +7,9 @@ import { idCheck, emailCheck, codeCheck, join } from "../apis/auth.js";
 import { Link } from "react-router-dom";
 import "../styles/App.css";
 import "../styles/signup.css";
+import { message } from "antd";
+
+//정규표현식 다듬어야됨
 
 function Signup() {
   const [idError, setIdError] = useState("");
@@ -37,7 +40,7 @@ function Signup() {
 
   const isValidPassword = (password) => {
     const passwordRegex =
-      /^(?=.*[A-Za-z0-9])(?=.*\d)(?=.*[!@#$%^&*()\-_+=])[A-Za-z0-9!@#$%^&*()\-_+=]{8,20}$/;
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()\-_+=])[A-Za-z0-9!@#$%^&*()\-_+=]{8,20}$/;
     return passwordRegex.test(password);
   };
   const isValidEmail = (email) => {
@@ -67,7 +70,7 @@ function Signup() {
     setPassword(passwordValue);
     if (!isValidPassword(passwordValue)) {
       setPasswordError(
-        "비밀번호는 하나의 문자, 숫자, 특수문자를 8자 포함해야 합니다.\n허용문자:!@#$%^&*()-_+="
+        " 8~20자의 영문 대소문자, 숫자, 특수문자만 가능합니다.\n허용특수문자:!@#$%^&*()-_+="
       );
     } else {
       setPasswordError("");
@@ -121,7 +124,9 @@ function Signup() {
       }
     } catch (error) {
       console.error("Error checking ID duplication:", error);
-      alert("아이디 중복 확인 중 오류가 발생했습니다. 다시 시도해주세요.");
+      message.warning(
+        "아이디 중복 확인 중 오류가 발생했습니다. 다시 시도해주세요."
+      );
     }
   };
 
@@ -134,8 +139,10 @@ function Signup() {
     try {
       const response = await emailCheck(data);
       if (response.data.result) {
-        alert("인증 코드를 보냈습니다.");
+        message.info("인증 코드를 보냈습니다.");
         setEmailConfirmed(true);
+      } else {
+        message.warning("이메일이 중복됩니다.");
       }
     } catch (error) {
       console.error("이메일 전송 중 오류가 발생했습니다.", error);
@@ -153,7 +160,7 @@ function Signup() {
       const response = await codeCheck(data);
       setEmailVerified(true);
       if (response.data.result) {
-        alert("인증이 완료되었습니다.");
+        message.success("인증이 완료되었습니다.");
       }
     } catch (error) {
       console.error("코드 확인 실패.", error);
@@ -163,12 +170,12 @@ function Signup() {
   //회원가입
   const handleSignUp = async () => {
     if (password !== passwordConfirm) {
-      alert("비밀번호가 일치하지 않습니다.");
+      message.warning("비밀번호가 일치하지 않습니다.");
       return;
     }
 
     if (!emailConfirmed) {
-      alert("이메일 인증을 완료해주세요.");
+      message.warning("이메일 인증을 완료해주세요.");
       return;
     }
 
@@ -186,14 +193,16 @@ function Signup() {
       const response = await join(data);
 
       if (response.data.result === "success") {
-        alert("성공적으로 회원가입되었습니다.");
+        message.success("성공적으로 회원가입되었습니다.");
         navigate("/sign-in");
       } else {
-        alert(response.data.message || "회원가입 중 오류가 발생했습니다.");
+        message.warning(
+          response.data.message || "회원가입 중 오류가 발생했습니다."
+        );
       }
     } catch (error) {
       console.error("회원가입 중 오류가 발생했습니다.", error);
-      alert("회원가입 중 오류가 발생했습니다. 다시 시도해주세요.");
+      message.warning("회원가입 중 오류가 발생했습니다. 다시 시도해주세요.");
     }
   };
 
