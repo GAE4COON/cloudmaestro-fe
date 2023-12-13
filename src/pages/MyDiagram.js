@@ -278,7 +278,7 @@ const CloudInstanceImg = styled.img`
 `;
 
 const CloudInstance = styled.div`
-  width: 30%; // Adjust the width to fit 3 instances per row
+  width: 280px; // Adjust the width to fit 3 instances per row
   height: 300px;
   /* border: 1px solid gray; */
   border-radius: 5px;
