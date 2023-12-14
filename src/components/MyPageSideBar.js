@@ -90,7 +90,7 @@ const StyledSideMenuTitle = styled.div`
 
 const StyledMenu = styled(Menu)`
   text-align: left;
-  background: #e2edff;
+  background: #fafafa;
   border-radius: 10px;
   margin-top: 10px;
   font-family: "Noto Sans KR", sans-serif !important;

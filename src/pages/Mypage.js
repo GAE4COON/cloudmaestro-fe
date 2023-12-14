@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "../components/MyPageSideBar";
 import styled from "styled-components";
-import "../styles/myresource.css";
 import "../styles/App.css";
 import { useAuth } from "../utils/auth/authContext";
 import jwtDecode from "jwt-decode";

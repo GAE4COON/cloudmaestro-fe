@@ -565,10 +565,20 @@ function Draw() {
             </StyledAlertBadge>
           </DiagramTopLeft>
           <DiagramTopRight>
-            <StyledButton onClick={handleSaveDiagram}>Save</StyledButton>
-            <StyledButton type="primary" onClick={() => setTourDraw(true)}>
+            <Button
+              type="primary"
+              onClick={handleSaveDiagram}
+              style={{ marginLeft: "5px", marginBottom: "5px" }}
+            >
+              Save
+            </Button>
+            <Button
+              type="primary"
+              onClick={() => setTourDraw(true)}
+              style={{ marginLeft: "5px", marginBottom: "5px" }}
+            >
               Tour
-            </StyledButton>
+            </Button>
           </DiagramTopRight>
         </DiagramTop>
 

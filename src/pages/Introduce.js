@@ -114,17 +114,6 @@ const Home = () => {
   const ImageSection = () => {
     return (
       <>
-        {/* <span
-          style={{
-            fontFamily: "Noto Sans KR",
-            textShadow: "2px 2px lightgray",
-            fontWeight: "bold",
-            color: "#4D6295",
-            fontSize: "50px",
-          }}
-        >
-          Cloud Maestro는..
-        </span> */}
         <FlexContainer>
           <ImageContainer>
             <img
