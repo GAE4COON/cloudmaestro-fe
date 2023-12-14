@@ -660,10 +660,10 @@ const PaletteContainer = styled.div`
 const DrawWorkSpace = styled.div`
   // margin-left: 10px;
   display: flex;
-  padding-top: 10vh;
+  padding-top: 11vh;
   align-items: stretch;
   width: 100%;
-  height: 90vh;
+  height: 89vh;
 `;
 
 const StyledAlertBadge = styled(Badge)`
