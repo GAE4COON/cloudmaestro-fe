@@ -1,77 +1,104 @@
 import SideBar from "../components/MyPageSideBar";
 import React, { useState, useEffect } from "react";
+import { Popconfirm, message } from "antd";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { DownOutlined } from "@ant-design/icons";
 import "../styles/App.css";
 import { Space, Dropdown, Button } from "antd";
 import { Menu } from "antd";
-import { CloseButton } from "react-bootstrap";
+import { useAuth } from "../utils/auth/authContext";
+import jwtDecode from "jwt-decode";
+import { CloseOutlined } from "@ant-design/icons";
+import { Avatar, Card, Tooltip } from "antd";
 
 import styled from "styled-components";
 import { getDiagramData, myNetworkDB, deleteDiagramData } from "../apis/myPage";
 
+message.config({
+  top: 50,
+  duration: 1,
+});
+
 const MyArchitecture = () => {
+  const { Meta } = Card;
+
   const [cloudInstances, setCloudInstances] = useState([]);
+  const [messageApi, contextHolder] = message.useMessage();
+
   const navigate = useNavigate();
+
+  const { user, setUser } = useAuth();
+  const ACCESS_TOKEN = localStorage.getItem("accessToken");
+
+  useEffect(() => {
+    if (ACCESS_TOKEN) {
+      try {
+        const decodedToken = jwtDecode(ACCESS_TOKEN);
+        console.log(decodedToken);
+        setUser(decodedToken);
+      } catch (error) {
+        console.log("Invalid token");
+      }
+    } else {
+      setUser(null);
+    }
+  }, [ACCESS_TOKEN]);
 
   useEffect(() => {
     const fetchMyNetwork = async () => {
       const myNetwork = await myNetworkDB();
-      setCloudInstances(myNetwork.data);
-      console.log(myNetwork.data)
-    };
+      const sortedData = myNetwork.data.sort((a, b) => {
+        return new Date(a.modifiedDate) - new Date(b.modifiedDate);
+      });
 
+      setCloudInstances(sortedData);
+      console.log(sortedData);
+    };
+  
     fetchMyNetwork();
   }, []);
-
-  // This function splits the cloudInstances array into chunks of 3
-  const getRows = (instances) => {
-    const rows = [];
-    instances.forEach((instance, idx) => {
-      if (idx % 3 === 0) rows.push([]);
-      rows[rows.length - 1].push(instance);
-    });
-    return rows;
-  };
-
+  
   const handleCloudInstance = async (key, path) => {
     const response = await getDiagramData(key);
-    console.log("response.data", response.data)
-    navigate(`${path}`, { state: { info: response.data } });
-  }
+    console.log("response.data", response.data);
+    navigate(`${path}`, { state: { info: response.data, save: true } });
+  };
 
-  const handleDeleteInstance = async (key) => {
-    const confirmDelete = window.confirm("도식화를 삭제하시겠습니까?");
+  const confirm = async (key, e) => {
+    const response = await deleteDiagramData(key);
+    console.log("response.data", response.data);
+    setCloudInstances(
+      cloudInstances.filter((instance) => instance.key !== key)
+    );
 
-    if (confirmDelete) {
-      // 사용자가 'OK'를 선택한 경우, 삭제 작업 진행
-      const response = await deleteDiagramData(key);
-      console.log("response.data", response.data);
-      setCloudInstances(cloudInstances.filter(instance => instance.key !== key));
-      alert("도식화가 삭제되었습니다.");
-    }
-  }
+    message.success("도식화가 삭제되었습니다.");
+  };
 
   return (
-    <div className="main-content">
-      <div className="mypage-container">
-        <div className="flex-container">
-          <div className="menu-container">
+    <MainContainer>
+        <FlexContainer>
+          <SidebarContainer>
             <SideBar />
-          </div>
+          </SidebarContainer>
 
-          <div className="main-container">
+          <MainContent>
             <StyledSideMenuTitle>도식화 히스토리</StyledSideMenuTitle>
-            {getRows(cloudInstances).map((row, idx) => (
-              <CloudInstanceRow key={idx}>
-                {row.map((instance) => {
+            <CloudInstanceRow>
+              {cloudInstances.length > 0 ? (
+                cloudInstances.map((instance) => {
                   const dropdownItems = [
                     {
                       key: "1",
                       label: (
                         <button
-                          onClick={() => handleCloudInstance(instance.key, "/mypage/diagram/security")}>
+                          onClick={() =>
+                            handleCloudInstance(
+                              instance.key,
+                              "/mypage/diagram/security"
+                            )
+                          }
+                        >
                           Security
                         </button>
                       ),
@@ -80,7 +107,13 @@ const MyArchitecture = () => {
                       key: "2",
                       label: (
                         <button
-                          onClick={() => handleCloudInstance(instance.key, "/mypage/diagram/resource")}>
+                          onClick={() =>
+                            handleCloudInstance(
+                              instance.key,
+                              "/mypage/diagram/resource"
+                            )
+                          }
+                        >
                           Resource
                         </button>
                       ),
@@ -88,103 +121,198 @@ const MyArchitecture = () => {
                   ];
                   return (
                     <CloudInstance key={instance.key}>
-                        <DeleteInstanceButton 
-                        onClick={() => handleDeleteInstance(instance.key)}
-                        >X</DeleteInstanceButton>
-                      <img
-                        onClick={() => handleCloudInstance(instance.key, "/draw")}
+                      <Popconfirm
+                        title="도식화 삭제"
+                        description={`${instance.title} 도식화를 삭제하시겠습니까?`}
+                        onConfirm={() => confirm(instance.key)}
+                        cancelText="No"
+                        okText="Yes"
+                        placement="right"
+                      >
+                        {/* <CloseOutlined
+                            style={{
+                              position: "absolute",
+                              top: "10px",
+                              right: "10px",
+                            }}
+                          />{" "} */}
+
+                        <Button
+                          style={{
+                            position: "absolute",
+                            top: "5px",
+                            right: "5px",
+                          }}
+                          type="text"
+                          shape="circle"
+                          icon={<CloseOutlined />}
+                        />
+                      </Popconfirm>
+
+                      <CloudInstanceImg
+                        onClick={() =>
+                          handleCloudInstance(instance.key, "/draw")
+                        }
                         alt="diagram_img"
-                        src={instance.imgSrc}
-                        style={{
-                          marginTop: "20px",
-                          width: "100%",
-                        }}
+                        src={`https://cm-user-file.s3.ap-northeast-2.amazonaws.com/${instance.title}_${user.sub}.png`}
                       />
-                      <StyledInstanceTitle>{instance.title}</StyledInstanceTitle>
+                      <CloudInstanceETC>
+                        <StyledInstanceTitle>
+                          {instance.title}
+                        </StyledInstanceTitle>
+                        
+                        <ButtonContainer>
+                        {instance.modifiedDate}
 
-                      <ButtonContainer>
-                        <StyledButton
-                          style={{ backgroundColor: "#5280DD" }}
-                          onClick={() => handleCloudInstance(instance.key, "/mypage/diagram/summary")}>
-                          Total Cost
-                        </StyledButton>
-
-                        <Dropdown overlay={<Menu items={dropdownItems} />} placement="bottomLeft">
-                          <StyledButton style={{ backgroundColor: "#FD754A" }}>
-                            Guide
-                            <DownOutlined style={{ marginTop: "5px" }} />
+                          <StyledButton
+                            style={{ backgroundColor: "#5280DD" }}
+                            onClick={() =>
+                              handleCloudInstance(
+                                instance.key,
+                                "/mypage/diagram/summary"
+                              )
+                            }
+                          >
+                            Total Cost
                           </StyledButton>
-                        </Dropdown>
-                      </ButtonContainer>
+
+                          <Dropdown
+                            overlay={<Menu items={dropdownItems} />}
+                            placement="bottomLeft"
+                          >
+                            <StyledButton
+                              style={{ backgroundColor: "#FD754A" }}
+                            >
+                              Guide
+                              <DownOutlined style={{ marginTop: "5px" }} />
+                            </StyledButton>
+                          </Dropdown>
+                        </ButtonContainer>
+                      </CloudInstanceETC>
                     </CloudInstance>
                   );
-                })}
-              </CloudInstanceRow>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
-
+                })
+              ) : (
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: "100%",
+                  }}
+                >
+                  <p>도식화 히스토리가 없습니다.</p>
+                </div>
+              )}
+            </CloudInstanceRow>
+          </MainContent>
+        </FlexContainer>
+    </MainContainer>
   );
 };
 
 export default MyArchitecture;
+const SidebarContainer = styled.div`
+`;
+const MainContent = styled.div`
+    margin-top: 10px;
+    flex:1;
+    `;
+const FlexContainer = styled.div`
+  display: flex;
+  `;
+
+const CloudInstanceETC = styled.div`
+  display: flex;
+  flex-direction: row; // 가로 방향으로 요소를 배열
+  /* align-items: center; // 세로 축 중앙 정렬 */
+  justify-content: space-between; // 요소 사이의 공간을 균등하게 배분
+  /* width: 100%; // 전체 너비를 사용 */
+  flex-wrap: wrap; // 필요한 경우 요소를 다음 줄로 넘김
+  padding: 20px;
+`;
+
+const CloudInstanceImg = styled.img`
+  /* margin-top: 30px; */
+  width: 100%;
+  height: 60%;
+  object-fit: contain;
+  cursor: "pointer";
+  border-radius: 5px 5px 0px 0px;
+  border: 1px solid #e8e8e8;
+`;
 
 const CloudInstance = styled.div`
-  width: 26%;
-  padding: 10px;
-  border: 1px solid gray;
-  margin-left: 10px;
-  margin: 10px;
+  width: 30%; // Adjust the width to fit 3 instances per row
+  height: 300px;
+  /* border: 1px solid gray; */
   border-radius: 5px;
+  flex-direction: column; // 화면이 작을 때 세로 방향으로 쌓음
+  @media (min-width: 720px) {
+    flex-direction: row; // 화면이 600px 이상일 때 가로 방향으로 배치
+  }
   box-shadow: 1px 1px 1px 1px rgb(235, 235, 235);
-  position: relative; /* 상대적 위치 지정 */
-`
-
-const DeleteInstanceButton = styled.button`
-  font-size: 15px;
-  font-weight: 500;
-  position: absolute; /* 절대적 위치 지정 */
-  top: 0px; /* 상단에서의 위치 */
-  right: 3px;
-  background-color:transparent;
-`
+  position: relative;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-bottom: 20px;
+`;
 
 const CloudInstanceRow = styled.div`
-    display: flex;
-    width: 100%;
-`
-
+  margin: 20px;
+  display: flex;
+  justify-content: flex-start; // 시작 부분부터 아이템 배치
+  flex-wrap: wrap; // 화면 크기에 따라 아이템을 줄바꿈
+  gap: 10px; // 아이템 간 간격
+`;
 
 const StyledButton = styled(Button)`
   min-width: 100px;
-  margin: 5px;
+  margin-bottom: 5px;
   color: white;
   font-weight: 500;
   display: flex;
   justify-content: space-between;
   border-radius: 20px;
-
+  font-family: "Noto Sans KR", sans-serif !important;
   /* text-align: left; */
 `;
 
 const ButtonContainer = styled.div`
-    align-items: end;
-    display: flex;
-    flex-direction: column;
+  /* align-items: end; */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; // 오른쪽 정렬
+  flex-grow: 0;
+  flex: 0;
 `;
 
 const StyledSideMenuTitle = styled.div`
   font-family: "Noto Sans KR", sans-serif !important;
   font-weight: 500;
   font-size: 20px;
+  margin-top: 30px;
 `;
 
 const StyledInstanceTitle = styled.div`
   font-family: "Noto Sans KR", sans-serif !important;
-  /* font-weight: 500; */
-  /* font-size: 20px; */
   text-align: left;
-  margin: 20px;
+  flex-grow: 1;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
+
+const MainContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding-top: 70px;
+  min-height: 100vh;
+  padding-left:10%;
+  padding-right: 10%;
+  margin-bottom: 30px;
+`;
+
+const MyPageContainer = styled.div`
+`

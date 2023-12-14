@@ -12,6 +12,6 @@ permissions:
     mode: 755
 hooks:
   AfterInstall:
-    - location: deploy.sh
-      timeout: 60
+    - location: /home/ubuntu/deploy-fe/deploy.sh
+      timeout: 300
       runas: root

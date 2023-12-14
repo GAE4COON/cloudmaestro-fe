@@ -12,10 +12,13 @@ export const join = (data) => api.post("/api/v1/users-api/sign-up", data);
 
 export const login = (data) => api.post("/api/v1/users-api/sign-in", data);
 
-export const loginTest = (token) =>
-  api.get("/api/v1/test-api/login-test", {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-type": "application/json",
-    },
-  });
+export const myuser = (data) => api.post("/api/v1/users-api/my-user", data);
+
+export const myNameModify = (data) =>
+  api.post("/api/v1/users-api/my-modify-name", data);
+
+export const myPwModify = (data) =>
+  api.post("/api/v1/users-api/my-modify-pw", data);
+
+export const myPwCheck = (data) =>
+  api.post("/api/v1/users-api/my-check-pw", data);

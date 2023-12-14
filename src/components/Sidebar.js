@@ -1,12 +1,32 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { FiX, FiMenu } from "react-icons/fi";
 import "../styles/Sidebar.css";
 import { useData } from "./DataContext";
-import { nodeDataArrayPalette } from "../db/Node"; // nodeDataArrayPalette 가져오기
+import { nodeDataArrayPalette } from "../db/Node";
+import jsonData from '../db/ResourceGuide.json'; // JSON 파일 경로
 
-function Sidebar({ isOpen, setIsOpen }) {
+
+function Sidebar() {
   const outside = useRef();
   const { data } = useData();
+  const [nodeRole, setNodeRole] = useState({});
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    setNodeRole(jsonData); // JSON 파일에서 데이터 가져오기
+  }, []);
+
+  var extractedTexts = [];
+  if(data!=null){
+    extractedTexts = data
+    .filter(node => !node.isGroup)
+    .filter(node => node.type != "Network_icon")
+    .map(node => node.text);
+    }
+
+// 중복을 제거하기 위해 Set을 사용
+  const resourceList = new Set(extractedTexts);
+  const dataArray = Array.from(resourceList);
 
   useEffect(() => {
     function handleMouseMove(event) {
@@ -33,22 +53,29 @@ function Sidebar({ isOpen, setIsOpen }) {
         <>
           <FiX size={24} onClick={() => setIsOpen(false)} className="icon" />
           <div className="sidebar-content">
-            {data && data.length > 0 && (
+            {dataArray && dataArray.length > 0 && (
               <div className="sidebar-title">
-                <h2>서비스</h2>
+                <h3 style={{paddingTop:"10px"}}>서비스</h3>
               </div>
             )}
-            {data && data.length > 0 ? (
-              data.map((item, index) => {
+            {dataArray && dataArray.length > 0 ? (
+              dataArray.map((item, index) => {
                 const node = nodeDataArrayPalette.find(
                   (node) => node.text === item
                 );
                 const source = node ? node.source : "";
-                // console.log(source);
                 return (
                   <div key={index} className="sidebar-item">
-                    {source && <img src={source} alt={item} />}
-                    <h3>{item}</h3>
+
+
+                    <div style={{ display: "flex", flexDirection: "column", textAlign: "left", width: "100%" }}>
+                      <div className="sidebar-item-title" style={{ fontWeight: "700", borderBottom:"1px solid gray", marginBottom:"5px" }}>{item}</div>
+
+                      <div style={{ display: "flex",  }}>
+                        {source && <img src={source} alt={item} style={{ width: "50px", height: "50px", marginRight: "10px" }} />}
+                        <div className="sidebar-item-description">{nodeRole[`${item}`] && nodeRole[`${item}`].role ? nodeRole[`${item}`].role : "추후 추가 예정"}</div>
+                      </div>
+                    </div>
                   </div>
                 );
               })
@@ -61,8 +88,8 @@ function Sidebar({ isOpen, setIsOpen }) {
         <>
           <FiMenu size={24} onClick={() => setIsOpen(true)} className="icon" />
           <div className="sidebar-content">
-            {data && data.length > 0 ? (
-              data.map((item, index) => {
+            {dataArray && dataArray.length > 0 ? (
+              dataArray.map((item, index) => {
                 const node = nodeDataArrayPalette.find(
                   (node) => node.text === item
                 );

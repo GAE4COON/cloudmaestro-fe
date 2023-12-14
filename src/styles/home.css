@@ -7,7 +7,7 @@
   margin: 0 auto;
   height: 100vh;
   width: 100%;
-  margin-top: 50px;
+  /* margin-top: px; */
   background-image: linear-gradient(135deg, #B4C9FF 1%, #ffffff);
 }
 
@@ -40,22 +40,13 @@
 
 
 .home-select-box {
-  width: 50%;
-  height: 30%;
-  bottom: 0;
-  color:#3064D6;
-  position: absolute;
-  top: 75%;
-  left: 27%;
-  transform: translate(-50%, -50%);
-  z-index: 1;
-  border-radius: 20px;
-  font-size: 1rem; /* 이 부분은 상대적 크기 조절의 기준이 됩니다. */
-  padding: 20px;
+
 }
 
 
 .home-btn {
+  /* flex: 1; */
+
   width: 160px;
   height: 60px;
   font-size: 16px;
@@ -67,8 +58,8 @@
   font-weight: bold;
   cursor: pointer;
   outline: none;
-  margin-top: 40px;
-  margin-right: 20px;
+  /* margin-top: 40px; */
+  /* margin-right: 20px; */
 }
 
 .home-btn:hover{

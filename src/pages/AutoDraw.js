@@ -20,10 +20,10 @@ const AutoDraw = () => {
 
   return (
     <div className="main-content">
-      <div className="app-container">
-        <div className="description_type">
+      <AutoBackground>
+        <div className="description_type" style={{marginTop:"100px"}}>
           <div className="upper_type">
-            <div className="excel_type">
+            <div className="excel_type" >
               <div className="title_type">Excel</div>
               <div className="description">
                 <p>온디맨드 정보 자산을 업로드 해주세요.</p>
@@ -43,21 +43,11 @@ const AutoDraw = () => {
               <button className="template_button" onClick={downloadExcel}>
                 템플릿 받으러가기
               </button>
-              <div className="example">
-                잘 모르겠다면?
-                <Link
-                  to={"/learn"}
-                  state={{ type: "excel" }}
-                  className="example_link"
-                >
-                  예시 보기
-                </Link>
-              </div>
             </div>
           </div>
           <div className="upper_type">
             <div className="json_type">
-              <div className="title_type">Json</div>
+              <div className="title_type">JSON</div>
               <div className="description">
                 <p>온디맨드 정보 자산을 업로드 해주세요.</p>
                 <br />
@@ -76,16 +66,6 @@ const AutoDraw = () => {
               <button className="template_button" onClick={downloadJson}>
                 템플릿 받으러가기
               </button>
-              <div className="example">
-                잘 모르겠다면?
-                <Link
-                  to={"/learn"}
-                  state={{ type: "json" }}
-                  className="example_link"
-                >
-                  예시 보기
-                </Link>
-              </div>
             </div>
           </div>
         </div>
@@ -107,11 +87,26 @@ const AutoDraw = () => {
         </div>
 
         <StyledButton onClick={handleInputFIleUpload}>Submit</StyledButton>
-      </div>
+      </AutoBackground>
     </div>
   );
 };
 export default AutoDraw;
+
+const AutoBackground = styled.div`
+
+
+margin-top: 50px;
+justify-content: center;
+width: 100%;
+height: 100vh;
+  background-color: #EDF3FF;
+  margin: 0 auto;
+    /* 중앙 정렬을 위한 스타일 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  `
 
 const StyledButton = styled.div`
   margin-top: 10px;

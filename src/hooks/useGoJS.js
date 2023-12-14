@@ -1,22 +1,25 @@
-import { useState, useEffect } from "react";
+import react, { useState, useEffect, startTransition } from "react";
 import * as go from "gojs";
 import "../styles/App.css"; // contains .diagram-component CSS
 import handleChangedSelection from "../pages/toggle/toggle";
 import { alertCheck, NodeCheck, GroupCheck } from "../apis/fileAPI";
-import { sidebarResource } from "../apis/sidebar";
 import { useData } from "../components/DataContext";
+import { checkForBackupAndS3Nodes, checkForMonitoringNodes, checkForLogAnalysisNodes, checkForKmsNodes, checkForDbAccess } from "../components/GuideAlert";
+import { handleSecurity } from "../components/SecurityAlert";
 
 const useGoJS = (
   setShowToggle,
   onDiagramChange,
-  handleguide,
+  // handleguide,
   setAlertMessage
+  // setWarnMessage,
+  // setInfoMessage
 ) => {
   const [diagram, setDiagram] = useState(null);
   const [clickedNodeKey, setClickedNodeKey] = useState();
   const [showSelectToggle, setShowSelectToggle] = useState({ value: false });
   // const [DiagramCheck, setDiagramCheck] = useState([]);
-  const [NodeGuide, setNodeGuide] = useState(null);
+  // const [NodeGuide, setNodeGuide] = useState(null);
   const { setData } = useData();
 
   // useEffect(() => {
@@ -53,8 +56,10 @@ const useGoJS = (
       "undoManager.isEnabled": true,
       "resizingTool.isGridSnapEnabled": true,
       "commandHandler.archetypeGroupData": {
+        key: "Group",
         text: "Group",
         type: "group",
+        stroke: "rgba(128, 128, 128)",
         isGroup: true,
       },
       "contextMenuTool.isEnabled": true,
@@ -67,15 +72,20 @@ const useGoJS = (
       ),
       "draggingTool.isGridSnapEnabled": true,
       "resizingTool.isGridSnapEnabled": true,
+      model: new go.GraphLinksModel({
+        linkKeyProperty: "uniqueLinkId", // Replace with your actual link property
+      }),
       ModelChanged: async (e) => {
         if (e.isTransactionFinished) {
           const jsonString = e.model.toIncrementalJson(e);
           const data = JSON.parse(jsonString);
-          console.log("data", data);
+          // console.log("노드 추가영2: ", e.model.toJson());
           if (data.insertedLinkKeys) {
             console.log("insertedLinkKeys", data.modifiedLinkData);
             try {
               const response = await alertCheck(data.modifiedLinkData[0]);
+              console.log("alertCheck request: ", data.modifiedLinkData[0]); // API 요청 데이터
+              console.log("alertCheck response: ", response);
               if (response.data.result.status === "fail") {
                 console.log(
                   "링크 취소해도 되는 부분.. 주석처리만 하니까 안 올라가서 우선 콘솔로그라도 띄움"
@@ -86,90 +96,144 @@ const useGoJS = (
                     (item) => item === response.data.result.message
                   );
                   if (!isDuplicate) {
-                    return [...prevDiagramCheck, response.data.result.message];
+                    const newMessage = {
+                      key: Date.now(), // 현재 타임스탬프를 key로 사용
+                      message: response.data.result.message,
+                    };
+
+                    return [...prevDiagramCheck, newMessage];
                   } else {
                     return prevDiagramCheck;
                   }
                 });
               }
-
-              // if (response && response.data) {
-              //   console.log("API Response:", response.data);
-              //   setDiagramCheck(response.data);
-              //   if (response.data.result.status === "fail") {
-
-              //   }
-              // }
             } catch (error) {
               console.error("API Error:", error);
             }
-          } else if (data.insertedNodeKeys || data.modifiedNodeData) {
+          } else if (data.modifiedNodeData) {
             try {
               const PostData = {
                 checkOption: null,
                 newData: null,
                 diagramData: diagram.model.toJson(),
               };
-              if (data.insertedNodeKeys || data.modifiedNodeData) {
+              if (data.modifiedNodeData) {
                 for (let i = 0; i < data.modifiedNodeData.length; i++) {
+                  // console.log(
+                  //   "현재 modifiedNodeData 요소:",
+                  //   data.modifiedNodeData[i]
+                  // );
                   if (
-                    data.modifiedNodeData[i].text === "VPC" &&
+                    data.modifiedNodeData[i]?.text === "VPC" &&
                     data.modifiedNodeData[i].isGroup === true
                   ) {
                     PostData.checkOption = "VPC";
                     PostData.newData = data.modifiedNodeData[i];
-                    console.log("NodeCheck 호출");
+                    //console.log("NodeCheck 호출");
                     const response = await GroupCheck(PostData);
                     console.log("API Response:", response.data);
                     if (response.data.result.status === "fail") {
-                      setAlertMessage((prevDiagramCheck) => {
-                        const isDuplicate = prevDiagramCheck.some(
-                          (item) => item === response.data.result.message
-                        );
-                        // 중복되지 않고 result가 "success"인 경우에만 추가
-                        if (!isDuplicate) {
-                          return [
-                            ...prevDiagramCheck,
-                            response.data.result.message,
-                          ];
-                        } else {
-                          return prevDiagramCheck;
-                        }
+                      setAlertMessage({
+                        key: Date.now(), // 현재 타임스탬프를 key로 사용
+                        message: response.data.result.message,
+                        tag: "Error",
                       });
                     }
-                  } else if (data.modifiedNodeData[i].text === "API Gateway") {
+                  } else if (
+                    data.modifiedNodeData[i]?.text === "API Gateway"
+                    //  ||data.modifiedNodeData[i].type === "Database"
+                  ) {
+                    // if (data.modifiedNodeData[i].text === "API Gateway")
+                    //   PostData.checkOption = "API Gateway";
+                    // else if (data.modifiedNodeData[i].type === "Database")
+                    //   PostData.checkOption = "Database";
                     PostData.checkOption = "API Gateway";
+                    PostData.newData = data.modifiedNodeData[i];
+                    //console.log("NodeCheck 호출");
+                    const response = await NodeCheck(PostData);
+                    if (response.data.result.status === "fail") {
+                      console.log("API Response:", response.data);
+                      setAlertMessage({
+                        key: Date.now(), // 현재 타임스탬프를 key로 사용
+                        message: response.data.result.message,
+                        tag: "Error",
+                      });
+                    }
+                  }
+                  if (
+                    data.modifiedNodeData[i]?.text === "S3" ||
+                    data.modifiedNodeData[i]?.text === "CloudTrail" ||
+                    data.modifiedNodeData[i]?.text === "CloudWatch"
+                  ) {
+                    PostData.checkOption = "Logging";
+                    PostData.newData = data.modifiedNodeData[i];
+                    console.log("Logging 호출");
+                    const response = await NodeCheck(PostData);
+                    if (response.data.result.status === "fail") {
+                      console.log("API Response:", response.data);
+
+                      setAlertMessage((prevAlert) => ({
+                        key: Date.now(),
+                        message: response.data.result.message,
+                        tag: "Info",
+                      }));
+                      // }, 0);
+                    }
+                  }
+                  if (
+                    data.modifiedNodeData[i]?.text === "Backup" ||
+                    data.modifiedNodeData[i]?.text === "S3"
+                  ) {
+                    PostData.checkOption = "Backup";
+                    PostData.newData = data.modifiedNodeData[i];
+                    console.log("Backup 호출");
+                    const response = await NodeCheck(PostData);
+                    if (response.data.result.status === "fail") {
+                      console.log("API Response:", response.data);
+                      setAlertMessage((prevAlert) => ({
+                        key: Date.now(),
+                        message: response.data.result.message,
+                        tag: "Info",
+                      }));
+                    }
+                  }
+                  if (data.modifiedNodeData[i]?.text === "EC2") {
+                    PostData.checkOption = "EC2";
+                    PostData.newData = data.modifiedNodeData[i];
+                    console.log("EC2 호출");
+                    const response = await NodeCheck(PostData);
+                    if (response.data.result.status === "fail") {
+                      console.log("API Response:", response.data);
+                      setAlertMessage((prevAlert) => ({
+                        key: Date.now(),
+                        message: response.data.result.message,
+                        tag: "Info",
+                      }));
+                    }
+                  }
+                  if (data.modifiedNodeData[i]?.text === "Database") {
+                    PostData.checkOption = "Database";
                     PostData.newData = data.modifiedNodeData[i];
                     console.log("NodeCheck 호출");
                     const response = await NodeCheck(PostData);
                     if (response.data.result.status === "fail") {
                       console.log("API Response:", response.data);
-                      setAlertMessage((prevDiagramCheck) => {
-                        const isDuplicate = prevDiagramCheck.some(
-                          (item) => item === response.data.result.message
-                        );
-                        if (!isDuplicate) {
-                          return [
-                            ...prevDiagramCheck,
-                            response.data.result.message,
-                          ];
-                        } else {
-                          return prevDiagramCheck;
-                        }
-                      });
+                      setAlertMessage((prevAlert) => ({
+                        key: Date.now(),
+                        message: response.data.result.message,
+                        tag: "Info",
+                      }));
                     }
                   }
                 }
               }
             } catch (error) {
-              console.error("API Error:", error);
+              console.error("API Error:", error, data.insertedLinkKeys);
             }
           }
+          handleSecurity(e, diagram, setAlertMessage);
         }
       },
-      model: new go.GraphLinksModel({
-        linkKeyProperty: "key",
-      }),
     });
 
     // delete
@@ -261,8 +325,7 @@ const useGoJS = (
 
     diagram.groupTemplate = $(
       go.Group,
-      // "Auto",
-      // "Vertical",
+      // {key: "Group"},
       new go.Binding("location", "loc", go.Point.parse).makeTwoWay(
         go.Point.stringify
       ),
@@ -272,11 +335,6 @@ const useGoJS = (
         mouseDrop: finishDrop,
         ungroupable: true,
         resizable: true,
-        // layout: $(go.GridLayout, {
-        //   wrappingColumn: 3, // 한 열에 하나의 노드만 표시
-        //   cellSize: new go.Size(1, 1), // 셀 크기 설정
-        //   spacing: new go.Size(4, 4) // 노드 간 간격 설정
-        // }),
       },
       new go.Binding("background", "isHighlighted", (h) =>
         h ? "rgba(128,128,128,0.1)" : "transparent"
@@ -302,7 +360,7 @@ const useGoJS = (
             portId: "",
             editable: true,
           },
-          new go.Binding("text", "text")
+          new go.Binding("text", "key")
         )
       ),
 
@@ -325,7 +383,8 @@ const useGoJS = (
           new go.Binding("fill", "", function (data) {
             if (
               data.key.toLowerCase().includes("public") ||
-              data.key.toLowerCase().includes("private")
+              data.key.toLowerCase().includes("private") ||
+              data.key.toLowerCase().includes("service")
             ) {
               // Parse the RGB color to get individual components
               let rgb = data.stroke.match(/\d+/g);
@@ -339,7 +398,8 @@ const useGoJS = (
           new go.Binding("stroke", "", function (data) {
             if (
               data.key.toLowerCase().includes("public") ||
-              data.key.toLowerCase().includes("private")
+              data.key.toLowerCase().includes("private") ||
+              data.key.toLowerCase().includes("service")
             ) {
               return "transparent";
             }
@@ -354,10 +414,11 @@ const useGoJS = (
     diagram.linkTemplate = $(
       go.Link,
       {
-        toShortLength: 3,
+        toShortLength: 1,
         routing: go.Link.Normal,
         // routing: go.Link.AvoidsNodes,
         curve: go.Link.JumpGap,
+
         corner: 5,
         contextMenu: $(
           go.Adornment,
@@ -373,7 +434,7 @@ const useGoJS = (
               width: 40,
               height: 40,
             }),
-            $(go.TextBlock, "━", { font: "10pt Noto Sans KR" }),
+            $(go.TextBlock, "━", { font: "5pt Noto Sans KR" }),
             {
               row: 0,
               column: 0,
@@ -446,66 +507,60 @@ const useGoJS = (
         ),
       },
       // for link shape
-      $(go.Shape, { strokeWidth: 2, stroke: "#000", name: "LinkShape" }),
-      // for arrowhead 여기서 standaer
+      $(go.Shape, { strokeWidth: 1, stroke: "#777", name: "LinkShape" }),
       $(go.Shape, {
         toArrow: "Standard",
-        scale: 1.5,
-        stroke: null,
-        name: "ToArrow",
-      }),
-      $(go.Shape, {
-        fromArrow: "DoubleForwardSlash",
-        scale: 1.5,
-        stroke: null,
-        name: "FromArrow",
+        stroke: "#777", // Set the color of the arrowhead outline
+        fill: "#777", // Set the color of the arrowhead fill
+        // scale: 1,
+        // name: "ToArrow",
       })
     );
 
-    diagram.nodeTemplate.selectionAdornmentTemplate = $(
-      go.Adornment,
-      "Spot",
-      $(
-        go.Panel,
-        "Auto",
-        $(go.Shape, { fill: null, stroke: "dodgerblue", strokeWidth: 2 }),
-        $(go.Placeholder)
-      ),
-      $(
-        go.Panel,
-        "Horizontal",
-        { alignment: new go.Spot(1, 1), alignmentFocus: new go.Spot(1, 0) },
-        $(
-          go.Panel,
-          "Spot",
-          {
-            width: 20,
-            height: 20,
-            mouseEnter: function (e, panel) {
-              const node = panel.part.adornedPart;
-              if (node instanceof go.Node) {
-                handleguide(node.data.text);
-                // setNodeGuide(node.data.text);
-              }
-            },
-            // mouseLeave: function (e, panel) {
-            //   setNodeGuide(null);
-            // },
-          },
-          $(go.Shape, "Circle", {
-            fill: "rgba(82,96,208,0.7)",
-            stroke: null,
-            width: 20,
-            height: 20,
-          }),
-          $(go.TextBlock, "?", {
-            font: "10pt Noto Sans KR",
-            stroke: "white",
-            verticalAlignment: go.Spot.Center,
-          })
-        )
-      )
-    );
+    // diagram.nodeTemplate.selectionAdornmentTemplate = $(
+    //   go.Adornment,
+    //   "Spot",
+    //   $(
+    //     go.Panel,
+    //     "Auto",
+    //     $(go.Shape, { fill: null, stroke: "dodgerblue", strokeWidth: 2 }),
+    //     $(go.Placeholder)
+    //   ),
+    //   $(
+    //     go.Panel,
+    //     "Horizontal",
+    //     { alignment: new go.Spot(1, 1), alignmentFocus: new go.Spot(1, 0) },
+    //     $(
+    //       go.Panel,
+    //       "Spot",
+    //       {
+    //         width: 20,
+    //         height: 20,
+    //         mouseEnter: function (e, panel) {
+    //           const node = panel.part.adornedPart;
+    //           if (node instanceof go.Node) {
+    //             handleguide(node.data.text);
+    //             // setNodeGuide(node.data.text);
+    //           }
+    //         },
+    //         // mouseLeave: function (e, panel) {
+    //         //   setNodeGuide(null);
+    //         // },
+    //       },
+    //       $(go.Shape, "Circle", {
+    //         fill: "rgba(82,96,208,0.7)",
+    //         stroke: null,
+    //         width: 20,
+    //         height: 20,
+    //       }),
+    //       $(go.TextBlock, "?", {
+    //         font: "10pt Noto Sans KR",
+    //         stroke: "white",
+    //         verticalAlignment: go.Spot.Center,
+    //       })
+    //     )
+    //   )
+    // );
 
     diagram.addDiagramListener("ObjectSingleClicked", function (e) {
       const part = e.subject.part;
@@ -539,6 +594,21 @@ const useGoJS = (
     diagram.addModelChangedListener(function (e) {
       if (e.isTransactionFinished) {
         onDiagramChange(diagram);
+        setTimeout(() => {
+          checkForBackupAndS3Nodes(diagram, setAlertMessage);
+        }, 1);
+        setTimeout(() => {
+          checkForMonitoringNodes(diagram, setAlertMessage);
+        }, 30);
+        setTimeout(() => {
+          checkForLogAnalysisNodes(diagram, setAlertMessage);
+        }, 30);
+        setTimeout(() => {
+          checkForKmsNodes(diagram, setAlertMessage);
+        }, 30);
+        setTimeout(() => {
+          checkForDbAccess(diagram, setAlertMessage);
+        }, 30);
       }
     });
 
@@ -549,8 +619,8 @@ const useGoJS = (
       } else {
         setShowSelectToggle({ value: false }); // 추가된 로직
       }
-      const response = await sidebarResource(diagram.model.nodeDataArray);
-      setData(response.data); // set the data in context
+      // console.log("setdata", diagram.model.nodeDataArray);
+      setData(diagram.model.nodeDataArray); // set the data in context
     });
 
     setDiagram(diagram);

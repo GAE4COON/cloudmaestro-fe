@@ -8,7 +8,7 @@
     max-width: 100%;
     margin-left: 40px;
     align-items: center; /* 세로 중앙 정렬 */
-    /* justify-content: center; */
+    justify-content: center;
   }
   
   .my-input-group {
@@ -17,29 +17,36 @@
     width: 50%; 
     display: flex; /* 플렉스박스로 나열 */
     justify-content: center;
-    margin-right: 200px;
+    align-items: center;
+    margin-left: 150px;
+    margin-right: 150px;
 
 }
 
 .my-input-group label {
-    width: 70px;
-    display: block;
+    position: relative;
+    width: auto;
+    min-width: 100px;
+    display: flex;
     margin-right: 10px; /* 오른쪽 마진 추가 */
 }
 
 .my-input-group input {
-    flex: 1; /* 가능한 모든 공간 차지 */
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    width: 300px;
+    min-width: 230px;
 }
 .my-input-group div{
     width: 70px;
+    min-width: 70px;
     margin-left: 10px;
 }
 
 .my-input-group button {
     width: 70px;
+    min-width: 70px;
     margin-left: 10px;
     padding: 7px 5px;
     background-color: #3064D6;

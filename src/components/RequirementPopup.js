@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
-import { Select } from "antd";
+import { Select, Modal } from "antd";
 import { TreeSelect, Checkbox } from "antd";
+import Draggable from "react-draggable";
+import { sendRequirement } from "../apis/requirementAPI";
+
 import { Button } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import { sendRequirement } from "../apis/requirementAPI";
 import * as go from "gojs";
 import ZoneComponent from "./ZoneComponent";
 import WebSvrComponent from "./WebSvrComponent";
@@ -36,6 +38,7 @@ function getBPIndustry(industryValue) {
 
 const RequirementPopup = (props) => {
   let diagram = props.diagram;
+
   const [industrialValue, setIndustrialValue] = useState(null);
   const [globalReqValue, setGlobalReqValue] = useState([]);
   const [savediagram, setSaveDiagram] = useState();
@@ -46,7 +49,14 @@ const RequirementPopup = (props) => {
   const [industrial_BP, setIndustrial_BP] = useState([]); //요구사항 선택
   const [zoneFrameValue, setZoneFrameValue] = useState(null);
   const [showWebSvrComponent, setShowWebSvrComponent] = useState(false);
-
+  const [disabled, setDisabled] = useState(true);
+  const [bounds, setBounds] = useState({
+    left: 0,
+    top: 0,
+    bottom: 0,
+    right: 0,
+  });
+  const draggleRef = useRef(null);
 
   useEffect(() => {
     const isZoneSelected =
@@ -166,8 +176,8 @@ const RequirementPopup = (props) => {
   };
   const addWebZone = () => {
     // Check if a webzone already exists
-    const webZoneExists = zones.some(zone => zone.id === "webzone");
-  
+    const webZoneExists = zones.some((zone) => zone.id === "webzone");
+
     if (!webZoneExists) {
       setZones([
         ...zones,
@@ -183,7 +193,6 @@ const RequirementPopup = (props) => {
       setIsOptimizeEnabled(false);
     }
   };
-  
 
   // Zone 선택을 업데이트하는 함수
 
@@ -195,16 +204,19 @@ const RequirementPopup = (props) => {
         zoneFrame: zoneFrameValue,
         backup: selectBackup,
 
-        zones: zones.map((zone) => (
-          console.log("zones", zone),
-          {
-            // console.log("zones",zone);
-            name: zone.zoneName,
-            function: zone.zoneFunc,
-            availableNode: zone.availableNode,
-            serverNode: zone.serverNode,
-            zoneRequirements: zone.zoneReqValue,
-          })),
+        zones: zones.map(
+          (zone) => (
+            console.log("zones", zone),
+            {
+              // console.log("zones",zone);
+              name: zone.zoneName,
+              function: zone.zoneFunc,
+              availableNode: zone.availableNode,
+              serverNode: zone.serverNode,
+              zoneRequirements: zone.zoneReqValue,
+            }
+          )
+        ),
       },
       diagramData: diagram.model.toJson(), // 다이어그램 데이터를 추가
     };
@@ -234,13 +246,25 @@ const RequirementPopup = (props) => {
   const handleZoneFrame = (value) => {
     setZoneFrameValue(value);
     // 선택이 해제되면 (`value`가 `null` 또는 빈 문자열이면) `WebSvrComponent`를 숨깁니다.
-    setShowWebSvrComponent(value=="웹 서버 존재" ? true : false);
-    if(showWebSvrComponent){
+    setShowWebSvrComponent(value == "웹 서버 존재" ? true : false);
+    if (showWebSvrComponent) {
       removeZone("webzone");
     }
   };
-  
 
+  const onStart = (_event, uiData) => {
+    const { clientWidth, clientHeight } = window.document.documentElement;
+    const targetRect = draggleRef.current?.getBoundingClientRect();
+    if (!targetRect) {
+      return;
+    }
+    setBounds({
+      left: -targetRect.left + uiData.x,
+      right: clientWidth - (targetRect.right - uiData.x),
+      top: -targetRect.top + uiData.y,
+      bottom: clientHeight - (targetRect.bottom - uiData.y),
+    });
+  };
 
   const handleDataChange = (zoneId, updatedData) => {
     const formattedUpdatedData = {
@@ -261,14 +285,65 @@ const RequirementPopup = (props) => {
   };
 
   const removeZone = (zoneId) => {
-    setZones(zones.filter(zone => zone.id !== zoneId));
+    setZones(zones.filter((zone) => zone.id !== zoneId));
   };
 
   return (
-    <Backdrop>
-      <PopupBox>
-        <PopupBoxHeader>Optimization input</PopupBoxHeader>
-        <CloseButton onClick={() => props.handlePopup()}>✖</CloseButton>
+    <>
+      <Modal
+        width={1000}
+        title={
+          <div
+            style={{
+              width: "100%",
+              cursor: "move",
+            }}
+            onMouseOver={() => {
+              if (disabled) {
+                setDisabled(false);
+              }
+            }}
+            onMouseOut={() => {
+              setDisabled(true);
+            }}
+            onFocus={() => {}}
+            onBlur={() => {}}
+          >
+            Optimization input
+          </div>
+        }
+        open={true}
+        onCancel={props.handlePopup}
+        modalRender={(modal) => (
+          <Draggable
+            disabled={disabled}
+            bounds={bounds}
+            nodeRef={draggleRef}
+            onStart={(event, uiData) => onStart(event, uiData)}
+          >
+            <div ref={draggleRef}>{modal}</div>
+          </Draggable>
+        )}
+        footer={[
+          <Button
+            key="back"
+            onClick={addZone}
+            disabled={zones.length >= zoneCount}
+          >
+            망 추가하기
+          </Button>,
+          <Button
+            type="primary"
+            shape="round"
+            size={"medium"}
+            onClick={handleOptimize}
+            disabled={!isOptimizeEnabled}
+            style={{ marginBottom: "20px" }}
+          >
+            Optimize
+          </Button>,
+        ]}
+      >
         <ScrollableContent>
           <SelectContainer>
             <SelectTitle>산업군</SelectTitle>
@@ -304,35 +379,42 @@ const RequirementPopup = (props) => {
           <SelectContainer>
             <SelectTitle>망 구조</SelectTitle>
             <BackupContainer>
-              <Checkbox.Group options={zoneFrame} onClick={addWebZone} onChange={handleZoneFrame} />
+              <Checkbox.Group
+                options={zoneFrame}
+                onClick={addWebZone}
+                onChange={handleZoneFrame}
+              />
             </BackupContainer>
           </SelectContainer>
 
           <div className="망 모음">
-          {zones.map((zone) => 
-            (showWebSvrComponent&&zone.id=="webzone")&&(
-              <WebSvrComponent
-                key={"webzone"}
-                diagram={savediagram}
-                industrial_BP={industrial_BP}
-                zone={zone}
-                onDataChange={handleDataChange}
-                onRemoveZone={removeZone}
-              />
-
-            ))}
-            {zones.map((zone) => 
-            (zone.id!="webzone")&&(
-              <ZoneComponent
-                key={zone.id}
-                diagram={savediagram}
-                industrial_BP={industrial_BP}
-                zone={zone}
-                onDataChange={handleDataChange}
-                onRemoveZone={removeZone}
-              />
-
-            ))}
+            {zones.map(
+              (zone) =>
+                showWebSvrComponent &&
+                zone.id == "webzone" && (
+                  <WebSvrComponent
+                    key={zone.id}
+                    diagram={savediagram}
+                    industrial_BP={industrial_BP}
+                    zone={zone}
+                    onDataChange={handleDataChange}
+                    onRemoveZone={removeZone}
+                  />
+                )
+            )}
+            {zones.map(
+              (zone) =>
+                zone.id != "webzone" && (
+                  <ZoneComponent
+                    key={zone.id}
+                    diagram={savediagram}
+                    industrial_BP={industrial_BP}
+                    zone={zone}
+                    onDataChange={handleDataChange}
+                    onRemoveZone={removeZone}
+                  />
+                )
+            )}
 
             <div
               style={{
@@ -341,78 +423,13 @@ const RequirementPopup = (props) => {
                 alignItems: "center", // 버튼들을 중앙 정렬
                 gap: "10px", // 버튼 사이의 간격
               }}
-            >
-              <Button
-                type="primary"
-                shape="circle"
-                icon={<PlusOutlined />}
-                size={"medium"}
-                onClick={addZone}
-                disabled={zones.length >= zoneCount}
-              />
-              <Button
-                type="primary"
-                shape="round"
-                size={"medium"}
-                onClick={handleOptimize}
-                disabled={!isOptimizeEnabled}
-                style={{ marginBottom: "20px" }}
-              >
-                Optimize
-              </Button>
-            </div>
+            ></div>
           </div>
         </ScrollableContent>
-      </PopupBox>
-    </Backdrop>
+      </Modal>
+    </>
   );
 };
-
-const Backdrop = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black backdrop */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-`;
-
-const PopupBox = styled.div`
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 800px; /* Adjust as needed */
-  z-index: 1000; /* Ensure this is less than PopupBoxHeader and CloseButton */
-  position: relative;
-`;
-
-const PopupBoxHeader = styled.div`
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  line-height: 40px;
-  text-align: left;
-  padding-left: 10px;
-  background: linear-gradient(105deg, #3064d6 0%, #ffffff 200%);
-  color: white;
-  height: 40px;
-  position: absolute; /* Changed to absolute */
-  width: 790px;
-  z-index: 1001; /* Higher than PopupBox */
-`;
-
-const CloseButton = styled.span`
-  cursor: pointer;
-  position: absolute; /* Changed to absolute */
-  z-index: 1002; /* Highest in the context */
-  top: 5px;
-  right: 10px;
-  font-size: 20px;
-  color: white;
-`;
 
 const SelectContainer = styled.div`
   display: flex;
