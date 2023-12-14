@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Select, TreeSelect, Checkbox } from "antd";
 
-import { industrial, zoneSecurityReq, zoneRdsReq } from "../db/Requirement";
+import { industrial, zoneSecurityReq } from "../db/Requirement";
 
 const { SHOW_PARENT } = TreeSelect;
 
