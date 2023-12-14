@@ -26,23 +26,15 @@
  */
 
 
-/* Scrollable styles for tabs and overflow content */
-/* .tab-content > div[style*="overflow: auto;"] {
-  ::-webkit-scrollbar {
-    width: 10px;
+ .tab-content > div[style*="overflow: auto;"] {
+  &::-webkit-scrollbar {
+    width: 7px;
   }
-
-  ::-webkit-scrollbar-thumb {
-    background-color: #d4d4d4;
-    border-radius: 10px;
-    background-clip: padding-box;
-    border: 2px solid transparent;
+  &::-webkit-scrollbar-thumb {
+    background-color: #dfdfdf;
+    border-radius: 5px;
   }
-
-  ::-webkit-scrollbar-track {
-    background-color: rgb(232, 232, 232);
-    border-radius: 10px;
-    box-shadow: inset 0px 0px 5px white;
+  &::-webkit-scrollbar-track {
+    background-color: #fafafa;
   }
-}
- */
+} 
