@@ -128,14 +128,6 @@ export const nodeDataArrayPalette = [
     type: "Analytics"
   },
   {
-    text: "La",
-    key: "DataZone",
-    figure: "Rectangle",
-    source: "/img/AWS_icon/Arch_Analytics/Arch_Amazon-DataZone_48.svg",
-    type: "Analytics"
-
-  },
-  {
     text: "EMR",
     key: "EMR",
     figure: "Rectangle",
