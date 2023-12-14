@@ -10,7 +10,7 @@ import { Menu } from "antd";
 import { useAuth } from "../utils/auth/authContext";
 import jwtDecode from "jwt-decode";
 import { CloseOutlined } from "@ant-design/icons";
-import { Avatar, Card, Tooltip } from "antd";
+import { Avatar, Card, Tooltip, Empty } from "antd";
 
 import styled from "styled-components";
 import { getDiagramData, myNetworkDB, deleteDiagramData } from "../apis/myPage";
@@ -223,15 +223,13 @@ const MyArchitecture = () => {
                 );
               })
             ) : (
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  height: "100%",
-                }}
-              >
-                <p>도식화 히스토리가 없습니다.</p>
+              <div style={{ width: "100%" }}>
+                <Empty
+                  image={Empty.PRESENTED_IMAGE_SIMPLE}
+                  imageStyle={{
+                    height: 200,
+                  }}
+                />
               </div>
             )}
           </CloudInstanceRow>
