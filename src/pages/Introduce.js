@@ -22,7 +22,7 @@ const LogoSection = () => {
   return (
     <div className="logo-container">
       <div className="content">
-        <img src="assets/img/introducelogo.png" alt="logo" />
+        <img src="assets/img/introduceLogo.png" alt="logo" />
       </div>
     </div>
   );
