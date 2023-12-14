@@ -23,9 +23,12 @@
     border: 3px #A1BBF7 solid;
     text-align: center;
     color: #DBDBDB;
-    font-size: 18px;
-    /* font-family: 'Inter'; */
-    font-weight: 700;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.upload-box.file-selected {
+    color: #3064d6; /* 선택됐을 때의 색상 */
 }
 
 .file-upload-container {

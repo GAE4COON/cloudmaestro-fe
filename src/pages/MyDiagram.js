@@ -106,7 +106,8 @@ const MyArchitecture = () => {
                   {
                     key: "1",
                     label: (
-                      <button
+                      <div
+                        style={{ cursor: "pointer", padding: "5px" }} // Add styling here
                         onClick={() =>
                           handleCloudInstance(
                             instance.key,
@@ -115,13 +116,14 @@ const MyArchitecture = () => {
                         }
                       >
                         Security
-                      </button>
+                      </div>
                     ),
                   },
                   {
                     key: "2",
                     label: (
-                      <button
+                      <div
+                        style={{ cursor: "pointer", padding: "5px" }} // Add styling here
                         onClick={() =>
                           handleCloudInstance(
                             instance.key,
@@ -130,7 +132,7 @@ const MyArchitecture = () => {
                         }
                       >
                         Resource
-                      </button>
+                      </div>
                     ),
                   },
                 ];
@@ -209,7 +211,12 @@ const MyArchitecture = () => {
                         </StyledButton>
 
                         <Dropdown
-                          overlay={<Menu items={dropdownItems} />}
+                          overlay={
+                            <Menu
+                              items={dropdownItems}
+                              onClick={(e) => e.key}
+                            />
+                          }
                           placement="bottomLeft"
                         >
                           <StyledButton style={{ backgroundColor: "#FD754A" }}>
@@ -354,7 +361,7 @@ const InstanceInformation = styled.div`
 const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding-top: 70px;
+  padding-top: 60px;
   min-height: 100vh;
   padding-left: 10%;
   padding-right: 10%;

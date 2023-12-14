@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import styled, { keyframes, css } from "styled-components";
 import { Button } from "antd";
+import { DownloadOutlined } from "@ant-design/icons";
 import { useInView } from "react-intersection-observer";
 
 export default function Page4() {
@@ -20,8 +21,9 @@ export default function Page4() {
   return (
     <FlexContainer>
       <ButtonContainer ref={imageRef} inView={imageInView}>
-        <div class="intro"> Cloud Computing Migration Introduce</div>
-        <p>The Beginning of Cloud Computing Migration Product Introduction</p>
+        <div class="intro"> Cloud Maestro 제품소개서 다운로드</div>
+
+        <p>Download the Cloud Maestro product introduction</p>
         <div>
           <Button
             type="dashed"
@@ -32,7 +34,8 @@ export default function Page4() {
               )
             }
           >
-            Product Introduction Download
+            <DownloadOutlined />
+            Cloud Maestro introduction Download
           </Button>
         </div>
       </ButtonContainer>
