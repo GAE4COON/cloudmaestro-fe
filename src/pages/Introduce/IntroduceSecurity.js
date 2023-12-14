@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import styled, { keyframes, css } from "styled-components";
 import { Button } from "antd";
 import { useInView } from "react-intersection-observer";
+import { DownloadOutlined } from "@ant-design/icons";
 
 export default function IntroduceSecurity() {
   const [imageRef, imageInView] = useInView({
@@ -21,10 +22,7 @@ export default function IntroduceSecurity() {
     <div className="about-container">
       <FlexContainer>
         <ButtonContainer ref={imageRef} inView={imageInView}>
-          <div className="intro">
-            {" "}
-            Examples of Security Guidelines by industry
-          </div>
+          <div className="intro"> 산업별 보안 가이드라인 예시</div>
           <p>The Beginning of Cloud Computing Migration Security GuideLine</p>
           <div>
             <Button
@@ -37,7 +35,7 @@ export default function IntroduceSecurity() {
               }
               style={{ marginRight: "30px" }}
             >
-              distribution logistics
+              <DownloadOutlined /> 유통 물류
             </Button>
             <Button
               type="dashed"
@@ -48,7 +46,7 @@ export default function IntroduceSecurity() {
                 )
               }
             >
-              media industry
+              <DownloadOutlined /> 미디어
             </Button>
           </div>
         </ButtonContainer>
