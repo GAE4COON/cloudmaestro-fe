@@ -746,8 +746,58 @@
   "EMR": {
     "role": "Amazon EMR은 Apache Spark, Apache Hive 및 Presto와 같은 오픈 소스 프레임워크를 사용하여 페타바이트급 데이터 처리, 대화식 분석 및 기계 학습을 위한 클라우드 빅 데이터 솔루션입니다."
   },
-  "FinSpace": {
-    "role": "Amazon FinSpace는 새로운 완전관리형 데이터 관리 및 분석 서비스로 대규모 금융 산업 데이터를 쉽게 저장, 분류 및 준비할 수 있도록 한다."
+  "Lightsail": {
+    "role": "Amazon Lightsail은 웹 애플리케이션 또는 웹 사이트를 클릭 몇 번으로 설정하고 실행할 수 있는 사용이 쉬운 클라우드 리소스를 제공합니다."
+  },
+  "Batch": {
+    "role": "AWS Batch를 사용하면 개발자, 과학자, 엔지니어가 수십만 개의 배치 및 기계 학습 컴퓨팅 작업을 효율적으로 실행하면서 컴퓨팅 리소스를 최적화하여 결과 분석 및 문제 해결에 집중할 수 있습니다."
+  },
+  "DocumentDB": {
+    "role": "Amazon DocumentDB(MongoDB 호환)는 완전관리형 기본 JSON 도큐먼트 데이터베이스로서 인프라를 관리하지 않고도 규모와 관계없이 중요한 문서 워크로드를 쉽고 비용 효율적으로 운영할 수 있게 해 줍니다."
+  },
+  "Neptune": {
+    "role": "Amazon Neptune은 노드(데이터 엔터티), 엣지(관계) 및 속성과 같은 그래프 구조를 사용하여 데이터를 표시하고 저장합니다."
+  },
+  "AppStream": {
+    "role": "Amazon AppStream 2.0은 사용자가 어디서나 데스크톱 애플리케이션에 즉시 액세스할 수 있도록 하는 완전 관리형 애플리케이션 스트리밍 서비스입니다."
+  },
+  "WorkSpaces": {
+    "role": "Amazon WorkSpaces는 AWS 클라우드에서 실행되는 안전한 완전관리형 데스크톱 컴퓨팅 서비스입니다."
+  },
+  "GameLift": {
+    "role": "Amazon GameLift는 클라우드, 온프레미스, 또는 하이브리드 배포를 통해 호스팅되는 전용 게임 서버를 배포하고 관리합니다."
+  },
+  "CodeGuru": {
+    "role": "CodeGuru는 Java, Python 및 JavaScript 코드에서 보안 취약성을 찾습니다. 그런 다음 코드 개선을 위한 권장 사항을 제공합니다."
+  },
+  "Comprehend": {
+    "role": "Amazon Comprehend는 기계 학습을 사용하여 텍스트에서 유용한 인사이트 및 관계를 찾아내는 자연어 처리(NLP) 서비스입니다."
+  },
+  "Forecast": {
+    "role": "Amazon Forecast는 기계 학습(ML)을 기반으로 하며, 비즈니스 지표 분석을 위해 구축된 시계열 예측 서비스입니다."
+  },
+  "Lex": {
+    "role": "Amazon Lex는 대화형 인터페이스를 애플리케이션에 설계, 구축, 테스트, 배포하기 위해 고급 자연어 모델을 사용하는 완전관리형 인공 지능(AI) 서비스입니다."
+  },
+  "Kendra": {
+    "role": "Amazon Kendra를 대규모 언어 모델(LLM)과 함께 사용하여 엔터프라이즈 콘텐츠를 기반으로 생성형 AI 기반의 안전한 대화형 경험을 신속하게 구축할 수 있습니다."
+  },
+  "Polly": {
+    "role": "Amazon Polly는 딥 러닝 기술을 사용하여 자연스러운 사람의 음성을 합성합니다."
+  },
+  "Rekognition": {
+    "role": "Amazon Rekognition은 이미지 및 비디오에서 정보와 인사이트를 추출하기 위해 사전 훈련된 컴퓨터 비전(CV) 및 사용자 지정 가능한 CV 기능을 제공합니다."
+  },
+  "SageMaker": {
+    "role": "SageMaker를 통해 데이터 과학자와 개발자들은 기계 학습 모델을 빠르고 쉽게 구축하고 훈련시킬 수 있으며, 그리고 나서 이들 모델을 프로덕션 지원 호스팅 환경에 직접 배포할 수 있습니다."
+  },
+  "Textract": {
+    "role": "Amazon Textract는 스캔한 문서에서 텍스트, 필기, 레이아웃 요소 및 데이터를 자동으로 추출하는 기계 학습(ML) 서비스입니다."
+  },
+  "Transcribe": {
+    "role": "Amazon Transcribe는 기계 학습 모델을 사용하여 오디오를 텍스트로 변환하는 자동 음성 인식 서비스입니다."
+  },
+  "Translate": {
+    "role": "Amazon Translate는 고품질의 사용자 지정 가능한 언어 번역을 빠르게 제공하는 신경망 기계 번역 서비스입니다."
   }
 }
-
