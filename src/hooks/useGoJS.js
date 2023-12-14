@@ -16,10 +16,7 @@ import { handleSecurity } from "../components/SecurityAlert";
 const useGoJS = (
   setShowToggle,
   onDiagramChange,
-  // handleguide,
   setAlertMessage
-  // setWarnMessage,
-  // setInfoMessage
 ) => {
   const [diagram, setDiagram] = useState(null);
   const [clickedNodeKey, setClickedNodeKey] = useState();
@@ -576,9 +573,7 @@ const useGoJS = (
     diagram.addDiagramListener("ObjectSingleClicked", function (e) {
       const part = e.subject.part;
       if (part instanceof go.Link) {
-        //console.log("링크가 클릭되었네요");
       } else if (part instanceof go.Node) {
-        //console.log("나는 node 입니다", part.data);
         const key = part.data.key;
         console.log("나는 node data 입니다", part.data);
         if (key) {
@@ -611,7 +606,7 @@ const useGoJS = (
         onDiagramChange(diagram);
         setTimeout(() => {
           checkForBackupAndS3Nodes(diagram, setAlertMessage);
-        }, 1);
+        }, 30);
         setTimeout(() => {
           checkForMonitoringNodes(diagram, setAlertMessage);
         }, 30);
@@ -647,6 +642,7 @@ const useGoJS = (
     initDiagram,
     diagram,
     showSelectToggle,
+    setShowSelectToggle,
     clickedNodeKey,
   };
 };

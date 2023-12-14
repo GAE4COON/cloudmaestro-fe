@@ -44,10 +44,10 @@ const tabs = [
   "AWS_Groups",
 ];
 
-const Palette = memo(({ diagram, diagramVersion }) => {
+const Palette = memo(({ diagram, diagramVersion, refNetworkPalette, refCloudPalette, clickedTab }) => {
   const [nodeDataArray, setNodeDataArray] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedTab, setSelectedTab] = useState("Storage");
+  const [selectedTab, setSelectedTab] = useState("");
   const [filteredNodes, setFilteredNodes] = useState(new Map());
   const paletteDivs = useRef({});
 
@@ -55,6 +55,7 @@ const Palette = memo(({ diagram, diagramVersion }) => {
   const [filterModule, setFilterModule] = useState([]);
   const [modulePaletteData, setModulePaletteData] = useState(new Map());
   const [myPalette, setMyPalette] = useState([]);
+ const [selectedTabs, setSelectedTabs] = useState([""]);
 
   const onChange = (e) => {
     setSearchTerm(e.target.value);
@@ -63,6 +64,32 @@ const Palette = memo(({ diagram, diagramVersion }) => {
   const onSearch = (value) => {
     setSelectedTab("Search");
   };
+
+  useEffect(() => {
+    console.log("clickedTab:", clickedTab);
+    clickedTab.forEach(tab => {
+      console.log("ta!!b:", tab)   
+      setSelectedTabs((prevTabs) => {
+        if (prevTabs.includes(tab)) {
+          // 이미 선택된 탭이면 제거
+          return prevTabs.filter(t => t !== tab);
+        } else {
+          // 새로운 탭을 추가
+          return [...prevTabs, tab];
+        }
+      })
+    });
+
+
+  }, [clickedTab]);
+
+  useEffect(() => {
+    console.log("selectedTabs", selectedTabs);
+  }, [selectedTabs])
+
+  useEffect(() => {
+    console.log(selectedTab);
+  }, [selectedTab]);
 
   useEffect(() => {
     setSaveDiagram(diagram);
@@ -179,7 +206,15 @@ const Palette = memo(({ diagram, diagramVersion }) => {
     }
   }, [savediagram, diagramVersion]);
 
+
+
+
+
+
   useEffect(() => {
+    selectedTabs.forEach((sTab) => {
+
+
     const $ = go.GraphObject.make;
 
     let myPalette = $(go.Palette, {
@@ -271,17 +306,16 @@ const Palette = memo(({ diagram, diagramVersion }) => {
       })
     );
 
-    if (paletteDivs.current[selectedTab]) {
-      myPalette.div = paletteDivs.current[selectedTab];
+    if (paletteDivs.current[sTab]) {
+      myPalette.div = paletteDivs.current[sTab];
     }
-
     let dataToUse;
 
-    if (modulePaletteData.has(selectedTab)) {
-      dataToUse = modulePaletteData.get(selectedTab);
+    if (modulePaletteData.has(sTab)) {
+      dataToUse = modulePaletteData.get(sTab);
     } else {
       dataToUse = nodeDataArrayPalette.filter(
-        (item) => item.type === selectedTab
+        (item) => item.type === sTab
       );
     }
 
@@ -299,16 +333,24 @@ const Palette = memo(({ diagram, diagramVersion }) => {
       myPalette.model.nodeDataArray = dataToUse;
     }
 
-    setMyPalette(myPalette);
-
+  });
     return () => {
       myPalette.div = null;
     };
-  }, [selectedTab, searchTerm, modulePaletteData]);
+  }, [selectedTab, searchTerm, modulePaletteData, selectedTabs]);
+  const handleTabClick = (tab) => {
+    if (selectedTabs.includes(tab)) {
+      setSelectedTabs(selectedTabs.filter((t) => t !== tab));
+    } else {
+      setSelectedTabs([...selectedTabs, tab]);
+    }
+  };
 
+  
   return (
     <PaletteContainer>
       <div id="allSampleContent">
+
         <SearchContainer>
           <StyledSearch
             allowClear
@@ -319,38 +361,42 @@ const Palette = memo(({ diagram, diagramVersion }) => {
           />
         </SearchContainer>
 
-        {filteredNodes.length > 0 && (
-          <div>
-            <FilteredNodesContainer>
-              {filteredNodes.map((node) => (
-                <div key={node.key}>
-                  - {node.type}: {formatKey(node.key)}
-                </div>
-              ))}
-            </FilteredNodesContainer>
+        {filteredNodes.length > 0 &&  (
+          
+  <div>
+    <FilteredNodesContainer>
+      {filteredNodes.map((node) => (
+        <div key={node.key}>
+          - {node.type}: {formatKey(node.key)}
+        </div>
+      ))}
+    </FilteredNodesContainer>
 
-            <ScrollableTabsContainer>
-              <Tabs>
-                <Tab>
-                  <RadioInput
-                    type="radio"
-                    id="rd_select"
-                    name="rd"
-                    onClick={() => setSelectedTab("Search")}
-                  />
-                  <TabLabel htmlFor="rd_select">Search</TabLabel>
-                  <div
-                    className="tab-content"
-                    ref={(el) => (paletteDivs.current["Search"] = el)}
-                  />
-                </Tab>
-              </Tabs>
-            </ScrollableTabsContainer>
-          </div>
-        )}
+    <ScrollableTabsContainer>
+      <Tabs>
+
+        <Tab>
+          <RadioInput 
+            type="checkbox" // Change from radio to checkbox
+            id="cb_search"
+            name="tabs"
+
+            onChange={() => handleTabClick("Search")}
+          />
+          <TabLabel htmlFor="cb_search">Search</TabLabel>
+          <div
+            className={`tab-content ${selectedTabs.includes("Search") ? 'expanded' : ''}`}
+            ref={(el) => (paletteDivs.current["Search"] = el)}
+          />
+        </Tab>
+
+      </Tabs>
+    </ScrollableTabsContainer>
+  </div>
+)}
         {filteredNodes.length === 0 && (
-          <ScrollableTabsContainer>
-            {filterModule.size > 0 &&
+          <ScrollableTabsContainer >
+            {/* {filterModule.size > 0 &&
               Array.from(filterModule.keys()).map((key) => (
                 <Tab key={key}>
                   <RadioInput
@@ -364,23 +410,35 @@ const Palette = memo(({ diagram, diagramVersion }) => {
                     className="tab-content"
                     ref={(el) => (paletteDivs.current[key] = el)}
                   />
+                  {console.log("key:", key)}
                 </Tab>
-              ))}
+              ))} */}
 
             {tabs.map((tab) => (
               <Tab key={tab}>
-                <RadioInput
-                  type="radio"
-                  id={`rd_${tab}`}
-                  name="rd"
-                  onClick={() => setSelectedTab(tab)}
+                <div  ref={tab === "Network_icon" ? refNetworkPalette : (tab === "Compute" ? refCloudPalette : null)}>
+                <RadioInput 
+                  type="checkbox" // 여기를 체크박스로 변경
+                  id={`cb_${tab}`}
+                  name="tabs"
+                  checked={selectedTabs.includes(tab)} // 체크 상태 결정
+                  onChange={() => handleTabClick(tab)}
                 />
-                <TabLabel htmlFor={`rd_${tab}`}>{formatKey(tab)}</TabLabel>
+                <TabLabel
+                htmlFor={`cb_${tab}`} 
+
+                >{formatKey(tab)}</TabLabel>
+                                {(
                 <div
-                  className="tab-content"
+                  className={`tab-content ${selectedTabs.includes(tab) ? 'expanded' : ''}`}
+                  
                   ref={(el) => (paletteDivs.current[tab] = el)}
                 />
-              </Tab>
+                
+                )}
+              
+              </div>
+              </Tab >
             ))}
           </ScrollableTabsContainer>
         )}
@@ -389,6 +447,7 @@ const Palette = memo(({ diagram, diagramVersion }) => {
 
   );
 });
+
 
 export default Palette;
 
@@ -401,8 +460,8 @@ const PaletteContainer = styled.div`
 const Tabs = styled.div`
   width: 100%;
   border-radius: 5px;
-
   overflow: hidden;
+
 `;
 
 // Styled component for the tab itself
@@ -419,11 +478,12 @@ const Tab = styled.div`
 `;
 
 // Hidden radio input for accessibility
-const RadioInput = styled.input.attrs({ type: "radio" })`
+const RadioInput = styled.input.attrs({ type: "checkbox" })`
   position: absolute;
   opacity: 0;
   border-radius: 5px;
   z-index: -1;
+
 `;
 
 // Styled component for the tab label
@@ -442,7 +502,8 @@ const TabLabel = styled.label`
   color: rgba(0, 0, 0, 0.65);
 
   background: #fff;
-  border: 1px solid #dee8ff;
+  /* border: 1px solid #dee8ff; */
+
   cursor: pointer;
   &:hover {
     color: #40a9ff;

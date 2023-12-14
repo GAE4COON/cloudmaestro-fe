@@ -12,22 +12,22 @@
     border-bottom: 2px solid #000000; /* 밑줄 추가 */
     border-radius: 5px;
     border-radius: 0; /* 밑줄을 깔끔하게 만들기 위해 반경을 0으로 설정 */
+
 }
 
 .select-s3-toggle input{
     display: flex;   
     position: relative;
     opacity: 1; 
-    font-size: 1.2em;
     padding: 8px 12px;
-    border: 2px solid #000000; 
+
+
     border-radius: 5px;
     width: 80px;     /*이걸로 박스 크기 조절해야함*/
     height: 30px;
     right: 15px;
     background-color: #ffffff;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    margin: 0;       
+    padding: 10px;
     box-sizing: border-box; 
 }
 
@@ -42,4 +42,6 @@
     display: flex;
     width: 60px;
     font-size: 12px;
+    padding: 10px;
+
 }
