@@ -5,26 +5,71 @@ import { useData } from "./DataContext.js";
 const TourDraw = (props) => {
   const {setIsPopup} = props;
   const {alertMessage, diagram, clickedTab, isOpen } = props;
-  const {open, setOpen, showAlertMessages, setAlertMessage, setDiagram, resetAlertMessage, setClickedTab, setIsOpen } = props;
-  const {refPalette, refDiagram, refButton, refAlert, refPopup, refCost, setShowToggle, refLS, refSummary, refOptimize, refNetworkPalette, refCloudPalette, refSidebar, setShowSelectToggle } = props;
+  const {open, setOpen, showAlertMessages, setAlertMessage, setDiagram, resetAlertMessage, setClickedTab, setIsOpen, setShowSelectToggle } = props;
+  const {refPalette, refDiagram, refButton, refAlert, refPopup, refCost, setShowToggle, refLS, refSummary, refOptimize, refNetworkPalette, refCloudPalette, refSidebar, refSaveButton } = props;
 
   useEffect(() => {},[open, alertMessage, diagram, clickedTab, isOpen]);
 
   const steps = [
-    //0
     {
       id: "initDiagram",
       title: 'Upload File',
       description: 'Put your files here.',
       target: () => refDiagram.current,
     },
-
-    //1
     {
-      id: "alert",
+      id:"palette",
+      placement: "right",
       title: 'Upload File',
       description: 'Put your files here.',
-      target: () => refAlert.current,
+      target: () => refPalette.current,
+    },
+    {
+      id: "button",
+      placement: "right",
+      title: 'Upload File',
+      description: 'Put your files here.',
+      target: () => refButton.current,
+    },
+    {
+      id: "networkPalette",
+      placement: "right",
+      title: 'Upload File',
+      description: 'Put your files here.',
+      target: () => refNetworkPalette.current,
+    },
+    
+    {
+      id: "networkDiagram",
+      placement: "top",
+
+      title: 'Network Diagram',
+      description: 'Put your files here.',
+      target: () => refDiagram.current,
+    },
+    {
+      id: "LS",
+      placement: "right",
+
+      title: 'Upload File',
+      description: 'Put your files here.',
+      target: () => refLS.current,
+    },
+
+    {
+      id: "cloudDiagram",
+      title: 'rehost',
+      description: 'Click to see other actions.',
+      target: () => refDiagram.current,
+    },
+    {
+      id: "cloudPalette",
+      placement: "right",
+
+      title: 'palette를 통해 수정 가능',
+      description: 'Save your changes.',
+
+      target: () => refCloudPalette.current,
     },
     {
       id: "beforeSidebar",
@@ -34,41 +79,28 @@ const TourDraw = (props) => {
     },
     {
       id: "sidebar",
+      placement: "left",
+
       title: 'rehost',
       description: 'Click to see other actions.',
       target: () => refSidebar.current,
     },
-    //2
+    {
+      id: "alert",
+      title: 'Upload File',
+      description: 'Put your files here.',
+      target: () => refAlert.current,
+    },
     {
       id: "alertList",
       title: 'Upload File',
       description: 'Put your files here.',
       // target: () => refDiagram.current,
     },
-    //4
-    {
-      id: "button",
-      title: 'Upload File',
-      description: 'Put your files here.',
-      target: () => refButton.current,
-    },
-    //5
-    {
-      id: "LS",
-      title: 'Upload File',
-      description: 'Put your files here.',
-      target: () => refLS.current,
-    },
-    //6
-    {
-      id: "summary",
-      title: 'Upload File',
-      description: 'Put your files here.',
-      target: () => refSummary.current,
-    },
-    //7
     {
       id: "optimize",
+      placement: "right",
+
       title: 'Upload File',
       description: 'Put your files here.',
       target: () => refOptimize.current,
@@ -76,51 +108,19 @@ const TourDraw = (props) => {
     //8
     {
       id: "popup",
-      title: 'Upload File',
+      title: 'Optimize popup',
       description: 'Put your files here.',
       target: () => refPopup.current,
     },
-    //9
     {
-      id:"palette",
+      id: "optimizeDiagram",
       title: 'Upload File',
-      description: 'Put your files here.',
-      target: () => refPalette.current,
-    },
-    //10
-    {
-      id: "networkPalette",
-      title: 'Upload File',
-      description: 'Put your files here.',
-      target: () => refNetworkPalette.current,
-    },
-    //11
-    {
-      id: "networkDiagram",
-      title: 'Network Diagram',
       description: 'Put your files here.',
       target: () => refDiagram.current,
     },
-    //12
-    {
-      id: "cloudPalette",
-      title: 'network',
-      description: 'Save your changes.',
-
-      target: () => refCloudPalette.current,
-    },
-    //13
-    {
-      id: "cloudDiagram",
-      title: 'rehost',
-      description: 'Click to see other actions.',
-      target: () => refDiagram.current,
-    },
-
-    //14
     {
       id: "costDiagram",
-      title: 'Other Actions',
+      title: '비용 산정은 이 4개의 리소스를 지원합니다.',
       description: 'Click to see other actions.',
       target: () => refDiagram.current,
     },
@@ -130,31 +130,39 @@ const TourDraw = (props) => {
       description: 'Click to see other actions.',
       target: () => refCost.current,
     },
+    {
+      id: "summary",      
+      placement: "right",
+
+      title: '이 버튼으로 확인 가능',
+      description: 'Put your files here.',
+      target: () => refSummary.current,
+    },
+    {
+      id: "saveButton",
+      placement: "left",
+
+      title: '저장 후 Mypage에서 가이드 확인 가능',
+      description: 'Put your files here.',
+      target: () => refSaveButton.current,
+    },
   ];
 
-  const [sidebarShouldOpen, setSidebarShouldOpen] = useState(false);
-
-  useEffect(() => {
-    if (sidebarShouldOpen) {
-      const timer = setTimeout(() => {
-        setIsOpen(true);
-        setSidebarShouldOpen(false);
-      }, 300); // Delay to match the sidebar animation duration
-
-      return () => clearTimeout(timer);
-    }
-  }, [sidebarShouldOpen, setIsOpen]);
   const handleStepChange = async (s) => {
     const step = steps[s];
   
       switch (step.id) {   
-        case "initDiagram":
-          break;
+
       case "beforeSidebar":
+        setClickedTab(["Network_icon", "Compute"]);
         setIsOpen(true);
         break;
+        case "popup":
+          setIsPopup(true);
+          break;
       case "alert":
         addAlertMessage();
+        setIsOpen(false);
         break;
       case "alertList":
         showAlertMessages();
@@ -166,11 +174,19 @@ const TourDraw = (props) => {
         setClickedTab(["Network_icon", "Compute"]);
         break;
       case "networkDiagram":
-        setDiagram("/assets/json/network.json");
+        setDiagram("/assets/json/network_diagram.json");
         break;
       case "cloudDiagram":
-        setDiagram("/assets/json/rehost.json");
-        setClickedTab(["Network_icon", "Compute"]);
+        setDiagram("/assets/json/cloud_diagram.json");
+        break;
+      case "cloudPalette":
+        break;
+      case "optimize":
+        resetAlertMessage();
+        break;
+      case "optimizeDiagram":
+        setIsPopup(false);
+        setDiagram("/assets/json/optimize.json");
         break;
       case "costDiagram":
         setDiagram("/assets/json/cost.json");
@@ -178,6 +194,10 @@ const TourDraw = (props) => {
       case "costToggle":
         ec2Cost();
         break;  
+        case "saveButton":
+          setDiagram("null");
+          setShowToggle(false);
+          break;
     }
   };
   const addAlertMessage = () => {

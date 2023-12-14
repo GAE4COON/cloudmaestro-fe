@@ -51,6 +51,7 @@ const Palette = memo(
     refNetworkPalette,
     refCloudPalette,
     clickedTab,
+    setClickedTab
   }) => {
     const [nodeDataArray, setNodeDataArray] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
@@ -69,11 +70,11 @@ const Palette = memo(
     };
 
     const onSearch = (value) => {
-      setSelectedTab("Search");
+      setClickedTab(["Search"]);
     };
 
     useEffect(() => {
-      console.log("clickedTab:", clickedTab);
+      console.log("clickedTab!!:", clickedTab);
       clickedTab.forEach((tab) => {
         console.log("ta!!b:", tab);
         setSelectedTabs((prevTabs) => {
@@ -89,38 +90,25 @@ const Palette = memo(
     }, [clickedTab]);
 
     useEffect(() => {
-      console.log("selectedTabs", selectedTabs);
-    }, [selectedTabs]);
-
-    useEffect(() => {
-      console.log(selectedTab);
-    }, [selectedTab]);
+    }, [selectedTab, selectedTabs]);
 
     useEffect(() => {
       setSaveDiagram(diagram);
       if (!savediagram) {
         return;
       }
-      // console.log("diagram change:", savediagram.model.toJson());
-      //console.log("diagramVersion11:", diagramVersion);
     }, [diagramVersion]); // diagramVersion을 의존성 배열에 추가
 
     useEffect(() => {
       const newModulePaletteData = new Map();
 
-      //console.log("filterModule:", filterModule);
-
       filterModule.forEach((sources, key) => {
         const nodes = nodeDataArrayPalette.filter((node) => {
           const included = sources.includes(node.source);
-          // console.log(`Node source: ${node.source}, Included: ${included}`);
-          // console.log(`Node source: ${sources}, Included: ${included}`);
           return included;
         });
         newModulePaletteData.set(key, nodes);
       });
-
-      //console.log("newModulePaletteData:", newModulePaletteData);
 
       setModulePaletteData(newModulePaletteData);
     }, [filterModule]);
@@ -193,7 +181,7 @@ const Palette = memo(
               }
             });
           }
-        }
+        } 
 
         const nodeMap = new Map();
         nodeSet.forEach((nodes, key) => {
