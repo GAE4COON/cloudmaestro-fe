@@ -11,6 +11,14 @@ import {
   checkForKmsNodes,
   checkForDbAccess,
 } from "../components/GuideAlert";
+
+import {
+  checkForSecurityAccess,
+  checkForOpenSearchAccess,
+  checkForS3Access,
+  checkForAthenaAccess
+
+} from "../components/SecurityAlert";
 import { handleSecurity } from "../components/SecurityAlert";
 
 const useGoJS = (
@@ -619,6 +627,20 @@ const useGoJS = (
         setTimeout(() => {
           checkForDbAccess(diagram, setAlertMessage);
         }, 30);
+        setTimeout(() => {
+          checkForS3Access(diagram, setAlertMessage);
+        }, 30);
+        setTimeout(() => {
+          checkForOpenSearchAccess(diagram, setAlertMessage);
+        }, 30);
+        setTimeout(() => {
+          checkForAthenaAccess(diagram, setAlertMessage);
+        }, 30);
+        setTimeout(() => {
+          checkForSecurityAccess(diagram, setAlertMessage);
+        }, 30);
+        
+
       }
     });
 
