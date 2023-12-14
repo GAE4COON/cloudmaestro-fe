@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../../styles/SelectToggle.css";
 import axios from 'axios';
 import { searchDb, searchPrice } from "../../apis/price.js";
+import styled from "styled-components";
 
 const baseOptions = [
     "PostgreSQL",
@@ -80,7 +81,7 @@ function fetchEngineData(dbengine, instanceType, setData, setLoading, setError){
 }
 
 
-const SelectRdsToggle = ({ diagram, uniquekey, finalToggleValue, setFinalToggleValue}) => {
+const SelectRdsToggle = ({ diagram, uniquekey, finalToggleValue, setFinalToggleValue, resourceKey}) => {
   
   const [toggle1Value, setToggle1Value] = useState(null);
   const [toggle2Value, setToggle2Value] = useState(null);
@@ -262,51 +263,110 @@ const SelectRdsToggle = ({ diagram, uniquekey, finalToggleValue, setFinalToggleV
       });
     } 
   };
+  let label = ["Engine", "Instance Type","Size"];
 
-
-  const renderToggle = (index, Select, value, options) => {
+  const renderToggle = (index, label, Select, value, options) => {
     return (
-      <select
-        value={value || ""}
-        onChange={(e) => handleChange(index, e)}
-      >
-        <option value="" >{Select}</option>
-      {options.map((option, idx) => (
-        <option key={idx}>
-          {option}
-        </option>
-      ))}
-    </select>
-      );
-    };
+      <div className="toggle-wrapper">
+        <label>{label}</label>
+        <select
+            className="custom-select"
+            value={value || ""}
+            onChange={(e) => handleChange(index, e)}
+        >
+            <option value="" disabled>{Select}</option>
+            {options.map((option, idx) => (
+                <option key={idx}>
+                    {option}
+                </option>
+            ))}
+        </select>
+      </div>
+    );
+};
+
+  // const renderToggle = (index, label, Select, value, options) => {
+  //   return (
+  //     <div className="toggle-wrapper">
+  //     <label>{label}</label>
+  //     <select
+  //       value={value || ""}
+  //       onChange={(e) => handleChange(index, e)}
+  //     >
+  //       <option value="" >{Select}</option>
+  //     {options.map((option, idx) => (
+  //       <option key={idx}>
+  //         {option}
+  //       </option>
+  //     ))}
+  //   </select>
+  //   </div>
+  //     );
+  //   };
 
   const Item = ({price}) =>{
+    
 
     if(!price || price.length < 1) {
       return null;
     }
     
-    return (
-      <div>
-        {price+"USD / Hour"}
-      </div>
-    );
+    // return (
+    //   <div>
+    //     {price+"USD / Hour"}
+    //   </div>
+    // );
+
+    // 되면 짱
+
+    if(!price || price!="Loading") {
+      const formattedPrice = Number(price).toFixed(3);
+
+      return (
+        <div>
+          ${formattedPrice+"/ Hour"}
+        </div>
+      );
+    }
     
   }
   return (
-    <div className ="ec2">
-      <div className="toggle-component">
-        {renderToggle(0, select[0], toggle1Value, baseOptions)}
-        {renderToggle(1, select[1], toggle2Value, toggle2Options)}
-        {renderToggle(2, select[2], toggle3Value, toggle3Options)}
-        
-        <div className="price">
-          <Item price={price} />
-        </div>
-      </div>
+    <ResourceComponent>
+      <ToggleComponent>
+      <ResourceKey>{resourceKey} 비용산정</ResourceKey>
+
+        <div className="toggle">
+        {renderToggle(0,label[0], select[0], toggle1Value, baseOptions)}
+        {renderToggle(1,label[1],  select[1], toggle2Value, toggle2Options)}
+        {renderToggle(2,label[2], select[2], toggle3Value, toggle3Options)}
+              
+              <div className="price">
+                <Item price={price} />
+              </div>
+            </div>
+      </ToggleComponent>
       
-    </div>
+    </ResourceComponent>
   );
 };
 
 export default React.memo(SelectRdsToggle);
+const ResourceKey = styled.p`
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 5px;
+  font-family: "Noto Sans KR", sans-serif;
+`;
+const ResourceComponent = styled.div`
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+`;
+
+const ToggleComponent = styled.div`
+  padding: 3px 0 3px 5px;
+  background-color: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  border-radius: 5px;  
+  padding: 10px;
+`;

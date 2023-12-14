@@ -1,3 +1,13 @@
+.ant-notification {
+  background-color: transparent; 
+  color: white; /* 텍스트 색상을 흰색으로 설정 (검은 배경에 대비) */
+  /* 필요에 따라 여기에 추가적인 스타일을 정의할 수 있습니다. */
+
+  /* height: 100%; */
+  /* z-index: inherit; */
+}
+
+
 .App {
   text-align: center;
 }
@@ -5,7 +15,7 @@
 .main-content {
   display: flex;
   flex-direction: column;
-  padding-top: 70px;
+  padding-top: 60px;
   min-height: 100vh;
   padding-left:10%;
   padding-right: 10%;
@@ -19,6 +29,7 @@
   margin-top: 35px;
   min-height: 100vh;
 }
+
 
 
 .handler-content {

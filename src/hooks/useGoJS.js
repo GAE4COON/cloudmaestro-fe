@@ -4,16 +4,27 @@ import "../styles/App.css"; // contains .diagram-component CSS
 import handleChangedSelection from "../pages/toggle/toggle";
 import { alertCheck, NodeCheck, GroupCheck } from "../apis/fileAPI";
 import { useData } from "../components/DataContext";
-import { checkForBackupAndS3Nodes, checkForMonitoringNodes, checkForLogAnalysisNodes, checkForKmsNodes, checkForDbAccess } from "../components/GuideAlert";
+import {
+  checkForBackupAndS3Nodes,
+  checkForMonitoringNodes,
+  checkForLogAnalysisNodes,
+  checkForKmsNodes,
+  checkForDbAccess,
+} from "../components/GuideAlert";
+
+import {
+  checkForSecurityAccess,
+  checkForOpenSearchAccess,
+  checkForS3Access,
+  checkForAthenaAccess
+
+} from "../components/SecurityAlert";
 import { handleSecurity } from "../components/SecurityAlert";
 
 const useGoJS = (
   setShowToggle,
   onDiagramChange,
-  // handleguide,
   setAlertMessage
-  // setWarnMessage,
-  // setInfoMessage
 ) => {
   const [diagram, setDiagram] = useState(null);
   const [clickedNodeKey, setClickedNodeKey] = useState();
@@ -55,6 +66,8 @@ const useGoJS = (
     const diagram = $(go.Diagram, {
       "undoManager.isEnabled": true,
       "resizingTool.isGridSnapEnabled": true,
+      initialAutoScale: go.Diagram.Uniform, // Automatically scale the diagram
+      initialContentAlignment: go.Spot.Center,
       "commandHandler.archetypeGroupData": {
         key: "Group",
         text: "Group",
@@ -75,6 +88,7 @@ const useGoJS = (
       model: new go.GraphLinksModel({
         linkKeyProperty: "uniqueLinkId", // Replace with your actual link property
       }),
+
       ModelChanged: async (e) => {
         if (e.isTransactionFinished) {
           const jsonString = e.model.toIncrementalJson(e);
@@ -119,10 +133,10 @@ const useGoJS = (
               };
               if (data.modifiedNodeData) {
                 for (let i = 0; i < data.modifiedNodeData.length; i++) {
-                  // console.log(
-                  //   "현재 modifiedNodeData 요소:",
-                  //   data.modifiedNodeData[i]
-                  // );
+                  console.log(
+                    "현재 modifiedNodeData 요소:",
+                    data.modifiedNodeData[i]
+                  );
                   if (
                     data.modifiedNodeData[i]?.text === "VPC" &&
                     data.modifiedNodeData[i].isGroup === true
@@ -139,7 +153,8 @@ const useGoJS = (
                         tag: "Error",
                       });
                     }
-                  } else if (
+                  }
+                  if (
                     data.modifiedNodeData[i]?.text === "API Gateway"
                     //  ||data.modifiedNodeData[i].type === "Database"
                   ) {
@@ -211,7 +226,8 @@ const useGoJS = (
                       }));
                     }
                   }
-                  if (data.modifiedNodeData[i]?.text === "Database") {
+                  if (data.modifiedNodeData[i]?.type === "Database") {
+                    console.log("Database 호출", data.modifiedNodeData[i]);
                     PostData.checkOption = "Database";
                     PostData.newData = data.modifiedNodeData[i];
                     console.log("NodeCheck 호출");
@@ -221,7 +237,7 @@ const useGoJS = (
                       setAlertMessage((prevAlert) => ({
                         key: Date.now(),
                         message: response.data.result.message,
-                        tag: "Info",
+                        tag: "Warn",
                       }));
                     }
                   }
@@ -565,9 +581,7 @@ const useGoJS = (
     diagram.addDiagramListener("ObjectSingleClicked", function (e) {
       const part = e.subject.part;
       if (part instanceof go.Link) {
-        //console.log("링크가 클릭되었네요");
       } else if (part instanceof go.Node) {
-        //console.log("나는 node 입니다", part.data);
         const key = part.data.key;
         console.log("나는 node data 입니다", part.data);
         if (key) {
@@ -576,6 +590,10 @@ const useGoJS = (
           }
         }
       }
+    });
+
+    diagram.addDiagramListener("InitialLayoutCompleted", (e) => {
+      e.diagram.zoomToFit();
     });
 
     diagram.addDiagramListener("ExternalObjectsDropped", (e) => {
@@ -596,7 +614,7 @@ const useGoJS = (
         onDiagramChange(diagram);
         setTimeout(() => {
           checkForBackupAndS3Nodes(diagram, setAlertMessage);
-        }, 1);
+        }, 30);
         setTimeout(() => {
           checkForMonitoringNodes(diagram, setAlertMessage);
         }, 30);
@@ -609,6 +627,20 @@ const useGoJS = (
         setTimeout(() => {
           checkForDbAccess(diagram, setAlertMessage);
         }, 30);
+        setTimeout(() => {
+          checkForS3Access(diagram, setAlertMessage);
+        }, 30);
+        setTimeout(() => {
+          checkForOpenSearchAccess(diagram, setAlertMessage);
+        }, 30);
+        setTimeout(() => {
+          checkForAthenaAccess(diagram, setAlertMessage);
+        }, 30);
+        setTimeout(() => {
+          checkForSecurityAccess(diagram, setAlertMessage);
+        }, 30);
+        
+
       }
     });
 
@@ -632,6 +664,7 @@ const useGoJS = (
     initDiagram,
     diagram,
     showSelectToggle,
+    setShowSelectToggle,
     clickedNodeKey,
   };
 };

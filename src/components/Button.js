@@ -1,9 +1,10 @@
-import React, { useCallback, useState, useEffect, useMemo } from "react";
+import React, { useCallback, useState, useEffect, useMemo, useRef } from "react";
 import * as go from "gojs";
 import "../styles/Button.css"; // contains .diagram-component CSS
 import { json, useNavigate } from "react-router-dom";
+import TourDraw from "../components/TourDraw.js";
 
-import { rehostRequest, requirementRequest } from "../apis/fileAPI";
+import { rehostRequest, requirementRequest } from "../apis/fileAPI.js";
 import {
   BsGear,
   BsClipboard2Data,
@@ -12,15 +13,17 @@ import {
   BsDownload,
   BsEraser,
   BsPalette, 
-  BsSave,
 } from "react-icons/bs";
 import { Tooltip, message, notification, Space } from "antd";
 import { BsFillImageFill } from "react-icons/bs";
-import { useData } from "../components/DataContext";
+import { useData } from "./DataContext.js";
 import { summaryFile } from "../apis/fileAPI.js";
 import { Modal, Input } from "antd";
 
 const Button = ({
+  refLS,
+  refSummary,
+  refOptimize,
   setIsReset,
   diagram,
   setShowToggle,
@@ -184,7 +187,6 @@ const Button = ({
       console.error("rehost error: ", error);
     }
   };
-
   const onUploadFileChange = (e) => {
     if (e.target.files[0] && e.target.files[0].name.includes("json")) {
       let file = e.target.files[0];
@@ -193,24 +195,35 @@ const Button = ({
       if (lastIndex > 0) {
         fileName = fileName.substring(0, lastIndex);
       }
-      setFileName(fileName);
 
       let fileReader = new FileReader();
       fileReader.readAsText(file);
       fileReader.onload = async () => {
-        let filejson = JSON.parse(fileReader.result);
+        
+      let filejson;  
+      
+        try{
+        filejson = JSON.parse(fileReader.result);
+        }catch(e){
+          message.error("올바른 JSON 파일 형식이 아닙니다.")
+          return;
+          
+        }
+        setFileName(fileName);
+
         if (filejson.hasOwnProperty("cost")) {
           setFinalToggleVal(filejson["cost"]);
         }
         if (fileReader.result && diagram) {
           diagram.model = go.Model.fromJson(fileReader.result);
+          console.log("diagram.model", diagram.model);
           setData(diagram.model.nodeDataArray);
           setShowToggle(true);
           setClickedLoaded(false);
         }
       };
     } else if (e.target.files[0] && !e.target.files[0].name.includes("json")) {
-      message.warning("Json형식의 파일을 넣어주세요.");
+      message.warning("JSON형식의 파일을 넣어주세요.");
     }
     e.target.value = null;
   };
@@ -261,10 +274,10 @@ const Button = ({
     backgroundColor: palette ? 'aliceblue' : 'initial', // palette가 true일 때 파란색 배경
   
   };
+
   return (
     <div>
       <div className="button-container">
-        
       <div className="button-row">
           <Tooltip placement="right" title={"show palette"} arrow={mergedArrow}>
             <button onClick={handlePalette} style={buttonStyle}>
@@ -339,7 +352,7 @@ const Button = ({
             }
             arrow={mergedArrow}
           >
-            <button onClick={handleLiftNShift}>
+            <button onClick={handleLiftNShift} ref={refLS}>
               <BsCloud />
             </button>
           </Tooltip>
@@ -360,8 +373,8 @@ const Button = ({
             }
             arrow={mergedArrow}
           >
-            <button onClick={handleSummary}>
-              <BsClipboard2Data />
+            <button onClick={handleSummary} ref={refSummary} >
+              <BsClipboard2Data/>
             </button>
           </Tooltip>
         </div>
@@ -380,8 +393,8 @@ const Button = ({
             }
             arrow={mergedArrow}
           >
-            <button onClick={handleOptimize}>
-              <BsGear />
+            <button onClick={handleOptimize}  ref={refOptimize}>
+              <BsGear/>
             </button>
           </Tooltip>
         </div>
