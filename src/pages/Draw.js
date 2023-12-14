@@ -62,6 +62,7 @@ function Draw() {
     tag: null,
   });
   const [tourDraw, setTourDraw] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const [handleMessageQueue, setHandleMessageQueue] = useState([]);
 
@@ -430,6 +431,7 @@ function Draw() {
   const setDiagram = async (type) => {
     diagram.clear();
     console.log(type);
+
     try {
       const response = await fetch(type);
       const filejson = await response.json();
@@ -439,6 +441,11 @@ function Draw() {
         console.log("filejson cost", filejson["cost"]);
         setFinalToggleValue(filejson["cost"]);
       }
+
+      
+        setData(diagram.model.nodeDataArray);
+      
+
     } catch (error) {
       console.error("Error fetching file:", error);
     }
@@ -457,36 +464,28 @@ function Draw() {
   const refCloudPalette = useRef(null);
   const refPopup = useRef(null);
   const refCost = useRef(null);
+  const refSidebar = useRef(null);
+  const refSaveButton = useRef(null);
 
-  const funcProps = {
-    setClickedTab,
-    showAlertMessages,
-    setAlertMessage,
-    resetAlertMessage,
-    setDiagram,
-    setIsPopup,
-    setShowSelectToggle,
-    setShowToggle,
-  };
-  const refProps = {
-    refPalette,
-    refDiagram,
-    refButton,
-    refAlert,
-    refLS,
-    refSummary,
-    refOptimize,
-    refNetworkPalette,
-    refCloudPalette,
-    refPopup,
-    refCost,
-  };
+  const stateProps = {alertMessage, diagram, clickedTab, isOpen };
+  const funcProps = {setClickedTab, showAlertMessages, setAlertMessage, resetAlertMessage, setDiagram, setIsPopup, setShowSelectToggle, setShowToggle, setIsOpen};
+  const refProps = {refPalette, refDiagram, refButton, refAlert, refLS, refSummary, refOptimize, refNetworkPalette, refCloudPalette, refPopup, refCost, refSaveButton, refSidebar};
+
+  useEffect(() => {}, [clickedTab, diagram, isOpen]);
+
+
+  const handleTourDraw = () => {
+    setDiagram("null");
+    setClickedTab([...clickedTab]);
+    setTourDraw(!tourDraw);
+  }
 
   return (
     <DrawWorkSpace>
       <TourDraw
         open={tourDraw}
         setOpen={setTourDraw}
+        {...stateProps}
         {...funcProps}
         {...refProps}
       />
@@ -498,6 +497,7 @@ function Draw() {
         <PaletteContainer ref={refPalette}>
           <Palette
             clickedTab={clickedTab}
+            setClickedTab={setClickedTab}
             diagram={mydiagram}
             diagramVersion={diagramVersion}
             refNetworkPalette={refNetworkPalette}
@@ -566,6 +566,7 @@ function Draw() {
           </DiagramTopLeft>
           <DiagramTopRight>
             <Button
+            ref={refSaveButton}
               type="primary"
               onClick={handleSaveDiagram}
               style={{ marginLeft: "5px", marginBottom: "5px" }}
@@ -574,7 +575,7 @@ function Draw() {
             </Button>
             <Button
               type="primary"
-              onClick={() => setTourDraw(true)}
+              onClick={() => handleTourDraw()}
               style={{ marginLeft: "5px", marginBottom: "5px" }}
             >
               Tour
@@ -613,14 +614,29 @@ function Draw() {
       ) : (
         ""
       )}
-      <SidebarContainer>
-        <Sidebar />
+      <SidebarContainer 
+            ref={refSidebar} 
+      >
+        <Sidebar  
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          
+        />
       </SidebarContainer>
     </DrawWorkSpace>
   );
 }
 
 export default Draw;
+const SidebarContainer = styled.div`
+  position: absolute;
+  right: 0;
+  /* width: %; */
+  /* height: 100%; */
+  z-index: 20;
+  /* height: 60vh; */
+`
+
 const CostContainer = styled.div`
   position: fixed;
   z-index: 23;
@@ -651,16 +667,7 @@ const ButtonContainer = styled.div`
     `
   `}
 `;
-const SidebarContainer = styled.div`
-  /* background-color: red; */
-  /* position: relative; */
-  /* width: 20%; */
-  flex: 0.25;
-  height: 100%;
-  z-index: 20;
-  height: 100%;
-  height: 89vh;
-`;
+
 
 const PaletteContainer = styled.div`
   float: left;
@@ -748,19 +755,21 @@ const StyledButton = styled.div`
   }
 `;
 const DiagramContainer = styled.div`
-  /* position: relative; */
-  /* display: inline; */
-  flex: 4;
-  height: calc(100% - 70px);
 
   ${(props) =>
     props.palette &&
     `
+    flex: 4;
+  height: calc(100% - 70px);
+  margin-right: 4%
+
   `}
   ${(props) =>
     !props.palette &&
-    `
-    margin-left: 5%;
-
-  `}
+    `  
+    flex: 1;
+    height: calc(100% - 70px);
+    margin-right: 4%
+  `
+  }
 `;
