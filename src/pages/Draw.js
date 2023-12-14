@@ -18,7 +18,6 @@ import { Alert, Space, Modal, Input } from "antd";
 import { saveDiagram, updateDiagram } from "../apis/fileAPI";
 import "../styles/App.css";
 
-
 // 페이지
 // import useReadJSON from "./useReadJSON";
 import ModalButton from "../components/Button.js";
@@ -88,7 +87,7 @@ function Draw() {
   const info = location.state ? location.state.info : null;
   const save = location.state ? location.state.save : false;
   const onpremise = location.state ? location.state.file : null;
-  useEffect(() => { }, [diagramVersion]); // Dependency on diagramVersion
+  useEffect(() => {}, [diagramVersion]); // Dependency on diagramVersion
 
   // const [nodeRole, setNodeRole] = useState({});
 
@@ -104,7 +103,13 @@ function Draw() {
   // const handleguide = useCallback((guide) => {
   //   setNodeGuide(guide);
   // });
-  const { initDiagram, diagram, showSelectToggle,setShowSelectToggle, clickedNodeKey } = useGoJS(
+  const {
+    initDiagram,
+    diagram,
+    showSelectToggle,
+    setShowSelectToggle,
+    clickedNodeKey,
+  } = useGoJS(
     setShowToggle,
     handleDiagramChange,
     // handleguide,
@@ -157,7 +162,6 @@ function Draw() {
     setIsSidebarOpen(!isSidebarOpen);
     return setIsPopup(!isPopup);
   };
-
 
   const handlePopupChange = (newPopupState) => {
     setIsPopup(newPopupState);
@@ -259,7 +263,7 @@ function Draw() {
   const resetAlertMessage = () => {
     api.destroy();
     removeMessageFromQueue(-1);
-  }
+  };
 
   useEffect(() => {
     if (isReset) {
@@ -288,7 +292,7 @@ function Draw() {
   };
 
   const showAlertMessages = () => {
-    console.log("refAlert")
+    console.log("refAlert");
     if (areNotificationsShown) {
       // Hide notifications
       api.destroy();
@@ -411,9 +415,9 @@ function Draw() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('/assets/json/network.json');
+        const response = await fetch("/assets/json/network.json");
         const filejson = await response.json();
-        console.log("filejson" ,filejson);
+        console.log("filejson", filejson);
         setJsonData(filejson); // Store the JSON data in state
       } catch (error) {
         console.error("Error fetching file:", error);
@@ -421,28 +425,27 @@ function Draw() {
     };
 
     fetchData();
-  },[])
+  }, []);
 
   const setDiagram = async (type) => {
     diagram.clear();
-    console.log(type)
+    console.log(type);
     try {
       const response = await fetch(type);
       const filejson = await response.json();
       console.log("filejson", filejson);
       diagram.model = go.Model.fromJson(filejson);
       if (filejson.hasOwnProperty("cost")) {
-        console.log("filejson cost", filejson["cost"])
+        console.log("filejson cost", filejson["cost"]);
         setFinalToggleValue(filejson["cost"]);
       }
-
     } catch (error) {
       console.error("Error fetching file:", error);
-    } 
-  }
-  
+    }
+  };
+
   const [clickedTab, setClickedTab] = useState([]);
-  
+
   const refPalette = useRef(null);
   const refDiagram = useRef(null);
   const refButton = useRef(null);
@@ -455,29 +458,44 @@ function Draw() {
   const refPopup = useRef(null);
   const refCost = useRef(null);
 
-  const funcProps = {setClickedTab, showAlertMessages, setAlertMessage, resetAlertMessage, setDiagram, setIsPopup, setShowSelectToggle, setShowToggle};
-  const refProps = {refPalette, refDiagram, refButton, refAlert, refLS, refSummary, refOptimize, refNetworkPalette, refCloudPalette, refPopup, refCost};
-
+  const funcProps = {
+    setClickedTab,
+    showAlertMessages,
+    setAlertMessage,
+    resetAlertMessage,
+    setDiagram,
+    setIsPopup,
+    setShowSelectToggle,
+    setShowToggle,
+  };
+  const refProps = {
+    refPalette,
+    refDiagram,
+    refButton,
+    refAlert,
+    refLS,
+    refSummary,
+    refOptimize,
+    refNetworkPalette,
+    refCloudPalette,
+    refPopup,
+    refCost,
+  };
 
   return (
     <DrawWorkSpace>
-
       <TourDraw
         open={tourDraw}
         setOpen={setTourDraw}
         {...funcProps}
         {...refProps}
       />
-      <div className="ant-notification" >
-      {contextHolder}
-      </div>
+      <div className="ant-notification">{contextHolder}</div>
       {/* </div> */}
 
       {/* <div className="ant-notification"></div> */}
       {palette && !isExiting && (
-        <PaletteContainer
-          ref={refPalette}
-        >
+        <PaletteContainer ref={refPalette}>
           <Palette
             clickedTab={clickedTab}
             diagram={mydiagram}
@@ -487,53 +505,50 @@ function Draw() {
           />
         </PaletteContainer>
       )}
-      <ButtonContainer palette={palette} ref={refButton}>
-        <ModalButton 
-          refLS={refLS}
-          refSummary={refSummary}
-          refOptimize={refOptimize}
-          setIsReset={setIsReset}
-          diagram={diagram}
-          showToggle={showToggle}
-          setShowToggle={setShowToggle}
-          isSave={isSave}
-          handleSaveDiagram={handleSaveDiagram}
-          setIsSave={setIsSave}
-          setFileName={setFileName}
-          fileName={fileName}
-          finalToggleValue={finalToggleValue}
-          setFinalToggleValue={setFinalToggleValue}
-          onPopupChange={handlePopupChange}
-          setPalette={setPalette}
-          palette={palette}
-        />
-              
-      </ButtonContainer>
-      
 
-      
       <DiagramContainer palette={palette}>
-      <CostContainer ref={refCost}>
-        <CostToggle
-  
-          diagram={diagram}
-          showToggle={showToggle}
-          showSelectToggle={showSelectToggle}
-          finalToggleValue={finalToggleValue}
-          setFinalToggleValue={setFinalToggleValue}
-          onToggleSelect={handleNodeSelect}
-          readOnly
-
+        <ButtonContainer palette={palette} ref={refButton}>
+          <ModalButton
+            refLS={refLS}
+            refSummary={refSummary}
+            refOptimize={refOptimize}
+            setIsReset={setIsReset}
+            diagram={diagram}
+            showToggle={showToggle}
+            setShowToggle={setShowToggle}
+            isSave={isSave}
+            handleSaveDiagram={handleSaveDiagram}
+            setIsSave={setIsSave}
+            setFileName={setFileName}
+            fileName={fileName}
+            finalToggleValue={finalToggleValue}
+            setFinalToggleValue={setFinalToggleValue}
+            onPopupChange={handlePopupChange}
+            setPalette={setPalette}
+            palette={palette}
           />
-</CostContainer>
+        </ButtonContainer>
+
+        <CostContainer ref={refCost}>
+          <CostToggle
+            diagram={diagram}
+            showToggle={showToggle}
+            showSelectToggle={showSelectToggle}
+            finalToggleValue={finalToggleValue}
+            setFinalToggleValue={setFinalToggleValue}
+            onToggleSelect={handleNodeSelect}
+            readOnly
+          />
+        </CostContainer>
         <DiagramTop>
           <DiagramTopLeft>
             <FileName>파일 이름: {fileName}</FileName>
             <StyledAlertBadge
               count={messageQueue.length}
               onClick={showAlertMessages}
-            > 
-              <Avatar ref={refAlert}
+            >
+              <Avatar
+                ref={refAlert}
                 style={{
                   backgroundColor: "transparent",
                   verticalAlign: "middle",
@@ -554,11 +569,8 @@ function Draw() {
             <StyledButton type="primary" onClick={() => setTourDraw(true)}>
               Tour
             </StyledButton>
-            
           </DiagramTopRight>
         </DiagramTop>
-
-     
 
         <Modal
           title="저장할 파일의 이름을 입력하세요."
@@ -574,21 +586,19 @@ function Draw() {
         </Modal>
 
         <StyledDiagram ref={refDiagram}>
-        
           <ReactDiagram
             initDiagram={initDiagram}
-            divClassName={diagramClassName}/>
+            divClassName={diagramClassName}
+          />
         </StyledDiagram>
-
       </DiagramContainer>
 
-      
       {isPopup ? (
-        <RequirementPopup 
+        <RequirementPopup
           diagram={diagram}
           fileName={fileName}
           handlePopup={handlePopup}
-          refPopup = {refPopup}
+          refPopup={refPopup}
         />
       ) : (
         ""
@@ -596,9 +606,7 @@ function Draw() {
       <SidebarContainer>
         <Sidebar />
       </SidebarContainer>
-
     </DrawWorkSpace>
-
   );
 }
 
@@ -606,8 +614,8 @@ export default Draw;
 const CostContainer = styled.div`
   position: fixed;
   z-index: 23;
-  left: 50%; 
-  transform: translateX(-22%); 
+  left: 50%;
+  transform: translateX(-22%);
   align-items: center;
   top: 120px;
   /* width: 500px; */
@@ -619,17 +627,19 @@ const ButtonContainer = styled.div`
   /* height: 100%; */
   position: absolute;
   margin-top: 40px;
-  margin-left: 1%;
   z-index: 20;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   /* border: 10px solid #bbbbda; */
-  ${props => props.palette && `
-  margin-left: 20%;
+  ${(props) =>
+    props.palette &&
+    `
+  margin-left: 0%;
   `}
-  ${props => !props.palette && `
+  ${(props) =>
+    !props.palette &&
+    `
   `}
-
 `;
 const SidebarContainer = styled.div`
   /* background-color: red; */
@@ -640,19 +650,20 @@ const SidebarContainer = styled.div`
   z-index: 20;
   height: 100%;
   height: 89vh;
-`
+`;
 
 const PaletteContainer = styled.div`
   float: left;
-flex: 1;
-  `;
+  flex: 1;
+`;
 
 const DrawWorkSpace = styled.div`
-margin-left: 10px;
+  // margin-left: 10px;
   display: flex;
-  padding-top: 80px;
+  padding-top: 10vh;
   align-items: stretch;
   width: 100%;
+  height: 90vh;
 `;
 
 const StyledAlertBadge = styled(Badge)`
@@ -664,12 +675,10 @@ const StyledAlertBadge = styled(Badge)`
   z-index: 21;
 `;
 
-
 const DiagramTop = styled.div`
   display: flex;
   width: 100%;
   align-items: center;
-
 `;
 
 const FileName = styled.div`
@@ -690,16 +699,16 @@ const DiagramTopLeft = styled.div`
 `;
 
 const DiagramTopRight = styled.div`
-  z-index: 20;  
+  z-index: 20;
   display: flex;
 `;
 const StyledDiagram = styled.div`
-/* border: 1px solid red; */
+  /* border: 1px solid red; */
   /* float: left; */
   /* margin-top: 3?0px; */
   /* width: 100%; */
   /* height: 100%; */
-  height: 80vh; 
+  height: 80vh;
 `;
 
 const StyledButton = styled.div`
@@ -734,10 +743,13 @@ const DiagramContainer = styled.div`
   flex: 4;
   height: calc(100% - 70px);
 
-  
-  ${props => props.palette && `
+  ${(props) =>
+    props.palette &&
+    `
   `}
-  ${props => !props.palette && `
+  ${(props) =>
+    !props.palette &&
+    `
     margin-left: 5%;
 
   `}
