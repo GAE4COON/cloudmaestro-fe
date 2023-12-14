@@ -44,359 +44,350 @@ const tabs = [
   "AWS_Groups",
 ];
 
-const Palette = memo(({ diagram, diagramVersion, refNetworkPalette, refCloudPalette, clickedTab }) => {
-  const [nodeDataArray, setNodeDataArray] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedTab, setSelectedTab] = useState("");
-  const [filteredNodes, setFilteredNodes] = useState(new Map());
-  const paletteDivs = useRef({});
+const Palette = memo(
+  ({
+    diagram,
+    diagramVersion,
+    refNetworkPalette,
+    refCloudPalette,
+    clickedTab,
+  }) => {
+    const [nodeDataArray, setNodeDataArray] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [selectedTab, setSelectedTab] = useState("");
+    const [filteredNodes, setFilteredNodes] = useState(new Map());
+    const paletteDivs = useRef({});
 
-  const [savediagram, setSaveDiagram] = useState(null);
-  const [filterModule, setFilterModule] = useState([]);
-  const [modulePaletteData, setModulePaletteData] = useState(new Map());
-  const [myPalette, setMyPalette] = useState([]);
- const [selectedTabs, setSelectedTabs] = useState([""]);
+    const [savediagram, setSaveDiagram] = useState(null);
+    const [filterModule, setFilterModule] = useState([]);
+    const [modulePaletteData, setModulePaletteData] = useState(new Map());
+    const [myPalette, setMyPalette] = useState([]);
+    const [selectedTabs, setSelectedTabs] = useState([""]);
 
-  const onChange = (e) => {
-    setSearchTerm(e.target.value);
-  };
+    const onChange = (e) => {
+      setSearchTerm(e.target.value);
+    };
 
-  const onSearch = (value) => {
-    setSelectedTab("Search");
-  };
+    const onSearch = (value) => {
+      setSelectedTab("Search");
+    };
 
-  useEffect(() => {
-    console.log("clickedTab:", clickedTab);
-    clickedTab.forEach(tab => {
-      console.log("ta!!b:", tab)   
-      setSelectedTabs((prevTabs) => {
-        if (prevTabs.includes(tab)) {
-          // 이미 선택된 탭이면 제거
-          return prevTabs.filter(t => t !== tab);
-        } else {
-          // 새로운 탭을 추가
-          return [...prevTabs, tab];
-        }
-      })
-    });
-
-
-  }, [clickedTab]);
-
-  useEffect(() => {
-    console.log("selectedTabs", selectedTabs);
-  }, [selectedTabs])
-
-  useEffect(() => {
-    console.log(selectedTab);
-  }, [selectedTab]);
-
-  useEffect(() => {
-    setSaveDiagram(diagram);
-    if (!savediagram) {
-      return;
-    }
-    // console.log("diagram change:", savediagram.model.toJson());
-    //console.log("diagramVersion11:", diagramVersion);
-  }, [diagramVersion]); // diagramVersion을 의존성 배열에 추가
-
-  useEffect(() => {
-    const newModulePaletteData = new Map();
-
-    //console.log("filterModule:", filterModule);
-
-    filterModule.forEach((sources, key) => {
-      const nodes = nodeDataArrayPalette.filter((node) => {
-        const included = sources.includes(node.source);
-        // console.log(`Node source: ${node.source}, Included: ${included}`);
-        // console.log(`Node source: ${sources}, Included: ${included}`);
-        return included;
+    useEffect(() => {
+      console.log("clickedTab:", clickedTab);
+      clickedTab.forEach((tab) => {
+        console.log("ta!!b:", tab);
+        setSelectedTabs((prevTabs) => {
+          if (prevTabs.includes(tab)) {
+            // 이미 선택된 탭이면 제거
+            return prevTabs.filter((t) => t !== tab);
+          } else {
+            // 새로운 탭을 추가
+            return [...prevTabs, tab];
+          }
+        });
       });
-      newModulePaletteData.set(key, nodes);
-    });
+    }, [clickedTab]);
 
-    //console.log("newModulePaletteData:", newModulePaletteData);
+    useEffect(() => {
+      console.log("selectedTabs", selectedTabs);
+    }, [selectedTabs]);
 
-    setModulePaletteData(newModulePaletteData);
-  }, [filterModule]);
+    useEffect(() => {
+      console.log(selectedTab);
+    }, [selectedTab]);
 
-  useEffect(() => {
-    if (!savediagram) {
-      return;
-    }
+    useEffect(() => {
+      setSaveDiagram(diagram);
+      if (!savediagram) {
+        return;
+      }
+      // console.log("diagram change:", savediagram.model.toJson());
+      //console.log("diagramVersion11:", diagramVersion);
+    }, [diagramVersion]); // diagramVersion을 의존성 배열에 추가
 
-    const diagramDataStr = savediagram.model.toJson();
-    const diagramData = JSON.parse(diagramDataStr);
-    const GroupData = [];
+    useEffect(() => {
+      const newModulePaletteData = new Map();
 
-    // console.log("diagramData:", diagramData);
+      //console.log("filterModule:", filterModule);
 
-    try {
-      for (let i = 0; i < diagramData.nodeDataArray.length; i++) {
-        let nodeData = diagramData.nodeDataArray[i];
-        if (nodeData.isGroup === true) {
-          GroupData.push(nodeData);
-        }
+      filterModule.forEach((sources, key) => {
+        const nodes = nodeDataArrayPalette.filter((node) => {
+          const included = sources.includes(node.source);
+          // console.log(`Node source: ${node.source}, Included: ${included}`);
+          // console.log(`Node source: ${sources}, Included: ${included}`);
+          return included;
+        });
+        newModulePaletteData.set(key, nodes);
+      });
+
+      //console.log("newModulePaletteData:", newModulePaletteData);
+
+      setModulePaletteData(newModulePaletteData);
+    }, [filterModule]);
+
+    useEffect(() => {
+      if (!savediagram) {
+        return;
       }
 
-      const result = new Set();
-      const resultSet = new Map();
-      const nodeSet = new Map();
+      const diagramDataStr = savediagram.model.toJson();
+      const diagramData = JSON.parse(diagramDataStr);
+      const GroupData = [];
 
-      GroupData.forEach((item) => {
-        if (typeof item.key === "string") {
-          const match = item.key.match(/Module BP(\d+)$/);
-          if (match) {
-            if (!resultSet.has(item.key)) {
-              resultSet.set(item.key, new Set());
-              nodeSet.set(item.key, new Set());
-            }
-            resultSet.get(item.key).add(item.key);
+      // console.log("diagramData:", diagramData);
+
+      try {
+        for (let i = 0; i < diagramData.nodeDataArray.length; i++) {
+          let nodeData = diagramData.nodeDataArray[i];
+          if (nodeData.isGroup === true) {
+            GroupData.push(nodeData);
           }
         }
-      });
 
-      resultSet.forEach((set, key) => {
-        let previousSize = 0;
-        let currentSize = set.size;
-        console.log("set:", set);
-        console.log("key:", key);
+        const result = new Set();
+        const resultSet = new Map();
+        const nodeSet = new Map();
 
-        while (previousSize !== currentSize) {
-          previousSize = currentSize;
-
-          GroupData.forEach((groupItem) => {
-            if (typeof groupItem.group === "string") {
-              set.forEach((setItem) => {
-                if (groupItem.group === setItem) {
-                  set.add(groupItem.key);
-                }
-              });
+        GroupData.forEach((item) => {
+          if (typeof item.key === "string") {
+            const match = item.key.match(/Module BP(\d+)$/);
+            if (match) {
+              if (!resultSet.has(item.key)) {
+                resultSet.set(item.key, new Set());
+                nodeSet.set(item.key, new Set());
+              }
+              resultSet.get(item.key).add(item.key);
             }
-          });
+          }
+        });
 
-          currentSize = set.size;
+        resultSet.forEach((set, key) => {
+          let previousSize = 0;
+          let currentSize = set.size;
+          console.log("set:", set);
+          console.log("key:", key);
+
+          while (previousSize !== currentSize) {
+            previousSize = currentSize;
+
+            GroupData.forEach((groupItem) => {
+              if (typeof groupItem.group === "string") {
+                set.forEach((setItem) => {
+                  if (groupItem.group === setItem) {
+                    set.add(groupItem.key);
+                  }
+                });
+              }
+            });
+
+            currentSize = set.size;
+          }
+        });
+
+        for (let i = 0; i < diagramData.nodeDataArray.length; i++) {
+          let nodeData = diagramData.nodeDataArray[i];
+          if (nodeData.source !== null) {
+            resultSet.forEach((set, key) => {
+              if (nodeData.group && set.has(nodeData.group)) {
+                nodeSet.get(key).add(nodeData); // nodeSet의 해당 Set에 nodeData 추가
+              }
+            });
+          }
         }
-      });
 
-      for (let i = 0; i < diagramData.nodeDataArray.length; i++) {
-        let nodeData = diagramData.nodeDataArray[i];
-        if (nodeData.source !== null) {
-          resultSet.forEach((set, key) => {
-            if (nodeData.group && set.has(nodeData.group)) {
-              nodeSet.get(key).add(nodeData); // nodeSet의 해당 Set에 nodeData 추가
-            }
-          });
-        }
+        const nodeMap = new Map();
+        nodeSet.forEach((nodes, key) => {
+          const sourcesSet = new Set(
+            Array.from(nodes).map((node) => node.source)
+          );
+          const sources = Array.from(sourcesSet); // Set을 다시 배열로 변환
+          nodeMap.set(key, sources); // 변환된 배열을 nodeMap에 저장
+        });
+
+        //console.log("nodeMap:", nodeMap);
+        setFilterModule(nodeMap);
+      } catch (error) {
+        console.log(error);
       }
+    }, [savediagram, diagramVersion]);
 
-      const nodeMap = new Map();
-      nodeSet.forEach((nodes, key) => {
-        const sourcesSet = new Set(
-          Array.from(nodes).map((node) => node.source)
-        );
-        const sources = Array.from(sourcesSet); // Set을 다시 배열로 변환
-        nodeMap.set(key, sources); // 변환된 배열을 nodeMap에 저장
-      });
+    useEffect(() => {
+      selectedTabs.forEach((sTab) => {
+        const $ = go.GraphObject.make;
 
-      //console.log("nodeMap:", nodeMap);
-      setFilterModule(nodeMap);
-    } catch (error) {
-      console.log(error);
-    }
-  }, [savediagram, diagramVersion]);
+        let myPalette = $(go.Palette, {
+          "undoManager.isEnabled": true,
+          "animationManager.isEnabled": false,
+          model: new go.GraphLinksModel(nodeDataArray),
+        });
 
-
-
-
-
-
-  useEffect(() => {
-    selectedTabs.forEach((sTab) => {
-
-
-    const $ = go.GraphObject.make;
-
-    let myPalette = $(go.Palette, {
-      "undoManager.isEnabled": true,
-      "animationManager.isEnabled": false,
-      model: new go.GraphLinksModel(nodeDataArray),
-    });
-
-    myPalette.nodeTemplate = $(
-      go.Node,
-      "Auto",
-
-      $(
-        go.Panel,
-        "Vertical",
-
-        $(
-          go.Picture,
-          { margin: 5, width: 50, height: 50, background: "transparent" },
-          new go.Binding("source")
-        ),
-
-        $(
-          go.TextBlock,
-          {
-            alignment: go.Spot.BottomCenter,
-            font: "bold 10pt Noto Sans KR",
-            width: 80, // 예를 들어, 최대 너비를 100픽셀로 설정
-            overflow: go.TextBlock.WrapFit, // 너비를 초과하는 텍스트를 래핑
-            textAlign: "center",
-          },
-          new go.Binding("text", "text")
-        )
-      )
-    );
-
-    function computeStroke(data) {
-      // source가 있으면 테두리를 표시하지 않음
-      if (data.source) {
-        return "transparent";
-      }
-      // source가 없으면 노드 데이터의 stroke 값을 사용하거나, 기본값으로 "grey"를 사용함
-      return data.stroke || "grey";
-    }
-
-    myPalette.groupTemplate = $(
-      go.Group,
-      "Auto",
-      $(
-        go.Panel,
-        "Vertical",
-        $(
-          go.Panel,
+        myPalette.nodeTemplate = $(
+          go.Node,
           "Auto",
 
           $(
-            go.Shape,
-            "Rectangle",
-            {
-              width: 47,
-              height: 47,
-              fill: "transparent",
-              strokeWidth: 3,
-            },
-            new go.Binding("stroke", "", computeStroke)
-          ),
-          $(
-            go.Picture,
-            { margin: 5, width: 50, height: 50 },
-            new go.Binding("source")
+            go.Panel,
+            "Vertical",
+
+            $(
+              go.Picture,
+              { margin: 5, width: 50, height: 50, background: "transparent" },
+              new go.Binding("source")
+            ),
+
+            $(
+              go.TextBlock,
+              {
+                alignment: go.Spot.BottomCenter,
+                font: "bold 10pt Noto Sans KR",
+                width: 70, // 예를 들어, 최대 너비를 100픽셀로 설정
+                overflow: go.TextBlock.WrapFit, // 너비를 초과하는 텍스트를 래핑
+                textAlign: "center",
+              },
+              new go.Binding("text", "text")
+            )
           )
-        ),
-        $(
-          go.TextBlock,
-          {
+        );
+
+        function computeStroke(data) {
+          // source가 있으면 테두리를 표시하지 않음
+          if (data.source) {
+            return "transparent";
+          }
+          // source가 없으면 노드 데이터의 stroke 값을 사용하거나, 기본값으로 "grey"를 사용함
+          return data.stroke || "grey";
+        }
+
+        myPalette.groupTemplate = $(
+          go.Group,
+          "Auto",
+          $(
+            go.Panel,
+            "Vertical",
+            $(
+              go.Panel,
+              "Auto",
+
+              $(
+                go.Shape,
+                "Rectangle",
+                {
+                  width: 47,
+                  height: 47,
+                  fill: "transparent",
+                  strokeWidth: 3,
+                },
+                new go.Binding("stroke", "", computeStroke)
+              ),
+              $(
+                go.Picture,
+                { margin: 5, width: 50, height: 50 },
+                new go.Binding("source")
+              )
+            ),
+            $(
+              go.TextBlock,
+              {
+                alignment: go.Spot.BottomCenter,
+                font: "bold 10pt Noto Sans KR",
+                width: 80,
+                overflow: go.TextBlock.WrapFit,
+                textAlign: "center",
+              },
+              new go.Binding("text", "key")
+            )
+          ),
+          $(go.TextBlock, {
             alignment: go.Spot.BottomCenter,
-            font: "bold 10pt Noto Sans KR",
-            width: 80,
-            overflow: go.TextBlock.WrapFit,
-            textAlign: "center",
-          },
-          new go.Binding("text", "key")
-        )
-      ),
-      $(go.TextBlock, {
-        alignment: go.Spot.BottomCenter,
-        margin: 3, // 마진을 추가하여 텍스트가 겹치지 않도록 조정
-        font: "10pt Noto Sans KR",
-      })
-    );
+            margin: 3, // 마진을 추가하여 텍스트가 겹치지 않도록 조정
+            font: "10pt Noto Sans KR",
+          })
+        );
 
-    if (paletteDivs.current[sTab]) {
-      myPalette.div = paletteDivs.current[sTab];
-    }
-    let dataToUse;
+        if (paletteDivs.current[sTab]) {
+          myPalette.div = paletteDivs.current[sTab];
+        }
+        let dataToUse;
 
-    if (modulePaletteData.has(sTab)) {
-      dataToUse = modulePaletteData.get(sTab);
-    } else {
-      dataToUse = nodeDataArrayPalette.filter(
-        (item) => item.type === sTab
-      );
-    }
+        if (modulePaletteData.has(sTab)) {
+          dataToUse = modulePaletteData.get(sTab);
+        } else {
+          dataToUse = nodeDataArrayPalette.filter((item) => item.type === sTab);
+        }
 
-    let dataToSearch = nodeDataArrayPalette;
-    if (searchTerm) {
-      dataToSearch = dataToSearch.filter((item) => {
-        return formatKey(item.key)
-          .toLowerCase()
-          .includes(searchTerm.toLowerCase());
+        let dataToSearch = nodeDataArrayPalette;
+        if (searchTerm) {
+          dataToSearch = dataToSearch.filter((item) => {
+            return formatKey(item.key)
+              .toLowerCase()
+              .includes(searchTerm.toLowerCase());
+          });
+          setFilteredNodes(dataToSearch);
+          myPalette.model.nodeDataArray = dataToSearch;
+        } else {
+          setFilteredNodes([]);
+          myPalette.model.nodeDataArray = dataToUse;
+        }
       });
-      setFilteredNodes(dataToSearch);
-      myPalette.model.nodeDataArray = dataToSearch;
-    } else {
-      setFilteredNodes([]);
-      myPalette.model.nodeDataArray = dataToUse;
-    }
-
-  });
-    return () => {
-      myPalette.div = null;
+      return () => {
+        myPalette.div = null;
+      };
+    }, [selectedTab, searchTerm, modulePaletteData, selectedTabs]);
+    const handleTabClick = (tab) => {
+      if (selectedTabs.includes(tab)) {
+        setSelectedTabs(selectedTabs.filter((t) => t !== tab));
+      } else {
+        setSelectedTabs([...selectedTabs, tab]);
+      }
     };
-  }, [selectedTab, searchTerm, modulePaletteData, selectedTabs]);
-  const handleTabClick = (tab) => {
-    if (selectedTabs.includes(tab)) {
-      setSelectedTabs(selectedTabs.filter((t) => t !== tab));
-    } else {
-      setSelectedTabs([...selectedTabs, tab]);
-    }
-  };
 
-  
-  return (
-    <PaletteContainer>
-      <div id="allSampleContent">
+    return (
+      <PaletteContainer>
+        <div id="allSampleContent">
+          <SearchContainer>
+            <StyledSearch
+              allowClear
+              placeholder="Search..."
+              onChange={onChange}
+              onSearch={onSearch}
+              enterButton
+            />
+          </SearchContainer>
 
-        <SearchContainer>
-          <StyledSearch
-            allowClear
-            placeholder="Search..."
-            onChange={onChange}
-            onSearch={onSearch}
-            enterButton
-          />
-        </SearchContainer>
+          {filteredNodes.length > 0 && (
+            <div>
+              <FilteredNodesContainer>
+                {filteredNodes.map((node) => (
+                  <div key={node.key}>
+                    - {node.type}: {formatKey(node.key)}
+                  </div>
+                ))}
+              </FilteredNodesContainer>
 
-        {filteredNodes.length > 0 &&  (
-          
-  <div>
-    <FilteredNodesContainer>
-      {filteredNodes.map((node) => (
-        <div key={node.key}>
-          - {node.type}: {formatKey(node.key)}
-        </div>
-      ))}
-    </FilteredNodesContainer>
-
-    <ScrollableTabsContainer>
-      <Tabs>
-
-        <Tab>
-          <RadioInput 
-            type="checkbox" // Change from radio to checkbox
-            id="cb_search"
-            name="tabs"
-
-            onChange={() => handleTabClick("Search")}
-          />
-          <TabLabel htmlFor="cb_search">Search</TabLabel>
-          <div
-            className={`tab-content ${selectedTabs.includes("Search") ? 'expanded' : ''}`}
-            ref={(el) => (paletteDivs.current["Search"] = el)}
-          />
-        </Tab>
-
-      </Tabs>
-    </ScrollableTabsContainer>
-  </div>
-)}
-        {filteredNodes.length === 0 && (
-          <ScrollableTabsContainer >
-            {/* {filterModule.size > 0 &&
+              <ScrollableTabsContainer>
+                <Tabs>
+                  <Tab>
+                    <RadioInput
+                      type="checkbox" // Change from radio to checkbox
+                      id="cb_search"
+                      name="tabs"
+                      onChange={() => handleTabClick("Search")}
+                    />
+                    <TabLabel htmlFor="cb_search">Search</TabLabel>
+                    <div
+                      className={`tab-content ${
+                        selectedTabs.includes("Search") ? "expanded" : ""
+                      }`}
+                      ref={(el) => (paletteDivs.current["Search"] = el)}
+                    />
+                  </Tab>
+                </Tabs>
+              </ScrollableTabsContainer>
+            </div>
+          )}
+          {filteredNodes.length === 0 && (
+            <ScrollableTabsContainer>
+              {/* {filterModule.size > 0 &&
               Array.from(filterModule.keys()).map((key) => (
                 <Tab key={key}>
                   <RadioInput
@@ -414,40 +405,43 @@ const Palette = memo(({ diagram, diagramVersion, refNetworkPalette, refCloudPale
                 </Tab>
               ))} */}
 
-            {tabs.map((tab) => (
-              <Tab key={tab}>
-                <div  ref={tab === "Network_icon" ? refNetworkPalette : (tab === "Compute" ? refCloudPalette : null)}>
-                <RadioInput 
-                  type="checkbox" // 여기를 체크박스로 변경
-                  id={`cb_${tab}`}
-                  name="tabs"
-                  checked={selectedTabs.includes(tab)} // 체크 상태 결정
-                  onChange={() => handleTabClick(tab)}
-                />
-                <TabLabel
-                htmlFor={`cb_${tab}`} 
-
-                >{formatKey(tab)}</TabLabel>
-                                {(
-                <div
-                  className={`tab-content ${selectedTabs.includes(tab) ? 'expanded' : ''}`}
-                  
-                  ref={(el) => (paletteDivs.current[tab] = el)}
-                />
-                
-                )}
-              
-              </div>
-              </Tab >
-            ))}
-          </ScrollableTabsContainer>
-        )}
-      </div>
+              {tabs.map((tab) => (
+                <Tab key={tab}>
+                  <div
+                    ref={
+                      tab === "Network_icon"
+                        ? refNetworkPalette
+                        : tab === "Compute"
+                        ? refCloudPalette
+                        : null
+                    }
+                  >
+                    <RadioInput
+                      type="checkbox" // 여기를 체크박스로 변경
+                      id={`cb_${tab}`}
+                      name="tabs"
+                      checked={selectedTabs.includes(tab)} // 체크 상태 결정
+                      onChange={() => handleTabClick(tab)}
+                    />
+                    <TabLabel htmlFor={`cb_${tab}`}>{formatKey(tab)}</TabLabel>
+                    {
+                      <div
+                        className={`tab-content ${
+                          selectedTabs.includes(tab) ? "expanded" : ""
+                        }`}
+                        ref={(el) => (paletteDivs.current[tab] = el)}
+                      />
+                    }
+                  </div>
+                </Tab>
+              ))}
+            </ScrollableTabsContainer>
+          )}
+        </div>
       </PaletteContainer>
-
-  );
-});
-
+    );
+  }
+);
 
 export default Palette;
 
@@ -461,7 +455,6 @@ const Tabs = styled.div`
   width: 100%;
   border-radius: 5px;
   overflow: hidden;
-
 `;
 
 // Styled component for the tab itself
@@ -483,7 +476,6 @@ const RadioInput = styled.input.attrs({ type: "checkbox" })`
   opacity: 0;
   border-radius: 5px;
   z-index: -1;
-
 `;
 
 // Styled component for the tab label
@@ -525,7 +517,8 @@ const ScrollableTabsContainer = styled.div`
     width: 7px;
   }
   &::-webkit-scrollbar-thumb {
-    background-color: #d9d9d9;
+    background-color: #dfdfdf;
+    border-radius: 5px;
   }
   &::-webkit-scrollbar-track {
     background-color: #fafafa;
