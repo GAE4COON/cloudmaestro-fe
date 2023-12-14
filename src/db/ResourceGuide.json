@@ -649,6 +649,156 @@
   },
   "RDS Read Replica": {
     "role": "Amazon RDS 읽기 전용 복제본은 Amazon RDS 데이터베이스(DB) 인스턴스의 성능과 내구성을 높여줍니다. 읽기 전용 복제본을 사용하면 손쉽게 단일 DB 인스턴스의 용량 한도 이상으로 탄력적으로 스케일 아웃하여 읽기 중심의 데이터베이스 워크로드를 처리할 수 있습니다."
+  },
+  "Application Load Balancer (ALB)": {
+    "role": "Application Load Balancing은 둘 이상의 가용 영역에서 EC2 인스턴스, 컨테이너, IP 주소 등 여러 대상에 걸쳐 수신되는 트래픽을 자동으로 분산합니다. 등록된 대상의 상태를 모니터링하면서 상태가 양호한 대상으로만 트래픽을 라우팅합니다."
+  },
+  "Cognito": {
+    "role": "Amazon Cognito는   OAuth 2.0 액세스 토큰 및 AWS 보안 인증을 위한 사용자 디렉터리, 인증 서버, 인증 서비스입니다. Amazon Cognito를 사용하면 기본 제공 사용자 디렉터리, 엔터프라이즈 디렉터리, Google 및 Facebook 같은 소비자 ID 제공업체의 사용자를 인증하고 권한을 부여할 수 있습니다."
+  },
+  "IAM Identity Center": {
+    "role": "AWS IAM Identity Center를 사용하면 여러 AWS 계정과 비즈니스 애플리케이션에 대한 SSO 액세스를 중앙에서 손쉽게 관리할 수 있습니다. 인력은 단일 위치에서 할당된 모든 계정과 애플리케이션에 Single Sign-On으로 액세스할 수 있습니다."
+  },
+  "S3": {
+    "role": "Amazon Simple Storage Service(Amazon S3)는 업계 최고 수준의 확장성, 데이터 가용성, 보안 및 성능을 제공하는 객체 스토리지 서비스입니다."
+  },
+  "EFS": {
+    "role": "완전 관리형의 파일 스토리지 서비스로, 여러 EC2 인스턴스에서 동시에 사용할 수 있는 고성능 및 확장 가능한 파일 시스템을 제공합니다."
+  },
+  "Simple Queue Service": {
+    "role": "Amazon Simple Queue Service(SQS)를 사용하면 메시지 손실을 우려하거나 다른 서비스를 제공할 필요 없이 소프트웨어 구성 요소 간에 어떤 볼륨의 메시지든 전송, 저장 및 수신할 수 있습니다."
+  },
+  "Simple Email Service": {
+    "role": "Amazon Simple Email Service(SES)는 사용자의 이메일 주소와 도메인을 사용해 이메일을 보내고 받기 위한 경제적이고 손쉬운 방법을 제공하는 이메일 플랫폼입니다."
+  },
+  "Kinesis": {
+    "role": "Amazon Kinesis는 모든 규모의 스트리밍 데이터를 비용 효율적으로 처리하고 분석하는 완전관리형 서비스입니다."
+  },
+  "Kinesis Data Streams": {
+    "role": "Amazon Kinesis Data Streams는 규모와 관계없이 데이터 스트림을 간편하게 캡처, 처리 및 저장할 수 있는 서버리스 스트리밍 데이터 서비스입니다."
+  },
+  "Analytics_Kinesis Video Streams": {
+    "role": "Amazon Kinesis Video Streams를 사용하면 연결된 디바이스에서 AWS로 보다 쉽고 안전하게 비디오를 스트리밍하여 분석, ML, 재생 및 기타 처리를 수행할 수 있습니다."
+  },
+  "Kinesis Data Analytics": {
+    "role": "Amazon Kinesis Data Analytics를 사용하면 표준 SQL을 사용하여 스트리밍 데이터를 처리하고 분석할 수 있습니다. 이 서비스를 사용하면 스트리밍 소스에 대해 강력한 SQL 코드를 작성하고 실행하여 시계열 분석을 수행하고, 실시간 대시보드를 제공하고, 실시간 지표를 생성할 수 있습니다."
+  },
+  "Elastic Container Service": {
+    "role": "Amazon Elastic Container Service(Amazon ECS)는 컨테이너화된 애플리케이션을 쉽게 배포, 관리, 스케일링할 수 있도록 도와주는 완전 관리형 컨테이너 오케스트레이션 서비스입니다."
+  },
+  "Elastic Container Registry": {
+    "role": "Amazon Elastic Container Registry(Amazon ECR)는 어디서나 애플리케이션 이미지 및 아티팩트를 안정적으로 배포할 수 있도록 뛰어난 성능 호스팅을 제공하는 완전관리형 컨테이너 레지스트리입니다."
+  },
+  "CodeBuild": {
+    "role": "AWS CodeBuild는 클라우드상의 완전관리형 빌드 서비스입니다. CodeBuild는 소스 코드를 컴파일하고 단위 테스트를 실행하며 배포 준비가 완료된 아티팩트를 생성합니다."
+  },
+  "CodeCommit": {
+    "role": "AWS CodeCommit은 프라이빗 Git 리포지토리를 호스팅하는 안전하고 확장성이 뛰어난 완전관리형 소스 제어 서비스입니다."
+  },
+  "CodeDeploy": {
+    "role": "AWS CodeDeploy는 다양한 컴퓨팅 서비스에 소프트웨어를 자동으로 배포하는 완전관리형 배포 서비스입니다."
+  },
+  "CodePipeline": {
+    "role": "AWS CodePipeline은 빠르고 안정적인 애플리케이션 및 인프라 업데이트를 위해 릴리스 파이프라인을 자동화하는 데 도움이 되는 완전관리형의 지속적 전달 서비스입니다."
+  },
+  "Organizations": {
+    "role": "AWS Organizations은 생성한 여러 AWS 계정을 조직에 통합하고 중앙에서 관리할 수 있는 계정 관리 서비스입니다."
+  },
+  "Trusted Advisor": {
+    "role": "Trusted Advisor는 비용 최적화, 성능, 복원력, 보안, 운영 우수성, 서비스 한도의 범주에서 모범 사례 검사를 사용하여 AWS 환경을 지속적으로 평가하고, 모범 사례와의 편차를 해결하기 위한 조치를 권장합니다."
+  },
+  "Global Accelerator": {
+    "role": "AWS Global Accelerator는 퍼블릭 애플리케이션의 가용성, 성능 및 보안을 개선하는 데 유용한 네트워킹 서비스입니다. Global Accelerator는 애플리케이션 엔드포인트로의 고정 진입점 역할을 하는 두 개의 글로벌 정적 공용 IP를 제공합니다."
+  },
+  "PrivateLink": {
+    "role": "AWS PrivateLink는 퍼블릭 인터넷에 트래픽을 노출하지 않고도 Virtual Private Cloud(VPC), 지원되는 AWS 서비스 및 온프레미스 네트워크 간에 프라이빗 연결을 제공합니다."
+  },
+  "Inspector": {
+    "role": "Amazon Inspector는 Amazon EC2 인스턴스, 컨테이너 및 Lambda 함수와 같은 워크로드를 자동으로 검색하고 소프트웨어 취약성과 의도하지 않은 네트워크 노출이 있는지 스캔합니다."
+  },
+  "Macie": {
+    "role": "Amazon Macie는 데이터 보안 및 데이터 프라이버시 서비스로서, 기계 학습(ML) 및 패턴 일치를 활용하여 민감한 데이터를 검색하고 보호합니다."
+  },
+  "Artifact": {
+    "role": "AWS Artifact는 AWSISO 인증, 결제 카드 산업 (PCI) 보고서, 서비스 조직 제어 (SOC) 보고서와 같은 AWS 보안 및 규정 준수 문서의 온디맨드 다운로드를 제공합니다."
+  },
+  "Audit Manager": {
+    "role": "AWS Audit Manager는 AWS 사용량을 지속적으로 감사하여 위험과 규정 및 산업 표준의 준수를 평가하는 방법을 간소화하는 데 도움이 됩니다."
+  },
+  "Certificate Manager": {
+    "role": "AWS Certificate Manager(ACM)를 사용하면 AWS 서비스 및 연결된 내부 리소스에 사용할 공인 및 사설 SSL/TLS 인증서를 프로비저닝, 관리 및 배포할 수 있습니다. ACM은 SSL/TLS 인증서를 구매, 업로드 및 갱신하는 데 드는 시간 소모적인 수동 프로세스를 대신 처리해줍니다."
+  },
+  "CloudHSM": {
+    "role": "AWS CloudHSM을 사용하면 FIPS 검증 하드웨어에서 키를 관리하고 액세스할 수 있습니다. 이 하드웨어는 자체 Virtual Private Cloud(VPC)에서 실행되는 고객 소유의 단일 테넌트 HSM 인스턴스로 보호됩니다."
+  },
+  "Elastic Block Store": {
+    "role": "Amazon Elastic Block Store(Amazon EBS)는 EC2 인스턴스에 사용할 수 있는 블록 수준 스토리지 볼륨을 제공합니다."
+  },
+  "Snowball": {
+    "role": "Snowball을 사용하여 페타바이트 규모의 데이터를 AWS로 마이그레이션할 수 있습니다. 여러 디바이스가 필요한 작업의 경우 Snow의 대규모 데이터 마이그레이션 관리자를 통해 디바이스의 단계를 추적할 수 있습니다."
+  },
+  "CloudSearch": {
+    "role": "Amazon CloudSearch는 AWS 클라우드의 완전 관리형 서비스로, 이를 이용해 웹 사이트 또는 애플리케이션을 위한 검색 솔루션을 쉽게 설치, 관리 및 확장할 수 있습니다."
+  },
+  "DataZone": {
+    "role": "Amazon DataZone은 AWS, 온프레미스 및 서드 파티 소스에 저장된 데이터를 더 빠르고 쉽게 카탈로그화, 검색, 공유 및 관리할 수 있게 해주는 데이터 관리 서비스입니다."
+  },
+  "EMR": {
+    "role": "Amazon EMR은 Apache Spark, Apache Hive 및 Presto와 같은 오픈 소스 프레임워크를 사용하여 페타바이트급 데이터 처리, 대화식 분석 및 기계 학습을 위한 클라우드 빅 데이터 솔루션입니다."
+  },
+  "Lightsail": {
+    "role": "Amazon Lightsail은 웹 애플리케이션 또는 웹 사이트를 클릭 몇 번으로 설정하고 실행할 수 있는 사용이 쉬운 클라우드 리소스를 제공합니다."
+  },
+  "Batch": {
+    "role": "AWS Batch를 사용하면 개발자, 과학자, 엔지니어가 수십만 개의 배치 및 기계 학습 컴퓨팅 작업을 효율적으로 실행하면서 컴퓨팅 리소스를 최적화하여 결과 분석 및 문제 해결에 집중할 수 있습니다."
+  },
+  "DocumentDB": {
+    "role": "Amazon DocumentDB(MongoDB 호환)는 완전관리형 기본 JSON 도큐먼트 데이터베이스로서 인프라를 관리하지 않고도 규모와 관계없이 중요한 문서 워크로드를 쉽고 비용 효율적으로 운영할 수 있게 해 줍니다."
+  },
+  "Neptune": {
+    "role": "Amazon Neptune은 노드(데이터 엔터티), 엣지(관계) 및 속성과 같은 그래프 구조를 사용하여 데이터를 표시하고 저장합니다."
+  },
+  "AppStream": {
+    "role": "Amazon AppStream 2.0은 사용자가 어디서나 데스크톱 애플리케이션에 즉시 액세스할 수 있도록 하는 완전 관리형 애플리케이션 스트리밍 서비스입니다."
+  },
+  "WorkSpaces": {
+    "role": "Amazon WorkSpaces는 AWS 클라우드에서 실행되는 안전한 완전관리형 데스크톱 컴퓨팅 서비스입니다."
+  },
+  "GameLift": {
+    "role": "Amazon GameLift는 클라우드, 온프레미스, 또는 하이브리드 배포를 통해 호스팅되는 전용 게임 서버를 배포하고 관리합니다."
+  },
+  "CodeGuru": {
+    "role": "CodeGuru는 Java, Python 및 JavaScript 코드에서 보안 취약성을 찾습니다. 그런 다음 코드 개선을 위한 권장 사항을 제공합니다."
+  },
+  "Comprehend": {
+    "role": "Amazon Comprehend는 기계 학습을 사용하여 텍스트에서 유용한 인사이트 및 관계를 찾아내는 자연어 처리(NLP) 서비스입니다."
+  },
+  "Forecast": {
+    "role": "Amazon Forecast는 기계 학습(ML)을 기반으로 하며, 비즈니스 지표 분석을 위해 구축된 시계열 예측 서비스입니다."
+  },
+  "Lex": {
+    "role": "Amazon Lex는 대화형 인터페이스를 애플리케이션에 설계, 구축, 테스트, 배포하기 위해 고급 자연어 모델을 사용하는 완전관리형 인공 지능(AI) 서비스입니다."
+  },
+  "Kendra": {
+    "role": "Amazon Kendra를 대규모 언어 모델(LLM)과 함께 사용하여 엔터프라이즈 콘텐츠를 기반으로 생성형 AI 기반의 안전한 대화형 경험을 신속하게 구축할 수 있습니다."
+  },
+  "Polly": {
+    "role": "Amazon Polly는 딥 러닝 기술을 사용하여 자연스러운 사람의 음성을 합성합니다."
+  },
+  "Rekognition": {
+    "role": "Amazon Rekognition은 이미지 및 비디오에서 정보와 인사이트를 추출하기 위해 사전 훈련된 컴퓨터 비전(CV) 및 사용자 지정 가능한 CV 기능을 제공합니다."
+  },
+  "SageMaker": {
+    "role": "SageMaker를 통해 데이터 과학자와 개발자들은 기계 학습 모델을 빠르고 쉽게 구축하고 훈련시킬 수 있으며, 그리고 나서 이들 모델을 프로덕션 지원 호스팅 환경에 직접 배포할 수 있습니다."
+  },
+  "Textract": {
+    "role": "Amazon Textract는 스캔한 문서에서 텍스트, 필기, 레이아웃 요소 및 데이터를 자동으로 추출하는 기계 학습(ML) 서비스입니다."
+  },
+  "Transcribe": {
+    "role": "Amazon Transcribe는 기계 학습 모델을 사용하여 오디오를 텍스트로 변환하는 자동 음성 인식 서비스입니다."
+  },
+  "Translate": {
+    "role": "Amazon Translate는 고품질의 사용자 지정 가능한 언어 번역을 빠르게 제공하는 신경망 기계 번역 서비스입니다."
   }
+  
 }
-
