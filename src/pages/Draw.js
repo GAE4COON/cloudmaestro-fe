@@ -668,11 +668,11 @@ const PaletteContainer = styled.div`
 `;
 
 const DrawWorkSpace = styled.div`
-  // margin-left: 10px;
+  padding-left: 10px;
   display: flex;
   padding-top: 11vh;
   align-items: stretch;
-  width: 100%;
+  width: 99%;
   height: 89vh;
 `;
 
