@@ -63,6 +63,7 @@ function Draw() {
     tag: null,
   });
   const [tourDraw, setTourDraw] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const [handleMessageQueue, setHandleMessageQueue] = useState([]);
 
@@ -435,6 +436,8 @@ function Draw() {
         console.log("filejson cost", filejson["cost"])
         setFinalToggleValue(filejson["cost"]);
       }
+      setData(diagram.model.nodeDataArray);
+
 
     } catch (error) {
       console.error("Error fetching file:", error);
@@ -454,9 +457,11 @@ function Draw() {
   const refCloudPalette = useRef(null);
   const refPopup = useRef(null);
   const refCost = useRef(null);
+  const refSidebar = useRef(null);
 
-  const funcProps = {setClickedTab, showAlertMessages, setAlertMessage, resetAlertMessage, setDiagram, setIsPopup, setShowSelectToggle, setShowToggle};
-  const refProps = {refPalette, refDiagram, refButton, refAlert, refLS, refSummary, refOptimize, refNetworkPalette, refCloudPalette, refPopup, refCost};
+  const stateProps = {alertMessage, diagram, clickedTab, isOpen };
+  const funcProps = {setClickedTab, showAlertMessages, setAlertMessage, resetAlertMessage, setDiagram, setIsPopup, setShowSelectToggle, setShowToggle, setIsOpen};
+  const refProps = {refPalette, refDiagram, refButton, refAlert, refLS, refSummary, refOptimize, refNetworkPalette, refCloudPalette, refPopup, refCost, refSidebar};
 
 
   return (
@@ -465,6 +470,7 @@ function Draw() {
       <TourDraw
         open={tourDraw}
         setOpen={setTourDraw}
+        {...stateProps}
         {...funcProps}
         {...refProps}
       />
@@ -593,8 +599,15 @@ function Draw() {
       ) : (
         ""
       )}
-      <SidebarContainer>
-        <Sidebar />
+      <SidebarContainer 
+            ref={refSidebar} 
+      >
+        <Sidebar  
+        ref={refSidebar}
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          
+        />
       </SidebarContainer>
 
     </DrawWorkSpace>
@@ -603,6 +616,14 @@ function Draw() {
 }
 
 export default Draw;
+const SidebarContainer = styled.div`
+  position: absolute;
+  right: 0;
+  /* width: %; */
+  /* height: 100%; */
+  z-index: 20;
+  /* height: 60vh; */
+`
 const CostContainer = styled.div`
   position: fixed;
   z-index: 23;
@@ -631,16 +652,7 @@ const ButtonContainer = styled.div`
   `}
 
 `;
-const SidebarContainer = styled.div`
-  /* background-color: red; */
-  /* position: relative; */
-  /* width: 20%; */
-  flex: 0.25;
-  height: 100%;
-  z-index: 20;
-  height: 100%;
-  height: 89vh;
-`
+
 
 const PaletteContainer = styled.div`
   float: left;
@@ -733,6 +745,7 @@ const DiagramContainer = styled.div`
   /* display: inline; */
   flex: 4;
   height: calc(100% - 70px);
+  margin-right: 3%
 
   
   ${props => props.palette && `

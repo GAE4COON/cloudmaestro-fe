@@ -1,86 +1,109 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { EllipsisOutlined } from '@ant-design/icons';
-import { Button, Divider, Space, Tour } from 'antd';
-import { wait } from '@testing-library/user-event/dist/utils';
+import { Tour } from 'antd';
+import { useData } from "./DataContext.js";
+
 const TourDraw = (props) => {
   const {setIsPopup} = props;
-  const { open, setOpen, showAlertMessages, setAlertMessage, setDiagram, resetAlertMessage, setClickedTab } = props;
-  const {refPalette, refDiagram, refButton, refAlert, refPopup, refCost, setShowToggle, refLS, refSummary, refOptimize, refNetworkPalette, refCloudPalette, setShowSelectToggle } = props;
-  
-useEffect(() => {
-  console.log("TourDraw.js useEffect");
-  console.log(props);
-})
+  const {alertMessage, diagram, clickedTab, isOpen } = props;
+  const {open, setOpen, showAlertMessages, setAlertMessage, setDiagram, resetAlertMessage, setClickedTab, setIsOpen } = props;
+  const {refPalette, refDiagram, refButton, refAlert, refPopup, refCost, setShowToggle, refLS, refSummary, refOptimize, refNetworkPalette, refCloudPalette, refSidebar, setShowSelectToggle } = props;
+
+  useEffect(() => {},[open, alertMessage, diagram, clickedTab, isOpen]);
 
   const steps = [
     //0
     {
+      id: "initDiagram",
       title: 'Upload File',
       description: 'Put your files here.',
       target: () => refDiagram.current,
     },
+
     //1
     {
+      id: "alert",
       title: 'Upload File',
       description: 'Put your files here.',
       target: () => refAlert.current,
     },
+    {
+      id: "beforeSidebar",
+      title: 'rehost',
+      description: 'Click to see other actions.',
+      // target: () => refSidebar.current,
+    },
+    {
+      id: "sidebar",
+      title: 'rehost',
+      description: 'Click to see other actions.',
+      target: () => refSidebar.current,
+    },
     //2
     {
+      id: "alertList",
       title: 'Upload File',
       description: 'Put your files here.',
       // target: () => refDiagram.current,
     },
     //4
     {
+      id: "button",
       title: 'Upload File',
       description: 'Put your files here.',
       target: () => refButton.current,
     },
     //5
     {
+      id: "LS",
       title: 'Upload File',
       description: 'Put your files here.',
       target: () => refLS.current,
     },
     //6
     {
+      id: "summary",
       title: 'Upload File',
       description: 'Put your files here.',
       target: () => refSummary.current,
     },
     //7
     {
+      id: "optimize",
       title: 'Upload File',
       description: 'Put your files here.',
       target: () => refOptimize.current,
     },
     //8
     {
+      id: "popup",
       title: 'Upload File',
       description: 'Put your files here.',
       target: () => refPopup.current,
     },
     //9
     {
+      id:"palette",
       title: 'Upload File',
       description: 'Put your files here.',
       target: () => refPalette.current,
     },
     //10
     {
+      id: "networkPalette",
       title: 'Upload File',
       description: 'Put your files here.',
       target: () => refNetworkPalette.current,
     },
     //11
     {
+      id: "networkDiagram",
       title: 'Network Diagram',
       description: 'Put your files here.',
       target: () => refDiagram.current,
     },
     //12
     {
+      id: "cloudPalette",
       title: 'network',
       description: 'Save your changes.',
 
@@ -88,23 +111,75 @@ useEffect(() => {
     },
     //13
     {
-      title: 'reghost',
+      id: "cloudDiagram",
+      title: 'rehost',
       description: 'Click to see other actions.',
       target: () => refDiagram.current,
     },
+
     //14
     {
+      id: "costDiagram",
       title: 'Other Actions',
       description: 'Click to see other actions.',
       target: () => refDiagram.current,
     },
     {
+      id: "costToggle",
       title: 'Other Actions',
       description: 'Click to see other actions.',
       target: () => refCost.current,
     },
   ];
 
+  const [sidebarShouldOpen, setSidebarShouldOpen] = useState(false);
+
+  useEffect(() => {
+    if (sidebarShouldOpen) {
+      const timer = setTimeout(() => {
+        setIsOpen(true);
+        setSidebarShouldOpen(false);
+      }, 300); // Delay to match the sidebar animation duration
+
+      return () => clearTimeout(timer);
+    }
+  }, [sidebarShouldOpen, setIsOpen]);
+  const handleStepChange = async (s) => {
+    const step = steps[s];
+  
+      switch (step.id) {   
+        case "initDiagram":
+          break;
+      case "beforeSidebar":
+        setIsOpen(true);
+        break;
+      case "alert":
+        addAlertMessage();
+        break;
+      case "alertList":
+        showAlertMessages();
+        break;
+      case "button":
+        resetAlertMessage();
+        break;
+      case "palette":
+        setClickedTab(["Network_icon", "Compute"]);
+        break;
+      case "networkDiagram":
+        setDiagram("/assets/json/network.json");
+        break;
+      case "cloudDiagram":
+        setDiagram("/assets/json/rehost.json");
+        setClickedTab(["Network_icon", "Compute"]);
+        break;
+      case "costDiagram":
+        setDiagram("/assets/json/cost.json");
+        break;
+      case "costToggle":
+        ec2Cost();
+        break;  
+    }
+  };
   const addAlertMessage = () => {
 
     setTimeout(() => {
@@ -135,63 +210,6 @@ useEffect(() => {
     setShowToggle(true);
     setShowSelectToggle({value: true, key: "EC2"});
   };
-
-  const handleStepChange = async (currentStep) => {
-    if(currentStep === 0){
-
-    }
-    if(currentStep === 1){
-      addAlertMessage();      
-    }
-    if(currentStep === 2){
-      showAlertMessages();
-    }
-    if(currentStep === 3){
-      resetAlertMessage();
-    }
-    if(currentStep === 7){
-      setIsPopup(true);
-    }
-    if(currentStep === 8){
-      setIsPopup(false);
-      setClickedTab(["Network_icon", "Compute"]);
-    }
-    if(currentStep === 10){
-      setDiagram("/assets/json/network.json");
-    }
-    if(currentStep === 12){
-      setDiagram("/assets/json/rehost.json");
-      setClickedTab(["Network_icon", "Compute"]);
-
-    }
-    if(currentStep === 13){
-      setDiagram("/assets/json/cost.json");
-
-    }
-    if(currentStep === 14){
-      ec2Cost();
-    }
-
-
-    // if (currentStep === 1) {  // 예를 들어, 두 번째 스텝에서 함수를 실행
-    //   // 여기에 원하는 함수 또는 로직을 추가
-    //   addAlertMessage();
-    // }
-    // if(currentStep === 2){
-    //   showAlertMessages();
-    // }
-    // if(currentStep === 3){
-    //   resetAlertMessage();
-    // }
-          // setClickedTab(["Network_icon", "Compute"]);
-      // 전에 선언
-      // await setDiagram("/assets/json/rehost.json");
-    //  await setDiagram("/assets/json/network.json");
-    //      setIsPopup(true);
-
-
-  };
-
   const handleSetOpen = () => {
     setOpen(!open);
   };
