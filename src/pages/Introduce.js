@@ -261,7 +261,7 @@ const contentStyle2 = {
   height: '300px',
   width: '29%',
   textAlign: 'center', // keep only one textAlign property
-  marginLeft: '38%', // specific left margin
+  marginLeft: '37%', // specific left margin
   marginBottom: '4%',
   color: '#fff',
   lineHeight: '160px'
