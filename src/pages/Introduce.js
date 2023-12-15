@@ -89,7 +89,7 @@ const ImageDescription = styled.div`
 const LogoSection = () => {
   return (
     <div className="logo-container">
-      <div className="content" style={{margin:"5%"}}>
+      <div className="content" style={{margin:"12%"}}>
         <img src="assets/img/introduceLogo.png" alt="logo" />
       </div>
     </div>
