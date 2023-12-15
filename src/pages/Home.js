@@ -2,6 +2,7 @@ import React, { Fragment } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/home.css";
 import styled from "styled-components";
+import { RightOutlined } from "@ant-design/icons";
 // import { useCookies } from "react-cookie";
 // import { loginTest } from "../apis/auth.js";
 import Page1 from "./Home/Page1";
@@ -41,6 +42,12 @@ function Home() {
     navigate("/draw");
   };
 
+  const startTourDraw = () => {
+    navigate("/draw", {
+      state: { tour: true },
+    });
+  };
+
   return (
     <>
       <Fragment>
@@ -50,20 +57,38 @@ function Home() {
             <HomeTextContent>
             <HomeText>Cloud Maestro와 함께<br/> 클라우드 환경에 빠르게 적응해보세요.</HomeText>
             <HomeTextDescription>Cloud Maestro는 클라우드에 대한 전문지식이 없는 사람들도 쉽게 클라우드 환경을 이해하고 활용할 수 있도록 돕는 클라우드 마이그레이션 및 도입 지원 플랫폼입니다.</HomeTextDescription>
+
             </HomeTextContent>
+            
             <HomeImg src="assets/img/homelogo.png" alt="logo" />
           </HomeContent>
-            <HomeButtonText>지금 그려보세요.</HomeButtonText>
+            {/* <HomeButtonText>지금 그려보세요.</HomeButtonText> */}
+            <HomeTextTutorial >
+              먼저, <GradientTextContent onClick={()=>startTourDraw()}>튜토리얼</GradientTextContent>을 통해 Cloud Maestro의 기능을 살펴보세요.
+            </HomeTextTutorial>
             <HomeSelectBox>
+{/* 
+            <TutorialButton onClick={handleAutoDraw}
+  
 
+            >
+              Tutorial
+            </TutorialButton> */}
+
+
+            <DrawButton>
             <StyledButton onClick={handleAutoDraw}>
               Use Template
             </StyledButton>
             <StyledButton onClick={handleJustDraw}>
               Just Draw
             </StyledButton>
+            </DrawButton>
           </HomeSelectBox>
+
+
         </HomeContainer>
+
       </Fragment>
       <Page1 />
       <Page2 />
@@ -72,6 +97,19 @@ function Home() {
     </>
   );
 }
+const HomeTextTutorial = styled.div`
+/* margin-top: 40px; */
+  font-size: 15px;
+margin-left: 10%;
+text-align: left;
+  font-weight: 600;
+  color:#fff;
+  margin-bottom: 20px;
+  /* flex: 2; */
+  font-family: "Noto Sans KR", sans-serif;
+  /* font-weight: 800; */
+  /* text-align: right; */
+  `;
 
 const StyledButton = styled(Button)`
   min-width: 150px;
@@ -79,6 +117,16 @@ const StyledButton = styled(Button)`
   font-size: 16px;
   color: #0070C0;
   background-color: #fff;
+  font-family: "Noto Sans KR", sans-serif;
+  font-weight: 800;
+`
+
+const TutorialButton = styled(Button)`
+  min-width: 150px;
+  height: 40px;
+  font-size: 16px;
+  color: white;
+  background-color: #0070C0;
   font-family: "Noto Sans KR", sans-serif;
   font-weight: 800;
 `
@@ -156,15 +204,43 @@ const HomeContent = styled.div`
   height: 60%;
 `;
 
+const DrawButton = styled.div`  
+  display: flex;
+  flex-direction: row;
+  flex:1;
+  gap: 10px;
+
+  `;
+
 const HomeSelectBox = styled.div`
+width: 20%;
   color:#3064D6;
   z-index: 1;
   font-size: 1rem; 
   display: flex;
+  flex-direction: column;  
   margin-left: 10%;
-  flex-direction: row; // Ensures the buttons are in a row
-  justify-content: flex-start; // Aligns the buttons to the left
+  /* flex-direction: row; // Ensures the buttons are in a row */
+  /* justify-content: flex-start; // Aligns the buttons to the left */
   gap: 20px; // Keeps space between the buttons
   `;
+
+const GradientTextContent = styled.span`
+cursor: pointer;
+color: 
+#06357d
+;
+background-image: linear-gradient(to right, #00B0F0, #0070C0, #002060);
+-webkit-background-clip: text;
+background-clip: text;
+/* border-bottom: 2px solid #fff; */
+/* text-shadow: -0.5px 0px white, 0px 0.5px white, 0.5px 0px white, 0px -1px white; */
+font-size: 18px;
+font-weight: 700; /* Adjust font weight as needed */
+  &:hover {
+    color: white;
+  }
+
+`
 
 export default Home;
