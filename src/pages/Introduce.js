@@ -14,9 +14,39 @@ import Second from "./Introduce/Second";
 import Third from "./Introduce/Third";
 import Introduce from "./Introduce/intro";
 import { Container } from "react-bootstrap";
+//import { App } from './Introduce/ImageSection';
+import ReactDOM from 'react-dom'; // Ensure ReactDOM is imported
+import { Carousel } from 'antd';
+
 const { TabPane } = Tabs;
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
+
+const { createRoot } = ReactDOM;
+
+const Image = () => {
+  const onChange = (currentSlide) => {
+    console.log(currentSlide);
+  }
+  return(
+    <Slide>
+    <Carousel autoplay afterChange={onChange}>
+        <div>
+          <img src="/assets/img/intro1.png" alt="Intro 1" style={contentStyle}  />       
+        </div>
+        <div>
+          <img src="/assets/img/intro2.png" alt="Intro 1" style={contentStyle} />
+        </div>
+        <div>
+          <img src="/assets/img/intro3.png" alt="Intro 1" style={contentStyle} />
+        </div>
+    </Carousel>
+    </Slide>
+  
+  );
+  };
+
 
 const LogoSection = () => {
   return (
@@ -230,12 +260,12 @@ const Home = () => {
 
   return (
     <div className="about-container">
-      <div className="section" ref={addtoRefs}>
+      <div className="section"  ref={addtoRefs}>
         <LogoSection />
         <Introduce />
       </div>
-      <div className="section" ref={addtoRefs}>
-        <ImageSection />
+      <div id="section" ref={addtoRefs}>
+        <Image />
       </div>
       <div className="section" ref={addtoRefs}>
         <TabSection />
@@ -253,11 +283,47 @@ const Home = () => {
 
 export default Home;
 
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<Home />);
+
+const contentStyle = {
+  height: '20%',
+  width: '25%',
+  textAlign: 'center', // keep only one textAlign property
+  marginLeft: '39%', // specific left margin
+  marginBottom: '4%',
+  color: '#fff',
+  lineHeight: '160px'
+  //background: '#364d79',
+
+
+
+};
+const Slide=styled.div`
+.slick-dots li button {
+  background-color: #3064D6; /* Change button color */
+  border: none; /* Remove border */
+  /* Add other styles as needed */
+  width: 70px; /* Increased button width */
+  height: 15px; /* Increased button height */
+
+}
+.slick-dots li {
+  margin-right:4%;
+  margin-left:3%;
+}
+.slick-dots li.slick-active button, .slick-dots li button:hover {
+  background-color: #3064D6; /* Color change on active/hover */
+}
+
+`
+
 const TabsContainer = styled.div`
   display: flex;
   flex-direction: column; /* if flex */
 
   justify-content: center;
+  margin-top:2%;
 `;
 const StyledAntTabs = styled(Tabs)`
   font-family: "Noto Sans KR", sans-serif;
