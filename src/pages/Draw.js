@@ -73,9 +73,11 @@ function Draw() {
   const [isReset, setIsReset] = useState(false);
   const [palette, setPalette] = useState(true);
   const [isExiting, setIsExiting] = useState(false);
-  const [tempFileName, setTempFileName] = useState("");
+  const [tempFileName, setTempFileName] = useState(fileName);
 
-  
+  useEffect(() => {
+    setTempFileName(fileName);
+  },[fileName]);
 
   useEffect(() => {
     if (!palette) {
@@ -168,17 +170,12 @@ function Draw() {
   };
 
   const [isModalVisible, setIsModalVisible] = useState(false);
-  useEffect(() => {
-    if (isModalVisible) {
-      setTempFileName(fileName);
-    }
-  }, [isModalVisible, fileName]);
+
   const showModal = () => {
     setIsModalVisible(true);
   };
 
   const handleOk = async () => {
-    setFileName(tempFileName);
     setIsModalVisible(false);
     const hideLoading = message.loading("저장 중...", 0);
 
@@ -199,13 +196,8 @@ function Draw() {
 
       var response;
       if (!isSave) {
-        console.log("save");
         response = await saveDiagram(diagramData, tempFileName, base64ImageContent);
       } else {
-        console.log("update");
-        console.log("diagramData", diagramData);
-        console.log("fileName", fileName);
-        console.log("base64ImageContent", base64ImageContent);
         response = await updateDiagram(
           diagramData,
           fileName,
@@ -215,11 +207,11 @@ function Draw() {
 
       hideLoading();
 
-      console.log(response.data);
       if (response.data === true) {
-        setFileName(tempFileName);
         message.success("저장되었습니다.");
         if (!isSave) {
+          setFileName(tempFileName);
+
           setIsSave(true);
         }
       } else {
@@ -620,9 +612,11 @@ function Draw() {
               <Button
                 ref={refSaveButton}
                 type="primary"
-                style={{ marginLeft: "5px", marginBottom: "5px" }}
+                onClick={handleSaveDiagram}
+
+                style={{ marginLeft: "5px", marginBottom: "5px", fontFamily: "Noto Sans KR" }}
               >
-                Save
+                저장
               </Button>
             </Dropdown>
             

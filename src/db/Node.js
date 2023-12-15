@@ -2,6 +2,13 @@ import * as go from "gojs";
 
 export const nodeDataArrayPalette = [
   {
+    isGroup: true,
+    stroke: "rgb(128,128,128)",
+    text: "Group",
+    key: "Group",
+    type: "Network_icon"
+  },
+  {
     text: "Anti DDoS",
     key: "Anti DDoS",
     figure: "Rectangle",
