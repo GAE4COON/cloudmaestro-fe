@@ -36,7 +36,7 @@ const Image = () => {
           <img src="/assets/img/intro1.png" alt="Intro 1" style={contentStyle}  />       
         </div>
         <div>
-          <img src="/assets/img/intro2.png" alt="Intro 1" style={contentStyle} />
+          <img src="/assets/img/intro2.png" alt="Intro 1" style={contentStyle2} />
         </div>
         <div>
           <img src="/assets/img/intro3.png" alt="Intro 1" style={contentStyle} />
@@ -141,50 +141,7 @@ const Home = () => {
     }
   };
 
-  const ImageSection = () => {
-    return (
-      <>
-        <FlexContainer>
-          <ImageContainer>
-            <img
-              src="assets/img/icon1.png"
-              alt="logo"
-              style={{ width: "100px" }}
-            />
-            <ButtonContainer>
-              <h2>Architecture</h2>
-              <p>클라우드 최적화 아키텍처 도식화</p>
-              <div style={{ marginTop: "5%" }}></div>
-            </ButtonContainer>
-          </ImageContainer>
-          <ImageContainer>
-            <img
-              src="assets/img/icon3.png"
-              alt="logo"
-              style={{ width: "100px" }}
-            />
-            <ButtonContainer>
-              <h2>Cost</h2>
-              <p>서비스, 인스턴스를 고려한 정확한 비용 산정</p>
-              <div style={{ marginTop: "5%" }}></div>
-            </ButtonContainer>
-          </ImageContainer>
-          <ImageContainer>
-            <img
-              src="assets/img/icon2.png"
-              alt="logo"
-              style={{ width: "100px" }}
-            />
-            <ButtonContainer>
-              <h2>Security</h2>
-              <p>사전 보안성 점검 보안 권고 및 가이드 기능</p>
-              <div style={{ marginTop: "5%" }}></div>
-            </ButtonContainer>
-          </ImageContainer>
-        </FlexContainer>
-      </>
-    );
-  };
+ 
 
   const TabSection = () => {
     return (
@@ -287,10 +244,24 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<Home />);
 
 const contentStyle = {
-  height: '20%',
+  height: '300px',
   width: '25%',
   textAlign: 'center', // keep only one textAlign property
   marginLeft: '39%', // specific left margin
+  marginBottom: '4%',
+  color: '#fff',
+  lineHeight: '160px'
+  //background: '#364d79',
+
+
+
+};
+
+const contentStyle2 = {
+  height: '300px',
+  width: '29%',
+  textAlign: 'center', // keep only one textAlign property
+  marginLeft: '38%', // specific left margin
   marginBottom: '4%',
   color: '#fff',
   lineHeight: '160px'
