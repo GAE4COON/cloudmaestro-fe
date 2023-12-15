@@ -59,6 +59,9 @@ const RequirementPopup = (props) => {
   });
   const draggleRef = useRef(null);
 
+  const [selectedZones, setSelectedZones] = useState([]);
+  
+
   useEffect(() => {
     const isZoneSelected =
       industrialValue !== null ||
@@ -415,6 +418,8 @@ const RequirementPopup = (props) => {
                     zone={zone}
                     onDataChange={handleDataChange}
                     onRemoveZone={removeZone}
+                    selectedZones={selectedZones}
+                    setSelectedZones={setSelectedZones}
                   />
                 )
             )}

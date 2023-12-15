@@ -12,6 +12,8 @@ function ZoneComponent({
   industrial_BP,
   onDataChange,
   onRemoveZone,
+  selectedZones,
+  setSelectedZones
 }) {
   const [ZoneData, setZoneData] = useState([]); //Zone select에서 쓰기 위한 데이터
   const [zoneValue, setZoneValue] = useState([]); //Zone에 대한 private, public subnet 정보 list
@@ -21,6 +23,8 @@ function ZoneComponent({
   const [serverNode, setServerNode] = useState([]); //고가용성 -  선택
   const [zoneFunc, setSelectedZoneFunc] = useState(null); //망 기능 선택
   const [zoneReqValue, setSelectedZoneReqValue] = useState([]); //요구사항 선택
+
+
 
   const [zones, setZones] = useState([]);
 
@@ -57,8 +61,16 @@ function ZoneComponent({
           label: resultList[i],
         };
       }
-      setZoneData(resultList);
-      setZoneValue(zonelist);
+
+
+      const updatedZoneData = resultList.map(zone => ({
+        value: zone.value,
+        label: zone.label,
+        disabled: selectedZones.includes(zone.value) // Disable zones that are in the selectedZones array
+      }));
+      
+      setZoneData(updatedZoneData)
+        setZoneValue(zonelist);
       console.log("Zone", resultList);
       // console.log("Zone subnet", zonelist);
 
@@ -164,17 +176,20 @@ function ZoneComponent({
   };
 
   const handleChange = (value) => {
-    console.log(`selected ${value}`);
+    console.log(`selected1 ${value}`);
+    setSelectedZones(prevSelectedZones => [...prevSelectedZones, value]);
+    console.log(selectedZones);
+
     setSelectZone(value);
     resetFields();
   };
 
   const handleChange1 = (value) => {
-    console.log(`selected ${value}`);
+    console.log(`selected2 ${value}`);
     setAvailableNode(value);
   };
   const handleChange2 = (value) => {
-    console.log(`selected ${value}`);
+    console.log(`selected3 ${value}`);
     setServerNode(value);
   };
 
@@ -183,22 +198,26 @@ function ZoneComponent({
     // Additional logic if needed
   };
 
-  const handleZoneReqValueChange = (value) => {
-    setSelectedZoneReqValue(value); // Corrected this line
-    // Additional logic if needed
-  };
-
-  const updateZone = (zoneId, key, value) => {
-    setZones(
-      zones.map((zone) =>
-        zone.id === zoneId ? { ...zone, [key]: value } : zone
-      )
-    );
-  };
-
   const removeCurrentZone = () => {
+    console.log("removeCurrentZone", zone.id);
     onRemoveZone(zone.id);
+    setSelectedZones(prevSelectedZones => 
+      [...prevSelectedZones.filter(zone => zone !== SelectZone)]      
+  );
+  console.log("SelectZone", SelectZone)
+  console.log("selectedZones",selectedZones)
+
+    const updatedZoneData = ZoneData.map(zone => ({
+      value: zone.value,
+      label: zone.label,
+      disabled: !selectedZones.includes(SelectZone) // Disable zones that are in the selectedZones array
+    }));
+    console.log("updatedZoneData",updatedZoneData);
+    setZoneData(updatedZoneData)
+
   };
+
+  
 
   return (
     <ZoneContainer key={zone.id}>
