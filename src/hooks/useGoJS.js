@@ -385,8 +385,8 @@ const useGoJS = (setShowToggle, onDiagramChange, setAlertMessage) => {
             portId: "",
             editable: true,
           },
-          new go.Binding("text", "key")
-        )
+          new go.Binding("text", "key").makeTwoWay()
+          )
       ),
 
       $(
