@@ -214,7 +214,7 @@ const Home = () => {
 
   return (
     <div className="about-container">
-      <div className="section"  ref={addtoRefs} style={{ height: "10vh" }}>
+      <div className="section"  ref={addtoRefs}>
         <LogoSection />
         <Introduce />
       </div>

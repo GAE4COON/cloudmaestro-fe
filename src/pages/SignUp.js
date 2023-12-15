@@ -13,6 +13,7 @@ import { message } from "antd";
 
 function Signup() {
   const [idError, setIdError] = useState("");
+  const [idVerified, setIdVerified] = useState(false);
   const [passwordError, setPasswordError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [nameError, setNameError] = useState("");
@@ -30,6 +31,10 @@ function Signup() {
   const [emailConfirmed, setEmailConfirmed] = useState(false);
 
   const { user, setUser } = useAuth();
+
+  useEffect(() => {
+    setId(""); // 페이지 로드 시 ID 필드 초기화
+  }, []);
 
   const navigate = useNavigate();
 
@@ -92,11 +97,13 @@ function Signup() {
   const handleIdChange = (e) => {
     const idValue = e.target.value;
     setId(idValue);
-    setIdStatus(null);
+
     if (!isValidId(idValue)) {
       setIdError("아이디는 6~20자의 영문 대소문자와 숫자로 구성되어야 합니다.");
+      setIdVerified(false); // 유효하지 않은 경우, idVerified를 false로 설정
     } else {
       setIdError("");
+      setIdVerified(true); // 유효한 경우, idVerified를 true로 설정
     }
   };
 
@@ -234,8 +241,19 @@ function Signup() {
         <div className="input-group">
           <label>아이디 *</label>
           <input type="text" value={id} onChange={handleIdChange} />
-          <button onClick={checkIdDuplication}>중복확인</button>
+          <button
+            onClick={checkIdDuplication}
+            disabled={!id || !idVerified}
+            style={
+              !idVerified
+                ? { backgroundColor: "#ccc", cursor: "not-allowed" }
+                : {}
+            }
+          >
+            중복확인
+          </button>
         </div>
+
         {idError && <span className="error-text">{idError}</span>}
         {idStatus === "taken" && (
           <span className="error-text">이미 사용중인 아이디입니다.</span>
@@ -250,6 +268,7 @@ function Signup() {
             type="password"
             value={password}
             onChange={handlePasswordChange}
+            autoComplete="off"
           />
           <div></div>
         </div>
@@ -261,6 +280,7 @@ function Signup() {
             type="password"
             value={passwordConfirm}
             onChange={(e) => setPasswordConfirm(e.target.value)}
+            autoComplete="off"
           />
           <div></div>
         </div>
