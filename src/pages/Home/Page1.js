@@ -34,7 +34,7 @@ export default function Page1() {
       </ImageContainer>
       <ButtonContainer ref={imageRef} inView={imageInView}>
         <h2>Network</h2>
-        <p>Automatic schematic and direct drawing based on Excel</p>
+        <p>엑셀에 있는 자산을 기반으로 네트워크 자동 도식화를 제공합니다</p>
         <div style={{ marginTop: "5%" }}>
           <Link to="/draw" state={{ file: jsonData }}>
             <Button type="primary">See More</Button>

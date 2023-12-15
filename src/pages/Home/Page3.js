@@ -35,8 +35,7 @@ export default function Page1() {
       <ButtonContainer ref={imageRef} inView={imageInView}>
         <h2>Optimize</h2>
         <p>
-          Optimized for AWS environments based on user requirementsutomatic
-          schematic and direct drawing based on Excel
+          클라우드 아키텍처를 사용자의 요구사항에 맞게 최적화합니다.
         </p>
         <div style={{ marginTop: "5%" }}>
           <Link to="/draw" state={{ file: jsonData }}>

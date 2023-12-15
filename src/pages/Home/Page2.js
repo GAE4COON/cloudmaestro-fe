@@ -28,8 +28,8 @@ export default function Page2() {
   return (
     <FlexContainer>
       <ButtonContainer ref={imageRef} inView={imageInView}>
-        <h2>Rehost</h2>
-        <p>One-to-one response of network environment to AWS environment</p>
+        <h2>Lift and Shift</h2>
+        <p>네트워크 도식화를 클라우드 환경에 맞춰 1:1 대응합니다.</p>
         <div style={{ marginTop: "5%" }}>
           <Link to="/draw" state={{ file: jsonData }}>
             <Button type="primary">See More</Button>

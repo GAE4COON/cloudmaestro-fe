@@ -6,15 +6,11 @@ import useGoJS from "../hooks/useGoJS.js";
 
 import TourDraw from "../components/TourDraw.js";
 
-import { useMediaQuery } from "react-responsive";
-import { nodeDataArrayPalette } from "../db/Node";
-import { Badge, Avatar, Tour } from "antd";
 import { BellOutlined } from "@ant-design/icons";
 
 import { useLocation } from "react-router-dom";
-import { message } from "antd";
-import { Button, notification } from "antd";
-import { Alert, Space, Modal, Input } from "antd";
+import { message, Button, notification, Space, Modal, Input, Badge, Avatar, Dropdown, Menu  } from "antd";
+
 import { saveDiagram, updateDiagram } from "../apis/fileAPI";
 import "../styles/App.css";
 
@@ -43,6 +39,8 @@ message.config({
   top: 50,
   duration: 1,
 });
+
+
 
 function Draw() {
   const { data } = useFileUpload();
@@ -74,6 +72,7 @@ function Draw() {
   const [isReset, setIsReset] = useState(false);
   const [palette, setPalette] = useState(true);
   const [isExiting, setIsExiting] = useState(false);
+  const [tempFileName, setTempFileName] = useState("");
 
   useEffect(() => {
     if (!palette) {
@@ -88,22 +87,13 @@ function Draw() {
   const info = location.state ? location.state.info : null;
   const save = location.state ? location.state.save : false;
   const onpremise = location.state ? location.state.file : null;
-  useEffect(() => {}, [diagramVersion]); // Dependency on diagramVersion
-
-  // const [nodeRole, setNodeRole] = useState({});
-
-  // useEffect(() => {
-  //   setNodeRole(jsonData); // JSON 파일에서 데이터 가져오기
-  // }, []);
+  useEffect(() => {}, [diagramVersion]); 
 
   const handleDiagramChange = useCallback((changedDiagram) => {
     setmyDiagram(changedDiagram);
     setDiagramVersion((prevVersion) => prevVersion + 1);
   });
 
-  // const handleguide = useCallback((guide) => {
-  //   setNodeGuide(guide);
-  // });
   const {
     initDiagram,
     diagram,
@@ -169,13 +159,17 @@ function Draw() {
   };
 
   const [isModalVisible, setIsModalVisible] = useState(false);
-
+  useEffect(() => {
+    if (isModalVisible) {
+      setTempFileName(fileName);
+    }
+  }, [isModalVisible, fileName]);
   const showModal = () => {
     setIsModalVisible(true);
   };
 
   const handleOk = async () => {
-    console.log("isSave", isSave);
+    setFileName(tempFileName);
     setIsModalVisible(false);
     const hideLoading = message.loading("저장 중...", 0);
 
@@ -197,7 +191,7 @@ function Draw() {
       var response;
       if (!isSave) {
         console.log("save");
-        response = await saveDiagram(diagramData, fileName, base64ImageContent);
+        response = await saveDiagram(diagramData, tempFileName, base64ImageContent);
       } else {
         console.log("update");
         console.log("diagramData", diagramData);
@@ -214,6 +208,7 @@ function Draw() {
 
       console.log(response.data);
       if (response.data === true) {
+        setFileName(tempFileName);
         message.success("저장되었습니다.");
         if (!isSave) {
           setIsSave(true);
@@ -233,16 +228,23 @@ function Draw() {
   };
 
   const handleChange = (e) => {
-    setFileName(e.target.value);
+    setTempFileName(e.target.value);
   };
 
   const handleSaveDiagram = () => {
     if (!isSave) {
+      //save
       showModal();
     } else {
+      // update
       handleOk();
     }
   };
+
+  const handleSaveDifDiagram = () => {
+    setIsSave(false);
+    showModal();
+  }
 
   const [messageQueue, setMessageQueue] = useState([]);
 
@@ -265,6 +267,31 @@ function Draw() {
     api.destroy();
     removeMessageFromQueue(-1);
   };
+
+  const saveDropdown = [
+    {
+      key: '저장',
+      label: (
+        <div
+        onClick={() =>
+          handleSaveDiagram()}
+        >
+          저장
+        </div>
+      ),
+    },
+    {
+      key: '다른이름으로 저장',
+      label: (
+        <div
+        onClick={() =>
+          handleSaveDifDiagram()}
+        >
+          다른 이름으로 저장
+        </div>
+      ),
+    },
+  ]
 
   useEffect(() => {
     if (isReset) {
@@ -466,17 +493,15 @@ function Draw() {
   const refCost = useRef(null);
   const refSidebar = useRef(null);
   const refSaveButton = useRef(null);
+  const refDownloadBtn = useRef(null);
 
   const stateProps = {alertMessage, diagram, clickedTab, isOpen };
   const funcProps = {setClickedTab, showAlertMessages, setAlertMessage, resetAlertMessage, setDiagram, setIsPopup, setShowSelectToggle, setShowToggle, setIsOpen};
-  const refProps = {refPalette, refDiagram, refButton, refAlert, refLS, refSummary, refOptimize, refNetworkPalette, refCloudPalette, refPopup, refCost, refSaveButton, refSidebar};
+  const refProps = {refPalette, refDiagram, refButton, refAlert, refLS, refSummary, refOptimize, refNetworkPalette, refCloudPalette, refPopup, refCost, refSaveButton, refSidebar, refDownloadBtn};
 
   useEffect(() => {}, [clickedTab, diagram, isOpen]);
 
-
   const handleTourDraw = () => {
-    setDiagram("null");
-    setClickedTab([...clickedTab]);
     setTourDraw(!tourDraw);
   }
 
@@ -512,6 +537,7 @@ function Draw() {
             refLS={refLS}
             refSummary={refSummary}
             refOptimize={refOptimize}
+            refDownloadBtn={refDownloadBtn}
             setIsReset={setIsReset}
             diagram={diagram}
             showToggle={showToggle}
@@ -526,6 +552,7 @@ function Draw() {
             onPopupChange={handlePopupChange}
             setPalette={setPalette}
             palette={palette}
+
           />
         </ButtonContainer>
 
@@ -565,14 +592,32 @@ function Draw() {
             </StyledAlertBadge>
           </DiagramTopLeft>
           <DiagramTopRight>
+          {isSave ? (
+            <Dropdown
+            menu={
+             { items: saveDropdown,}
+            }
+              trigger={["hover"]}
+              placement="bottomLeft"
+            >
+              <Button
+                ref={refSaveButton}
+                type="primary"
+                style={{ marginLeft: "5px", marginBottom: "5px" }}
+              >
+                Save
+              </Button>
+            </Dropdown>
+          ) : (
             <Button
-            ref={refSaveButton}
+              ref={refSaveButton}
               type="primary"
               onClick={handleSaveDiagram}
               style={{ marginLeft: "5px", marginBottom: "5px" }}
             >
               Save
             </Button>
+          )}
             <Button
               type="primary"
               onClick={() => handleTourDraw()}
@@ -590,7 +635,7 @@ function Draw() {
           onCancel={handleCancel}
         >
           <Input
-            value={fileName}
+            value={tempFileName}
             onChange={handleChange}
             placeholder="파일 이름"
           />
