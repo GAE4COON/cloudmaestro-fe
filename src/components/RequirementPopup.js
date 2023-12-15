@@ -60,7 +60,8 @@ const RequirementPopup = (props) => {
   const draggleRef = useRef(null);
 
   const [selectedZones, setSelectedZones] = useState([]);
-  
+
+  useEffect(() => {}, [selectedZones]);
 
   useEffect(() => {
     const isZoneSelected =

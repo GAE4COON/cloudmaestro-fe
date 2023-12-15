@@ -174,6 +174,16 @@ function ZoneComponent({
     setSelectedZoneFunc(null); // Resetting Selected Zone Function
     setSelectedZoneReqValue([]); // Resetting Selected Zone Requirements
   };
+  useEffect(() => {
+    const updatedZoneData = ZoneData.map(zone => ({
+      value: zone.value,
+      label: zone.label,
+      disabled: !selectedZones.includes(SelectZone) // Disable zones that are in the selectedZones array
+    }));
+    setZoneData(updatedZoneData)
+
+  }, [selectedZones]);
+
 
   const handleChange = (value) => {
     console.log(`selected1 ${value}`);
@@ -201,9 +211,7 @@ function ZoneComponent({
   const removeCurrentZone = () => {
     console.log("removeCurrentZone", zone.id);
     onRemoveZone(zone.id);
-    setSelectedZones(prevSelectedZones => 
-      [...prevSelectedZones.filter(zone => zone !== SelectZone)]      
-  );
+
   console.log("SelectZone", SelectZone)
   console.log("selectedZones",selectedZones)
 
@@ -212,7 +220,6 @@ function ZoneComponent({
       label: zone.label,
       disabled: !selectedZones.includes(SelectZone) // Disable zones that are in the selectedZones array
     }));
-    console.log("updatedZoneData",updatedZoneData);
     setZoneData(updatedZoneData)
 
   };

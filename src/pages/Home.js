@@ -227,23 +227,25 @@ width: 20%;
 
 const GradientTextContent = styled.span`
 cursor: pointer;
-color: 
-#06357d
-;
+color: white;
+    background-color: #0070C0;
 /* background-image: linear-gradient(to right, #00B0F0, #0070C0, #002060); */
 /* -webkit-background-clip: text; */
 /* background-clip: text; */
 
-/* border: 2px solid #fff; */
+/* border: 1px solid #fff; */
 /* text-shadow: -0.1px 0px white, 0px 0.1px white, 0.1px 0px white, 0px -01px white; */
-font-size: 22px;
-font-weight: 700; /* Adjust font weight as needed */
-/* background-color: #fff; */
-border-radius: 10px;
+/* font-size: 22px; */
+font-weight: 800; /* Adjust font weight as needed */
+border-radius: 20px;
+padding-right: 10px;
+margin-right: 5px;
+padding-left: 10px;
 text-align: center;
 justify-content: center;
   &:hover {
-    color: white;
+    color: #0070C0;
+    background-color: #fff;
   }
 
 `
