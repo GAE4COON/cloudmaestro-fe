@@ -137,8 +137,15 @@ const TourDraw = (props) => {
     {
       id: "summary",      
       placement: "right",
+      cover: (
+        <img
+          alt="cost"
+          src="assets/img/cost.png"
+          style={{ width: "40%" }}
+        />
+      ),
       title: '사용자가 선택한 리소스 별 비용을 요약해서 볼 수 있는 버튼입니다.',
-      description: '비용 요약 페이지로 넘어가게 됩니다. 이 페이지는 추후 MyPage에서도 확인 할 수 있습니다.',
+      description: '버튼을 클릭하면 비용 요약 페이지로 넘어가게 됩니다. 이 페이지는 추후 MyPage에서도 확인 할 수 있습니다.',
       target: () => refSummary.current,
     },
     {

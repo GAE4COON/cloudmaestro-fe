@@ -117,7 +117,7 @@ const Button = ({
       a.href = URL.createObjectURL(blob);
       a.download = tmpFileName;
       a.click();
-      message.info("저장되었습니다.");
+      message.success("저장되었습니다.");
     });
   };
 
@@ -146,7 +146,7 @@ const Button = ({
         a.href = imgData;
         a.download = tmpFileName;
         a.click();
-        message.info("저장되었습니다.");
+        message.success("저장되었습니다.");
       }
     });
   };

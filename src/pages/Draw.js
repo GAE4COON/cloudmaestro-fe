@@ -72,6 +72,7 @@ function Draw() {
   const [isReset, setIsReset] = useState(false);
   const [palette, setPalette] = useState(true);
   const [isExiting, setIsExiting] = useState(false);
+  const [tempFileName, setTempFileName] = useState("");
 
   useEffect(() => {
     if (!palette) {
@@ -86,22 +87,13 @@ function Draw() {
   const info = location.state ? location.state.info : null;
   const save = location.state ? location.state.save : false;
   const onpremise = location.state ? location.state.file : null;
-  useEffect(() => {}, [diagramVersion]); // Dependency on diagramVersion
-
-  // const [nodeRole, setNodeRole] = useState({});
-
-  // useEffect(() => {
-  //   setNodeRole(jsonData); // JSON 파일에서 데이터 가져오기
-  // }, []);
+  useEffect(() => {}, [diagramVersion]); 
 
   const handleDiagramChange = useCallback((changedDiagram) => {
     setmyDiagram(changedDiagram);
     setDiagramVersion((prevVersion) => prevVersion + 1);
   });
 
-  // const handleguide = useCallback((guide) => {
-  //   setNodeGuide(guide);
-  // });
   const {
     initDiagram,
     diagram,
@@ -167,12 +159,17 @@ function Draw() {
   };
 
   const [isModalVisible, setIsModalVisible] = useState(false);
-
+  useEffect(() => {
+    if (isModalVisible) {
+      setTempFileName(fileName);
+    }
+  }, [isModalVisible, fileName]);
   const showModal = () => {
     setIsModalVisible(true);
   };
 
   const handleOk = async () => {
+    setFileName(tempFileName);
     setIsModalVisible(false);
     const hideLoading = message.loading("저장 중...", 0);
 
@@ -194,7 +191,7 @@ function Draw() {
       var response;
       if (!isSave) {
         console.log("save");
-        response = await saveDiagram(diagramData, fileName, base64ImageContent);
+        response = await saveDiagram(diagramData, tempFileName, base64ImageContent);
       } else {
         console.log("update");
         console.log("diagramData", diagramData);
@@ -211,6 +208,7 @@ function Draw() {
 
       console.log(response.data);
       if (response.data === true) {
+        setFileName(tempFileName);
         message.success("저장되었습니다.");
         if (!isSave) {
           setIsSave(true);
@@ -230,7 +228,7 @@ function Draw() {
   };
 
   const handleChange = (e) => {
-    setFileName(e.target.value);
+    setTempFileName(e.target.value);
   };
 
   const handleSaveDiagram = () => {
@@ -637,7 +635,7 @@ function Draw() {
           onCancel={handleCancel}
         >
           <Input
-            value={fileName}
+            value={tempFileName}
             onChange={handleChange}
             placeholder="파일 이름"
           />
