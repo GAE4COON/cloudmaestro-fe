@@ -75,6 +75,8 @@ function Draw() {
   const [isExiting, setIsExiting] = useState(false);
   const [tempFileName, setTempFileName] = useState("");
 
+  
+
   useEffect(() => {
     if (!palette) {
       setIsExiting(true);
@@ -604,8 +606,7 @@ function Draw() {
               onClick={handleTourDraw}
               style={{ marginLeft: "5px", marginBottom: "5px", fontFamily: "Noto Sans KR", fontWeight: "700" }}
             >
-              도움말
-                            <QuestionCircleOutlined/>
+              튜토리얼 <QuestionCircleOutlined/>
 
             </Button>
           {isSave ? (

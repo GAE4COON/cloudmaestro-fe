@@ -77,6 +77,8 @@ function MyPage() {
         console.log("res: ", response.data.result);
         message.success("닉네임이 변경되었습니다.");
         handleSignOut();
+      } else {
+        message.warning("닉네임 변경에 실패했습니다.");
       }
     } catch (error) {
       console.error("Error:", error);
