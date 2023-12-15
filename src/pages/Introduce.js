@@ -288,12 +288,12 @@ root.render(<Home />);
 
 const contentStyle = {
   height: '20%',
-  width: '30%',
+  width: '25%',
   textAlign: 'center', // keep only one textAlign property
-  marginLeft: '36%', // specific left margin
+  marginLeft: '39%', // specific left margin
   marginBottom: '4%',
   color: '#fff',
-  lineHeight: '160px',
+  lineHeight: '160px'
   //background: '#364d79',
 
 
