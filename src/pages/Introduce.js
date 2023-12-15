@@ -29,20 +29,61 @@ const Image = () => {
   return(
     <Slide>
     <Carousel autoplay>
-        <div>
-          <img src="/assets/img/intro1.png" alt="Intro 1" style={contentStyle}  />       
-        </div>
-        <div>
-          <img src="/assets/img/intro2.png" alt="Intro 1" style={contentStyle2} />
-        </div>
-        <div>
-          <img src="/assets/img/intro3.png" alt="Intro 1" style={contentStyle} />
-        </div>
+        <SlideImageContainer>
+          <SlideImage src="/assets/img/icon2.png" alt="Intro 1" />       
+          <ImageTitle>Security</ImageTitle>
+          <ImageDescription>보안 권고 및 가이드 기능</ImageDescription>
+        </SlideImageContainer>
+
+        <SlideImageContainer>
+          <SlideImage src="/assets/img/calculator.png" alt="Intro 1" />       
+          <ImageTitle>Cost</ImageTitle>
+          <ImageDescription>서비스를 고려한 비용 산정</ImageDescription>
+        </SlideImageContainer>
+        
+        <SlideImageContainer>
+          <SlideImage src="/assets/img/icon1.png" alt="Intro 1" />       
+          <ImageTitle>Architectire</ImageTitle>
+          <ImageDescription>클라우드 최적화 아키텍처 도식화</ImageDescription>
+        </SlideImageContainer>
     </Carousel>
     </Slide>
   
   );
   };
+
+  const SlideImageContainer = styled.div`
+  font-family: "Noto Sans KR", sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* This centers the flex items horizontally */
+  justify-content: center; /* This centers the flex items vertically */
+  width: 40%; /* Make sure the container takes the full width */
+  text-align: center; /* Center text for all child elements */
+`;
+
+const SlideImage = styled.img`
+  width: 15%; /* Adjust width as necessary, could be a percentage */
+  height: auto; /* Keep height auto to maintain aspect ratio */
+  margin: 0 auto; /* This centers the image if it has a specific width */
+`;
+
+const ImageTitle = styled.div`
+  color: #3464d4;
+  margin-top: 20px;
+  font-size: 2.7rem;
+  font-weight: 700;
+  margin: 0 auto; /* This centers the title */
+`;
+
+const ImageDescription = styled.div`
+  font-size: 1.7rem;
+  font-weight: 600;
+  margin: 0 auto; /* This centers the description */
+  margin-bottom: 30px;
+`;
+
+
 
 
 const LogoSection = () => {
@@ -240,15 +281,7 @@ export default Home;
 
 
 const contentStyle = {
-  height: 'auto',
-  width: '25%',
-  textAlign: 'center', // keep only one textAlign property
-  marginLeft: '39%', // specific left margin
-  // marginBottom: '4%',
-  bottom: '10px',
-  color: '#fff',
-  lineHeight: '160px'
-  //background: '#364d79',
+
 };
 
 const contentStyle2 = {
