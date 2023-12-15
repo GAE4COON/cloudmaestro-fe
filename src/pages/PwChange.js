@@ -107,6 +107,8 @@ function PwChange() {
         setPwConfirmed(true);
         setPwVerified(true);
         message.success("패스워스를 확인했습니다.");
+      } else {
+        message.warning("패스워드 확인에 실패했습니다.");
       }
     } catch (error) {
       console.error("Error:", error);
@@ -124,6 +126,8 @@ function PwChange() {
         console.log("res: ", response.data.result);
         message.success("패스워드가 변경되었습니다.");
         handleSignOut();
+      } else {
+        message.warning("패스워드 변경에 실패했습니다.");
       }
     } catch (error) {
       console.error("Error:", error);
