@@ -419,8 +419,7 @@ const RequirementPopup = (props) => {
                     zone={zone}
                     onDataChange={handleDataChange}
                     onRemoveZone={removeZone}
-                    selectedZones={selectedZones}
-                    setSelectedZones={setSelectedZones}
+                   
                   />
                 )
             )}
