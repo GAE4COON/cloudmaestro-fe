@@ -22,7 +22,9 @@ export default function IntroduceSecurity() {
     <div className="about-container">
       <FlexContainer>
         <ButtonContainer ref={imageRef} inView={imageInView}>
-          <div className="intro"> 산업별 보안 가이드라인 예시</div>
+          <div className="intro"
+          
+          > 산업별 보안 가이드라인 예시</div>
           <p>The Beginning of Cloud Computing Migration Security GuideLine</p>
           <div>
             <Button
@@ -69,6 +71,8 @@ const fadeIn = css`
 `;
 
 const FlexContainer = styled.div`
+font-family: "Noto Sans KR", sans-serif;
+
   display: flex;
   justify-content: center; // 추가된 부분
   align-items: flex-start;

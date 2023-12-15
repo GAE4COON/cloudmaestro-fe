@@ -57,6 +57,8 @@ const fadeIn = css`
 `;
 
 const FlexContainer = styled.div`
+font-family: "Noto Sans KR", sans-serif;
+
   display: flex;
   justify-content: center; // 추가된 부분
   align-items: center; // 추가된 부분

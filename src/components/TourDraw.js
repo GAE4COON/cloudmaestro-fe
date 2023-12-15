@@ -54,7 +54,7 @@ const TourDraw = (props) => {
       id: "LS",
       placement: "right",
 
-      title: '네트워크 도식화에서 클라우드 도식화로 가는 첫 걸음, Lift&Shift 버튼입니다.',
+      title: '네트워크 도식화에서 클라우드 도식화로 변환할 수 있는 Lift&Shift 버튼입니다.',
       description: 'Lift&Shift 방식으로 네트워크 아키텍처를 클라우드 아키텍처로 변환할 수 있습니다.',
       target: () => refLS.current,
     },

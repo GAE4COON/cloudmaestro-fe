@@ -75,6 +75,8 @@ const slideInFromRight = css`
   animation: slideInFromRight 1s ease-out forwards;
 `;
 const FlexContainer = styled.div`
+font-family: "Noto Sans KR", sans-serif;
+
   display: flex;
   justify-content: space-between;
   height: 100vh;
