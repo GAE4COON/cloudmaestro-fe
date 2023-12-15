@@ -32,6 +32,10 @@ function Signup() {
 
   const { user, setUser } = useAuth();
 
+  useEffect(() => {
+    setId(""); // 페이지 로드 시 ID 필드 초기화
+  }, []);
+
   const navigate = useNavigate();
 
   const isValidId = (id) => {
@@ -93,12 +97,13 @@ function Signup() {
   const handleIdChange = (e) => {
     const idValue = e.target.value;
     setId(idValue);
-    setIdStatus(null);
-    setIdVerified(isValidId(idValue)); // Corrected Line
-    if (!idVerified) {
+
+    if (!isValidId(idValue)) {
       setIdError("아이디는 6~20자의 영문 대소문자와 숫자로 구성되어야 합니다.");
+      setIdVerified(false); // 유효하지 않은 경우, idVerified를 false로 설정
     } else {
       setIdError("");
+      setIdVerified(true); // 유효한 경우, idVerified를 true로 설정
     }
   };
 
@@ -263,6 +268,7 @@ function Signup() {
             type="password"
             value={password}
             onChange={handlePasswordChange}
+            autoComplete="off"
           />
           <div></div>
         </div>
@@ -274,6 +280,7 @@ function Signup() {
             type="password"
             value={passwordConfirm}
             onChange={(e) => setPasswordConfirm(e.target.value)}
+            autoComplete="off"
           />
           <div></div>
         </div>

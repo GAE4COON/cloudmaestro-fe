@@ -179,8 +179,6 @@ const TourDraw = (props) => {
     switch (step.id) {
       case "beforeSidebar":
         setClickedTab(["Network_icon", "Compute"]);
-        break;
-      case "sidebar":
         setIsOpen(true);
         break;
       case "popup":
