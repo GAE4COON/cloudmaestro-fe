@@ -26,12 +26,9 @@ gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 const { createRoot } = ReactDOM;
 
 const Image = () => {
-  const onChange = (currentSlide) => {
-    console.log(currentSlide);
-  }
   return(
     <Slide>
-    <Carousel autoplay afterChange={onChange}>
+    <Carousel autoplay>
         <div>
           <img src="/assets/img/intro1.png" alt="Intro 1" style={contentStyle}  />       
         </div>
@@ -51,7 +48,7 @@ const Image = () => {
 const LogoSection = () => {
   return (
     <div className="logo-container">
-      <div className="content">
+      <div className="content" style={{margin:"5%"}}>
         <img src="assets/img/introduceLogo.png" alt="logo" />
       </div>
     </div>
@@ -217,7 +214,7 @@ const Home = () => {
 
   return (
     <div className="about-container">
-      <div className="section"  ref={addtoRefs}>
+      <div className="section"  ref={addtoRefs} style={{ height: "10vh" }}>
         <LogoSection />
         <Introduce />
       </div>
@@ -240,8 +237,7 @@ const Home = () => {
 
 export default Home;
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<Home />);
+
 
 const contentStyle = {
   height: '300px',
@@ -252,16 +248,13 @@ const contentStyle = {
   color: '#fff',
   lineHeight: '160px'
   //background: '#364d79',
-
-
-
 };
 
 const contentStyle2 = {
   height: '300px',
   width: '29%',
   textAlign: 'center', // keep only one textAlign property
-  marginLeft: '38%', // specific left margin
+  marginLeft: '37%', // specific left margin
   marginBottom: '4%',
   color: '#fff',
   lineHeight: '160px'
@@ -294,7 +287,7 @@ const TabsContainer = styled.div`
   flex-direction: column; /* if flex */
 
   justify-content: center;
-  margin-top:2%;
+  margin-top:15%;
 `;
 const StyledAntTabs = styled(Tabs)`
   font-family: "Noto Sans KR", sans-serif;
