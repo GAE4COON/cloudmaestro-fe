@@ -13,6 +13,7 @@ import { message } from "antd";
 
 function Signup() {
   const [idError, setIdError] = useState("");
+  const [idVerified, setIdVerified] = useState(false);
   const [passwordError, setPasswordError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [nameError, setNameError] = useState("");
@@ -93,7 +94,8 @@ function Signup() {
     const idValue = e.target.value;
     setId(idValue);
     setIdStatus(null);
-    if (!isValidId(idValue)) {
+    setIdVerified(isValidId(idValue)); // Corrected Line
+    if (!idVerified) {
       setIdError("아이디는 6~20자의 영문 대소문자와 숫자로 구성되어야 합니다.");
     } else {
       setIdError("");
@@ -234,8 +236,19 @@ function Signup() {
         <div className="input-group">
           <label>아이디 *</label>
           <input type="text" value={id} onChange={handleIdChange} />
-          <button onClick={checkIdDuplication}>중복확인</button>
+          <button
+            onClick={checkIdDuplication}
+            disabled={!id || !idVerified}
+            style={
+              !idVerified
+                ? { backgroundColor: "#ccc", cursor: "not-allowed" }
+                : {}
+            }
+          >
+            중복확인
+          </button>
         </div>
+
         {idError && <span className="error-text">{idError}</span>}
         {idStatus === "taken" && (
           <span className="error-text">이미 사용중인 아이디입니다.</span>
