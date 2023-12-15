@@ -274,7 +274,7 @@ const SelectRdsToggle = ({ diagram, uniquekey, finalToggleValue, setFinalToggleV
             value={value || ""}
             onChange={(e) => handleChange(index, e)}
         >
-            <option value="" disabled>{Select}</option>
+            <option value="">{Select}</option>
             {options.map((option, idx) => (
                 <option key={idx}>
                     {option}
