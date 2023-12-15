@@ -313,12 +313,6 @@ function WebSvrComponent({
           options={zoneNode[SelectZone]}
         />
       </SelectContainer>
-
-
-      <SelectContainer>
-        <SelectTitle>고가용성</SelectTitle>
-        <Checkbox.Group options={zoneRdsReq} onChange={handleZoneReqValueChange} />
-      </SelectContainer>
     </ZoneContainer>
   );
 }
