@@ -99,7 +99,7 @@ function Home() {
 }
 const HomeTextTutorial = styled.div`
 /* margin-top: 40px; */
-  font-size: 15px;
+  font-size: 20px;
 margin-left: 10%;
 text-align: left;
   font-weight: 600;
@@ -230,13 +230,18 @@ cursor: pointer;
 color: 
 #06357d
 ;
-background-image: linear-gradient(to right, #00B0F0, #0070C0, #002060);
--webkit-background-clip: text;
-background-clip: text;
-/* border-bottom: 2px solid #fff; */
-/* text-shadow: -0.5px 0px white, 0px 0.5px white, 0.5px 0px white, 0px -1px white; */
-font-size: 18px;
+/* background-image: linear-gradient(to right, #00B0F0, #0070C0, #002060); */
+/* -webkit-background-clip: text; */
+/* background-clip: text; */
+
+/* border: 2px solid #fff; */
+/* text-shadow: -0.1px 0px white, 0px 0.1px white, 0.1px 0px white, 0px -01px white; */
+font-size: 22px;
 font-weight: 700; /* Adjust font weight as needed */
+/* background-color: #fff; */
+border-radius: 10px;
+text-align: center;
+justify-content: center;
   &:hover {
     color: white;
   }
