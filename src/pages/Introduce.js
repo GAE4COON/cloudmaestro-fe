@@ -287,11 +287,11 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<Home />);
 
 const contentStyle = {
-  height: '300px',
-  width: '500px',
+  height: '20%',
+  width: '30%',
   textAlign: 'center', // keep only one textAlign property
   marginLeft: '36%', // specific left margin
-  marginBottom: '2%',
+  marginBottom: '4%',
   color: '#fff',
   lineHeight: '160px',
   //background: '#364d79',
@@ -304,12 +304,13 @@ const Slide=styled.div`
   background-color: #3064D6; /* Change button color */
   border: none; /* Remove border */
   /* Add other styles as needed */
-  width: 50px; /* Increased button width */
+  width: 70px; /* Increased button width */
   height: 15px; /* Increased button height */
 
 }
 .slick-dots li {
-  margin-right:5%;
+  margin-right:4%;
+  margin-left:3%;
 }
 .slick-dots li.slick-active button, .slick-dots li button:hover {
   background-color: #3064D6; /* Color change on active/hover */
