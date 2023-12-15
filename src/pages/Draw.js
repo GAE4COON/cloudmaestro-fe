@@ -10,6 +10,7 @@ import { BellOutlined } from "@ant-design/icons";
 
 import { useLocation } from "react-router-dom";
 import { message, Button, notification, Space, Modal, Input, Badge, Avatar, Dropdown, Menu  } from "antd";
+import { QuestionCircleOutlined } from "@ant-design/icons";
 
 import { saveDiagram, updateDiagram } from "../apis/fileAPI";
 import "../styles/App.css";
@@ -85,14 +86,20 @@ function Draw() {
 
   const location = useLocation();
   const info = location.state ? location.state.info : null;
+  const tour = location.state ? location.state.tour : false;
   const save = location.state ? location.state.save : false;
   const onpremise = location.state ? location.state.file : null;
   useEffect(() => {}, [diagramVersion]); 
-
   const handleDiagramChange = useCallback((changedDiagram) => {
     setmyDiagram(changedDiagram);
     setDiagramVersion((prevVersion) => prevVersion + 1);
   });
+
+  useEffect(() => {
+    if(tour){
+      handleTourDraw();
+    }
+  }, [tour]);
 
   const {
     initDiagram,
@@ -592,6 +599,15 @@ function Draw() {
             </StyledAlertBadge>
           </DiagramTopLeft>
           <DiagramTopRight>
+          <Button
+              // type="primary"
+              onClick={handleTourDraw}
+              style={{ marginLeft: "5px", marginBottom: "5px", fontFamily: "Noto Sans KR", fontWeight: "700" }}
+            >
+              도움말
+                            <QuestionCircleOutlined/>
+
+            </Button>
           {isSave ? (
             <Dropdown
             menu={
@@ -608,23 +624,20 @@ function Draw() {
                 Save
               </Button>
             </Dropdown>
+            
           ) : (
+            
             <Button
               ref={refSaveButton}
               type="primary"
               onClick={handleSaveDiagram}
-              style={{ marginLeft: "5px", marginBottom: "5px" }}
+              style={{ marginLeft: "5px", marginBottom: "5px", fontFamily: "Noto Sans KR", fontWeight: "700" }}
             >
-              Save
+              저장
             </Button>
           )}
-            <Button
-              type="primary"
-              onClick={() => handleTourDraw()}
-              style={{ marginLeft: "5px", marginBottom: "5px" }}
-            >
-              Tour
-            </Button>
+              
+       
           </DiagramTopRight>
         </DiagramTop>
 
@@ -674,6 +687,7 @@ function Draw() {
 
 export default Draw;
 const SidebarContainer = styled.div`
+margin-top: 35px;
   position: absolute;
   right: 0;
   /* width: %; */

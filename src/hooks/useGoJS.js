@@ -16,16 +16,11 @@ import {
   checkForSecurityAccess,
   checkForOpenSearchAccess,
   checkForS3Access,
-  checkForAthenaAccess
-
+  checkForAthenaAccess,
 } from "../components/SecurityAlert";
 import { handleSecurity } from "../components/SecurityAlert";
 
-const useGoJS = (
-  setShowToggle,
-  onDiagramChange,
-  setAlertMessage
-) => {
+const useGoJS = (setShowToggle, onDiagramChange, setAlertMessage) => {
   const [diagram, setDiagram] = useState(null);
   const [clickedNodeKey, setClickedNodeKey] = useState();
   const [showSelectToggle, setShowSelectToggle] = useState({ value: false });
@@ -163,6 +158,20 @@ const useGoJS = (
                     // else if (data.modifiedNodeData[i].type === "Database")
                     //   PostData.checkOption = "Database";
                     PostData.checkOption = "API Gateway";
+                    PostData.newData = data.modifiedNodeData[i];
+                    //console.log("NodeCheck 호출");
+                    const response = await NodeCheck(PostData);
+                    if (response.data.result.status === "fail") {
+                      console.log("API Response:", response.data);
+                      setAlertMessage({
+                        key: Date.now(), // 현재 타임스탬프를 key로 사용
+                        message: response.data.result.message,
+                        tag: "Error",
+                      });
+                    }
+                  }
+                  if (data.modifiedNodeData[i]?.text === "Internet Gateway") {
+                    PostData.checkOption = "IGW";
                     PostData.newData = data.modifiedNodeData[i];
                     //console.log("NodeCheck 호출");
                     const response = await NodeCheck(PostData);
@@ -639,8 +648,6 @@ const useGoJS = (
         setTimeout(() => {
           checkForSecurityAccess(diagram, setAlertMessage);
         }, 30);
-        
-
       }
     });
 
