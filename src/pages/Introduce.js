@@ -52,7 +52,7 @@ const LogoSection = () => {
   return (
     <div className="logo-container">
       <div className="content">
-        <img src="assets/img/introducelogo.png" alt="logo" />
+        <img src="assets/img/introduceLogo.png" alt="logo" />
       </div>
     </div>
   );
@@ -368,6 +368,10 @@ const ImageContainer = styled.div`
   }
 `;
 const ButtonContainer = styled.div`
+  width: 100%; // Set the width of the tab content
+  margin: 0 auto; // Center the content
+  margin-left: 10px;
+  margin-top: 10px;
   text-align: left;
   h2 {
     font-size: 32px;

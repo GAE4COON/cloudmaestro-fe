@@ -1,110 +1,205 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { EllipsisOutlined } from '@ant-design/icons';
-import { Button, Divider, Space, Tour } from 'antd';
-import { wait } from '@testing-library/user-event/dist/utils';
+import { Tour } from 'antd';
+import { useData } from "./DataContext.js";
+
 const TourDraw = (props) => {
   const {setIsPopup} = props;
-  const { open, setOpen, showAlertMessages, setAlertMessage, setDiagram, resetAlertMessage, setClickedTab } = props;
-  const {refPalette, refDiagram, refButton, refAlert, refPopup, refCost, setShowToggle, refLS, refSummary, refOptimize, refNetworkPalette, refCloudPalette, setShowSelectToggle } = props;
-  
-useEffect(() => {
-  console.log("TourDraw.js useEffect");
-  console.log(props);
-})
+  const {alertMessage, diagram, clickedTab, isOpen } = props;
+  const {open, setOpen, showAlertMessages, setAlertMessage, setDiagram, resetAlertMessage, setClickedTab, setIsOpen, setShowSelectToggle } = props;
+  const {refPalette, refDiagram, refButton, refAlert, refPopup, refCost, setShowToggle, refLS, refSummary, refOptimize, refNetworkPalette, refCloudPalette, refSidebar, refSaveButton } = props;
+
+  useEffect(() => {},[open, alertMessage, diagram, clickedTab, isOpen]);
 
   const steps = [
-    //0
     {
+      id: "initDiagram",
       title: 'Upload File',
       description: 'Put your files here.',
       target: () => refDiagram.current,
     },
-    //1
     {
+      id:"palette",
+      placement: "right",
       title: 'Upload File',
       description: 'Put your files here.',
-      target: () => refAlert.current,
+      target: () => refPalette.current,
     },
-    //2
     {
-      title: 'Upload File',
-      description: 'Put your files here.',
-      // target: () => refDiagram.current,
-    },
-    //4
-    {
+      id: "button",
+      placement: "right",
       title: 'Upload File',
       description: 'Put your files here.',
       target: () => refButton.current,
     },
-    //5
     {
+      id: "networkPalette",
+      placement: "right",
+      title: 'Upload File',
+      description: 'Put your files here.',
+      target: () => refNetworkPalette.current,
+    },
+    
+    {
+      id: "networkDiagram",
+      placement: "top",
+
+      title: 'Network Diagram',
+      description: 'Put your files here.',
+      target: () => refDiagram.current,
+    },
+    {
+      id: "LS",
+      placement: "right",
+
       title: 'Upload File',
       description: 'Put your files here.',
       target: () => refLS.current,
     },
-    //6
+
     {
+      id: "cloudDiagram",
+      title: 'rehost',
+      description: 'Click to see other actions.',
+      target: () => refDiagram.current,
+    },
+    {
+      id: "cloudPalette",
+      placement: "right",
+
+      title: 'palette를 통해 수정 가능',
+      description: 'Save your changes.',
+
+      target: () => refCloudPalette.current,
+    },
+    {
+      id: "beforeSidebar",
+      title: 'rehost',
+      description: 'Click to see other actions.',
+      // target: () => refSidebar.current,
+    },
+    {
+      id: "sidebar",
+      placement: "left",
+
+      title: 'rehost',
+      description: 'Click to see other actions.',
+      target: () => refSidebar.current,
+    },
+    {
+      id: "alert",
       title: 'Upload File',
       description: 'Put your files here.',
-      target: () => refSummary.current,
+      target: () => refAlert.current,
     },
-    //7
     {
+      id: "alertList",
+      title: 'Upload File',
+      description: 'Put your files here.',
+      // target: () => refDiagram.current,
+    },
+    {
+      id: "optimize",
+      placement: "right",
+
       title: 'Upload File',
       description: 'Put your files here.',
       target: () => refOptimize.current,
     },
     //8
     {
-      title: 'Upload File',
+      id: "popup",
+      title: 'Optimize popup',
       description: 'Put your files here.',
       target: () => refPopup.current,
     },
-    //9
     {
+      id: "optimizeDiagram",
       title: 'Upload File',
-      description: 'Put your files here.',
-      target: () => refPalette.current,
-    },
-    //10
-    {
-      title: 'Upload File',
-      description: 'Put your files here.',
-      target: () => refNetworkPalette.current,
-    },
-    //11
-    {
-      title: 'Network Diagram',
       description: 'Put your files here.',
       target: () => refDiagram.current,
     },
-    //12
     {
-      title: 'network',
-      description: 'Save your changes.',
-
-      target: () => refCloudPalette.current,
-    },
-    //13
-    {
-      title: 'reghost',
-      description: 'Click to see other actions.',
-      target: () => refDiagram.current,
-    },
-    //14
-    {
-      title: 'Other Actions',
+      id: "costDiagram",
+      title: '비용 산정은 이 4개의 리소스를 지원합니다.',
       description: 'Click to see other actions.',
       target: () => refDiagram.current,
     },
     {
+      id: "costToggle",
       title: 'Other Actions',
       description: 'Click to see other actions.',
       target: () => refCost.current,
     },
+    {
+      id: "summary",      
+      placement: "right",
+
+      title: '이 버튼으로 확인 가능',
+      description: 'Put your files here.',
+      target: () => refSummary.current,
+    },
+    {
+      id: "saveButton",
+      placement: "left",
+
+      title: '저장 후 Mypage에서 가이드 확인 가능',
+      description: 'Put your files here.',
+      target: () => refSaveButton.current,
+    },
   ];
 
+  const handleStepChange = async (s) => {
+    const step = steps[s];
+  
+      switch (step.id) {   
+
+      case "beforeSidebar":
+        setClickedTab(["Network_icon", "Compute"]);
+        setIsOpen(true);
+        break;
+        case "popup":
+          setIsPopup(true);
+          break;
+      case "alert":
+        addAlertMessage();
+        setIsOpen(false);
+        break;
+      case "alertList":
+        showAlertMessages();
+        break;
+      case "button":
+        resetAlertMessage();
+        break;
+      case "palette":
+        setClickedTab(["Network_icon", "Compute"]);
+        break;
+      case "networkDiagram":
+        setDiagram("/assets/json/network_diagram.json");
+        break;
+      case "cloudDiagram":
+        setDiagram("/assets/json/cloud_diagram.json");
+        break;
+      case "cloudPalette":
+        break;
+      case "optimize":
+        resetAlertMessage();
+        break;
+      case "optimizeDiagram":
+        setIsPopup(false);
+        setDiagram("/assets/json/optimize.json");
+        break;
+      case "costDiagram":
+        setDiagram("/assets/json/cost.json");
+        break;
+      case "costToggle":
+        ec2Cost();
+        break;  
+        case "saveButton":
+          setDiagram("null");
+          setShowToggle(false);
+          break;
+    }
+  };
   const addAlertMessage = () => {
 
     setTimeout(() => {
@@ -135,63 +230,6 @@ useEffect(() => {
     setShowToggle(true);
     setShowSelectToggle({value: true, key: "EC2"});
   };
-
-  const handleStepChange = async (currentStep) => {
-    if(currentStep === 0){
-
-    }
-    if(currentStep === 1){
-      addAlertMessage();      
-    }
-    if(currentStep === 2){
-      showAlertMessages();
-    }
-    if(currentStep === 3){
-      resetAlertMessage();
-    }
-    if(currentStep === 7){
-      setIsPopup(true);
-    }
-    if(currentStep === 8){
-      setIsPopup(false);
-      setClickedTab(["Network_icon", "Compute"]);
-    }
-    if(currentStep === 10){
-      setDiagram("/assets/json/network.json");
-    }
-    if(currentStep === 12){
-      setDiagram("/assets/json/rehost.json");
-      setClickedTab(["Network_icon", "Compute"]);
-
-    }
-    if(currentStep === 13){
-      setDiagram("/assets/json/cost.json");
-
-    }
-    if(currentStep === 14){
-      ec2Cost();
-    }
-
-
-    // if (currentStep === 1) {  // 예를 들어, 두 번째 스텝에서 함수를 실행
-    //   // 여기에 원하는 함수 또는 로직을 추가
-    //   addAlertMessage();
-    // }
-    // if(currentStep === 2){
-    //   showAlertMessages();
-    // }
-    // if(currentStep === 3){
-    //   resetAlertMessage();
-    // }
-          // setClickedTab(["Network_icon", "Compute"]);
-      // 전에 선언
-      // await setDiagram("/assets/json/rehost.json");
-    //  await setDiagram("/assets/json/network.json");
-    //      setIsPopup(true);
-
-
-  };
-
   const handleSetOpen = () => {
     setOpen(!open);
   };
