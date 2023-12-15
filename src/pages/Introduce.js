@@ -240,18 +240,19 @@ export default Home;
 
 
 const contentStyle = {
-  height: '300px',
+  height: 'auto',
   width: '25%',
   textAlign: 'center', // keep only one textAlign property
   marginLeft: '39%', // specific left margin
-  marginBottom: '4%',
+  // marginBottom: '4%',
+  bottom: '10px',
   color: '#fff',
   lineHeight: '160px'
   //background: '#364d79',
 };
 
 const contentStyle2 = {
-  height: '300px',
+  height: 'auto',
   width: '29%',
   textAlign: 'center', // keep only one textAlign property
   marginLeft: '37%', // specific left margin
@@ -259,16 +260,12 @@ const contentStyle2 = {
   color: '#fff',
   lineHeight: '160px'
   //background: '#364d79',
-
-
-
 };
 const Slide=styled.div`
 .slick-dots li button {
   background-color: #3064D6; /* Change button color */
   border: none; /* Remove border */
-  /* Add other styles as needed */
-  width: 70px; /* Increased button width */
+  width: 45px; /* Increased button width */
   height: 15px; /* Increased button height */
 
 }

@@ -132,7 +132,8 @@ const SidebarMain = styled.div`
   background-color:#ffffff;
   /* height: 100%; */
   /* width: 100%; */
-  height: 85vh;
+  
+  height: 80vh;
   /* position: fixed; */
   /* transition: width 0.5s ease-in-out;  */
   overflow-y: auto;
@@ -163,14 +164,13 @@ const SidebarItemClosed = styled.div`
 `;
 
 const SidebarItem = styled.div`
-
-display: flex;
-align-items: center; /* 세로 중앙 정렬 */
-justify-content: space-around; /* 공간을 균등하게 나눔 */
-padding: 10px;
-height: auto; /* 고정된 높이 설정 */
-font-family: "Noto Sans KR", sans-serif;
-font-size: 14px;
+  display: flex;
+  align-items: center; /* 세로 중앙 정렬 */
+  justify-content: space-around; /* 공간을 균등하게 나눔 */
+  padding: 10px;
+  height: auto; /* 고정된 높이 설정 */
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 14px;
 
 `;
 

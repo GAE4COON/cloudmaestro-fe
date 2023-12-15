@@ -72,6 +72,8 @@ const slideInFromRight = css`
 `;
 const FlexContainer = styled.div`
   display: flex;
+  font-family: "Noto Sans KR", sans-serif;
+
   justify-content: space-between;
   height: 100vh;
   width: 100%;
