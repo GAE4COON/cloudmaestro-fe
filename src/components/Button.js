@@ -1,6 +1,6 @@
 import React, { useCallback, useState, useEffect, useMemo, useRef } from "react";
 import * as go from "gojs";
-import "../styles/Button.css"; // contains .diagram-component CSS
+import "../styles/Button.css";
 import { json, useNavigate } from "react-router-dom";
 import TourDraw from "../components/TourDraw.js";
 

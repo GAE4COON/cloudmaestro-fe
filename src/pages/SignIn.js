@@ -92,6 +92,12 @@ function SignIn() {
     });
   }, []);
 
+  const handleOnKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleSignIn();
+    }
+  };
+
   return (
     <div className="main-content">
       <h1></h1>
@@ -112,6 +118,7 @@ function SignIn() {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            onKeyPress={handleOnKeyPress}
           />
         </div>
 
