@@ -321,12 +321,21 @@ const Palette = memo(
         myPalette.div = null;
       };
     }, [selectedTab, searchTerm, modulePaletteData, selectedTabs]);
+    // const handleTabClick = (tab) => {
+    //   if (selectedTabs.includes(tab)) {
+    //     setSelectedTabs(selectedTabs.filter((t) => t !== tab));
+    //   } else {
+    //     setSelectedTabs([...selectedTabs, tab]);
+    //   }
+    // };
     const handleTabClick = (tab) => {
-      if (selectedTabs.includes(tab)) {
-        setSelectedTabs(selectedTabs.filter((t) => t !== tab));
-      } else {
-        setSelectedTabs([...selectedTabs, tab]);
-      }
+      setClickedTab((prevClickedTab) => {
+        if (prevClickedTab.includes(tab)) {
+          return prevClickedTab.filter((t) => t !== tab);
+        } else {
+          return [...prevClickedTab, tab];
+        }
+      });
     };
 
     return (
@@ -393,7 +402,7 @@ const Palette = memo(
                 </Tab>
               ))} */}
 
-              {tabs.map((tab) => (
+              {/* {tabs.map((tab) => (
                 <Tab key={tab}>
                   <div
                     ref={
@@ -422,8 +431,36 @@ const Palette = memo(
                     }
                   </div>
                 </Tab>
-              ))}
-            </ScrollableTabsContainer>
+              ))} */}
+                {tabs.map((tab) => (
+                  <Tab key={tab}>
+                    <div
+                    ref={
+                      tab === "Network_icon"
+                        ? refNetworkPalette
+                        : tab === "Compute"
+                        ? refCloudPalette
+                        : null
+                    }
+                    >
+                      <RadioInput
+                        type="checkbox"
+                        id={`cb_${tab}`}
+                        name="tabs"
+                        checked={clickedTab.includes(tab)}
+                        onChange={() => handleTabClick(tab)}
+                      />
+                      <TabLabel htmlFor={`cb_${tab}`}>{formatKey(tab)}</TabLabel>
+                      {
+                        <div
+                          className={`tab-content ${clickedTab.includes(tab) ? "expanded" : ""}`}
+                          ref={(el) => (paletteDivs.current[tab] = el)}
+                        />
+                      }
+                    </div>
+                  </Tab>
+                ))}
+                          </ScrollableTabsContainer>
           )}
         </div>
       </PaletteContainer>

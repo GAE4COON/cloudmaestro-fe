@@ -14,14 +14,41 @@ import Second from "./Introduce/Second";
 import Third from "./Introduce/Third";
 import Introduce from "./Introduce/intro";
 import { Container } from "react-bootstrap";
+//import { App } from './Introduce/ImageSection';
+import ReactDOM from 'react-dom'; // Ensure ReactDOM is imported
+import { Carousel } from 'antd';
+
 const { TabPane } = Tabs;
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
+
+const { createRoot } = ReactDOM;
+
+const Image = () => {
+  return(
+    <Slide>
+    <Carousel autoplay>
+        <div>
+          <img src="/assets/img/intro1.png" alt="Intro 1" style={contentStyle}  />       
+        </div>
+        <div>
+          <img src="/assets/img/intro2.png" alt="Intro 1" style={contentStyle2} />
+        </div>
+        <div>
+          <img src="/assets/img/intro3.png" alt="Intro 1" style={contentStyle} />
+        </div>
+    </Carousel>
+    </Slide>
+  
+  );
+  };
+
+
 const LogoSection = () => {
   return (
     <div className="logo-container">
-      <div className="content">
+      <div className="content" style={{margin:"5%"}}>
         <img src="assets/img/introduceLogo.png" alt="logo" />
       </div>
     </div>
@@ -111,50 +138,7 @@ const Home = () => {
     }
   };
 
-  const ImageSection = () => {
-    return (
-      <>
-        <FlexContainer>
-          <ImageContainer>
-            <img
-              src="assets/img/icon1.png"
-              alt="logo"
-              style={{ width: "100px" }}
-            />
-            <ButtonContainer>
-              <h2>Architecture</h2>
-              <p>클라우드 최적화 아키텍처 도식화</p>
-              <div style={{ marginTop: "5%" }}></div>
-            </ButtonContainer>
-          </ImageContainer>
-          <ImageContainer>
-            <img
-              src="assets/img/icon3.png"
-              alt="logo"
-              style={{ width: "100px" }}
-            />
-            <ButtonContainer>
-              <h2>Cost</h2>
-              <p>서비스, 인스턴스를 고려한 정확한 비용 산정</p>
-              <div style={{ marginTop: "5%" }}></div>
-            </ButtonContainer>
-          </ImageContainer>
-          <ImageContainer>
-            <img
-              src="assets/img/icon2.png"
-              alt="logo"
-              style={{ width: "100px" }}
-            />
-            <ButtonContainer>
-              <h2>Security</h2>
-              <p>사전 보안성 점검 보안 권고 및 가이드 기능</p>
-              <div style={{ marginTop: "5%" }}></div>
-            </ButtonContainer>
-          </ImageContainer>
-        </FlexContainer>
-      </>
-    );
-  };
+ 
 
   const TabSection = () => {
     return (
@@ -230,12 +214,12 @@ const Home = () => {
 
   return (
     <div className="about-container">
-      <div className="section" ref={addtoRefs}>
+      <div className="section"  ref={addtoRefs} style={{ height: "10vh" }}>
         <LogoSection />
         <Introduce />
       </div>
-      <div className="section" ref={addtoRefs}>
-        <ImageSection />
+      <div id="section" ref={addtoRefs}>
+        <Image />
       </div>
       <div className="section" ref={addtoRefs}>
         <TabSection />
@@ -253,11 +237,57 @@ const Home = () => {
 
 export default Home;
 
+
+
+const contentStyle = {
+  height: '300px',
+  width: '25%',
+  textAlign: 'center', // keep only one textAlign property
+  marginLeft: '39%', // specific left margin
+  marginBottom: '4%',
+  color: '#fff',
+  lineHeight: '160px'
+  //background: '#364d79',
+};
+
+const contentStyle2 = {
+  height: '300px',
+  width: '29%',
+  textAlign: 'center', // keep only one textAlign property
+  marginLeft: '37%', // specific left margin
+  marginBottom: '4%',
+  color: '#fff',
+  lineHeight: '160px'
+  //background: '#364d79',
+
+
+
+};
+const Slide=styled.div`
+.slick-dots li button {
+  background-color: #3064D6; /* Change button color */
+  border: none; /* Remove border */
+  /* Add other styles as needed */
+  width: 70px; /* Increased button width */
+  height: 15px; /* Increased button height */
+
+}
+.slick-dots li {
+  margin-right:4%;
+  margin-left:3%;
+}
+.slick-dots li.slick-active button, .slick-dots li button:hover {
+  background-color: #3064D6; /* Color change on active/hover */
+}
+
+`
+
 const TabsContainer = styled.div`
   display: flex;
   flex-direction: column; /* if flex */
 
   justify-content: center;
+  margin-top:15%;
 `;
 const StyledAntTabs = styled(Tabs)`
   font-family: "Noto Sans KR", sans-serif;

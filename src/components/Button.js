@@ -1,6 +1,6 @@
 import React, { useCallback, useState, useEffect, useMemo, useRef } from "react";
 import * as go from "gojs";
-import "../styles/Button.css"; // contains .diagram-component CSS
+import "../styles/Button.css";
 import { json, useNavigate } from "react-router-dom";
 import TourDraw from "../components/TourDraw.js";
 
@@ -30,6 +30,7 @@ const Button = ({
   handleSaveDiagram,
   setPalette,
   palette,
+  refDownloadBtn,
   isSave,
   setIsSave,
   setFileName,
@@ -116,7 +117,7 @@ const Button = ({
       a.href = URL.createObjectURL(blob);
       a.download = tmpFileName;
       a.click();
-      message.info("저장되었습니다.");
+      message.success("저장되었습니다.");
     });
   };
 
@@ -145,7 +146,7 @@ const Button = ({
         a.href = imgData;
         a.download = tmpFileName;
         a.click();
-        message.info("저장되었습니다.");
+        message.success("저장되었습니다.");
       }
     });
   };
@@ -286,6 +287,13 @@ const Button = ({
           </Tooltip>
         </div>
         <div className="button-row">
+          <Tooltip placement="right" title={"reset"} arrow={mergedArrow}>
+            <button onClick={handleReset}>
+              <BsEraser />
+            </button>
+          </Tooltip>
+        </div>
+        <div className="button-row">
           <Tooltip placement="right" title={"upload"} arrow={mergedArrow}>
             <Modal
               title="Enter file name"
@@ -311,13 +319,7 @@ const Button = ({
           </Tooltip>
         </div>
 
-        <div className="button-row">
-          <Tooltip placement="right" title={"reset"} arrow={mergedArrow}>
-            <button onClick={handleReset}>
-              <BsEraser />
-            </button>
-          </Tooltip>
-        </div>
+      <div ref={refDownloadBtn}>
         <div className="button-row">
           <Tooltip placement="right" title={"download"} arrow={mergedArrow}>
             <button onClick={handleSaveJSON}>
@@ -335,6 +337,7 @@ const Button = ({
               <BsFillImageFill />
             </button>
           </Tooltip>
+        </div>
         </div>
         <div className="button-row">
           <Tooltip
@@ -357,6 +360,27 @@ const Button = ({
             </button>
           </Tooltip>
         </div>
+
+        <div className="button-row">
+          <Tooltip
+            placement="right"
+            title={
+              <>
+                <div>
+                  <strong>Optimize</strong>
+                </div>
+                <div>
+                현재 아키텍처에 대한 요구사항을 입력받아, 이를 기반으로 최적화하여 클라우드 아키텍처를 제시합니다.
+                </div>
+              </>
+            }
+            arrow={mergedArrow}
+          >
+            <button onClick={handleOptimize}  ref={refOptimize}>
+              <BsGear/>
+            </button>
+          </Tooltip>
+        </div>
         <div className="button-row">
           <Tooltip
             placement="right"
@@ -375,26 +399,6 @@ const Button = ({
           >
             <button onClick={handleSummary} ref={refSummary} >
               <BsClipboard2Data/>
-            </button>
-          </Tooltip>
-        </div>
-        <div className="button-row">
-          <Tooltip
-            placement="right"
-            title={
-              <>
-                <div>
-                  <strong>Optimize</strong>
-                </div>
-                <div>
-                현재 아키텍처에 대한 요구사항을 입력받아, 이를 기반으로 최적화하여 클라우드 아키텍처를 제시합니다.
-                </div>
-              </>
-            }
-            arrow={mergedArrow}
-          >
-            <button onClick={handleOptimize}  ref={refOptimize}>
-              <BsGear/>
             </button>
           </Tooltip>
         </div>

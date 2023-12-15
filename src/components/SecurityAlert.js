@@ -31,7 +31,7 @@ async function handleNode(node, diagram, setAlertMessage) {
       key: Date.now().toString(), // Unique key for each message
       message:
         node.text +
-        " 가 암호화되지 않을 시, 무단 접근 및 변조 등을 통한 보험 위험이 존재할 수 있습니다.",
+        "가 암호화되지 않을 시, 무단 접근 및 변조 등을 통한 보험 위험이 존재할 수 있습니다.",
     };
 
     setAlertMessage({
@@ -94,7 +94,7 @@ async function checkForLog(diagram, setAlertMessage) {
 
 export async function checkForSecurityAccess(diagram, setAlertMessage) {
   const hasQuickSight = diagram.model.nodeDataArray.some(
-    (node) => node.text === "Athena"
+    (node) => node.text === "QuickSight"
   );
   const hasQuickMessage = {
     key: Date.now().toString(), // Unique key for each message
@@ -120,7 +120,7 @@ export async function checkForOpenSearchAccess(diagram, setAlertMessage) {
   const hasOpenSearch = diagram.model.nodeDataArray.some((node) => node.text=="OpenSearch Service" );
   const hasOpenSearchMessage = {
     key: Date.now().toString(), // Unique key for each message
-    message:"OpenSearch가 암호화되지 않을 시, 무단 접근 및 변조 등을 통한 보험 위험이 존재할 수 있습니다.",
+    message:"OpenSearch Service가 암호화되지 않을 시, 무단 접근 및 변조 등을 통한 보험 위험이 존재할 수 있습니다.",
   };
   try {
     if(hasOpenSearch){
