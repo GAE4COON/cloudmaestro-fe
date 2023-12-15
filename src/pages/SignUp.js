@@ -274,6 +274,7 @@ function Signup() {
           <div></div>
         </div>
         {nameError && <span className="error-text">{nameError}</span>}
+      
 
         <div className="input-group">
           <label>이메일 *</label>

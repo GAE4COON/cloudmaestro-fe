@@ -308,7 +308,7 @@ const CloudInstanceRow = styled.div`
 
 const StyledButton = styled(Button)`
   position: relative;
-  min-width: 80px;
+  min-width: 90px;
   align-items: center;
   font-size: 12px;
   margin-bottom: 5px;
