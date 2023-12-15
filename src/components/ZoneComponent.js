@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Select, TreeSelect, Checkbox } from "antd";
 
-import { industrial, zoneSecurityReq } from "../db/Requirement";
+import { industrial, zoneSecurityReq, zoneRdsReq } from "../db/Requirement";
 
 const { SHOW_PARENT } = TreeSelect;
 
@@ -12,8 +12,6 @@ function ZoneComponent({
   industrial_BP,
   onDataChange,
   onRemoveZone,
-  selectedZones,
-  setSelectedZones
 }) {
   const [ZoneData, setZoneData] = useState([]); //Zone select에서 쓰기 위한 데이터
   const [zoneValue, setZoneValue] = useState([]); //Zone에 대한 private, public subnet 정보 list
@@ -23,8 +21,6 @@ function ZoneComponent({
   const [serverNode, setServerNode] = useState([]); //고가용성 -  선택
   const [zoneFunc, setSelectedZoneFunc] = useState(null); //망 기능 선택
   const [zoneReqValue, setSelectedZoneReqValue] = useState([]); //요구사항 선택
-
-
 
   const [zones, setZones] = useState([]);
 
@@ -61,16 +57,8 @@ function ZoneComponent({
           label: resultList[i],
         };
       }
-
-
-      const updatedZoneData = resultList.map(zone => ({
-        value: zone.value,
-        label: zone.label,
-        disabled: selectedZones.includes(zone.value) // Disable zones that are in the selectedZones array
-      }));
-      
-      setZoneData(updatedZoneData)
-        setZoneValue(zonelist);
+      setZoneData(resultList);
+      setZoneValue(zonelist);
       console.log("Zone", resultList);
       // console.log("Zone subnet", zonelist);
 
@@ -174,32 +162,19 @@ function ZoneComponent({
     setSelectedZoneFunc(null); // Resetting Selected Zone Function
     setSelectedZoneReqValue([]); // Resetting Selected Zone Requirements
   };
-  useEffect(() => {
-    const updatedZoneData = ZoneData.map(zone => ({
-      value: zone.value,
-      label: zone.label,
-      disabled: !selectedZones.includes(SelectZone) // Disable zones that are in the selectedZones array
-    }));
-    setZoneData(updatedZoneData)
-
-  }, [selectedZones]);
-
 
   const handleChange = (value) => {
-    console.log(`selected1 ${value}`);
-    setSelectedZones(prevSelectedZones => [...prevSelectedZones, value]);
-    console.log(selectedZones);
-
+    console.log(`selected ${value}`);
     setSelectZone(value);
     resetFields();
   };
 
   const handleChange1 = (value) => {
-    console.log(`selected2 ${value}`);
+    console.log(`selected ${value}`);
     setAvailableNode(value);
   };
   const handleChange2 = (value) => {
-    console.log(`selected3 ${value}`);
+    console.log(`selected ${value}`);
     setServerNode(value);
   };
 
@@ -208,23 +183,22 @@ function ZoneComponent({
     // Additional logic if needed
   };
 
-  const removeCurrentZone = () => {
-    console.log("removeCurrentZone", zone.id);
-    onRemoveZone(zone.id);
-
-  console.log("SelectZone", SelectZone)
-  console.log("selectedZones",selectedZones)
-
-    const updatedZoneData = ZoneData.map(zone => ({
-      value: zone.value,
-      label: zone.label,
-      disabled: !selectedZones.includes(SelectZone) // Disable zones that are in the selectedZones array
-    }));
-    setZoneData(updatedZoneData)
-
+  const handleZoneReqValueChange = (value) => {
+    setSelectedZoneReqValue(value); // Corrected this line
+    // Additional logic if needed
   };
 
-  
+  const updateZone = (zoneId, key, value) => {
+    setZones(
+      zones.map((zone) =>
+        zone.id === zoneId ? { ...zone, [key]: value } : zone
+      )
+    );
+  };
+
+  const removeCurrentZone = () => {
+    onRemoveZone(zone.id);
+  };
 
   return (
     <ZoneContainer key={zone.id}>
@@ -311,6 +285,11 @@ function ZoneComponent({
             }
             options={zoneNode[SelectZone]}
           />
+      </SelectContainer>
+
+      <SelectContainer>
+        <SelectTitle>고가용성</SelectTitle>
+          <Checkbox.Group options={zoneRdsReq} onChange={handleZoneReqValueChange} />
       </SelectContainer>
     </ZoneContainer>
   );
